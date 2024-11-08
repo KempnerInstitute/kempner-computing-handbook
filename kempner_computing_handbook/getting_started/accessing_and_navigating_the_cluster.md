@@ -58,9 +58,6 @@ To set up a VPN connection, follow these steps:
 For detailed instructions and additional information, please read more about the VPN at [VPN setup guide](https://docs.rc.fas.harvard.edu/kb/vpn-setup/) on FASRC Documentation.
 ```
 
-```{warning}
-Please avoid logging in directly to specific login nodes, as this can disrupt the load balancing on the nodes and may exert undue pressure on a particular login node (e.g., `holylogin01` through `holylogin04`). An exception exists for VSCode, which requires rotation between login nodes. Please refer to the [VSCode Section](development_and_runtime_envs:using_vscode_for_remote_development) for more information.
-```
 
 (ssh_access)=
 ## SSH Access 
