@@ -7,7 +7,7 @@ To contribute to the handbook, please follow these steps:
 
 ### Step 1: Decide what to contribute
 
-Before making any changes to the handbook, it is important to decide what you would like to contribute. One way to contribute is picking an existing issue from the [issue tracker](https://github.com/KempnerInstitute/kempner-hpc-handbook/issues) and working on it. If you have an idea for a new section or topic that is not covered in the handbook, you can create a new issue to discuss it with the maintainers. Please note that random contributions without discussing them with the maintainers may not be accepted or may take longer to be reviewed.
+Before making any changes to the handbook, it is important to decide what you would like to contribute. One way to contribute is picking an existing issue from the [issue tracker](https://github.com/KempnerInstitute/kempner-computing-handbook/issues) and working on it. If you have an idea for a new section or topic that is not covered in the handbook, you can create a new issue to discuss it with the maintainers. Please note that random contributions without discussing them with the maintainers may not be accepted or may take longer to be reviewed.
 
 
 ### Step 2: Fork the repository
@@ -19,7 +19,7 @@ If you have already forked the repository, make sure that your fork is up to dat
 
 ### Step 3: Make changes to the handbook
 
-Once you have forked the repository, you can make changes to the handbook by editing the Markdown files in the `kempner_hpc_handbook` directory. You can use a text editor or a Markdown editor to make changes to the files. If you are not familiar with Markdown, you can refer to the [Markdown Guide](https://www.markdownguide.org/) for a quick introduction.
+Once you have forked the repository, you can make changes to the handbook by editing the Markdown files in the `kempner_computing_handbook` directory. You can use a text editor or a Markdown editor to make changes to the files. If you are not familiar with Markdown, you can refer to the [Markdown Guide](https://www.markdownguide.org/) for a quick introduction.
 
 
 ### Step 4: Build the handbook
@@ -29,7 +29,7 @@ Once you have forked the repository, you can make changes to the handbook by edi
 Before submitting your changes, it is recommended to build the handbook locally to ensure that your changes are displayed correctly. You can build the handbook (while being at the root directory) using the following command:
 
 ```bash
-jupyter-book build kempner_hpc_handbook
+jupyter-book build kempner_computing_handbook
 ```
 
 - **Docker build**:
@@ -37,13 +37,13 @@ jupyter-book build kempner_hpc_handbook
 The handbook can also be built using Docker. This is useful if you do not want to install the required dependencies on your local machine. To build the handbook using Docker, you can run the following command in the terminal:
 
 ```bash
-docker run --rm -v $PWD:/usr/src/app kempnerinstitute/hpc_handbook_jb:<version> jupyter-book build kempner_hpc_handbook
+docker run --rm -v $PWD:/usr/src/app kempnerinstitute/computing_handbook_jb:<version> jupyter-book build kempner_computing_handbook
 ```
 
-__Note__: Replace `<version>` with the version of the Docker image you want to use. For example, `1.0-240312-d1189501`. You can find the available versions on the [Docker Hub](https://hub.docker.com/r/kempnerinstitute/hpc_handbook_jb/tags).
+__Note__: Replace `<version>` with the version of the Docker image you want to use. For example, `1.0-240312-d1189501`. You can find the available versions on the [Docker Hub](https://hub.docker.com/r/kempnerinstitute/computing_handbook_jb/tags).
 
 
-After building the handbook, you can view the changes by opening the `kempner_hpc_handbook/_build/html/index.html` file in a web browser.
+After building the handbook, you can view the changes by opening the `kempner_computing_handbook/_build/html/index.html` file in a web browser.
 
 ### Step 5: Stage, commit, and push your changes
 
@@ -78,7 +78,7 @@ git fetch --all
 - Merge the `main` branch into your current branch:
 
 ```bash
-git merge kempner-hpc-handbook/main
+git merge kempner-computing-handbook/main
 ```
 
 - Push the changes to your forked repository:
@@ -113,7 +113,7 @@ Done!
 
 If you are contributing figures to the handbook, please make sure to follow these guidelines:
 
-- Each chapter, has a folder in the `kempner_hpc_handbook` directory. Inside each chapter folder, there is a `figures` folder with subfolder for each figure type (e.g., `ai`, `png`, `svg`, `pdf`, etc.). Please make sure to place your figures in the appropriate folder.
+- Each chapter, has a folder in the `kempner_computing_handbook` directory. Inside each chapter folder, there is a `figures` folder with subfolder for each figure type (e.g., `ai`, `png`, `svg`, `pdf`, etc.). Please make sure to place your figures in the appropriate folder.
 - We recommend using vector graphics (e.g., SVG, PDF) for figures whenever possible, as they are scalable and can be easily edited. If you are using raster graphics (e.g., PNG, JPG), which is not recommended, please make sure to use a high resolution (e.g., 300 dpi) to ensure that the figures are displayed correctly in the handbook.
 - If you are annotating a figure, please include both the original and the annotated figures. If you are using Adobe Illustrator to annotate figures (recommended), please include the `.ai` file. This will facilitate the change of the figure's annotation style to make it uniform in the handbook.  
 - Please avoid using copyrighted images or figures that are not licensed for reuse. If you are using figures from external sources, make sure to provide proper attribution and licensing information in the figure caption or in the text.

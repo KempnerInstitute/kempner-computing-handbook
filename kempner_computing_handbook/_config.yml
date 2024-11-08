@@ -1,4 +1,4 @@
-title: Kempner Institute HPC Handbook
+title: Kempner Institute Computing Handbook
 copyright: " 2024, The President and Fellows of Harvard College"
 author: Kempner Institute
 logo: figures/svg/Kempner-logo_Full-Color-Full-Name-Harvard.svg
@@ -13,8 +13,8 @@ bibtex_bibfiles:
   - references.bib
 
 repository:
-  url: https://github.com/KempnerInstitute/kempner-hpc-handbook
-  path: kempner_hpc_handbook
+  url: https://github.com/KempnerInstitute/kempner-computing-handbook
+  path: kempner_computing_handbook
   branch: main
 
 html:

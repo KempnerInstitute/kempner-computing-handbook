@@ -1,6 +1,6 @@
 format: jb-article
 root: intro
-title: Kempner Institute HPC Handbook
+title: Kempner Institute Computing Handbook
 options:
   numbered: true
 

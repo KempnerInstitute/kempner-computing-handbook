@@ -1,4 +1,4 @@
-name: deploy_hpc_handbook
+name: deploy_computing_handbook
 
 on:
   push:
@@ -24,10 +24,10 @@ jobs:
     # Build the book
     - name: Build the book
       run: |
-        jupyter-book build kempner_hpc_handbook 
+        jupyter-book build kempner_computing_handbook 
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: kempner_hpc_handbook/_build/html
+        publish_dir: kempner_computing_handbook/_build/html

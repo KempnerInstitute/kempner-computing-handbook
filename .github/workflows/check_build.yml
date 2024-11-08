@@ -24,9 +24,9 @@ jobs:
         pip install jupyter-book
     - name: Build
       run: |
-        jupyter-book build kempner_hpc_handbook
+        jupyter-book build kempner_computing_handbook
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
       with:
         name: book
-        path: kempner_hpc_handbook/_build/html
+        path: kempner_computing_handbook/_build/html
