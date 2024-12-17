@@ -20,7 +20,7 @@ Define an alias for quick navigation to your scratch space, a temporary storage 
 
 
 ```bash
-export SCRATCHDIR='/n/holyscratch01/<lab_name>/Users/$USER'
+export SCRATCHDIR='/n/netscratch/<lab_name>/Users/$USER'
 alias goscratch='cd $SCRATCHDIR; pwd'
 ```
 

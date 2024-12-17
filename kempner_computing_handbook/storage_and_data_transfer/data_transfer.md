@@ -37,7 +37,7 @@ scp /Users/janesmith/Downloads/data.npy janesmith@login.rc.fas.harvard.edu:/n/ho
 Jane Smith wants to transfer an entire directory, called `results`, from scratch storage on the cluster to her laptop's Documents folder. She can accomplish this with running the following command on her laptop.
 
 ```bash
-scp -r janesmith@login.rc.fas.harvard.edu:/n/holyscratch01/janesmith_lab/Users/janesmith/results /Users/janesmith/Documents/
+scp -r janesmith@login.rc.fas.harvard.edu:/n/netscratch/janesmith_lab/Users/janesmith/results /Users/janesmith/Documents/
 ``` 
 ````
 
@@ -89,7 +89,7 @@ rsync -av /Users/janesmith/Downloads/data.npy janesmith@login.rc.fas.harvard.edu
 Jane Smith wants to transfer an entire directory, called `results`, from scratch storage on the cluster to her laptop's Documents folder. She can accomplish this with running the following command on her laptop. She will use the archive mode argument (-a) and the verbose mode argument (-v):
 
 ```bash
-rsync -av janesmith@login.rc.fas.harvard.edu:/n/holyscratch01/janesmith_lab/Users/janesmith/results /Users/janesmith/Documents/
+rsync -av janesmith@login.rc.fas.harvard.edu:/n/netscratch/janesmith_lab/Users/janesmith/results /Users/janesmith/Documents/
 ``` 
 
 This creates a directory called results in the Documents folder, with all the files inside that were in the results directory on the cluster. 
@@ -97,7 +97,7 @@ This creates a directory called results in the Documents folder, with all the fi
 Let's say that Jane includes a trailing '/' on the first file path:
 
 ```bash
-rsync -av janesmith@login.rc.fas.harvard.edu:/n/holyscratch01/janesmith_lab/Users/janesmith/results/ /Users/janesmith/Documents/
+rsync -av janesmith@login.rc.fas.harvard.edu:/n/netscratch/janesmith_lab/Users/janesmith/results/ /Users/janesmith/Documents/
 ``` 
 
 This behaves differently. Now, the files that were in the results directory on the cluster have been transferred directly to the Documents directory. There is not a 'results' directory on the local machine.
@@ -165,7 +165,7 @@ Globus is a file sharing service designed for the secure and efficient transfer 
 ### Data Transfer Example
 In this example, we will transfer an entire directory called results on the cluster to the Documents folder on Ella Batty's local machine.
 
-1. First, set up the collection you are transferring data from and navigate to the correct directory. In this case, the collection is Harvard FAS RC Holyoke and the path to the results directory is `/n/holyscratch01/sham_lab/Users/ebatty`.
+1. First, set up the collection you are transferring data from and navigate to the correct directory. In this case, the collection is Harvard FAS RC Holyoke and the path to the results directory is `/n/netscratch/sham_lab/Users/ebatty`.
 
 ```{figure} figures/png/globus_data_transfer_1.png
 ---
