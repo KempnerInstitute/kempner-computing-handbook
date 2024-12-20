@@ -63,6 +63,8 @@ sections:
     title: Understanding Storage Options
   - file: storage_and_data_transfer/data_transfer
     title: Data Transfer
+  - file: storage_and_data_transfer/testbed_and_tatm
+    title: The Kempner Testbed and TATM
   - file: storage_and_data_transfer/shared_data_repository
     title: Shared Data Repository    
 - file: performance_monitoring/README
