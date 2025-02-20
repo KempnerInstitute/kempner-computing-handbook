@@ -1,0 +1,99 @@
+format: jb-article
+root: intro
+title: Kempner Institute Computing Handbook
+options:
+  numbered: true
+sections:
+- file: s1_high_performance_computing/README
+  sections:
+  - file: s1_high_performance_computing/kempner_cluster/README
+    sections:
+    - file: s1_high_performance_computing/kempner_cluster/README
+    sections:
+    - file: s1_high_performance_computing/kempner_cluster/introduction_and_cluster_basics
+      title: Introduction and Cluster Basics
+    - file: s1_high_performance_computing/kempner_cluster/overview_of_kempner_cluster
+      title: Overview of Kempner Institute HPC Cluster
+    - file: s1_high_performance_computing/kempner_cluster/kempner_policies_for_responsible_use
+      title: Kempner Policies for Responsible Use of the Cluster
+    - file: s1_high_performance_computing/kempner_cluster/accessing_and_navigating_the_cluster
+      title: Accessing and Navigating the Cluster
+    - file: s1_high_performance_computing/kempner_cluster/accessing_gpu_by_fasrc_users
+      title: Accessing Kempner GPUs by All FASRC Users     
+  - file: s1_high_performance_computing/general_hpc_concepts/README
+    sections:
+    - file: s1_high_performance_computing/general_hpc_concepts/understanding_slurm
+      title: Understanding SLURM
+    - file: s1_high_performance_computing/general_hpc_concepts/job_submission_basics
+      title: Job Submission Basics
+    - file: s1_high_performance_computing/general_hpc_concepts/open_ondemand
+      title: Open OnDemand
+    - file: s1_high_performance_computing/general_hpc_concepts/array_jobs
+      title: Array Jobs
+    - file: s1_high_performance_computing/general_hpc_concepts/job_dependencies
+      title: Job Dependencies
+    - file: s1_high_performance_computing/general_hpc_concepts/advanced_slurm_features
+      title: Advanced SLURM Features
+  - file: s1_high_performance_computing/development_and_runtime_envs/README
+    sections:
+    - file: s1_high_performance_computing/development_and_runtime_envs/software_module_and_environment_management
+      title: Software Module and Environment Management
+    - file: s1_high_performance_computing/development_and_runtime_envs/containerization
+      title: Containerization
+    - file: s1_high_performance_computing/development_and_runtime_envs/using_vscode_for_remote_development
+      title: Using VSCode for Remote Development
+    - file: s1_high_performance_computing/development_and_runtime_envs/using_conda_env
+      title: Using Conda Environment
+    - file: s1_high_performance_computing/development_and_runtime_envs/handling_dependencies_with_spack
+      title: Handling Dependencies with Spack
+    - file: s1_high_performance_computing/development_and_runtime_envs/customizing_bashrc
+      title: Customizing Shell Configuration File
+  - file: s1_high_performance_computing/storage_and_data_transfer/README
+    sections:
+    - file: s1_high_performance_computing/storage_and_data_transfer/understanding_storage_options
+      title: Understanding Storage Options
+    - file: s1_high_performance_computing/storage_and_data_transfer/data_transfer
+      title: Data Transfer
+    - file: s1_high_performance_computing/storage_and_data_transfer/testbed_and_tatm
+      title: The Kempner Testbed and TATM
+    - file: s1_high_performance_computing/storage_and_data_transfer/shared_data_repository
+      title: Shared Data Repository
+  - file: s1_high_performance_computing/efficient_use_of_resources/README
+    sections:
+    - file: s1_high_performance_computing/efficient_use_of_resources/best_practices_for_hpc_efficiency
+      title: Best Practices for HPC Efficiency
+    - file: s1_high_performance_computing/efficient_use_of_resources/fair_use_and_prioritization_policies
+      title: Fair Use and Prioritization Policies    
+  - file: s1_high_performance_computing/scalability/README
+    sections:
+    - file: s1_high_performance_computing/scalability/introduction_to_parallel_computing
+      title: Intro to Parallel Computing
+    - file: s1_high_performance_computing/scalability/gpu_computing
+      title: GPU Computing
+    - file: s1_high_performance_computing/scalability/gpu_profiling
+      title: GPU Profiling
+    - file: s1_high_performance_computing/scalability/distributed_gpu_computing
+      title: Distributed GPU Computing
+    - file: s1_high_performance_computing/scalability/parallel_io
+      title: Parallel I/O
+- file: s2_swe_for_research/README
+- file: s3_ai_workflows/README
+- file: s4_neuro_ai_workflows/README
+- file: s5_ai_scaling_and_engineering/README
+  sections:
+  - file: s5_ai_scaling_and_engineering/ml_scaling_and_efficiency/README
+  - file: s5_ai_scaling_and_engineering/performance_monitoring_and_optimization/README
+  - file: s5_ai_scaling_and_engineering/efficient_deployment_and_inference/README
+  - file: s5_ai_scaling_and_engineering/experiment_management_and_reproducibility/README
+- file: s6_security_and_compliance/README.md
+- file: s7_open_source_hub/README
+- file: s9_support/README
+  sections:
+  - file: s9_support/faq
+    title: FAQ
+- file: s8_workshops_and_trainings/README
+  sections:
+  - file: s8_workshops_and_trainings/spring2403_intro_to_hpc/content_file
+    title: Intro to HPC
+
+

@@ -102,7 +102,7 @@ Notes:
 - Please make sure to describe your changes in the pull request, so that the maintainers can understand the purpose of your contribution.
 - If your pull request is related to an existing issue, please mention the issue number in the description of the pull request.
 - If you are working on a large contribution, please open an issue to discuss the changes with the maintainers before submitting a pull request.
-- If your work is still in progress, you can submit a draft pull request to get feedback from the maintainers and other contributors. To do this add "WIP: " to the title of the pull request. This will indicate that the pull request is a work in progress and not ready to be merged.
+- If your work is still in progress, you can submit a draft pull request to get feedback from the maintainers and other contributors. To do this add "[WIP]: " to the title of the pull request. This will indicate that the pull request is a work in progress and not ready to be merged. You can remove the "[WIP]: " prefix when your work is complete and ready for review.
 - After submitting the pull request, the maintainers will review your changes and provide feedback. You may need to make additional changes based on the feedback before your pull request is accepted.
 - Depending on the nature and complexity of your contribution, it may take some time for the maintainers to review and merge your pull request. Please be patient and responsive to the feedback provided by the maintainers. During this time, it is your responsiblity to address any conflicts that might happen due to changes in the main repository. So, please make sure to keep your forked repository up to date with the main repository.
 
@@ -114,16 +114,51 @@ Done!
 If you are contributing figures to the handbook, please make sure to follow these guidelines:
 
 - Each chapter, has a folder in the `kempner_computing_handbook` directory. Inside each chapter folder, there is a `figures` folder with subfolder for each figure type (e.g., `ai`, `png`, `svg`, `pdf`, etc.). Please make sure to place your figures in the appropriate folder.
-- We recommend using vector graphics (e.g., SVG, PDF) for figures whenever possible, as they are scalable and can be easily edited. If you are using raster graphics (e.g., PNG, JPG), which is not recommended, please make sure to use a high resolution (e.g., 300 dpi) to ensure that the figures are displayed correctly in the handbook.
+- We require the use of vector graphics (e.g., SVG, PDF) for figures, as they are scalable without loss of quality and facilitate easy editing. If, due to specific constraints, you must include raster graphics (e.g., PNG, JPG), please provide a detailed explanation in your pull request justifying their necessity. Ensure that any raster images are of high resolution (minimum 300 dpi) to maintain visual clarity in the handbook.
 - If you are annotating a figure, please include both the original and the annotated figures. If you are using Adobe Illustrator to annotate figures (recommended), please include the `.ai` file. This will facilitate the change of the figure's annotation style to make it uniform in the handbook.  
-- Please avoid using copyrighted images or figures that are not licensed for reuse. If you are using figures from external sources, make sure to provide proper attribution and licensing information in the figure caption or in the text.
-- If you are creating new figures, please make sure to follow the style and formatting guidelines of the handbook to ensure consistency across the chapters.
+- Please avoid using copyrighted images or figures that are not licensed for reuse. If you are using figures from external sources, make sure to provide proper attribution and licensing information in the figure caption or in the text. As a contributor, you are solely responsible for ensuring that your submission does not violate any copyright laws.
 
-    - [TBD font type and font size]
-    - [TBD color palette]
-    - [TBD figure size and aspect ratio]
-    - [TBD figure caption format]
-    - [TBD background color]
+### Style and formatting guidelines for figures
+
+If you are creating new figures, please make sure to follow the style and formatting guidelines of the handbook to ensure consistency across the chapters.
+
+**Font**:
+
+- **Font Type**: Use Arial for all text within figures. 
+- **Font Size**: Set the font size to 12 pt for standard text. 
+
+**Color Palette**:
+
+- **Primary Colors**: TBD
+- **Secondary Colors**:TBD
+- **Accent Colors**: TBD
+
+**Figure Size and Aspect Ratio**:
+
+- **Size**: Design figures with a width of `800` pixels and a height of `600` pixels. 
+- **Aspect Ratio**: Maintain a `4:3` aspect ratio to ensure uniformity throughout the handbook. 
+
+**Figure Caption**:
+
+- **Placement**: DO NOT include figure caption in the figure itself.
+- **Content**: Figure caption should be consize, informative, and self-sufficient. Readers should be able to understand the figure without referring to the text.
+
+**Background Color**: 
+
+- Use transparent background for figures to ensure that they blend seamlessly with the handbook's design. 
+
+
+## Conributing a Workshop Session
+
+If you are contributing a workshop session to the handbook, please make sure to follow these guidelines:
+
+- The workshop should be related to the topics covered in the handbook and should provide hands-on training or practical exercises for the readers.  
+- Open an issue to discuss the workshop session with the maintainers before starting the work. 
+- Inside the workshop folder (`s8_workshops_and_trainings`), create a new folder for the workshop session. The folder name should start in the following format `semesterYYMM_workshop_title`. For example, `spring2403_intro_to_hpc`.
+- In the landing page of the workshop `s8_workshops_and_trainings/README.md`, add  
+- Each workshop session has a folder in the `kempner_computing_handbook/s8_workshops_and_trainings` directory. Inside each workshop session folder, there is a `notebooks` folder with the Jupyter notebooks for the session. Please make sure to place your notebooks in the appropriate folder.
+
+
 
 ## Notes on Docker images
 

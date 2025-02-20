@@ -9,3 +9,34 @@ h2 {
 h3 {
     font-size: 18px;
 }
+
+/* Adjust the width of the primary sidebar */
+.bd-sidebar-primary {
+    flex: 0 0 300px; /* Set the desired width */
+    max-width: 300px; /* Ensure the sidebar doesn't exceed this width */
+}
+
+/* Adjust the width of the secondary sidebar (if present) */
+.bd-sidebar-secondary {
+    flex: 0 0 300px; /* Set the desired width */
+    max-width: 300px; /* Ensure the sidebar doesn't exceed this width */
+}
+
+/* Adjust the main content area to accommodate the sidebar width changes */
+.bd-main {
+    flex: 1;
+    max-width: calc(100% - 300px); /* Subtract the sidebar width from the total width */
+}
+
+.caption {
+    background-color: #c6c8f438; /* Replace with your desired background color */
+    border-radius: 10px; /* Adjust the value to control the roundness of the corners */
+    padding: 10px; /* Optional: Adds space inside the element */
+    display: inline-block; /* Ensures the background doesn't cover the full width */
+}
+
+
+/* Custom styling for the sidenav for space between sections */
+ul.nav.bd-sidenav {
+    line-height: 1.0; /* Set your desired line height */
+}

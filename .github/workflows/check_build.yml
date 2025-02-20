@@ -26,7 +26,7 @@ jobs:
       run: |
         jupyter-book build kempner_computing_handbook
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: book
         path: kempner_computing_handbook/_build/html

@@ -1,108 +1,99 @@
-format: jb-article
+format: jb-book
 root: intro
 title: Kempner Institute Computing Handbook
 options:
   numbered: true
-
-sections:
-- file: getting_started/README
-  sections:
-  - file: getting_started/introduction_and_cluster_basics
-    title: Introduction and Cluster Basics
-  - file: getting_started/overview_of_kempner_cluster
-    title: Overview of Kempner Institute HPC Cluster
-  - file: getting_started/kempner_policies_for_responsible_use
-    title: Kempner Policies for Responsible Use of the Cluster
-  - file: getting_started/accessing_and_navigating_the_cluster
-    title: Accessing and Navigating the Cluster
-  - file: getting_started/accessing_gpu_by_fasrc_users
-    title: Accessing Kempner GPUs by All FASRC Users     
-- file: resource_management/README
-  sections:
-  - file: resource_management/understanding_slurm
-    title: Understanding SLURM
-  - file: resource_management/job_submission_basics
-    title: Job Submission Basics
-  - file: resource_management/open_ondemand
-    title: Open OnDemand
-  - file: resource_management/array_jobs
-    title: Array Jobs
-  - file: resource_management/job_dependencies
-    title: Job Dependencies
-  - file: resource_management/advanced_slurm_features
-    title: Advanced SLURM Features
-- file: development_and_runtime_envs/README
-  sections:
-  - file: development_and_runtime_envs/software_module_and_environment_management
-    title: Software Module and Environment Management
-  - file: development_and_runtime_envs/containerization
-    title: Containerization
-  - file: development_and_runtime_envs/using_vscode_for_remote_development
-    title: Using VSCode for Remote Development
-  - file: development_and_runtime_envs/using_conda_env
-    title: Using Conda Environment
-  - file: development_and_runtime_envs/handling_dependencies_with_spack
-    title: Handling Dependencies with Spack
-  - file: development_and_runtime_envs/customizing_bashrc
-    title: Customizing Shell Configuration File
-- file: scalability/README
-  sections:
-  - file: scalability/introduction_to_parallel_computing
-    title: Intro to Parallel Computing
-  - file: scalability/gpu_computing
-    title: GPU Computing
-  - file: scalability/gpu_profiling
-    title: GPU Profiling
-  - file: scalability/distributed_gpu_computing
-    title: Distributed GPU Computing
-  - file: scalability/parallel_io
-    title: Parallel I/O
-- file: storage_and_data_transfer/README
-  sections:
-  - file: storage_and_data_transfer/understanding_storage_options
-    title: Understanding Storage Options
-  - file: storage_and_data_transfer/data_transfer
-    title: Data Transfer
-  - file: storage_and_data_transfer/testbed_and_tatm
-    title: The Kempner Testbed and TATM
-  - file: storage_and_data_transfer/shared_data_repository
-    title: Shared Data Repository    
-- file: performance_monitoring/README
-  sections:
-  - file: performance_monitoring/intro_to_performance_monitoring
-    title: Introduction to Performance Monitoring
-  - file: performance_monitoring/monitoring_tools
-    title: Monitoring Tools
-  - file: performance_monitoring/performance_analysis_techniques
-    title: Performance Analysis Techniques
-  - file: performance_monitoring/benchmarking_your_application
-    title: Benchmarking Your Application
-  - file: performance_monitoring/optimizing_io_performance
-    title: Optimizing I/O Performance
-  - file: performance_monitoring/parallel_performance_tuning
-    title: Parallel Performance Tuning
-  - file: performance_monitoring/advanced_monitoring_and_tuning_tools
-    title: Advanced Monitoring and Tuning Tools
-- file: advanced_topics/README
-  sections:
-  - file: advanced_topics/gpu_interconnect
-    title: GPU Architecture and Interconnect
-  - file: advanced_topics/gpu_libraries_and_frameworks
-    title: GPU Libraries and Frameworks
-- file: efficient_use_of_resources/README
-  sections:
-  - file: efficient_use_of_resources/best_practices_for_hpc_efficiency
-    title: Best Practices for HPC Efficiency
-  - file: efficient_use_of_resources/fair_use_and_prioritization_policies
-    title: Fair Use and Prioritization Policies
-- file: hpc_application_scenarios/README
-- file: workshops_and_trainings/README
-  sections:
-  - file: workshops_and_trainings/intro_to_hpc/content_file
-    title: Intro to HPC
-- file: support/README
-  sections:
-  - file: support/faq
-    title: FAQ
+parts:
+  - caption: High Performance Computing
+    numbered: true
+    chapters:
+    - file: s1_high_performance_computing/kempner_cluster/README
+      sections:
+      - file: s1_high_performance_computing/kempner_cluster/introduction_and_cluster_basics
+      - file: s1_high_performance_computing/kempner_cluster/overview_of_kempner_cluster
+      - file: s1_high_performance_computing/kempner_cluster/kempner_policies_for_responsible_use
+      - file: s1_high_performance_computing/kempner_cluster/accessing_and_navigating_the_cluster
+      - file: s1_high_performance_computing/kempner_cluster/accessing_gpu_by_fasrc_users
+      - file: s1_high_performance_computing/efficient_use_of_resources/fair_use_and_prioritization_policies
+    - file: s1_high_performance_computing/general_hpc_concepts/README
+      sections:
+      - file: s1_high_performance_computing/general_hpc_concepts/understanding_slurm
+      - file: s1_high_performance_computing/general_hpc_concepts/job_submission_basics
+      - file: s1_high_performance_computing/general_hpc_concepts/array_jobs
+      - file: s1_high_performance_computing/general_hpc_concepts/job_dependencies
+      - file: s1_high_performance_computing/general_hpc_concepts/advanced_slurm_features    
+      - file: s1_high_performance_computing/general_hpc_concepts/open_ondemand
+    - file: s1_high_performance_computing/development_and_runtime_envs/README
+      sections:
+      - file: s1_high_performance_computing/development_and_runtime_envs/software_module_and_environment_management
+      - file: s1_high_performance_computing/development_and_runtime_envs/containerization
+      - file: s1_high_performance_computing/development_and_runtime_envs/using_vscode_for_remote_development
+      - file: s1_high_performance_computing/development_and_runtime_envs/using_conda_env
+      - file: s1_high_performance_computing/development_and_runtime_envs/handling_dependencies_with_spack
+      - file: s1_high_performance_computing/development_and_runtime_envs/customizing_bashrc
+    - file: s1_high_performance_computing/storage_and_data_transfer/README
+      sections:
+      - file: s1_high_performance_computing/storage_and_data_transfer/understanding_storage_options
+      - file: s1_high_performance_computing/storage_and_data_transfer/data_transfer
+      - file: s1_high_performance_computing/storage_and_data_transfer/shared_data_repository
+    # - file: s1_high_performance_computing/efficient_use_of_resources/README
+      # sections:
+      # - file: s1_high_performance_computing/efficient_use_of_resources/best_practices_for_hpc_efficiency
+  - caption: Software Engineering for Research
+    numbered: true
+    chapters:
+    # - file: s2_swe_for_research/git_and_version_control
+    - file: s2_swe_for_research/collaborative_code_development
+    - file: s2_swe_for_research/software_design_principles
+    - file: s2_swe_for_research/documentation_and_readibility
+    - file: s2_swe_for_research/testing_and_continuous_integration
+    - file: s2_swe_for_research/package_development
+    - file: s2_swe_for_research/reproducible_research
+  - caption: AI Tools and Workflows
+    numbered: true
+    chapters:
+    # - file: s3_ai_workflows/README
+    - file: s3_ai_workflows/testbed_and_tatm
+  - caption: Neuro AI Workflows
+    numbered: true
+    chapters:
+    - file: s4_neuro_ai_workflows/README
+  - caption: AI Scaling and Engineering
+    numbered: true
+    chapters:
+    - file: s5_ai_scaling_and_engineering/scalability/README
+      sections:
+      - file: s5_ai_scaling_and_engineering/scalability/introduction_to_parallel_computing
+      - file: s5_ai_scaling_and_engineering/scalability/gpu_computing
+      - file: s5_ai_scaling_and_engineering/scalability/gpu_profiling
+      - file: s5_ai_scaling_and_engineering/scalability/distributed_gpu_computing
+      - file: s5_ai_scaling_and_engineering/scalability/parallel_io
+    - file: s5_ai_scaling_and_engineering/efficiency/README
+      sections:
+      - file: s5_ai_scaling_and_engineering/efficiency/ml_scaling_and_efficiency
+      - file: s5_ai_scaling_and_engineering/efficiency/performance_monitoring_and_optimization
+      - file: s5_ai_scaling_and_engineering/efficiency/efficient_deployment_and_inference
+      - file: s5_ai_scaling_and_engineering/efficiency/experiment_management_and_reproducibility
+  - caption: Security and Compliance
+    numbered: true
+    chapters:
+    - file: s6_security_and_compliance/README
+  - caption: Open Source Hub
+    numbered: true
+    chapters:
+    - file: s7_open_source_hub/README
+  - caption: Support
+    numbered: true
+    chapters:
+    - file: s8_support/README
+      sections:
+      - file: s8_support/faq
+  - caption: Workshops and Trainings
+    numbered: false
+    chapters:
+    - file: s9_workshops_and_trainings/README
+      sections:
+      - file: s9_workshops_and_trainings/spring2403_intro_to_hpc/content_file
+        title: Spring 24, March
 
 

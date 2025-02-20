@@ -20,9 +20,11 @@ repository:
 html:
   use_issues_button: true
   use_repository_button: true
-  extra_css: ["_static/custom.css"]
+  extra_css: 
+    - custom.css
   google_analytics_id: G-QFZEXWFW26
 
 
 exclude_patterns:
   - scalability/distributed_computing.md
+  - s8_workshops_and_trainings/workshops/*
