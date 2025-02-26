@@ -482,6 +482,10 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-tatm-on-the-kempner-ai-cluster">11.1. Using <code class="docutils literal notranslate"><span class="pre">tatm</span></code> on the Kempner AI Cluster</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#online-data-exploration">11.2. Online Data Exploration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-tatm-with-olmo">11.3. Using <code class="docutils literal notranslate"><span class="pre">tatm</span></code> with OLMo</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#known-issues">11.3.1. Known Issues</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -501,10 +505,48 @@ the primary focus of the testbed is easing access and exploration of data, throu
 <h2><span class="section-number">11.1. </span>Using <code class="docutils literal notranslate"><span class="pre">tatm</span></code> on the Kempner AI Cluster<a class="headerlink" href="#using-tatm-on-the-kempner-ai-cluster" title="Link to this heading">#</a></h2>
 <p>You should follow the instructions in the <a class="reference external" href="https://kempnerinstitute.github.io/tatm/getting_started.html">tatm documentation</a> to install the <code class="docutils literal notranslate"><span class="pre">tatm</span></code> library. Once you have installed <code class="docutils literal notranslate"><span class="pre">tatm</span></code>, you can use it to access data on the Kempner AI cluster. The <code class="docutils literal notranslate"><span class="pre">tatm</span></code> library provides a simple interface to access data on the cluster, and it is designed to be easy to use. In order to take advantage of the semantic name resolution provided by <code class="docutils literal notranslate"><span class="pre">tatm</span></code>, you need to
 be using at least version <code class="docutils literal notranslate"><span class="pre">0.2.0</span></code> of the library and have the the <code class="docutils literal notranslate"><span class="pre">TATM_BASE_DIR</span></code> environment variable set to <code class="docutils literal notranslate"><span class="pre">/n/holylfs06/LABS/kempner_shared/Everyone/testbed</span></code> (the path to the root of the data directory on the cluster). Path based data access will still work if you do not have the <code class="docutils literal notranslate"><span class="pre">TATM_BASE_DIR</span></code> environment variable set.</p>
+<p>For a brief overview of loading data using <code class="docutils literal notranslate"><span class="pre">tatm</span></code>, you can refer to the guide in the documentation <a class="reference external" href="https://kempnerinstitute.github.io/tatm/text_dataset.html">here</a> which covers basic use of the <code class="docutils literal notranslate"><span class="pre">get_dataset</span></code> function.</p>
 </section>
 <section id="online-data-exploration">
 <h2><span class="section-number">11.2. </span>Online Data Exploration<a class="headerlink" href="#online-data-exploration" title="Link to this heading">#</a></h2>
-<p>In order to support exploration of data available, we have deployed an online data exploration tool. This tool allows you to search for data available on the cluster, and provides the command to load the data using <code class="docutils literal notranslate"><span class="pre">tatm</span></code>. You can access the online data exploration tool at <a class="reference external" href="https://data.eng.kempnerinstitute.harvard.edu">https://data.eng.kempnerinstitute.harvard.edu</a>. THe username to log in is <code class="docutils literal notranslate"><span class="pre">kempneruser&#64;kempner.edu</span></code> and the password is <code class="docutils literal notranslate"><span class="pre">K3mpnerData!</span></code>.</p>
+<p>In order to support exploration of data available, we have deployed an online data exploration tool. This tool allows you to search for data available on the cluster, and provides the command to load the data using <code class="docutils literal notranslate"><span class="pre">tatm</span></code>. You can access the online data exploration tool at <a class="reference external" href="https://data.eng.kempnerinstitute.harvard.edu">https://data.eng.kempnerinstitute.harvard.edu</a>. The username for logging in is <code class="docutils literal notranslate"><span class="pre">kempneruser&#64;kempner.edu</span></code>. Click the section below to reveal the password.</p>
+<details>
+  <summary>Click to reveal password</summary>
+  <p><strong>K3mpnerData!</strong></p>
+</details>
+</section>
+<section id="using-tatm-with-olmo">
+<h2><span class="section-number">11.3. </span>Using <code class="docutils literal notranslate"><span class="pre">tatm</span></code> with OLMo<a class="headerlink" href="#using-tatm-with-olmo" title="Link to this heading">#</a></h2>
+<p>We have built support for custom PyTorch datasets (including those output by the <code class="docutils literal notranslate"><span class="pre">tatm</span></code> <code class="docutils literal notranslate"><span class="pre">get_dataset</span></code> function) into the
+<a class="reference external" href="https://github.com/KempnerInstitute/OLMo">Kempner fork of OLMo</a>. We’ve also had a PR accepted
+into the <a class="reference external" href="https://github.com/allenai/OLMo">main Ai2 branch of OLMo</a> bringing that support into the mainline
+codebase which should be available in future releases. In order to use data made available by <code class="docutils literal notranslate"><span class="pre">tatm</span></code> with OLMo, you will
+need to utilize that custom dataset support. The following <code class="docutils literal notranslate"><span class="pre">data</span></code> section of the OLMo config file is an example of how to do this:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">data</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">pad_direction</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">right</span>
+<span class="w">  </span><span class="nt">num_workers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">  </span><span class="nt">drop_last</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">pin_memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">prefetch_factor</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">  </span><span class="nt">persistent_workers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">  </span><span class="nt">custom_dataset</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tatm.data.get_dataset&quot;</span>
+<span class="w">    </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">metadata</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Red</span><span class="nv"> </span><span class="s">Pajama</span><span class="nv"> </span><span class="s">v1-tokenized_t5-base_arxiv&quot;</span>
+<span class="w">      </span><span class="nt">context_length</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2048</span>
+<span class="w">    </span><span class="nt">collate_config</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">input_id_field</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;token_ids&quot;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">custom_dataset</span></code> provides OLMo the necessary information to load the dataset. The <code class="docutils literal notranslate"><span class="pre">name</span></code> section provides the name of the python object or function that will return a Pytorch dataset object (in this case the <code class="docutils literal notranslate"><span class="pre">tatm.data.get_dataset</span></code> function). The <code class="docutils literal notranslate"><span class="pre">args</span></code> section specifies the keyword arguments to the function or class constructor in <code class="docutils literal notranslate"><span class="pre">name</span></code>. For these specfic arguments, the <code class="docutils literal notranslate"><span class="pre">metadata</span></code> field specifies the semantic name of the dataset to load and can also be used to point to a metadata file on disk or a directory containing a metadata file, and the <code class="docutils literal notranslate"><span class="pre">context_length</span></code> field specifies the length of the input sequences. The <code class="docutils literal notranslate"><span class="pre">collate_config</span></code> section specifies how to collate the data into batches. In this case, we are using the custom collator in OLMo which maps output fields in a custom class to expected fields in the OLMo model. The <code class="docutils literal notranslate"><span class="pre">input_id_field</span></code> specifies the name of the field in the dataset that contains the input IDs. This maps the <code class="docutils literal notranslate"><span class="pre">token_ids</span></code> field in the dataset to the <code class="docutils literal notranslate"><span class="pre">input_ids</span></code> field in the OLMo dataset.</p>
+<p>Using this config in an environment with OLMo and <code class="docutils literal notranslate"><span class="pre">tatm</span></code> installed and running OLMo as normal should allow you to load the dataset and train a model using the data.</p>
+<section id="known-issues">
+<h3><span class="section-number">11.3.1. </span>Known Issues<a class="headerlink" href="#known-issues" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>We have observed memory issues when using <code class="docutils literal notranslate"><span class="pre">tatm</span></code> datasets in contexts where multiple copies of the dataset object are created in multiple processes with the torch <code class="docutils literal notranslate"><span class="pre">DistributedSampler</span></code> and when new processes are created with the <code class="docutils literal notranslate"><span class="pre">spawn</span></code> method. We are working to identify the root cause of this issue and will update this document when we have more information. In the meantime, we recommend using a small number of worker processes alongside large amounts of host memory to avoid this issue. Spawning processes with <code class="docutils literal notranslate"><span class="pre">fork</span></code> is also recommended if possible, although this is not always possible in the context of OLMo.</p></li>
+</ul>
+</section>
 </section>
 </section>
 
@@ -574,6 +616,10 @@ be using at least version <code class="docutils literal notranslate"><span class
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-tatm-on-the-kempner-ai-cluster">11.1. Using <code class="docutils literal notranslate"><span class="pre">tatm</span></code> on the Kempner AI Cluster</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#online-data-exploration">11.2. Online Data Exploration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-tatm-with-olmo">11.3. Using <code class="docutils literal notranslate"><span class="pre">tatm</span></code> with OLMo</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#known-issues">11.3.1. Known Issues</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
