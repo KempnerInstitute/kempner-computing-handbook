@@ -507,8 +507,8 @@ document.write(`
 <p>Please use the <a class="reference external" href="https://docs.rc.fas.harvard.edu/kb/kempner-partitions/">Kempner requeue</a> partition if you want to try out something resource intensive but not urgent. This work may be requeued by higher priority work, so you should implement checkpointing in the event that something higher priority interrupts your run.</p>
 <p>The cluster should never be used for CPU-only jobs. There are two types of Kempner Institute nodes on the cluster: Nodes with A100 40GB GPUs (<code class="docutils literal notranslate"><span class="pre">kempner</span></code> partition) and nodes with H100 80GB GPUs (<code class="docutils literal notranslate"><span class="pre">kempner_h100</span></code> partition). All nodes have 4 GPUs. Jobs should be submitted with <strong>no more than</strong>:</p>
 <ul class="simple">
-<li><p>16 cores and 250 GB per GPU for <code class="docutils literal notranslate"><span class="pre">kempner</span></code> partition, and</p></li>
-<li><p>24 cores and 375 GB per GPU for <code class="docutils literal notranslate"><span class="pre">kempner_h100</span></code> partition.</p></li>
+<li><p>16 cores and 240 GB per GPU for <code class="docutils literal notranslate"><span class="pre">kempner</span></code> partition, and</p></li>
+<li><p>24 cores and 360 GB per GPU for <code class="docutils literal notranslate"><span class="pre">kempner_h100</span></code> partition.</p></li>
 </ul>
 <div class="admonition important">
 <p class="admonition-title">Important</p>

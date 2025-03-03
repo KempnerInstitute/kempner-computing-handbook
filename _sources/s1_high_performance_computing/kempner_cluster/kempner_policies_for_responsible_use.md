@@ -14,8 +14,8 @@ Please use the [Kempner requeue](https://docs.rc.fas.harvard.edu/kb/kempner-part
 
 The cluster should never be used for CPU-only jobs. There are two types of Kempner Institute nodes on the cluster: Nodes with A100 40GB GPUs (`kempner` partition) and nodes with H100 80GB GPUs (`kempner_h100` partition). All nodes have 4 GPUs. Jobs should be submitted with **no more than**:
 
-- 16 cores and 250 GB per GPU for `kempner` partition, and 
-- 24 cores and 375 GB per GPU for `kempner_h100` partition.  
+- 16 cores and 240 GB per GPU for `kempner` partition, and 
+- 24 cores and 360 GB per GPU for `kempner_h100` partition.  
 
 ::::{important}
 Users should not submit jobs that utilize more than 10% of the cluster resources or that run for extended periods (exceeding 4 hours). Given the current resources, 10% of the cluster comprises:
