@@ -108,7 +108,7 @@ The available email types:
 
 Since SLURM performs backfilling to allow smaller jobs to run, it may lead to fragmentation of GPU resources on Kempner AI cluster. If your job requires multiple GPUs, you can optimize your SLURM submission script or `salloc` based on the available resources. The following command can help you determine the optimal resource configuration for your job.
 
-The initial version of this command only prints the total utilization of nodes and does not account for preemptible resources. We will notify you once that version is implemented.
+The initial version of this command only prints the total utilization of nodes and does not account for preemptible resources.
 
 **Command for the `kempner_h100` partition:**
 ```bash

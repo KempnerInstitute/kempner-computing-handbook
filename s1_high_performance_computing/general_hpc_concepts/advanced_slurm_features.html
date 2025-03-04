@@ -642,7 +642,7 @@ kempner_h100<span class="w"> </span>amd,holyndr,genoa,avx,avx2,avx512,gpu,h100,c
 <section id="optimizing-request-for-compute-resources">
 <h2><span class="section-number">2.5.5. </span>Optimizing Request for Compute Resources<a class="headerlink" href="#optimizing-request-for-compute-resources" title="Link to this heading">#</a></h2>
 <p>Since SLURM performs backfilling to allow smaller jobs to run, it may lead to fragmentation of GPU resources on Kempner AI cluster. If your job requires multiple GPUs, you can optimize your SLURM submission script or <code class="docutils literal notranslate"><span class="pre">salloc</span></code> based on the available resources. The following command can help you determine the optimal resource configuration for your job.</p>
-<p>The initial version of this command only prints the total utilization of nodes and does not account for preemptible resources. We will notify you once that version is implemented.</p>
+<p>The initial version of this command only prints the total utilization of nodes and does not account for preemptible resources.</p>
 <p><strong>Command for the <code class="docutils literal notranslate"><span class="pre">kempner_h100</span></code> partition:</strong></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sh<span class="w"> </span>/n/holylfs06/LABS/kempner_shared/Everyone/cluster_scripts/free_resources<span class="w"> </span>kempner_h100
 </pre></div>
