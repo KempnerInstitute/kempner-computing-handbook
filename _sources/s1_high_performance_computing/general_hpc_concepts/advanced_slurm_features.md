@@ -102,3 +102,40 @@ The available email types:
 | `FAIL`         | Notifies if the job fails at any point.                    |
 | `REQUEUE`      | Notifies if the job is requeued.                           |
 | `ALL`          | Sends notifications for all the above events.              |
+
+
+## Optimizing Request for Compute Resources 
+
+Since SLURM performs backfilling to allow smaller jobs to run, it may lead to fragmentation of GPU resources on Kempner AI cluster. If your job requires multiple GPUs, you can optimize your SLURM submission script or `salloc` based on the available resources. The following command can help you determine the optimal resource configuration for your job.
+
+The initial version of this command only prints the total utilization of nodes and does not account for preemptible resources. We will notify you once that version is implemented.
+
+**Command for the `kempner_h100` partition:**
+```bash
+sh /n/holylfs06/LABS/kempner_shared/Everyone/cluster_scripts/free_resources kempner_h100
+```
+
+**Command for the `kempner` partition:**
+```bash
+sh /n/holylfs06/LABS/kempner_shared/Everyone/cluster_scripts/free_resources kempner
+```
+
+Each command prints the available GPUs, CPU cores, and memory for each node in the partition. Here is a sample output:
+
+```bash
+Node_Name       Available_GPU  Available_Core  Free_Memory_GB
+holygpu8a17303  4              96              1511
+holygpu8a11301  3              32              1480
+holygpu8a13303  3              32              1480
+holygpu8a13404  3              80              16
+holygpu8a13602  3              80              16
+holygpu8a13603  3              32              1480
+holygpu8a15602  3              32              1480
+holygpu8a17104  3              32              1480
+holygpu8a17202  3              32              1480
+holygpu8a17403  3              32              1480
+holygpu8a17504  3              32              1480
+holygpu8a11102  2              16              1430
+```
+
+Using the information in the output table, you can adjust your job’s resource request (number of nodes, number of cores per node, and memory) to secure an allocation more quickly.

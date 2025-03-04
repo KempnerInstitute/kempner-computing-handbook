@@ -484,6 +484,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependency-chains-with-job-arrays">2.5.2. Dependency Chains with Job Arrays</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constraining-resources">2.5.3. Constraining Resources</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#receiving-emails-about-job-status">2.5.4. Receiving Emails about Job Status</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimizing-request-for-compute-resources">2.5.5. Optimizing Request for Compute Resources</a></li>
 </ul>
             </nav>
         </div>
@@ -638,6 +639,36 @@ kempner_h100<span class="w"> </span>amd,holyndr,genoa,avx,avx2,avx512,gpu,h100,c
 </table>
 </div>
 </section>
+<section id="optimizing-request-for-compute-resources">
+<h2><span class="section-number">2.5.5. </span>Optimizing Request for Compute Resources<a class="headerlink" href="#optimizing-request-for-compute-resources" title="Link to this heading">#</a></h2>
+<p>Since SLURM performs backfilling to allow smaller jobs to run, it may lead to fragmentation of GPU resources on Kempner AI cluster. If your job requires multiple GPUs, you can optimize your SLURM submission script or <code class="docutils literal notranslate"><span class="pre">salloc</span></code> based on the available resources. The following command can help you determine the optimal resource configuration for your job.</p>
+<p>The initial version of this command only prints the total utilization of nodes and does not account for preemptible resources. We will notify you once that version is implemented.</p>
+<p><strong>Command for the <code class="docutils literal notranslate"><span class="pre">kempner_h100</span></code> partition:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sh<span class="w"> </span>/n/holylfs06/LABS/kempner_shared/Everyone/cluster_scripts/free_resources<span class="w"> </span>kempner_h100
+</pre></div>
+</div>
+<p><strong>Command for the <code class="docutils literal notranslate"><span class="pre">kempner</span></code> partition:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sh<span class="w"> </span>/n/holylfs06/LABS/kempner_shared/Everyone/cluster_scripts/free_resources<span class="w"> </span>kempner
+</pre></div>
+</div>
+<p>Each command prints the available GPUs, CPU cores, and memory for each node in the partition. Here is a sample output:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Node_Name<span class="w">       </span>Available_GPU<span class="w">  </span>Available_Core<span class="w">  </span>Free_Memory_GB
+holygpu8a17303<span class="w">  </span><span class="m">4</span><span class="w">              </span><span class="m">96</span><span class="w">              </span><span class="m">1511</span>
+holygpu8a11301<span class="w">  </span><span class="m">3</span><span class="w">              </span><span class="m">32</span><span class="w">              </span><span class="m">1480</span>
+holygpu8a13303<span class="w">  </span><span class="m">3</span><span class="w">              </span><span class="m">32</span><span class="w">              </span><span class="m">1480</span>
+holygpu8a13404<span class="w">  </span><span class="m">3</span><span class="w">              </span><span class="m">80</span><span class="w">              </span><span class="m">16</span>
+holygpu8a13602<span class="w">  </span><span class="m">3</span><span class="w">              </span><span class="m">80</span><span class="w">              </span><span class="m">16</span>
+holygpu8a13603<span class="w">  </span><span class="m">3</span><span class="w">              </span><span class="m">32</span><span class="w">              </span><span class="m">1480</span>
+holygpu8a15602<span class="w">  </span><span class="m">3</span><span class="w">              </span><span class="m">32</span><span class="w">              </span><span class="m">1480</span>
+holygpu8a17104<span class="w">  </span><span class="m">3</span><span class="w">              </span><span class="m">32</span><span class="w">              </span><span class="m">1480</span>
+holygpu8a17202<span class="w">  </span><span class="m">3</span><span class="w">              </span><span class="m">32</span><span class="w">              </span><span class="m">1480</span>
+holygpu8a17403<span class="w">  </span><span class="m">3</span><span class="w">              </span><span class="m">32</span><span class="w">              </span><span class="m">1480</span>
+holygpu8a17504<span class="w">  </span><span class="m">3</span><span class="w">              </span><span class="m">32</span><span class="w">              </span><span class="m">1480</span>
+holygpu8a11102<span class="w">  </span><span class="m">2</span><span class="w">              </span><span class="m">16</span><span class="w">              </span><span class="m">1430</span>
+</pre></div>
+</div>
+<p>Using the information in the output table, you can adjust your job’s resource request (number of nodes, number of cores per node, and memory) to secure an allocation more quickly.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -708,6 +739,7 @@ kempner_h100<span class="w"> </span>amd,holyndr,genoa,avx,avx2,avx512,gpu,h100,c
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependency-chains-with-job-arrays">2.5.2. Dependency Chains with Job Arrays</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constraining-resources">2.5.3. Constraining Resources</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#receiving-emails-about-job-status">2.5.4. Receiving Emails about Job Status</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimizing-request-for-compute-resources">2.5.5. Optimizing Request for Compute Resources</a></li>
 </ul>
   </nav></div>
 
