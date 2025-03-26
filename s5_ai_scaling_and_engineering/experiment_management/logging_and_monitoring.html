@@ -462,7 +462,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -478,6 +480,18 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wandb">15.1.1. Wandb</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#logging-in">15.1.1.1. Logging In</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-tracking">15.1.1.2. Simple Tracking</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -489,7 +503,45 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="weights-biases-wandb">
 <h1><span class="section-number">15.1. </span>Weights &amp; Biases (WandB)<a class="headerlink" href="#weights-biases-wandb" title="Link to this heading">#</a></h1>
-<p>TBD</p>
+<section id="wandb">
+<span id="wandb-section"></span><h2><span class="section-number">15.1.1. </span>Wandb<a class="headerlink" href="#wandb" title="Link to this heading">#</a></h2>
+<p>Weights &amp; Biases (W&amp;B) is a platform designed to streamline experiment tracking and visualization, enabling effective collaboration on large teams. Weights and Biases gives researchers great flexibility in deciding what metrics to log.</p>
+<section id="logging-in">
+<h3><span class="section-number">15.1.1.1. </span>Logging In<a class="headerlink" href="#logging-in" title="Link to this heading">#</a></h3>
+<p>To get started, first sign up for an account at <a class="reference external" href="https://wandb.ai/site/">https://wandb.ai/site/</a>. Next, generate an API key at <a class="reference external" href="https://wandb.ai/authorize">https://wandb.ai/authorize</a> . Finally, install the wandb package and log in:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>wandb
+wandb<span class="w"> </span>login
+</pre></div>
+</div>
+<p>Logging in using the W&amp;B Command Line Interface adds your api key to your <code class="docutils literal notranslate"><span class="pre">.netrc</span></code> file at <code class="docutils literal notranslate"><span class="pre">~/.netrc</span></code> (Mac and Linux). Alternatively, you can also manually add your api key to this file following this format:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>machine<span class="w"> </span>api.wandb.ai
+<span class="w">  </span>login<span class="w"> </span>user
+<span class="w">  </span>password<span class="w"> </span>YOUR_API_KEY
+</pre></div>
+</div>
+</section>
+<section id="simple-tracking">
+<h3><span class="section-number">15.1.1.2. </span>Simple Tracking<a class="headerlink" href="#simple-tracking" title="Link to this heading">#</a></h3>
+<p>In your python script, import wandb and start a W&amp;B run object. Set the project name and decide which hyperparameters and metrics to track:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">wandb</span>
+
+<span class="n">run</span> <span class="o">=</span> <span class="n">wandb</span><span class="o">.</span><span class="n">init</span><span class="p">(</span>
+    <span class="n">project</span> <span class="o">=</span> <span class="s2">&quot;project_name&quot;</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;metric_1&quot;</span><span class="p">:</span> <span class="n">metric_1</span><span class="p">,</span>
+        <span class="s2">&quot;metric_2&quot;</span><span class="p">:</span> <span class="n">metric_2</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="n">wandb</span><span class="o">.</span><span class="n">log</span><span class="p">({</span><span class="s2">&quot;accuracy&quot;</span><span class="p">:</span> <span class="n">acc</span><span class="p">,</span> <span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="n">loss</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>Access your project and view your runs at <a class="reference external" href="https://wandb.ai/home">https://wandb.ai/home</a>. Additionally, invite any collaborators you have to your project at this page. Refer to the <a class="reference external" href="https://docs.wandb.ai/quickstart/">quickstart guide</a> for more details.</p>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -546,6 +598,25 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wandb">15.1.1. Wandb</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#logging-in">15.1.1.1. Logging In</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-tracking">15.1.1.2. Simple Tracking</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
