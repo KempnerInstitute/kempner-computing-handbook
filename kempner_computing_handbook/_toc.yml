@@ -63,6 +63,7 @@ parts:
     chapters:
     - file: s5_ai_scaling_and_engineering/scalability/README
       sections:
+      - file: s5_ai_scaling_and_engineering/scalability/distributed_computing
       - file: s5_ai_scaling_and_engineering/scalability/introduction_to_parallel_computing
       - file: s5_ai_scaling_and_engineering/scalability/gpu_computing
       - file: s5_ai_scaling_and_engineering/scalability/gpu_profiling
@@ -97,6 +98,7 @@ parts:
     - file: s9_workshops_and_trainings/README
       sections:
       - file: s9_workshops_and_trainings/spring2403_intro_to_hpc/content_file
-        title: Spring 24, March
-
+        title: Spring 24 - Intro to Compute
+      - file: s9_workshops_and_trainings/fall2409_intro_to_kempner_ai_cluster/intro_to_kempner_ai_cluster
+        title: Fall 24 - Intro to Kempner AI Cluster
 

@@ -17,6 +17,9 @@ repository:
   path: kempner_computing_handbook
   branch: main
 
+extra_files:
+  - files/**
+
 html:
   use_issues_button: true
   use_repository_button: true
@@ -28,4 +31,4 @@ html:
 
 exclude_patterns:
   - scalability/distributed_computing.md
-  - s8_workshops_and_trainings/workshops/*›
+  - s9_workshops_and_trainings/workshops/*›
