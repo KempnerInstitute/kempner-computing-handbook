@@ -1,12 +1,11 @@
-# Sessions
+# About Workshops @ Kempner
 
-Welcome to the Workshops and Training section of our handbook. This area is dedicated to fostering continuous learning and professional development through a variety of interactive sessions. Our workshops are designed to equip participants with practical skills and knowledge, encouraging active engagement and collaboration. Whether you're a beginner eager to acquire new competencies or a seasoned professional aiming to enhance your expertise, our training programs offer valuable opportunities to advance your proficiency and contribute effectively to your field.
+Welcome to the Workshops @ Kempner section of our Computing Handbook. This section is dedicated to fostering continuous learning and professional development through a variety of interactive sessions.
+Our workshops are designed to equip participants with practical skills and knowledge, encouraging active engagement and collaboration. Whether you are a beginner eager to acquire new competencies or a seasoned professional aiming to enhance your expertise, our training programs offer valuable opportunities to advance your proficiency and contribute effectively to your field.
+
+## List of Workshops
 
 
-
-##  Spring 2024
-
-
-| Title                                                      | Date           |  
-|:-----------------------------------------------------------|:--------------:|
-| {ref}`s8_workshops_and_trainings:spring2403_intro_to_hpc`  | March 28, 2024 |
+| Workshop Name                               | Description                                                                 | Target Audience                         |
+|--------------------------------------------|-----------------------------------------------------------------------------|------------------------------------------|
+| {ref}`Introduction to the Kempner AI Cluster <s9_workshops_and_trainings:intro_to_kempner_ai_cluster>`     | Overview of how to access and use the Kempner AI cluster.    | Kempner AI Cluster Users        |
