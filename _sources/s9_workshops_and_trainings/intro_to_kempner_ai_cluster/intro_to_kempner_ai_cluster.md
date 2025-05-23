@@ -10,4 +10,8 @@ This introductory workshop describes how to access and use the Kempner AI cluste
 
 To view the "Introduction to the Kempner AI cluster" workshop slides (in pdf format), click the following link:
 
-{download}`Introduction to Kempner AI cluster Workshop </files/Intro_to_Kempner_AI_Cluster_Workshop.pdf>`
+{download}`Introduction to Kempner AI cluster Workshop </_static/workshop/Intro_to_Kempner_AI_Cluster_Workshop.pdf>`
+
+<div style="text-align: center;">
+  <iframe src="/kempner_computing_handbook/_static/workshop/Intro_to_Kempner_AI_Cluster_Workshop.pdf" width="90%" height="460px" style="border: none;"></iframe>
+</div>
