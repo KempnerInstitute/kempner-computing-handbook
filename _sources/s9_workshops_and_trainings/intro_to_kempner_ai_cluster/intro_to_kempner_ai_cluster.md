@@ -13,5 +13,5 @@ To view the "Introduction to the Kempner AI cluster" workshop slides (in pdf for
 {download}`Introduction to Kempner AI cluster Workshop </_static/workshop/Intro_to_Kempner_AI_Cluster_Workshop.pdf>`
 
 <div style="text-align: center;">
-  <iframe src="/kempner_computing_handbook/_static/workshop/Intro_to_Kempner_AI_Cluster_Workshop.pdf" width="90%" height="460px" style="border: none;"></iframe>
+ <iframe src="/_static/workshop/Intro_to_Kempner_AI_Cluster_Workshop.pdf" width="90%" height="460px" style="border: none;"></iframe>
 </div>
