@@ -32,7 +32,6 @@ html:
    - _static
   static_path: ["_static"]
 
-
 exclude_patterns:
   - scalability/distributed_computing.md
   - s9_workshops_and_trainings/workshops/*›
