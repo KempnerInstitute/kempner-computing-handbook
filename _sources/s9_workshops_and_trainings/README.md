@@ -6,6 +6,7 @@ Our workshops are designed to equip participants with practical skills and knowl
 ## List of Workshops
 
 
-| Workshop Name                               | Description                                                                 | Target Audience                         |
+| Workshop Name                              | Description                                                                 | Target Audience                         |
 |--------------------------------------------|-----------------------------------------------------------------------------|------------------------------------------|
 | {ref}`Introduction to the Kempner AI Cluster <s9_workshops_and_trainings:intro_to_kempner_ai_cluster>`     | Overview of how to access and use the Kempner AI cluster.    | Kempner AI Cluster Users        |
+| {ref}`Introduction to Distributed Computing <s9_workshops_and_trainings:intro_to_distributed_computing>`   | Introduction to key concepts in distributed computing.       | Researchers and students with basic SLURM experience and some familiarity with neural networks.  |
