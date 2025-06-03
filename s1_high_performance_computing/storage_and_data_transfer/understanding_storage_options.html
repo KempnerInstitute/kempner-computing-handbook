@@ -491,6 +491,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#default-persistent-lab-directory">4.1.2. Default persistent lab directory</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#temporary-high-performance-scratch-storage-vast">4.1.3. Temporary High-Performance scratch storage (VAST)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scratch-storage-summary-table">4.1.4. Scratch Storage Summary Table</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#note-on-lustre-storage-performance">4.1.5. Note on Lustre Storage Performance</a></li>
 </ul>
             </nav>
         </div>
@@ -599,6 +600,33 @@ document.write(`
 </a>
 </figure>
 </section>
+<section id="note-on-lustre-storage-performance">
+<h2><span class="section-number">4.1.5. </span>Note on Lustre Storage Performance<a class="headerlink" href="#note-on-lustre-storage-performance" title="Link to this heading">#</a></h2>
+<p>If you’re running I/O-heavy computational workflows on data stored in any Lustre filesystem (e.g., <code class="docutils literal notranslate"><span class="pre">holylabs</span></code>, <code class="docutils literal notranslate"><span class="pre">holylfs06</span></code>), check the LFS stripe count on your directories and optimize it if necessary. Here are a few important points:</p>
+<ul>
+<li><p>The LFS stripe count on a directory determines how data inside that directory is distributed across one or more Object Storage Targets (OSTs), which can significantly improve read/write performance.</p></li>
+<li><p>For a directory with small files, a single stripe (default) is usually sufficient.</p></li>
+<li><p>For a directory with large files (several GBs to TBs), using multiple stripes can improve performance. We recommend setting the stripe count to <strong>8</strong> or <strong>16</strong> as a starting point.</p></li>
+<li><p>To check the stripe count on a directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>lfs<span class="w"> </span>getstripe<span class="w"> </span>&lt;directory&gt;
+</pre></div>
+</div>
+</li>
+<li><p>To set the stripe count on a directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>lfs<span class="w"> </span>setstripe<span class="w"> </span>-c<span class="w"> </span><span class="m">16</span><span class="w"> </span>&lt;directory&gt;
+</pre></div>
+</div>
+</li>
+<li><p>Setting the stripe count on a directory does not apply it to existing files or files in subdirectories. To apply new striping to existing data:</p>
+<ol class="arabic simple">
+<li><p>Move the data out of the directory.</p></li>
+<li><p>Set the stripe count on the directory.</p></li>
+<li><p>Copy the data back using <code class="docutils literal notranslate"><span class="pre">cp</span></code> or <code class="docutils literal notranslate"><span class="pre">rsync</span></code>. Do not use <code class="docutils literal notranslate"><span class="pre">mv</span></code>, as it won’t retrigger striping.</p></li>
+</ol>
+</li>
+</ul>
+<p>Optimizing stripe counts can lead to significant improvements in I/O performance for data-intensive workflows. Read more about Lustre storage internals <a class="reference external" href="https://wiki.lustre.org/Understanding_Lustre_Internals">here</a>.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -669,6 +697,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#default-persistent-lab-directory">4.1.2. Default persistent lab directory</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#temporary-high-performance-scratch-storage-vast">4.1.3. Temporary High-Performance scratch storage (VAST)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scratch-storage-summary-table">4.1.4. Scratch Storage Summary Table</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#note-on-lustre-storage-performance">4.1.5. Note on Lustre Storage Performance</a></li>
 </ul>
   </nav></div>
 

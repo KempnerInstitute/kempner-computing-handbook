@@ -100,3 +100,31 @@ The following table summarizes the storage options available on the cluster, vis
 height: 350 px
 name: Storage Options
 ```
+
+## Note on Lustre Storage Performance 
+
+If you're running I/O-heavy computational workflows on data stored in any Lustre filesystem (e.g., `holylabs`, `holylfs06`), check the LFS stripe count on your directories and optimize it if necessary. Here are a few important points:
+
+- The LFS stripe count on a directory determines how data inside that directory is distributed across one or more Object Storage Targets (OSTs), which can significantly improve read/write performance.
+- For a directory with small files, a single stripe (default) is usually sufficient.
+- For a directory with large files (several GBs to TBs), using multiple stripes can improve performance. We recommend setting the stripe count to **8** or **16** as a starting point.
+
+- To check the stripe count on a directory:  
+
+    ```bash
+    lfs getstripe <directory>
+    ```
+
+- To set the stripe count on a directory:
+
+    ```bash
+    lfs setstripe -c 16 <directory>
+    ```
+
+- Setting the stripe count on a directory does not apply it to existing files or files in subdirectories. To apply new striping to existing data:
+
+  1. Move the data out of the directory.
+  2. Set the stripe count on the directory.
+  3. Copy the data back using `cp` or `rsync`. Do not use `mv`, as it won't retrigger striping.
+
+Optimizing stripe counts can lead to significant improvements in I/O performance for data-intensive workflows. Read more about Lustre storage internals [here](https://wiki.lustre.org/Understanding_Lustre_Internals).
