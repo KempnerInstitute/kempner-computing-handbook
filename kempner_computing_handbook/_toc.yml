@@ -54,6 +54,7 @@ parts:
     chapters:
     # - file: s3_ai_workflows/README
     - file: s3_ai_workflows/testbed_and_tatm
+    - file: s3_ai_workflows/get_hf_model
   - caption: Neuro AI Workflows
     numbered: true
     chapters:
