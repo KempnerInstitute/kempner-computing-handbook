@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>22.1. FAQ &#8212; Kempner Institute Computing Handbook</title>
+    <title>12. Distributed Inference &#8212; Kempner Institute Computing Handbook</title>
   
   
   
@@ -71,12 +71,12 @@
                 gtag('config', 'G-QFZEXWFW26');
             </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 's8_support/faq';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 's3_ai_workflows/distributed_inference';</script>
     <script src="../_static/custom.js?v=ba1c093d"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="23. About Workshops @ Kempner" href="../s9_workshops_and_trainings/README.html" />
-    <link rel="prev" title="22. Support and Troubleshooting" href="README.html" />
+    <link rel="next" title="13. NVIDIA NeMo Workflow" href="nemo_workflow.html" />
+    <link rel="prev" title="11. Data Discovery and Tokenization" href="testbed_and_tatm.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -240,12 +240,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../s2_swe_for_research/reproducible_research.html">10. Reproducible Research</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">AI Tools and Workflows</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../s3_ai_workflows/testbed_and_tatm.html">11. Data Discovery and Tokenization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../s3_ai_workflows/distributed_inference.html">12. Distributed Inference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../s3_ai_workflows/nemo_workflow.html">13. NVIDIA NeMo Workflow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../s3_ai_workflows/scalable_vision_workflows.html">14. Scalable Vision Workflows</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../s3_ai_workflows/get_hf_model.html">15. Hugging Face Models</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="testbed_and_tatm.html">11. Data Discovery and Tokenization</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">12. Distributed Inference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nemo_workflow.html">13. NVIDIA NeMo Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scalable_vision_workflows.html">14. Scalable Vision Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get_hf_model.html">15. Hugging Face Models</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Neuro AI Workflows</span></p>
 <ul class="nav bd-sidenav">
@@ -283,9 +283,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../s7_open_source_hub/README.html">21. Open Source Hub</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Support</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="README.html">22. Support and Troubleshooting</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">22.1. FAQ</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../s8_support/README.html">22. Support and Troubleshooting</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../s8_support/faq.html">22.1. FAQ</a></li>
 </ul>
 </details></li>
 </ul>
@@ -367,7 +367,7 @@
       
       
       
-      <li><a href="https://github.com/KempnerInstitute/kempner-computing-handbook/issues/new?title=Issue%20on%20page%20%2Fs8_support/faq.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/KempnerInstitute/kempner-computing-handbook/issues/new?title=Issue%20on%20page%20%2Fs3_ai_workflows/distributed_inference.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -397,7 +397,7 @@
       
       
       
-      <li><a href="../_sources/s8_support/faq.md" target="_blank"
+      <li><a href="../_sources/s3_ai_workflows/distributed_inference.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -468,7 +468,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -479,11 +481,21 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>FAQ</h1>
+    <h1>Distributed Inference</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">12.1. Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-models">12.2. Supported Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices">12.3. Best Practices</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -493,40 +505,74 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="faq">
-<h1><span class="section-number">22.1. </span>FAQ<a class="headerlink" href="#faq" title="Link to this heading">#</a></h1>
-<ol class="arabic">
-<li><p>I am trying to clone a repository on HPC but I get the following error:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@<span class="w">    </span>WARNING:<span class="w"> </span>REMOTE<span class="w"> </span>HOST<span class="w"> </span>IDENTIFICATION<span class="w"> </span>HAS<span class="w"> </span>CHANGED!<span class="w">     </span>@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-IT<span class="w"> </span>IS<span class="w"> </span>POSSIBLE<span class="w"> </span>THAT<span class="w"> </span>SOMEONE<span class="w"> </span>IS<span class="w"> </span>DOING<span class="w"> </span>SOMETHING<span class="w"> </span>NASTY!
-Someone<span class="w"> </span>could<span class="w"> </span>be<span class="w"> </span>eavesdropping<span class="w"> </span>on<span class="w"> </span>you<span class="w"> </span>right<span class="w"> </span>now<span class="w"> </span><span class="o">(</span>man-in-the-middle<span class="w"> </span>attack<span class="o">)</span>!
-It<span class="w"> </span>is<span class="w"> </span>also<span class="w"> </span>possible<span class="w"> </span>that<span class="w"> </span>a<span class="w"> </span>host<span class="w"> </span>key<span class="w"> </span>has<span class="w"> </span>just<span class="w"> </span>been<span class="w"> </span>changed.
-The<span class="w"> </span>fingerprint<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>RSA<span class="w"> </span>key<span class="w"> </span>sent<span class="w"> </span>by<span class="w"> </span>the<span class="w"> </span>remote<span class="w"> </span>host<span class="w"> </span>is
-...
-</pre></div>
-</div>
-<p>This can happen if you do not add your ssh key to your github account. Follow these links to add your ssh key to your github account:</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="distributed-inference">
+<h1><span class="section-number">12. </span>Distributed Inference<a class="headerlink" href="#distributed-inference" title="Link to this heading">#</a></h1>
+<p>Distributed inference enables large language models (LLMs) to serve predictions efficiently across multiple GPUs or nodes. As models grow in size, ranging from tens to hundreds of billions of parameters, single-GPU deployment becomes impractical. This section introduces how distributed inference is achieved using the open-source library <a class="reference external" href="https://docs.vllm.ai/en/latest/index.html">vLLM</a>.</p>
+<section id="overview">
+<h2><span class="section-number">12.1. </span>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p>vLLM is a high-performance inference engine designed to serve large transformer models efficiently. It supports:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/checking-for-existing-ssh-keys">Checking for existing SSH keys</a></p></li>
-<li><p><a class="reference external" href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent?platform=linux">Generating a new SSH key and adding it to the ssh-agent</a></p></li>
-<li><p><a class="reference external" href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account">Adding a new SSH key to your GitHub account</a></p></li>
+<li><p>Pipeline Parallelism (PP): Splits the model layers across GPUs or nodes.</p></li>
+<li><p>Tensor Parallelism (TP): Splits individual computations within a layer.</p></li>
 </ul>
-</li>
-<li><p>I am trying to <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span></code> (<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code> or <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">fetch</span></code>) however I get the following error:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>gnome-ssh-askpass:134672<span class="o">)</span>:<span class="w"> </span>Gtk-WARNING<span class="w"> </span>**:<span class="w"> </span><span class="m">07</span>:19:13.800:<span class="w"> </span>cannot<span class="w"> </span>open<span class="w"> </span>display:<span class="w"> </span>
-error:<span class="w"> </span>unable<span class="w"> </span>to<span class="w"> </span><span class="nb">read</span><span class="w"> </span>askpass<span class="w"> </span>response<span class="w"> </span>from<span class="w"> </span><span class="s1">&#39;/usr/libexec/openssh/gnome-ssh-askpass&#39;</span>
-Username<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="s1">&#39;https://github.com&#39;</span>:
-</pre></div>
+<p>These features allow for scalable, memory-efficient, and high-throughput inference, making it ideal for deploying very large models in production environments or on AI clusters.</p>
+</section>
+<section id="supported-models">
+<h2><span class="section-number">12.2. </span>Supported Models<a class="headerlink" href="#supported-models" title="Link to this heading">#</a></h2>
+<p>The following models have been tested and configured for distributed inference using vLLM on AI clusters:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Model</p></th>
+<th class="head"><p>Model Size</p></th>
+<th class="head"><p>Hugging Face</p></th>
+<th class="head"><p>Deployment Guide</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Llama 3.1</p></td>
+<td><p>70B</p></td>
+<td><p><a class="reference external" href="https://huggingface.co/meta-llama/Llama-3.1-70B">HF Link</a></p></td>
+<td><p><a class="reference external" href="https://github.com/KempnerInstitute/distributed-inference-vllm/blob/main/README_Llama3.1.md">Llama 3.1 Deployment</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Llama 3.1</p></td>
+<td><p>405B</p></td>
+<td><p><a class="reference external" href="https://huggingface.co/meta-llama/Llama-3.1-405B">HF Link</a></p></td>
+<td><p><a class="reference external" href="https://github.com/KempnerInstitute/distributed-inference-vllm/blob/main/README_Llama3.1.md">Llama 3.1 Deployment</a></p></td>
+</tr>
+<tr class="row-even"><td><p>DeepSeek-R1</p></td>
+<td><p>671B</p></td>
+<td><p><a class="reference external" href="https://huggingface.co/deepseek-ai/DeepSeek-R1">HF Link</a></p></td>
+<td><p><a class="reference external" href="https://github.com/KempnerInstitute/distributed-inference-vllm/blob/main/README_DeepSeekR1.md">DeepSeek-R1 Deployment</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>DeepSeek-R1-0528</p></td>
+<td><p>671B</p></td>
+<td><p><a class="reference external" href="https://huggingface.co/deepseek-ai/DeepSeek-R1-0528">HF Link</a></p></td>
+<td><p><a class="reference external" href="https://github.com/KempnerInstitute/distributed-inference-vllm/blob/main/README_DeepSeekR1-0528.md">DeepSeek-R1-0528 Deployment</a></p></td>
+</tr>
+</tbody>
+</table>
 </div>
-<p>This error is due to the fact that you are trying to use <code class="docutils literal notranslate"><span class="pre">https</span></code> instead of <code class="docutils literal notranslate"><span class="pre">ssh</span></code>. You can change the remote url to <code class="docutils literal notranslate"><span class="pre">ssh</span></code> by running the following command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>remote<span class="w"> </span>set-url<span class="w"> </span>origin<span class="w"> </span>git@github.com:<span class="o">[</span>Github<span class="w"> </span>account<span class="o">]</span>/<span class="o">[</span>Github<span class="w"> </span>repository<span class="o">]</span>.git
-</pre></div>
-</div>
-<p>Replace <code class="docutils literal notranslate"><span class="pre">[Github</span> <span class="pre">account]</span></code> with your github account and <code class="docutils literal notranslate"><span class="pre">[Github</span> <span class="pre">repository]</span></code> with the repository you are trying to push to.</p>
-</li>
-</ol>
+<p>Each model’s deployment page includes:</p>
+<ul class="simple">
+<li><p>Instructions for launching vLLM with multi-GPU settings.</p></li>
+<li><p>Example configurations for PP and/or TP.</p></li>
+<li><p>Tips for optimizing throughput and latency.</p></li>
+</ul>
+</section>
+<section id="best-practices">
+<h2><span class="section-number">12.3. </span>Best Practices<a class="headerlink" href="#best-practices" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Use a fast interconnect between GPUs or nodes (e.g., NVLink, InfiniBand).</p></li>
+<li><p>Fine-tune the balance between PP and TP for your hardware.</p></li>
+<li><p>Monitor memory usage and load balancing to avoid bottlenecks.</p></li>
+</ul>
+<p>For full source code, documentation, and additional details, visit the GitHub repository.</p>
+<p>GitHub Repository: <a class="reference external" href="https://github.com/KempnerInstitute/distributed-inference-vllm">KempnerInstitute/distributed-inference-vllm</a></p>
+<blockquote>
+<div><p>[!NOTE]
+Stay up to date with the repository for new model support and configuration guides.</p>
+</div></blockquote>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -542,7 +588,7 @@ Username<span class="w"> </span><span class="k">for</span><span class="w"> </spa
         },
         kernelOptions: {
             name: "python3",
-            path: "./s8_support"
+            path: "./s3_ai_workflows"
         },
         predefinedOutput: true
     }
@@ -560,20 +606,20 @@ Username<span class="w"> </span><span class="k">for</span><span class="w"> </spa
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="README.html"
+       href="testbed_and_tatm.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">22. </span>Support and Troubleshooting</p>
+        <p class="prev-next-title"><span class="section-number">11. </span>Data Discovery and Tokenization</p>
       </div>
     </a>
     <a class="right-next"
-       href="../s9_workshops_and_trainings/README.html"
+       href="nemo_workflow.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">23. </span>About Workshops &#64; Kempner</p>
+        <p class="prev-next-title"><span class="section-number">13. </span>NVIDIA NeMo Workflow</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -583,6 +629,23 @@ Username<span class="w"> </span><span class="k">for</span><span class="w"> </spa
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">12.1. Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-models">12.2. Supported Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices">12.3. Best Practices</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
