@@ -67,5 +67,6 @@ To use these workflows, ensure the following:
 |------|---------------|------------|----------------|
 | DPO  | [dpo_llama3-8b](https://github.com/KempnerInstitute/nvidia-nemo-workflows/tree/main/RL/DPO/llama3-8b) | [Meta-Llama-3-8B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct) | email response |
 
-> [!NOTE]
-> Follow this repository for regular updates on workflow instructions for the latest training, fine-tuning, and RL workflows on AI clusters.
+```{note}
+Follow this repository for regular updates on workflow instructions for the latest training, fine-tuning, and RL workflows on AI clusters.
+```

@@ -15,8 +15,8 @@ These workflows are tailored for high-performance computing environments like th
 
 | Workflow                                                                                                                     | Model     | Dataset     | Max Tested GPUs  | Tags          |
 | -----------------------------------------------------------------------------------------------------------------------------|-----------| ----------- | -----------------|---------------|
-| [imagenet1k_resnet50](https://github.com/KempnerInstitute/scalable-vision-workflows/tree/main/workflows/imagenet1k_resnet50) | ResNet-50 | ImageNet-1k | 64               | `A100`, `DDP` |
-| [imagenet1k_alexnet](https://github.com/KempnerInstitute/scalable-vision-workflows/tree/main/workflows/imagenet1k_alexnet)   | AlexNet   | ImageNet-1k | 4                | `A100`, `DDP` |
+| [imagenet1k_resnet50](https://github.com/KempnerInstitute/scalable-vision-workflows/tree/main/imagenet1k_resnet50) | ResNet-50 | ImageNet-1k | 64               | `A100`, `DDP` |
+| [imagenet1k_alexnet](https://github.com/KempnerInstitute/scalable-vision-workflows/tree/main/imagenet1k_alexnet)   | AlexNet   | ImageNet-1k | 4                | `A100`, `DDP` |
 
 These examples demonstrate scalable and reproducible model training setups that can be extended or customized for your research.
 

@@ -38,5 +38,6 @@ For full source code, documentation, and additional details, visit the GitHub re
 
 GitHub Repository: [KempnerInstitute/distributed-inference-vllm](https://github.com/KempnerInstitute/distributed-inference-vllm)
 
-> [!NOTE]
-> Stay up to date with the repository for new model support and configuration guides.
+```{note}
+Stay up to date with the repository for new model support and configuration guides.
+```
