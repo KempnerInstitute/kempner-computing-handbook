@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>15.5. Distributed GPU Computing &#8212; Kempner Institute Computing Handbook</title>
+    <title>16.5. Distributed GPU Computing &#8212; Kempner Institute Computing Handbook</title>
   
   
   
@@ -77,8 +77,8 @@
     <script src="../../_static/custom.js?v=ba1c093d"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="15.6. Parallel I/O" href="parallel_io.html" />
-    <link rel="prev" title="15.4. GPU Profiling" href="gpu_profiling.html" />
+    <link rel="next" title="16.6. Parallel I/O" href="parallel_io.html" />
+    <link rel="prev" title="16.4. GPU Profiling" href="gpu_profiling.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -244,56 +244,57 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">AI Tools and Workflows</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../s3_ai_workflows/testbed_and_tatm.html">11. Data Discovery and Tokenization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../s3_ai_workflows/scalable_vision_workflows.html">12. Scalable Vision Workflows</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../s3_ai_workflows/get_hf_model.html">13. Hugging Face Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../s3_ai_workflows/nemo_workflow.html">12. NVIDIA NeMo Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../s3_ai_workflows/scalable_vision_workflows.html">13. Scalable Vision Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../s3_ai_workflows/get_hf_model.html">14. Hugging Face Models</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Neuro AI Workflows</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../s4_neuro_ai_workflows/spike_sorting.html">14. Spike Sorting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../s4_neuro_ai_workflows/spike_sorting.html">15. Spike Sorting</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">AI Scaling and Engineering</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="README.html">15. Scalability</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="distributed_computing.html">15.1. Distributed Computing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="introduction_to_parallel_computing.html">15.2. Intro to Parallel Computing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gpu_computing.html">15.3. GPU Computing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gpu_profiling.html">15.4. GPU Profiling</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">15.5. Distributed GPU Computing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="parallel_io.html">15.6. Parallel I/O</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="README.html">16. Scalability</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="distributed_computing.html">16.1. Distributed Computing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction_to_parallel_computing.html">16.2. Intro to Parallel Computing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gpu_computing.html">16.3. GPU Computing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gpu_profiling.html">16.4. GPU Profiling</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">16.5. Distributed GPU Computing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parallel_io.html">16.6. Parallel I/O</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../efficiency/README.html">16. Efficiency</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../efficiency/ml_scaling_and_efficiency.html">16.1. ML Efficiency</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../efficiency/performance_monitoring_and_optimization.html">16.2. Peformance Monitoring</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../efficiency/efficient_deployment_and_inference.html">16.3. Deployment and Inference</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../efficiency/experiment_management_and_reproducibility.html">16.4. Experiment Management</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../efficiency/README.html">17. Efficiency</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../efficiency/ml_scaling_and_efficiency.html">17.1. ML Efficiency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../efficiency/performance_monitoring_and_optimization.html">17.2. Peformance Monitoring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../efficiency/efficient_deployment_and_inference.html">17.3. Deployment and Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../efficiency/experiment_management_and_reproducibility.html">17.4. Experiment Management</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../experiment_management/README.html">17. Experiment Management</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../experiment_management/logging_and_monitoring.html">17.1. Weights &amp; Biases (WandB)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../experiment_management/README.html">18. Experiment Management</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../experiment_management/logging_and_monitoring.html">18.1. Weights &amp; Biases (WandB)</a></li>
 </ul>
 </details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Security and Compliance</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../s6_security_and_compliance/README.html">18. Security and Compliance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../s6_security_and_compliance/README.html">19. Security and Compliance</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Open Source Hub</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../s7_open_source_hub/README.html">19. Open Source Hub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../s7_open_source_hub/README.html">20. Open Source Hub</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Support</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../s8_support/README.html">20. Support and Troubleshooting</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../s8_support/faq.html">20.1. FAQ</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../s8_support/README.html">21. Support and Troubleshooting</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../s8_support/faq.html">21.1. FAQ</a></li>
 </ul>
 </details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Workshops</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../s9_workshops_and_trainings/README.html">21. About Workshops @ Kempner</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../s9_workshops_and_trainings/intro_to_kempner_ai_cluster/intro_to_kempner_ai_cluster.html">21.2. Introduction to the Kempner AI cluster Workshop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../s9_workshops_and_trainings/intro_to_distributed_computing/intro_to_distributed_computing.html">21.3. Introduction to Distributed Computing Workshop</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../s9_workshops_and_trainings/README.html">22. About Workshops @ Kempner</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../s9_workshops_and_trainings/intro_to_kempner_ai_cluster/intro_to_kempner_ai_cluster.html">22.2. Introduction to the Kempner AI cluster Workshop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s9_workshops_and_trainings/intro_to_distributed_computing/intro_to_distributed_computing.html">22.3. Introduction to Distributed Computing Workshop</a></li>
 </ul>
 </details></li>
 </ul>
@@ -491,17 +492,17 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inter-gpu-communication">15.5.1. Inter GPU Communication</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nvidia-collective-communication-library-nccl">15.5.1.1. NVIDIA Collective Communication Library (NCCL)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inter-gpu-communication">16.5.1. Inter GPU Communication</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nvidia-collective-communication-library-nccl">16.5.1.1. NVIDIA Collective Communication Library (NCCL)</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distributed-training-strategies">15.5.2. Distributed Training Strategies</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-mlp-network">15.5.2.1. Simple MLP Network</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distributed-data-parallelism-ddp">15.5.2.2. Distributed Data Parallelism (DDP)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-parallelism-mp">15.5.2.3. Model Parallelism (MP)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline-parallelism-pp">15.5.2.4. Pipeline Parallelism (PP)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tensor-parallelism-tp">15.5.2.5. Tensor Parallelism (TP)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fully-sharded-data-parallelism-fsdp">15.5.2.6. Fully Sharded Data Parallelism (FSDP)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distributed-training-strategies">16.5.2. Distributed Training Strategies</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-mlp-network">16.5.2.1. Simple MLP Network</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distributed-data-parallelism-ddp">16.5.2.2. Distributed Data Parallelism (DDP)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-parallelism-mp">16.5.2.3. Model Parallelism (MP)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline-parallelism-pp">16.5.2.4. Pipeline Parallelism (PP)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tensor-parallelism-tp">16.5.2.5. Tensor Parallelism (TP)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fully-sharded-data-parallelism-fsdp">16.5.2.6. Fully Sharded Data Parallelism (FSDP)</a></li>
 </ul>
 </li>
 </ul>
@@ -516,7 +517,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="distributed-gpu-computing">
-<h1><span class="section-number">15.5. </span>Distributed GPU Computing<a class="headerlink" href="#distributed-gpu-computing" title="Link to this heading">#</a></h1>
+<h1><span class="section-number">16.5. </span>Distributed GPU Computing<a class="headerlink" href="#distributed-gpu-computing" title="Link to this heading">#</a></h1>
 <p>The scaling of machine learning (ML) workloads in HPC environments can be achieved through various parallelism approaches. This section outlines the primary methods for parallelizing ML computations.</p>
 <p>One can decide to use multiple GPUs on their AI/ML applications for different reasons including but not limited to:</p>
 <ul class="simple">
@@ -525,10 +526,10 @@ document.write(`
 <li><p>Train/inferece large-scale Model that does not fit into the memory of a single GPU.</p></li>
 </ul>
 <section id="inter-gpu-communication">
-<h2><span class="section-number">15.5.1. </span>Inter GPU Communication<a class="headerlink" href="#inter-gpu-communication" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">16.5.1. </span>Inter GPU Communication<a class="headerlink" href="#inter-gpu-communication" title="Link to this heading">#</a></h2>
 <p>In majority of use-cases of multi-GPU computation there is the need for different GPU to communicate and send their partail computation to one another to sync. NCCL libarary from NVIDIA is widely in use for NIVIDA based GPU communication.</p>
 <section id="nvidia-collective-communication-library-nccl">
-<span id="sec-nccl"></span><h3><span class="section-number">15.5.1.1. </span>NVIDIA Collective Communication Library (NCCL)<a class="headerlink" href="#nvidia-collective-communication-library-nccl" title="Link to this heading">#</a></h3>
+<span id="sec-nccl"></span><h3><span class="section-number">16.5.1.1. </span>NVIDIA Collective Communication Library (NCCL)<a class="headerlink" href="#nvidia-collective-communication-library-nccl" title="Link to this heading">#</a></h3>
 <p>For multi-GPU and multi-node communication, NVIDIA Collective Communication Library (NCCL, pronounced “Nickel”) is being used as backend in distributed strategies for Nvidia GPUs such as Distributed Data Parallel (DDP) and Fully Sharded Data Parallel (FSDP). Following are some of the most related NCCL collective communication primitives :</p>
 <ul class="simple">
 <li><p>Scatter: From one rank, data will be distributed across all rank, with each rank receiving a subpart of the data.</p></li>
@@ -548,7 +549,7 @@ document.write(`
 <p>Each process in the multi-process applications is called a rank. Usually each process has its own exclusive device. Therefore you can think of each rank as one GPU in the following diagrams.</p>
 </div>
 <div class="pst-scrollable-table-container"><table class="table" id="id1">
-<caption><span class="caption-number">Table 15.1 </span><span class="caption-text">Inter-GPU Collective Communication Primitives.</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
+<caption><span class="caption-number">Table 16.1 </span><span class="caption-text">Inter-GPU Collective Communication Primitives.</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
 <tbody>
 <tr class="row-odd"><td><p><img alt="" src="../../_images/nccl_scatter.png" /></p></td>
 <td><p><img alt="" src="../../_images/nccl_gather.png" /></p></td>
@@ -565,57 +566,57 @@ document.write(`
 </section>
 </section>
 <section id="distributed-training-strategies">
-<h2><span class="section-number">15.5.2. </span>Distributed Training Strategies<a class="headerlink" href="#distributed-training-strategies" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">16.5.2. </span>Distributed Training Strategies<a class="headerlink" href="#distributed-training-strategies" title="Link to this heading">#</a></h2>
 <section id="simple-mlp-network">
-<h3><span class="section-number">15.5.2.1. </span>Simple MLP Network<a class="headerlink" href="#simple-mlp-network" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">16.5.2.1. </span>Simple MLP Network<a class="headerlink" href="#simple-mlp-network" title="Link to this heading">#</a></h3>
 <p>To go over the different distributed computing strategies that have been used widely in AI/ML community, let’s consider the following simple example.</p>
 <figure class="align-default" id="mlp-network">
 <a class="reference internal image-reference" href="../../_images/mlp_network.png"><img alt="../../_images/mlp_network.png" src="../../_images/mlp_network.png" style="width: 50%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 15.10 </span><span class="caption-text">A 2-Layer MLP Network.</span><a class="headerlink" href="#mlp-network" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 16.10 </span><span class="caption-text">A 2-Layer MLP Network.</span><a class="headerlink" href="#mlp-network" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#mlp-matrices"><span class="std std-numref">Fig. 15.11</span></a> shows the input, output of the above network as well as the weight and bias tensors of each layer in <a class="reference internal" href="#mlp-network"><span class="std std-numref">Fig. 15.10</span></a></p>
+<p><a class="reference internal" href="#mlp-matrices"><span class="std std-numref">Fig. 16.11</span></a> shows the input, output of the above network as well as the weight and bias tensors of each layer in <a class="reference internal" href="#mlp-network"><span class="std std-numref">Fig. 16.10</span></a></p>
 <figure class="align-default" id="mlp-matrices">
 <a class="reference internal image-reference" href="../../_images/mlp_matrices.png"><img alt="../../_images/mlp_matrices.png" src="../../_images/mlp_matrices.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 15.11 </span><span class="caption-text">Input, output, weight and bias matrices of the mlp model in <a class="reference internal" href="#mlp-network"><span class="std std-numref">Fig. 15.10</span></a>.</span><a class="headerlink" href="#mlp-matrices" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 16.11 </span><span class="caption-text">Input, output, weight and bias matrices of the mlp model in <a class="reference internal" href="#mlp-network"><span class="std std-numref">Fig. 16.10</span></a>.</span><a class="headerlink" href="#mlp-matrices" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <ul class="simple">
 <li><p>Forward Pass Computations</p></li>
 </ul>
 <div class="math notranslate nohighlight" id="forward-computation">
-<span id="equation-forward-computation"></span><span class="eqno">(15.1)<a class="headerlink" href="#forward-computation" title="Link to this equation">#</a></span>\[ \begin{align}\begin{aligned}h = xW_1 + b_1\\y' = hW_2 + b_2\end{aligned}\end{align} \]</div>
+<span id="equation-forward-computation"></span><span class="eqno">(16.1)<a class="headerlink" href="#forward-computation" title="Link to this equation">#</a></span>\[ \begin{align}\begin{aligned}h = xW_1 + b_1\\y' = hW_2 + b_2\end{aligned}\end{align} \]</div>
 <ul class="simple">
 <li><p>Loss Calculation</p></li>
 </ul>
 <div class="math notranslate nohighlight" id="loss-computation">
-<span id="equation-loss-computation"></span><span class="eqno">(15.2)<a class="headerlink" href="#loss-computation" title="Link to this equation">#</a></span>\[L = \frac{1}{2} (y' - y)^2\]</div>
+<span id="equation-loss-computation"></span><span class="eqno">(16.2)<a class="headerlink" href="#loss-computation" title="Link to this equation">#</a></span>\[L = \frac{1}{2} (y' - y)^2\]</div>
 <ul class="simple">
 <li><p>Backward Pass Computations</p></li>
 </ul>
 <div class="math notranslate nohighlight" id="backward-computation-dy">
-<span id="equation-backward-computation-dy"></span><span class="eqno">(15.3)<a class="headerlink" href="#backward-computation-dy" title="Link to this equation">#</a></span>\[\frac{dL}{dy'} = y' - y\]</div>
+<span id="equation-backward-computation-dy"></span><span class="eqno">(16.3)<a class="headerlink" href="#backward-computation-dy" title="Link to this equation">#</a></span>\[\frac{dL}{dy'} = y' - y\]</div>
 <div class="math notranslate nohighlight" id="backward-computation-layer2">
-<span id="equation-backward-computation-layer2"></span><span class="eqno">(15.4)<a class="headerlink" href="#backward-computation-layer2" title="Link to this equation">#</a></span>\[\begin{split}&amp;W_2.grad = \frac{dL}{dW_2} = \frac{dL}{dy'} . \frac{dy'}{dW_2} = (y' - y) . h^T \\
+<span id="equation-backward-computation-layer2"></span><span class="eqno">(16.4)<a class="headerlink" href="#backward-computation-layer2" title="Link to this equation">#</a></span>\[\begin{split}&amp;W_2.grad = \frac{dL}{dW_2} = \frac{dL}{dy'} . \frac{dy'}{dW_2} = (y' - y) . h^T \\
 &amp;b_2.grad = \frac{dL}{db_2} = \frac{dL}{dy'} . \frac{dy'}{db_2} = (y' - y)\end{split}\]</div>
 <div class="math notranslate nohighlight" id="backward-computation-dh">
-<span id="equation-backward-computation-dh"></span><span class="eqno">(15.5)<a class="headerlink" href="#backward-computation-dh" title="Link to this equation">#</a></span>\[\frac{dL}{dh} = \frac{dL}{dy'} . \frac{dy'}{dh} = (y' - y) . W_2\]</div>
+<span id="equation-backward-computation-dh"></span><span class="eqno">(16.5)<a class="headerlink" href="#backward-computation-dh" title="Link to this equation">#</a></span>\[\frac{dL}{dh} = \frac{dL}{dy'} . \frac{dy'}{dh} = (y' - y) . W_2\]</div>
 <div class="math notranslate nohighlight" id="backward-computation-layer1">
-<span id="equation-backward-computation-layer1"></span><span class="eqno">(15.6)<a class="headerlink" href="#backward-computation-layer1" title="Link to this equation">#</a></span>\[\begin{split}&amp;W_1.grad = \frac{dL}{dW_1} = \frac{dL}{dh} . \frac{dh}{dW_1} = [(y' - y) . W_2] . x^T \\
+<span id="equation-backward-computation-layer1"></span><span class="eqno">(16.6)<a class="headerlink" href="#backward-computation-layer1" title="Link to this equation">#</a></span>\[\begin{split}&amp;W_1.grad = \frac{dL}{dW_1} = \frac{dL}{dh} . \frac{dh}{dW_1} = [(y' - y) . W_2] . x^T \\
 &amp;b_1.grad = \frac{dL}{db_1} = \frac{dL}{dh} . \frac{dh}{db_1} = [(y' - y) . W_2] \end{split}\]</div>
 <ul class="simple">
 <li><p>Updating the Model</p></li>
 </ul>
 <div class="math notranslate nohighlight" id="update-computation">
-<span id="equation-update-computation"></span><span class="eqno">(15.7)<a class="headerlink" href="#update-computation" title="Link to this equation">#</a></span>\[\begin{split}&amp;W_i = W_i - \alpha . W_i.grad \\
+<span id="equation-update-computation"></span><span class="eqno">(16.7)<a class="headerlink" href="#update-computation" title="Link to this equation">#</a></span>\[\begin{split}&amp;W_i = W_i - \alpha . W_i.grad \\
 &amp;b_i = b_i - \alpha . b_i.grad \end{split}\]</div>
 <p>Corresponding single-GPU pytorch code for the above example would be the following code:</p>
 <div class="literal-block-wrapper docutils container" id="mlp-single-gpu">
-<div class="code-block-caption"><span class="caption-number">Listing 15.5 </span><span class="caption-text">mlp_single_gpu.py - Simple MLP example training loop. Note that it uses a random dataset with size of 1024 and batch size of 32.</span><a class="headerlink" href="#mlp-single-gpu" title="Link to this code">#</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 16.5 </span><span class="caption-text">mlp_single_gpu.py - Simple MLP example training loop. Note that it uses a random dataset with size of 1024 and batch size of 32.</span><a class="headerlink" href="#mlp-single-gpu" title="Link to this code">#</a></div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch.optim</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">optim</span>
@@ -691,7 +692,7 @@ document.write(`
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">RandomTensorDataset</span></code> will generate random tensors for the input as well as output label.</p>
 <div class="literal-block-wrapper docutils container" id="random-dataset">
-<div class="code-block-caption"><span class="caption-number">Listing 15.6 </span><span class="caption-text">random_dataset.py - Simple Random Dataset</span><a class="headerlink" href="#random-dataset" title="Link to this code">#</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 16.6 </span><span class="caption-text">random_dataset.py - Simple Random Dataset</span><a class="headerlink" href="#random-dataset" title="Link to this code">#</a></div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dataset</span>
 
@@ -714,7 +715,7 @@ document.write(`
 <span class="sd-summary-text">Run the above code on the AI cluster</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
 <p class="sd-card-text">If you don’t have a conda environment already in which PyTorch is installed, you need to create one.</p>
 <div class="literal-block-wrapper docutils container" id="conda-setup">
-<div class="code-block-caption"><span class="caption-number">Listing 15.7 </span><span class="caption-text">Conda Environment Setup</span><a class="headerlink" href="#conda-setup" title="Link to this code">#</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 16.7 </span><span class="caption-text">Conda Environment Setup</span><a class="headerlink" href="#conda-setup" title="Link to this code">#</a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating the conda envireonment named `dist_computing` (one can use their own customized name).</span>
 conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>dist_computing<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10
 
@@ -725,9 +726,9 @@ pip3<span class="w"> </span>install<span class="w"> </span>torch
 </div>
 </div>
 <p class="sd-card-text">The conda environment activation needs also be added to the slurm scripts.</p>
-<p class="sd-card-text">Now create <code class="docutils literal notranslate"><span class="pre">mlp_single_gpu.py</span></code> and <code class="docutils literal notranslate"><span class="pre">random_dataset.py</span></code> from <a class="reference internal" href="#mlp-single-gpu"><span class="std std-numref">Listing 15.5</span></a> and <a class="reference internal" href="#random-dataset"><span class="std std-numref">Listing 15.6</span></a> respectively and use the following slurm script to run it on the AI cluster.</p>
+<p class="sd-card-text">Now create <code class="docutils literal notranslate"><span class="pre">mlp_single_gpu.py</span></code> and <code class="docutils literal notranslate"><span class="pre">random_dataset.py</span></code> from <a class="reference internal" href="#mlp-single-gpu"><span class="std std-numref">Listing 16.5</span></a> and <a class="reference internal" href="#random-dataset"><span class="std std-numref">Listing 16.6</span></a> respectively and use the following slurm script to run it on the AI cluster.</p>
 <div class="literal-block-wrapper docutils container" id="single-gpu-slurm">
-<div class="code-block-caption"><span class="caption-number">Listing 15.8 </span><span class="caption-text">Slurm script skeleton to run the single-GPU mlp example.</span><a class="headerlink" href="#single-gpu-slurm" title="Link to this code">#</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 16.8 </span><span class="caption-text">Slurm script skeleton to run the single-GPU mlp example.</span><a class="headerlink" href="#single-gpu-slurm" title="Link to this code">#</a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#! /bin/bash</span>
 <span class="c1">#SBATCH --job-name=mlp-single-gpu</span>
 <span class="c1">#SBATCH --output=mlp.out</span>
@@ -751,36 +752,36 @@ python<span class="w"> </span>mlp_single_gpu.py
 </div>
 </details></section>
 <section id="distributed-data-parallelism-ddp">
-<h3><span class="section-number">15.5.2.2. </span>Distributed Data Parallelism (DDP)<a class="headerlink" href="#distributed-data-parallelism-ddp" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">16.5.2.2. </span>Distributed Data Parallelism (DDP)<a class="headerlink" href="#distributed-data-parallelism-ddp" title="Link to this heading">#</a></h3>
 <p>Distributed Data Parallelism facilitates training a model on high-volume datasets by distributing the computation across multiple devices. It involves splitting the dataset into smaller batches that are processed in parallel across different GPUs. Each GPU trains a copy of the model on its subset of the data, and the results are aggregated to update the model.</p>
-<p>Particularly, in each training step, GPUs perform forward and backward passes locally and compute the parameter gradients corresponding to their current data batch. Then before updating the model weights, GPUs communicate to sum the parameter gradients across GPUs. This guarantees the model replicas being kept consistent across GPUs before starting the next training step. This inter-GPU communication are optimized by All-Reduce collective communication primitive from NCCL library for Nvidia GPUs, see <a class="reference internal" href="#sec-nccl"><span class="std std-numref">Section 15.5.1.1</span></a>.</p>
-<p><a class="reference internal" href="#ddp"><span class="std std-numref">Fig. 15.12</span></a> shows a high-level overview of how DDP works.</p>
+<p>Particularly, in each training step, GPUs perform forward and backward passes locally and compute the parameter gradients corresponding to their current data batch. Then before updating the model weights, GPUs communicate to sum the parameter gradients across GPUs. This guarantees the model replicas being kept consistent across GPUs before starting the next training step. This inter-GPU communication are optimized by All-Reduce collective communication primitive from NCCL library for Nvidia GPUs, see <a class="reference internal" href="#sec-nccl"><span class="std std-numref">Section 16.5.1.1</span></a>.</p>
+<p><a class="reference internal" href="#ddp"><span class="std std-numref">Fig. 16.12</span></a> shows a high-level overview of how DDP works.</p>
 <figure class="align-default" id="ddp">
 <a class="reference internal image-reference" href="../../_images/DDP.png"><img alt="../../_images/DDP.png" src="../../_images/DDP.png" style="height: 500px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 15.12 </span><span class="caption-text">Schematic Diagram of DDP Computation, Communication and Their Potential Overlapp.</span><a class="headerlink" href="#ddp" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 16.12 </span><span class="caption-text">Schematic Diagram of DDP Computation, Communication and Their Potential Overlapp.</span><a class="headerlink" href="#ddp" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The limitation is that DDP requires all model parameters, gradients, and optimizer states to fit into the memory of a single GPU device.</p>
 </div>
-<p>Now let’s see how DDP applies on the above simple MLP example in <a class="reference internal" href="#mlp-single-gpu"><span class="std std-numref">Listing 15.5</span></a>.</p>
+<p>Now let’s see how DDP applies on the above simple MLP example in <a class="reference internal" href="#mlp-single-gpu"><span class="std std-numref">Listing 16.5</span></a>.</p>
 <figure class="align-default" id="mlp-ddp-figure">
 <a class="reference internal image-reference" href="../../_images/mlp_ddp.png"><img alt="../../_images/mlp_ddp.png" src="../../_images/mlp_ddp.png" style="width: 100%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 15.13 </span><span class="caption-text">DDP for the simple MLP example. For simplicity it does not show communication overlap.</span><a class="headerlink" href="#mlp-ddp-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 16.13 </span><span class="caption-text">DDP for the simple MLP example. For simplicity it does not show communication overlap.</span><a class="headerlink" href="#mlp-ddp-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#mlp-ddp-figure"><span class="std std-numref">Fig. 15.13</span></a> shows that each GPU take a copy of the model, both has the whole <span class="math notranslate nohighlight">\(W_1\)</span>, <span class="math notranslate nohighlight">\(b_1\)</span>, <span class="math notranslate nohighlight">\(W_2\)</span> and <span class="math notranslate nohighlight">\(b_2\)</span>. It shows the dataset is divided into two parts and each GPU sees only its own batches of the data perform the forward and backward passes locally. After each backward pass and before updating model, the GPUs needs to sync on gradients since each GPU compute their own gradiens for the model parameters based on the data batches that they process. The average of the parameter garaients across the GPUs are computed and synced across all GPUs using All-Reduce commpunication primitive, see <a class="reference internal" href="#sec-nccl"><span class="std std-numref">Section 15.5.1.1</span></a>. it guarantees the model on all GPUs are consistent before starting the next iteration.</p>
-<p>Next, we can take the single-GPU code of our simple mlp example from <a class="reference internal" href="#mlp-single-gpu"><span class="std std-numref">Listing 15.5</span></a> and modify to use two GPUs using DDP.</p>
+<p><a class="reference internal" href="#mlp-ddp-figure"><span class="std std-numref">Fig. 16.13</span></a> shows that each GPU take a copy of the model, both has the whole <span class="math notranslate nohighlight">\(W_1\)</span>, <span class="math notranslate nohighlight">\(b_1\)</span>, <span class="math notranslate nohighlight">\(W_2\)</span> and <span class="math notranslate nohighlight">\(b_2\)</span>. It shows the dataset is divided into two parts and each GPU sees only its own batches of the data perform the forward and backward passes locally. After each backward pass and before updating model, the GPUs needs to sync on gradients since each GPU compute their own gradiens for the model parameters based on the data batches that they process. The average of the parameter garaients across the GPUs are computed and synced across all GPUs using All-Reduce commpunication primitive, see <a class="reference internal" href="#sec-nccl"><span class="std std-numref">Section 16.5.1.1</span></a>. it guarantees the model on all GPUs are consistent before starting the next iteration.</p>
+<p>Next, we can take the single-GPU code of our simple mlp example from <a class="reference internal" href="#mlp-single-gpu"><span class="std std-numref">Listing 16.5</span></a> and modify to use two GPUs using DDP.</p>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
 <span class="sd-summary-text">Using DDP To Run The Simple MLP Example On Two GPUs</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
 <div class="literal-block-wrapper docutils container" id="mlp-ddp-code">
-<div class="code-block-caption"><span class="caption-number">Listing 15.9 </span><span class="caption-text">mlp_ddp.py - Modifying the simple mlp example, <a class="reference internal" href="#mlp-single-gpu"><span class="std std-numref">Listing 15.5</span></a>, to run on multiple GPUs using DDP</span><a class="headerlink" href="#mlp-ddp-code" title="Link to this code">#</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 16.9 </span><span class="caption-text">mlp_ddp.py - Modifying the simple mlp example, <a class="reference internal" href="#mlp-single-gpu"><span class="std std-numref">Listing 16.5</span></a>, to run on multiple GPUs using DDP</span><a class="headerlink" href="#mlp-ddp-code" title="Link to this code">#</a></div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch.optim</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">optim</span>
@@ -889,10 +890,10 @@ python<span class="w"> </span>mlp_single_gpu.py
 </pre></div>
 </div>
 </div>
-<p class="sd-card-text">To run this code we need the <code class="docutils literal notranslate"><span class="pre">random_sataset.py</span></code> from <a class="reference internal" href="#random-dataset"><span class="std std-numref">Listing 15.6</span></a> and a conda environment in which PyTorch is installed, refer to <a class="reference internal" href="#conda-setup"><span class="std std-numref">Listing 15.7</span></a> to create one if you don’t have one already.</p>
-<p class="sd-card-text">Now use the following slurm script skeleton to run the <code class="docutils literal notranslate"><span class="pre">mlp_ddp.py</span></code> from <a class="reference internal" href="#mlp-ddp-code"><span class="std std-numref">Listing 15.9</span></a>. Note that we need to add environment variables to specify the Master node info, rank, local rank, etc.</p>
+<p class="sd-card-text">To run this code we need the <code class="docutils literal notranslate"><span class="pre">random_sataset.py</span></code> from <a class="reference internal" href="#random-dataset"><span class="std std-numref">Listing 16.6</span></a> and a conda environment in which PyTorch is installed, refer to <a class="reference internal" href="#conda-setup"><span class="std std-numref">Listing 16.7</span></a> to create one if you don’t have one already.</p>
+<p class="sd-card-text">Now use the following slurm script skeleton to run the <code class="docutils literal notranslate"><span class="pre">mlp_ddp.py</span></code> from <a class="reference internal" href="#mlp-ddp-code"><span class="std std-numref">Listing 16.9</span></a>. Note that we need to add environment variables to specify the Master node info, rank, local rank, etc.</p>
 <div class="literal-block-wrapper docutils container" id="multi-gpu-slurm">
-<div class="code-block-caption"><span class="caption-number">Listing 15.10 </span><span class="caption-text">Slurm script skeleton to run <a class="reference internal" href="#mlp-ddp-code"><span class="std std-numref">Listing 15.9</span></a> on multiple GPUs. Here, it requests for two nodes, one GPU on each node, a total of two GPUs.</span><a class="headerlink" href="#multi-gpu-slurm" title="Link to this code">#</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 16.10 </span><span class="caption-text">Slurm script skeleton to run <a class="reference internal" href="#mlp-ddp-code"><span class="std std-numref">Listing 16.9</span></a> on multiple GPUs. Here, it requests for two nodes, one GPU on each node, a total of two GPUs.</span><a class="headerlink" href="#multi-gpu-slurm" title="Link to this code">#</a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#! /bin/bash</span>
 <span class="c1">#SBATCH --job-name=mlp_tp</span>
 <span class="c1">#SBATCH --output=tp.out</span>
@@ -925,23 +926,23 @@ srun<span class="w"> </span>--ntasks-per-node<span class="o">=</span><span class
 </div>
 </details></section>
 <section id="model-parallelism-mp">
-<h3><span class="section-number">15.5.2.3. </span>Model Parallelism (MP)<a class="headerlink" href="#model-parallelism-mp" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">16.5.2.3. </span>Model Parallelism (MP)<a class="headerlink" href="#model-parallelism-mp" title="Link to this heading">#</a></h3>
 <p>Although DDP can significantly accelerate the training process, it does not work for some use cases where the model is too large to fit into a single GPU. Unlike DDP, Model Parallelism focuses on parallelizing the model itself, rather than the data to support training the larger models.</p>
 <p>A naive implementation could be dividing the model vertically meaning that the layers of the model are divided into multiple groups consisting of one or more layers. Each GPU will hold one group. The forward and backward phase will be performed sequentially.</p>
-<p><a class="reference internal" href="#mlp-mp-figure"><span class="std std-numref">Fig. 15.14</span></a> shows the model parallelism of our simple mlp example.</p>
+<p><a class="reference internal" href="#mlp-mp-figure"><span class="std std-numref">Fig. 16.14</span></a> shows the model parallelism of our simple mlp example.</p>
 <figure class="align-default" id="mlp-mp-figure">
 <a class="reference internal image-reference" href="../../_images/mlp_mp.png"><img alt="../../_images/mlp_mp.png" src="../../_images/mlp_mp.png" style="width: 100%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 15.14 </span><span class="caption-text">Model Parallelism for the simple MLP example. Note since the output of one GPU is used as input of the next one, it results in a high GPU idle time.</span><a class="headerlink" href="#mlp-mp-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 16.14 </span><span class="caption-text">Model Parallelism for the simple MLP example. Note since the output of one GPU is used as input of the next one, it results in a high GPU idle time.</span><a class="headerlink" href="#mlp-mp-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
 <span class="sd-summary-text">Using MP To Run The Simple MLP Example On Two GPUs</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
-<p class="sd-card-text"><a class="reference internal" href="#mlp-mp-code"><span class="std std-numref">Listing 15.11</span></a> shows how to send each layer into different GPUs using <code class="docutils literal notranslate"><span class="pre">.to</span></code> method from <code class="docutils literal notranslate"><span class="pre">torch</span></code> module while defining different layers of the model. Note that the input data (<code class="docutils literal notranslate"><span class="pre">x</span></code>) should also be sent to proper devices accordingly in the forward function.</p>
+<p class="sd-card-text"><a class="reference internal" href="#mlp-mp-code"><span class="std std-numref">Listing 16.11</span></a> shows how to send each layer into different GPUs using <code class="docutils literal notranslate"><span class="pre">.to</span></code> method from <code class="docutils literal notranslate"><span class="pre">torch</span></code> module while defining different layers of the model. Note that the input data (<code class="docutils literal notranslate"><span class="pre">x</span></code>) should also be sent to proper devices accordingly in the forward function.</p>
 <div class="literal-block-wrapper docutils container" id="mlp-mp-code">
-<div class="code-block-caption"><span class="caption-number">Listing 15.11 </span><span class="caption-text">mlp_model_parallel.py - Modifying the simple mlp example, <a class="reference internal" href="#mlp-single-gpu"><span class="std std-numref">Listing 15.5</span></a>, to run on two GPUs on the same node using MP</span><a class="headerlink" href="#mlp-mp-code" title="Link to this code">#</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 16.11 </span><span class="caption-text">mlp_model_parallel.py - Modifying the simple mlp example, <a class="reference internal" href="#mlp-single-gpu"><span class="std std-numref">Listing 16.5</span></a>, to run on two GPUs on the same node using MP</span><a class="headerlink" href="#mlp-mp-code" title="Link to this code">#</a></div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch.optim</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">optim</span>
@@ -1012,11 +1013,11 @@ srun<span class="w"> </span>--ntasks-per-node<span class="o">=</span><span class
 </pre></div>
 </div>
 </div>
-<p class="sd-card-text">To run it you can just follow the same steps when running the single GPU <a class="reference internal" href="#mlp-single-gpu"><span class="std std-numref">Listing 15.5</span></a>. Note that it requires two available GPUs on the same node.</p>
+<p class="sd-card-text">To run it you can just follow the same steps when running the single GPU <a class="reference internal" href="#mlp-single-gpu"><span class="std std-numref">Listing 16.5</span></a>. Note that it requires two available GPUs on the same node.</p>
 </div>
-</details><p>As you see in <a class="reference internal" href="#mlp-mp-figure"><span class="std std-numref">Fig. 15.14</span></a>, the main drawback of this method is that at any given time only one of the GPUs are active and the other GPUs are idle leading to underutilization of the compute resources. Tensor Parallelism (sharding model horizontally) and Pipeline Parallelism are other forms of Model parallelism that aim to mitigate this drawback.</p>
+</details><p>As you see in <a class="reference internal" href="#mlp-mp-figure"><span class="std std-numref">Fig. 16.14</span></a>, the main drawback of this method is that at any given time only one of the GPUs are active and the other GPUs are idle leading to underutilization of the compute resources. Tensor Parallelism (sharding model horizontally) and Pipeline Parallelism are other forms of Model parallelism that aim to mitigate this drawback.</p>
 <div class="pst-scrollable-table-container"><table class="table" id="id2">
-<caption><span class="caption-number">Table 15.2 </span><span class="caption-text">Model Partitioned Into Two GPUs Using Pipeline Parallelism (left) vs Tensor Prallelism (right).</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
+<caption><span class="caption-number">Table 16.2 </span><span class="caption-text">Model Partitioned Into Two GPUs Using Pipeline Parallelism (left) vs Tensor Prallelism (right).</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
 <tbody>
 <tr class="row-odd"><td><p><img alt="" src="../../_images/mlp_network_mp.png" /></p></td>
 <td><p><img alt="" src="../../_images/mlp_network_tp.png" /></p></td>
@@ -1026,25 +1027,25 @@ srun<span class="w"> </span>--ntasks-per-node<span class="o">=</span><span class
 </div>
 </section>
 <section id="pipeline-parallelism-pp">
-<h3><span class="section-number">15.5.2.4. </span>Pipeline Parallelism (PP)<a class="headerlink" href="#pipeline-parallelism-pp" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">16.5.2.4. </span>Pipeline Parallelism (PP)<a class="headerlink" href="#pipeline-parallelism-pp" title="Link to this heading">#</a></h3>
 <p>It is very similar to the naive model parallelism while it combines aspects of data and model parallelism by splitting the model into stages that are processed in a pipeline fashion to mitigate the GPU idle time issue in model prallelism. Each stage of the model is processed on different GPU, allowing for efficient parallel processing of large models and datasets.</p>
 </section>
 <section id="tensor-parallelism-tp">
-<h3><span class="section-number">15.5.2.5. </span>Tensor Parallelism (TP)<a class="headerlink" href="#tensor-parallelism-tp" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">16.5.2.5. </span>Tensor Parallelism (TP)<a class="headerlink" href="#tensor-parallelism-tp" title="Link to this heading">#</a></h3>
 <p>Tensor Parallelism is a form of Model Parallelism in which we divide the parameter tensors of each layer into slices and each GPU will hold one slice instead of putting the entire layer in one GPU. In this way each GPU participates in computation of every layer equally and does not have to be idle and waiting for other GPUs to perform previous layers’ computation.</p>
-<p><a class="reference internal" href="#mlp-tp-figure"><span class="std std-numref">Fig. 15.15</span></a> shows the model parallelism of our simple mlp example.</p>
+<p><a class="reference internal" href="#mlp-tp-figure"><span class="std std-numref">Fig. 16.15</span></a> shows the model parallelism of our simple mlp example.</p>
 <figure class="align-default" id="mlp-tp-figure">
 <a class="reference internal image-reference" href="../../_images/mlp_tp.png"><img alt="../../_images/mlp_tp.png" src="../../_images/mlp_tp.png" style="width: 100%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 15.15 </span><span class="caption-text">Tensor Parallelism for the simple MLP example. In this example each tensor is divided into two slices column-wise. Each GPU computing a part of the output and then communication needed to gather the partail compuation across GPUs.</span><a class="headerlink" href="#mlp-tp-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 16.15 </span><span class="caption-text">Tensor Parallelism for the simple MLP example. In this example each tensor is divided into two slices column-wise. Each GPU computing a part of the output and then communication needed to gather the partail compuation across GPUs.</span><a class="headerlink" href="#mlp-tp-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
 <span class="sd-summary-text">Using TP To Run The Simple MLP Example On Two GPUs</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
 <div class="literal-block-wrapper docutils container" id="mlp-tp-code">
-<div class="code-block-caption"><span class="caption-number">Listing 15.12 </span><span class="caption-text">mlp_tensor_parallel.py - Modifying the simple mlp example, <a class="reference internal" href="#mlp-single-gpu"><span class="std std-numref">Listing 15.5</span></a>, to run on multiple GPUs using TP</span><a class="headerlink" href="#mlp-tp-code" title="Link to this code">#</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 16.12 </span><span class="caption-text">mlp_tensor_parallel.py - Modifying the simple mlp example, <a class="reference internal" href="#mlp-single-gpu"><span class="std std-numref">Listing 16.5</span></a>, to run on multiple GPUs using TP</span><a class="headerlink" href="#mlp-tp-code" title="Link to this code">#</a></div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch.optim</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">optim</span>
@@ -1163,29 +1164,29 @@ srun<span class="w"> </span>--ntasks-per-node<span class="o">=</span><span class
 </pre></div>
 </div>
 </div>
-<p class="sd-card-text">To run this code we need the <code class="docutils literal notranslate"><span class="pre">random_sataset.py</span></code> from <a class="reference internal" href="#random-dataset"><span class="std std-numref">Listing 15.6</span></a> and a conda environment in which PyTorch is installed, refer to <a class="reference internal" href="#conda-setup"><span class="std std-numref">Listing 15.7</span></a> to create one if you don’t have one already.</p>
-<p class="sd-card-text">Now use the same slurm script skeleton in <a class="reference internal" href="#multi-gpu-slurm"><span class="std std-numref">Listing 15.10</span></a> to run the <code class="docutils literal notranslate"><span class="pre">mlp_tensor_parallel.py</span></code> from <a class="reference internal" href="#mlp-tp-code"><span class="std std-numref">Listing 15.12</span></a>.</p>
+<p class="sd-card-text">To run this code we need the <code class="docutils literal notranslate"><span class="pre">random_sataset.py</span></code> from <a class="reference internal" href="#random-dataset"><span class="std std-numref">Listing 16.6</span></a> and a conda environment in which PyTorch is installed, refer to <a class="reference internal" href="#conda-setup"><span class="std std-numref">Listing 16.7</span></a> to create one if you don’t have one already.</p>
+<p class="sd-card-text">Now use the same slurm script skeleton in <a class="reference internal" href="#multi-gpu-slurm"><span class="std std-numref">Listing 16.10</span></a> to run the <code class="docutils literal notranslate"><span class="pre">mlp_tensor_parallel.py</span></code> from <a class="reference internal" href="#mlp-tp-code"><span class="std std-numref">Listing 16.12</span></a>.</p>
 </div>
 </details></section>
 <section id="fully-sharded-data-parallelism-fsdp">
-<h3><span class="section-number">15.5.2.6. </span>Fully Sharded Data Parallelism (FSDP)<a class="headerlink" href="#fully-sharded-data-parallelism-fsdp" title="Link to this heading">#</a></h3>
-<p>The idea of this strategy is to shards almost everything across GPUs to enable distributed training for very large models. FSDP shards the model (parameters and gradients), data and optimization states across GPUs. It combines Data Parallelism with Model Parallelism (sharding model both Vertically and Horizontally) in a unique way. FSDP breaks down a model instance into smaller units and then flattens and shards all of the parameters within each unit. It allows to train very large models using the combined memory of many GPUs. Before each computation, it requires to first gather all the paramater shards across GPUs (aka, parameter unsharding) using <code class="docutils literal notranslate"><span class="pre">All-Gather</span></code> and <code class="docutils literal notranslate"><span class="pre">Reduce_Scatter</span></code> collective communication primitives, see <a class="reference internal" href="#sec-nccl"><span class="std std-numref">Section 15.5.1.1</span></a>.</p>
+<h3><span class="section-number">16.5.2.6. </span>Fully Sharded Data Parallelism (FSDP)<a class="headerlink" href="#fully-sharded-data-parallelism-fsdp" title="Link to this heading">#</a></h3>
+<p>The idea of this strategy is to shards almost everything across GPUs to enable distributed training for very large models. FSDP shards the model (parameters and gradients), data and optimization states across GPUs. It combines Data Parallelism with Model Parallelism (sharding model both Vertically and Horizontally) in a unique way. FSDP breaks down a model instance into smaller units and then flattens and shards all of the parameters within each unit. It allows to train very large models using the combined memory of many GPUs. Before each computation, it requires to first gather all the paramater shards across GPUs (aka, parameter unsharding) using <code class="docutils literal notranslate"><span class="pre">All-Gather</span></code> and <code class="docutils literal notranslate"><span class="pre">Reduce_Scatter</span></code> collective communication primitives, see <a class="reference internal" href="#sec-nccl"><span class="std std-numref">Section 16.5.1.1</span></a>.</p>
 <figure class="align-default" id="fsdp">
 <a class="reference internal image-reference" href="../../_images/FSDP.png"><img alt="../../_images/FSDP.png" src="../../_images/FSDP.png" style="height: 500px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 15.16 </span><span class="caption-text">Schematic Diagram of FSDP Computation, Communication and Their Potential Overlapp.</span><a class="headerlink" href="#fsdp" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 16.16 </span><span class="caption-text">Schematic Diagram of FSDP Computation, Communication and Their Potential Overlapp.</span><a class="headerlink" href="#fsdp" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>As <a class="reference internal" href="#fsdp"><span class="std std-numref">Fig. 15.16</span></a> shows - Before performing each Forward or Backward pass for a given FSDP unit, it has to first All-Gather the unit’s parameters from all GPUs and then perform the Forward or Backward pass. Afterward it will release the remote shards to free memory for the next unit <code class="docutils literal notranslate"><span class="pre">All-Gather</span></code>.</p>
+<p>As <a class="reference internal" href="#fsdp"><span class="std std-numref">Fig. 16.16</span></a> shows - Before performing each Forward or Backward pass for a given FSDP unit, it has to first All-Gather the unit’s parameters from all GPUs and then perform the Forward or Backward pass. Afterward it will release the remote shards to free memory for the next unit <code class="docutils literal notranslate"><span class="pre">All-Gather</span></code>.</p>
 <p>Since each GPU is working with different data batches, after the backward pass and before updating the model parameters, FSDP synchronizes the gradients across GPUs for consistency using <code class="docutils literal notranslate"><span class="pre">Reduce-Scatter</span></code> collective primitive.</p>
-<p>FSDP’s sharding method is optimized for collective communication primitives. For each FSDP unit, it flattens all the parameters into a 1D array format and then equally divides them across GPUs. <a class="reference internal" href="#mlp-fsdp-figure"><span class="std std-numref">Fig. 15.17</span></a> shows how fsdp can be applied on our simple mlp example of <a class="reference internal" href="#mlp-single-gpu"><span class="std std-numref">Listing 15.5</span></a>.</p>
-<p><a class="reference internal" href="#mlp-tp-figure"><span class="std std-numref">Fig. 15.15</span></a> shows the model parallelism of our simple mlp example.</p>
+<p>FSDP’s sharding method is optimized for collective communication primitives. For each FSDP unit, it flattens all the parameters into a 1D array format and then equally divides them across GPUs. <a class="reference internal" href="#mlp-fsdp-figure"><span class="std std-numref">Fig. 16.17</span></a> shows how fsdp can be applied on our simple mlp example of <a class="reference internal" href="#mlp-single-gpu"><span class="std std-numref">Listing 16.5</span></a>.</p>
+<p><a class="reference internal" href="#mlp-tp-figure"><span class="std std-numref">Fig. 16.15</span></a> shows the model parallelism of our simple mlp example.</p>
 <figure class="align-default" id="mlp-fsdp-figure">
 <a class="reference internal image-reference" href="../../_images/mlp_fsdp.png"><img alt="../../_images/mlp_fsdp.png" src="../../_images/mlp_fsdp.png" style="width: 100%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 15.17 </span><span class="caption-text">FSDP implementation for the simple MLP example.</span><a class="headerlink" href="#mlp-fsdp-figure" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 16.17 </span><span class="caption-text">FSDP implementation for the simple MLP example.</span><a class="headerlink" href="#mlp-fsdp-figure" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -1228,7 +1229,7 @@ srun<span class="w"> </span>--ntasks-per-node<span class="o">=</span><span class
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">15.4. </span>GPU Profiling</p>
+        <p class="prev-next-title"><span class="section-number">16.4. </span>GPU Profiling</p>
       </div>
     </a>
     <a class="right-next"
@@ -1236,7 +1237,7 @@ srun<span class="w"> </span>--ntasks-per-node<span class="o">=</span><span class
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">15.6. </span>Parallel I/O</p>
+        <p class="prev-next-title"><span class="section-number">16.6. </span>Parallel I/O</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1256,17 +1257,17 @@ srun<span class="w"> </span>--ntasks-per-node<span class="o">=</span><span class
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inter-gpu-communication">15.5.1. Inter GPU Communication</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nvidia-collective-communication-library-nccl">15.5.1.1. NVIDIA Collective Communication Library (NCCL)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inter-gpu-communication">16.5.1. Inter GPU Communication</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nvidia-collective-communication-library-nccl">16.5.1.1. NVIDIA Collective Communication Library (NCCL)</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distributed-training-strategies">15.5.2. Distributed Training Strategies</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-mlp-network">15.5.2.1. Simple MLP Network</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distributed-data-parallelism-ddp">15.5.2.2. Distributed Data Parallelism (DDP)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-parallelism-mp">15.5.2.3. Model Parallelism (MP)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline-parallelism-pp">15.5.2.4. Pipeline Parallelism (PP)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tensor-parallelism-tp">15.5.2.5. Tensor Parallelism (TP)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fully-sharded-data-parallelism-fsdp">15.5.2.6. Fully Sharded Data Parallelism (FSDP)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distributed-training-strategies">16.5.2. Distributed Training Strategies</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-mlp-network">16.5.2.1. Simple MLP Network</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distributed-data-parallelism-ddp">16.5.2.2. Distributed Data Parallelism (DDP)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-parallelism-mp">16.5.2.3. Model Parallelism (MP)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline-parallelism-pp">16.5.2.4. Pipeline Parallelism (PP)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tensor-parallelism-tp">16.5.2.5. Tensor Parallelism (TP)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fully-sharded-data-parallelism-fsdp">16.5.2.6. Fully Sharded Data Parallelism (FSDP)</a></li>
 </ul>
 </li>
 </ul>
