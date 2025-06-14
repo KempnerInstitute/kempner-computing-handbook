@@ -82,6 +82,7 @@ parts:
     - file: s5_ai_scaling_and_engineering/experiment_management/README
       sections:
       - file: s5_ai_scaling_and_engineering/experiment_management/logging_and_monitoring
+      - file: s5_ai_scaling_and_engineering/experiment_management/wandb_sweeps
   - caption: Security and Compliance
     numbered: true
     chapters:
