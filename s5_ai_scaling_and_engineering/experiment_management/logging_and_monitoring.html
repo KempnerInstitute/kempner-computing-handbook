@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>19.1. Weights &amp; Biases (WandB) &#8212; Kempner Institute Computing Handbook</title>
+    <title>19.1. Weights &amp; Biases - Intro &#8212; Kempner Institute Computing Handbook</title>
   
   
   
@@ -75,7 +75,7 @@
     <script src="../../_static/custom.js?v=ba1c093d"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="20. Security and Compliance" href="../../s6_security_and_compliance/README.html" />
+    <link rel="next" title="19.2. Weights &amp; Biases - Sweeps" href="wandb_sweeps.html" />
     <link rel="prev" title="19. Experiment Management" href="README.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -270,7 +270,8 @@
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="README.html">19. Experiment Management</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">19.1. Weights &amp; Biases (WandB)</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">19.1. Weights &amp; Biases - Intro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wandb_sweeps.html">19.2. Weights &amp; Biases - Sweeps</a></li>
 </ul>
 </details></li>
 </ul>
@@ -481,7 +482,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Weights & Biases (WandB)</h1>
+    <h1>Weights & Biases - Intro</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -491,11 +492,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wandb">19.1.1. Wandb</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#logging-in">19.1.1.1. Logging In</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-tracking">19.1.1.2. Simple Tracking</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">19.1.1. Getting Started</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#authentication">19.1.2. Authentication</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-tracking">19.1.3. Simple Tracking</a></li>
 </ul>
             </nav>
         </div>
@@ -507,19 +506,20 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="weights-biases-wandb">
-<h1><span class="section-number">19.1. </span>Weights &amp; Biases (WandB)<a class="headerlink" href="#weights-biases-wandb" title="Link to this heading">#</a></h1>
-<section id="wandb">
-<span id="wandb-section"></span><h2><span class="section-number">19.1.1. </span>Wandb<a class="headerlink" href="#wandb" title="Link to this heading">#</a></h2>
-<p>Weights &amp; Biases (W&amp;B) is a platform designed to streamline experiment tracking and visualization, enabling effective collaboration on large teams. Weights and Biases gives researchers great flexibility in deciding what metrics to log.</p>
-<section id="logging-in">
-<h3><span class="section-number">19.1.1.1. </span>Logging In<a class="headerlink" href="#logging-in" title="Link to this heading">#</a></h3>
-<p>To get started, first sign up for an account at <a class="reference external" href="https://wandb.ai/site/">https://wandb.ai/site/</a>. Next, generate an API key at <a class="reference external" href="https://wandb.ai/authorize">https://wandb.ai/authorize</a> . Finally, install the wandb package and log in:</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="weights-biases-intro">
+<span id="wandb-section"></span><h1><span class="section-number">19.1. </span>Weights &amp; Biases - Intro<a class="headerlink" href="#weights-biases-intro" title="Link to this heading">#</a></h1>
+<p>Weights &amp; Biases (W&amp;B) is an online platform designed to streamline experiment tracking and visualization, enabling effective collaboration on large teams. W&amp;B gives researchers great flexibility in deciding what metrics to log.</p>
+<section id="getting-started">
+<h2><span class="section-number">19.1.1. </span>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h2>
+<p>To get started, first sign up for an account at <a class="reference external" href="https://wandb.ai/site/">wandb.ai</a> website. Next, generate an API key <a class="reference external" href="https://wandb.ai/authorize">here</a>. Finally, install the <code class="docutils literal notranslate"><span class="pre">wandb</span></code> package and log in:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>wandb
 wandb<span class="w"> </span>login
 </pre></div>
 </div>
-<p>Logging in using the W&amp;B Command Line Interface adds your api key to your <code class="docutils literal notranslate"><span class="pre">.netrc</span></code> file at <code class="docutils literal notranslate"><span class="pre">~/.netrc</span></code> (Mac and Linux). Alternatively, you can also manually add your api key to this file following this format:</p>
+</section>
+<section id="authentication">
+<h2><span class="section-number">19.1.2. </span>Authentication<a class="headerlink" href="#authentication" title="Link to this heading">#</a></h2>
+<p>Logging in using the <code class="docutils literal notranslate"><span class="pre">wandb</span></code> Command Line Interface (CLI) adds your API key to your <code class="docutils literal notranslate"><span class="pre">.netrc</span></code> file at <code class="docutils literal notranslate"><span class="pre">~/.netrc</span></code> (Mac and Linux). Alternatively, you can also manually add your API key to this file following this format:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>machine<span class="w"> </span>api.wandb.ai
 <span class="w">  </span>login<span class="w"> </span>user
 <span class="w">  </span>password<span class="w"> </span>YOUR_API_KEY
@@ -527,8 +527,8 @@ wandb<span class="w"> </span>login
 </div>
 </section>
 <section id="simple-tracking">
-<h3><span class="section-number">19.1.1.2. </span>Simple Tracking<a class="headerlink" href="#simple-tracking" title="Link to this heading">#</a></h3>
-<p>In your python script, import wandb and start a W&amp;B run object. Set the project name and decide which hyperparameters and metrics to track:</p>
+<h2><span class="section-number">19.1.3. </span>Simple Tracking<a class="headerlink" href="#simple-tracking" title="Link to this heading">#</a></h2>
+<p>In your Python script, import <code class="docutils literal notranslate"><span class="pre">wandb</span></code> module and start a W&amp;B run object. Set the project name and decide which hyperparameters and metrics to track:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">wandb</span>
 
 <span class="n">run</span> <span class="o">=</span> <span class="n">wandb</span><span class="o">.</span><span class="n">init</span><span class="p">(</span>
@@ -545,8 +545,7 @@ wandb<span class="w"> </span>login
     <span class="n">wandb</span><span class="o">.</span><span class="n">log</span><span class="p">({</span><span class="s2">&quot;accuracy&quot;</span><span class="p">:</span> <span class="n">acc</span><span class="p">,</span> <span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="n">loss</span><span class="p">})</span>
 </pre></div>
 </div>
-<p>Access your project and view your runs at <a class="reference external" href="https://wandb.ai/home">https://wandb.ai/home</a>. Additionally, invite any collaborators you have to your project at this page. Refer to the <a class="reference external" href="https://docs.wandb.ai/quickstart/">quickstart guide</a> for more details.</p>
-</section>
+<p>Access your project and view your runs on <a class="reference external" href="https://wandb.ai/home">wandb.ai</a> website. Additionally, invite any collaborators you have to your project at this page. Refer to the <a class="reference external" href="https://docs.wandb.ai/quickstart/">W&amp;B Quickstart</a> for more details.</p>
 </section>
 </section>
 
@@ -590,11 +589,11 @@ wandb<span class="w"> </span>login
       </div>
     </a>
     <a class="right-next"
-       href="../../s6_security_and_compliance/README.html"
+       href="wandb_sweeps.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">20. </span>Security and Compliance</p>
+        <p class="prev-next-title"><span class="section-number">19.2. </span>Weights &amp; Biases - Sweeps</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -614,11 +613,9 @@ wandb<span class="w"> </span>login
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wandb">19.1.1. Wandb</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#logging-in">19.1.1.1. Logging In</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-tracking">19.1.1.2. Simple Tracking</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">19.1.1. Getting Started</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#authentication">19.1.2. Authentication</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-tracking">19.1.3. Simple Tracking</a></li>
 </ul>
   </nav></div>
 

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>17.6. Parallel I/O &#8212; Kempner Institute Computing Handbook</title>
+    <title>19.2. Weights &amp; Biases - Sweeps &#8212; Kempner Institute Computing Handbook</title>
   
   
   
@@ -71,12 +71,12 @@
                 gtag('config', 'G-QFZEXWFW26');
             </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 's5_ai_scaling_and_engineering/scalability/parallel_io';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 's5_ai_scaling_and_engineering/experiment_management/wandb_sweeps';</script>
     <script src="../../_static/custom.js?v=ba1c093d"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="18. Efficiency" href="../efficiency/README.html" />
-    <link rel="prev" title="17.5. Distributed GPU Computing" href="distributed_gpu_computing.html" />
+    <link rel="next" title="20. Security and Compliance" href="../../s6_security_and_compliance/README.html" />
+    <link rel="prev" title="19.1. Weights &amp; Biases - Intro" href="logging_and_monitoring.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -253,13 +253,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">AI Scaling and Engineering</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="README.html">17. Scalability</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="distributed_computing.html">17.1. Distributed Computing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="introduction_to_parallel_computing.html">17.2. Intro to Parallel Computing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gpu_computing.html">17.3. GPU Computing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gpu_profiling.html">17.4. GPU Profiling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="distributed_gpu_computing.html">17.5. Distributed GPU Computing</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">17.6. Parallel I/O</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../scalability/README.html">17. Scalability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../scalability/distributed_computing.html">17.1. Distributed Computing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scalability/introduction_to_parallel_computing.html">17.2. Intro to Parallel Computing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scalability/gpu_computing.html">17.3. GPU Computing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scalability/gpu_profiling.html">17.4. GPU Profiling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scalability/distributed_gpu_computing.html">17.5. Distributed GPU Computing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scalability/parallel_io.html">17.6. Parallel I/O</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../efficiency/README.html">18. Efficiency</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -269,9 +269,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../efficiency/experiment_management_and_reproducibility.html">18.4. Experiment Management</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../experiment_management/README.html">19. Experiment Management</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../experiment_management/logging_and_monitoring.html">19.1. Weights &amp; Biases - Intro</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../experiment_management/wandb_sweeps.html">19.2. Weights &amp; Biases - Sweeps</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="README.html">19. Experiment Management</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="logging_and_monitoring.html">19.1. Weights &amp; Biases - Intro</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">19.2. Weights &amp; Biases - Sweeps</a></li>
 </ul>
 </details></li>
 </ul>
@@ -368,7 +368,7 @@
       
       
       
-      <li><a href="https://github.com/KempnerInstitute/kempner-computing-handbook/issues/new?title=Issue%20on%20page%20%2Fs5_ai_scaling_and_engineering/scalability/parallel_io.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/KempnerInstitute/kempner-computing-handbook/issues/new?title=Issue%20on%20page%20%2Fs5_ai_scaling_and_engineering/experiment_management/wandb_sweeps.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -398,7 +398,7 @@
       
       
       
-      <li><a href="../../_sources/s5_ai_scaling_and_engineering/scalability/parallel_io.md" target="_blank"
+      <li><a href="../../_sources/s5_ai_scaling_and_engineering/experiment_management/wandb_sweeps.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -469,7 +469,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -480,11 +482,28 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Parallel I/O</h1>
+    <h1>Weights & Biases - Sweeps</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">19.2.1. Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resnet-50-classification-example">19.2.2. ResNet-50 Classification Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-define-the-sweep">19.2.3. Step 1: Define the Sweep</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-initialize-the-sweep">19.2.4. Step 2: Initialize the Sweep</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-run-sweep-agents">19.2.5. Step 3: Run Sweep Agents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-sweep-visualization">19.2.6. Step 4: Sweep Visualization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-sweep-visualizations">19.2.6.1. Key Sweep Visualizations</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#note-on-mapping-sweep-runs-to-slurm-array-jobs">19.2.7. Note on Mapping Sweep Runs to SLURM Array Jobs</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -494,9 +513,198 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="parallel-i-o">
-<h1><span class="section-number">17.6. </span>Parallel I/O<a class="headerlink" href="#parallel-i-o" title="Link to this heading">#</a></h1>
-<p>[ Best practices for managing input/output operations in parallel applications.]</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="weights-biases-sweeps">
+<span id="wandb-sweep-section"></span><h1><span class="section-number">19.2. </span>Weights &amp; Biases - Sweeps<a class="headerlink" href="#weights-biases-sweeps" title="Link to this heading">#</a></h1>
+<section id="introduction">
+<h2><span class="section-number">19.2.1. </span>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<p>Hyperparameter sweeps systematically explore combinations of training parameters, such as learning rate, batch size, and optimizer, to identify configurations that improve model performance.</p>
+<p>Why Sweep Hyperparameters?</p>
+<ul class="simple">
+<li><p>Small changes can have big impacts: Minor tweaks to hyperparameters can significantly affect training outcomes.</p></li>
+<li><p>Gain insights: Sweeps help understand how different hyperparameters influence training dynamics.</p></li>
+<li><p>Experiment at scale: Run one model on many datasets or many models on one dataset.</p></li>
+<li><p>Automate and save time: Automating the exploration process is more efficient than manual tuning.</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><a class="reference external" href="https://wandb.ai">Weights &amp; Biases (W&amp;B)</a> offers robust tools for managing and automating hyperparameter sweeps.</p>
+</div>
+</section>
+<section id="resnet-50-classification-example">
+<h2><span class="section-number">19.2.2. </span>ResNet-50 Classification Example<a class="headerlink" href="#resnet-50-classification-example" title="Link to this heading">#</a></h2>
+<p>In order to cover the W&amp;B sweep feature, we will go over an example from this <a class="reference external" href="https://github.com/KempnerInstitute/optimizing-ml-workflow/tree/main/workshop_exercises/wandb_sweep">GitHub repository</a>, which is part of <em>“Optimizing ML Workflows on an AI Cluster”</em> workshop. This example demonstrates a simple classification task on the <a class="reference external" href="https://www.cs.toronto.edu/~kriz/cifar.html">CIFAR-10</a> dataset using the <a class="reference external" href="https://arxiv.org/abs/1512.03385">ResNet-50</a> model.</p>
+<p>Below is a directory-style tree view of the files used in this example, along with brief explanations for each file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wandb_sweep/
+├──<span class="w"> </span>config.yaml<span class="w">             </span><span class="c1"># Base training configuration (default hyperparameters)</span>
+├──<span class="w"> </span>sweep_config.yaml<span class="w">       </span><span class="c1"># Sweep definition: parameters to search and optimization method</span>
+├──<span class="w"> </span>sweep_submission.slrm<span class="w">   </span><span class="c1"># SLURM batch script to submit sweep agents to the cluster</span>
+└──<span class="w"> </span>wandb_sweep.py<span class="w">          </span><span class="c1"># Training script that reads config and logs results to W&amp;B</span>
+</pre></div>
+</div>
+<p>The description of each file is listed in the following.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">config.yaml</span></code></p>
+<p>Contains the default hyperparameters and general configuration used during training.<br />
+Values here are overridden by <code class="docutils literal notranslate"><span class="pre">sweep_config.yaml</span></code> during sweeps.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sweep_config.yaml</span></code></p>
+<p>Defines the sweep strategy:</p>
+<ul class="simple">
+<li><p>The script (<code class="docutils literal notranslate"><span class="pre">program</span></code>) to execute</p></li>
+<li><p>The search method (<code class="docutils literal notranslate"><span class="pre">grid</span></code>, <code class="docutils literal notranslate"><span class="pre">random</span></code>, or <code class="docutils literal notranslate"><span class="pre">bayes</span></code>)</p></li>
+<li><p>The metric to optimize (e.g., validation accuracy)</p></li>
+<li><p>The hyperparameters and value ranges to explore</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sweep_submission.slrm</span></code></p>
+<p>A SLURM batch submission script used to launch sweep agents on an AI cluster.<br />
+This typically includes calls to <code class="docutils literal notranslate"><span class="pre">wandb</span> <span class="pre">agent</span></code> and resource requests (CPU/GPU, memory, etc.).</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">wandb_sweep.py</span></code></p>
+<p>The training script executed by each sweep run. It:</p>
+<ul class="simple">
+<li><p>Reads hyperparameters from W&amp;B config</p></li>
+<li><p>Trains the model using those parameters</p></li>
+<li><p>Logs metrics and artifacts to W&amp;B for tracking and comparison</p></li>
+</ul>
+</li>
+</ul>
+<p>In the following sections, we cover each step in detail.</p>
+</section>
+<section id="step-1-define-the-sweep">
+<h2><span class="section-number">19.2.3. </span>Step 1: Define the Sweep<a class="headerlink" href="#step-1-define-the-sweep" title="Link to this heading">#</a></h2>
+<p>The first step in setting up a W&amp;B sweep is to define the sweep configuration.</p>
+<p>This is typically done using a <code class="docutils literal notranslate"><span class="pre">sweep_config.yaml</span></code> file. The key elements of <code class="docutils literal notranslate"><span class="pre">sweep_config.yaml</span></code> are:</p>
+<ul class="simple">
+<li><p>Program to run: The training script to execute (e.g., <code class="docutils literal notranslate"><span class="pre">wandb_sweep.py</span></code>)</p></li>
+<li><p>Search method: Choose from:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">grid</span></code>: tests all combinations</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">random</span></code>: samples combinations at random</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bayes</span></code>: uses Bayesian optimization for smarter search</p></li>
+</ul>
+</li>
+<li><p>Metric to optimize: Define the goal and metric name (e.g., maximize validation accuracy)</p></li>
+<li><p>Parameters to sweep over: List the hyperparameters and their values to explore</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># sweep_config.yaml</span>
+<span class="nt">program</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wandb_sweep.py</span>
+<span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">grid</span><span class="w">  </span><span class="c1"># other options: bayes, random</span>
+
+<span class="nt">metric</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">goal</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">maximize</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Validation Accuracy</span>
+
+<span class="nt">parameters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">learning_rate</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.1</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.01</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">config.yaml</span></code> for fixed parameters not being searched. Values in <code class="docutils literal notranslate"><span class="pre">sweep_config.yaml</span></code> will override those in <code class="docutils literal notranslate"><span class="pre">config.yaml</span></code> during the sweep.</p>
+</div>
+</section>
+<section id="step-2-initialize-the-sweep">
+<h2><span class="section-number">19.2.4. </span>Step 2: Initialize the Sweep<a class="headerlink" href="#step-2-initialize-the-sweep" title="Link to this heading">#</a></h2>
+<p>Once the sweep configuration is defined, the next step is to initialize the sweep. W&amp;B uses <a class="reference external" href="https://docs.wandb.ai/ref/python/controller/">Sweep Controllers</a> to manage and orchestrate sweeps.</p>
+<p>From within your (e.g., <code class="docutils literal notranslate"><span class="pre">mamba</span></code>) environment, run the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wandb<span class="w"> </span>sweep<span class="w"> </span>--project<span class="w"> </span>project_name<span class="w"> </span>sweep_config.yaml
+</pre></div>
+</div>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">project_name</span></code> with the name of your W&amp;B project. After running this command, W&amp;B will perform the following tasks.</p>
+<ul class="simple">
+<li><p>Register the sweep with your account</p></li>
+<li><p>Return a sweep ID, which uniquely identifies the sweep</p></li>
+<li><p>Allow you to launch one or more sweep agents using this ID in the next step</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sample output</span>
+wandb<span class="w"> </span>sweep<span class="w"> </span>--project<span class="w"> </span>test_project<span class="w"> </span>sweep_config.yaml
+
+wandb:<span class="w"> </span>Creating<span class="w"> </span>sweep<span class="w"> </span>from:<span class="w"> </span>sweep_config.yaml
+wandb:<span class="w"> </span>Creating<span class="w"> </span>sweep<span class="w"> </span>with<span class="w"> </span>ID:<span class="w"> </span>3r3sv8tg
+wandb:<span class="w"> </span>View<span class="w"> </span>sweep<span class="w"> </span>at:<span class="w"> </span>https://wandb.ai/mxshad/test_project/sweeps/3r3sv8tg
+wandb:<span class="w"> </span>Run<span class="w"> </span>sweep<span class="w"> </span>agent<span class="w"> </span>with:<span class="w"> </span>wandb<span class="w"> </span>agent<span class="w"> </span>mxshad/test_project/3r3sv8tg
+</pre></div>
+</div>
+</section>
+<section id="step-3-run-sweep-agents">
+<h2><span class="section-number">19.2.5. </span>Step 3: Run Sweep Agents<a class="headerlink" href="#step-3-run-sweep-agents" title="Link to this heading">#</a></h2>
+<p>Once the sweep is initialized and you have a sweep ID, the next step is to run sweep agents.</p>
+<p>Sweep agents are processes that:</p>
+<ul class="simple">
+<li><p>Connect to the W&amp;B sweep controller</p></li>
+<li><p>Fetch a set of hyperparameter values from the sweep</p></li>
+<li><p>Run the training script with those values</p></li>
+<li><p>Report results back to W&amp;B</p></li>
+</ul>
+<p>Each agent runs one experiment from the sweep. To parallelize experiments on an AI cluster, you can launch sweep agents using a SLURM array job. For example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#SBATCH --array=1-12%2</span>
+</pre></div>
+</div>
+<p>This directive launches up to 12 jobs, with a maximum of 2 running concurrently (<a class="reference internal" href="../../s1_high_performance_computing/general_hpc_concepts/array_jobs.html#resource-management-array-jobs"><span class="std std-ref">read more here</span></a>).</p>
+<p>Inside the SLURM batch script, run the agent command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wandb<span class="w"> </span>agent<span class="w"> </span>--count<span class="w"> </span><span class="m">1</span><span class="w"> </span>your_entity/your_project/your_sweep_id
+</pre></div>
+</div>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">your_entity</span></code>, <code class="docutils literal notranslate"><span class="pre">your_project</span></code>, and <code class="docutils literal notranslate"><span class="pre">your_sweep_id</span></code> with your actual W&amp;B account name, project name, and the sweep ID you received in Step 2.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Set one sweep run per array job ID by using the <code class="docutils literal notranslate"><span class="pre">--count</span> <span class="pre">1</span></code> flag.</p>
+</div>
+</section>
+<section id="step-4-sweep-visualization">
+<h2><span class="section-number">19.2.6. </span>Step 4: Sweep Visualization<a class="headerlink" href="#step-4-sweep-visualization" title="Link to this heading">#</a></h2>
+<p>You can explore and compare your sweep runs using the <a class="reference external" href="https://wandb.ai/home">W&amp;B App UI</a>. Just open your project, click the Sweeps (broom) icon in the sidebar, and select your sweep from the list.</p>
+<section id="key-sweep-visualizations">
+<h3><span class="section-number">19.2.6.1. </span>Key Sweep Visualizations<a class="headerlink" href="#key-sweep-visualizations" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Parallel Coordinates Plot</strong>: This chart provides a quick overview of how different hyperparameter values relate to model performance. Each line represents a sweep run, showing how its specific parameter values align across multiple axes and relate to the final metric. It helps spot patterns and trade-offs between parameters.</p></li>
+</ul>
+<figure class="align-default" id="parallel-coordinates-plot">
+<a class="reference internal image-reference" href="../../_images/parallel_coordinates_plot.png"><img alt="../../_images/parallel_coordinates_plot.png" src="../../_images/parallel_coordinates_plot.png" style="width: 600px;" />
+</a>
+</figure>
+<ul class="simple">
+<li><p><strong>Parameter Importance Plot</strong>: This plot ranks hyperparameters based on how strongly they influence your target metric. It helps identify which parameters had the greatest impact on performance, guiding future tuning efforts.</p></li>
+</ul>
+<figure class="align-default" id="parameter-importance-plot">
+<a class="reference internal image-reference" href="../../_images/parameter_importance_plot.png"><img alt="../../_images/parameter_importance_plot.png" src="../../_images/parameter_importance_plot.png" style="width: 600px;" />
+</a>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">Correlation</span></code> measures the linear relationship between a single hyperparameter and a performance metric, while <code class="docutils literal notranslate"><span class="pre">Importance</span></code> tells you how much a hyperparameter influenced the model’s performance, regardless of whether the effect was linear or nonlinear.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can learn more about these visualizations in the <a class="reference external" href="https://docs.wandb.ai/guides/sweeps/visualize-sweep-results/">W&amp;B documentation</a>.</p>
+</div>
+</section>
+</section>
+<section id="note-on-mapping-sweep-runs-to-slurm-array-jobs">
+<h2><span class="section-number">19.2.7. </span>Note on Mapping Sweep Runs to SLURM Array Jobs<a class="headerlink" href="#note-on-mapping-sweep-runs-to-slurm-array-jobs" title="Link to this heading">#</a></h2>
+<p>The way you configure your SLURM jobs determines how sweep runs are distributed. The diagram below illustrates two different execution patterns when running <code class="docutils literal notranslate"><span class="pre">wandb</span> <span class="pre">agent</span></code>.</p>
+<figure class="align-default" id="w-b-sweep-mapping">
+<a class="reference internal image-reference" href="../../_images/sweep_runs.png"><img alt="../../_images/sweep_runs.png" src="../../_images/sweep_runs.png" style="width: 600px;" />
+</a>
+</figure>
+<p>The top execution pattern shows multiple runs per task in an SLURM array job (no <code class="docutils literal notranslate"><span class="pre">--count</span> <span class="pre">1</span></code> flag). In this setup, each task within the SLURM array job (or individual submission) runs multiple sweep runs. This happens when you omit the <code class="docutils literal notranslate"><span class="pre">--count</span> <span class="pre">1</span></code> flag in your <code class="docutils literal notranslate"><span class="pre">wandb</span> <span class="pre">agent</span></code> command. Each job will continue pulling new runs from the sweep controller until the sweep is complete or the job is stopped.</p>
+<ul class="simple">
+<li><p>Good for maximizing GPU/CPU utilization</p></li>
+<li><p>Harder to map specific sweep runs to array job IDs</p></li>
+</ul>
+<p>The bottom execution pattern shows one run per task in an SLURM array job (<code class="docutils literal notranslate"><span class="pre">--count</span> <span class="pre">1</span></code>). When using <code class="docutils literal notranslate"><span class="pre">wandb</span> <span class="pre">agent</span> <span class="pre">--count</span> <span class="pre">1</span></code>, each task within the SLURM array job executes exactly one sweep run. This creates a 1:1 mapping in SLURM array job IDs and W&amp;B sweep runs.</p>
+<ul class="simple">
+<li><p>Easier to track and debug individual runs</p></li>
+<li><p>Enables fine-grained resource control (e.g., job timeouts, logs)</p></li>
+<li><p>Requires more job submissions for large sweeps</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">--count</span> <span class="pre">1</span></code> if you want each array job to handle a single, isolated hyperparameter configuration from the sweep.</p>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -512,7 +720,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./s5_ai_scaling_and_engineering/scalability"
+            path: "./s5_ai_scaling_and_engineering/experiment_management"
         },
         predefinedOutput: true
     }
@@ -530,20 +738,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="distributed_gpu_computing.html"
+       href="logging_and_monitoring.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">17.5. </span>Distributed GPU Computing</p>
+        <p class="prev-next-title"><span class="section-number">19.1. </span>Weights &amp; Biases - Intro</p>
       </div>
     </a>
     <a class="right-next"
-       href="../efficiency/README.html"
+       href="../../s6_security_and_compliance/README.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">18. </span>Efficiency</p>
+        <p class="prev-next-title"><span class="section-number">20. </span>Security and Compliance</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -553,6 +761,30 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">19.2.1. Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resnet-50-classification-example">19.2.2. ResNet-50 Classification Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-define-the-sweep">19.2.3. Step 1: Define the Sweep</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-initialize-the-sweep">19.2.4. Step 2: Initialize the Sweep</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-run-sweep-agents">19.2.5. Step 3: Run Sweep Agents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-sweep-visualization">19.2.6. Step 4: Sweep Visualization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-sweep-visualizations">19.2.6.1. Key Sweep Visualizations</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#note-on-mapping-sweep-runs-to-slurm-array-jobs">19.2.7. Note on Mapping Sweep Runs to SLURM Array Jobs</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
