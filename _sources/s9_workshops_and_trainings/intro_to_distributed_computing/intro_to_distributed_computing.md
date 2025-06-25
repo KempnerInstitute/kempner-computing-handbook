@@ -12,7 +12,7 @@ As part of the Workshops @ Kempner series, this interactive workshop provides a 
 - Embarrassingly parallel processes using SLURM array jobs (e.g., for hyperparameter sweeps)
 - Distributed Data Parallel (DDP) in PyTorch for training multi-layer perceptrons across multiple GPUs
 
-### Prerequisites:
+### Prerequisites
 
 - Basic knowledge of SLURM
 - Familiarity with multi-layer perceptrons
