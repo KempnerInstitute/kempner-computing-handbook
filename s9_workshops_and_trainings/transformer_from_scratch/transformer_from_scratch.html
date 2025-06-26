@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>4.3. Shared Data/Model Repository &#8212; Kempner Institute Computing Handbook</title>
+    <title>23.5. Building a Transformer from Scratch Workshop &#8212; Kempner Institute Computing Handbook</title>
   
   
   
@@ -71,12 +71,11 @@
                 gtag('config', 'G-QFZEXWFW26');
             </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 's1_high_performance_computing/storage_and_data_transfer/shared_data_repository';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 's9_workshops_and_trainings/transformer_from_scratch/transformer_from_scratch';</script>
     <script src="../../_static/custom.js?v=ba1c093d"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="5. Collaborative Code Development" href="../../s2_swe_for_research/collaborative_code_development.html" />
-    <link rel="prev" title="4.2. Data Transfer" href="data_transfer.html" />
+    <link rel="prev" title="23.4. Large Language Model Distributed Training Workshop" href="../llm_distributed_training/llm_distributed_training.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -195,38 +194,38 @@
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">High Performance Computing</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../kempner_cluster/README.html">1. Kempner AI Cluster</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../kempner_cluster/introduction_and_cluster_basics.html">1.1. Introduction and Basics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../kempner_cluster/overview_of_kempner_cluster.html">1.2. Overview of Cluster</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../kempner_cluster/kempner_policies_for_responsible_use.html">1.3. Cluster Usage Policies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../kempner_cluster/accessing_and_navigating_the_cluster.html">1.4. Accessing the Cluster</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../kempner_cluster/accessing_gpu_by_fasrc_users.html">1.5. Access by FASRC Users</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../efficient_use_of_resources/fair_use_and_prioritization_policies.html">1.6. Fairshare Policy</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../s1_high_performance_computing/kempner_cluster/README.html">1. Kempner AI Cluster</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/kempner_cluster/introduction_and_cluster_basics.html">1.1. Introduction and Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/kempner_cluster/overview_of_kempner_cluster.html">1.2. Overview of Cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/kempner_cluster/kempner_policies_for_responsible_use.html">1.3. Cluster Usage Policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/kempner_cluster/accessing_and_navigating_the_cluster.html">1.4. Accessing the Cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/kempner_cluster/accessing_gpu_by_fasrc_users.html">1.5. Access by FASRC Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/efficient_use_of_resources/fair_use_and_prioritization_policies.html">1.6. Fairshare Policy</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../general_hpc_concepts/README.html">2. Job Submission</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../general_hpc_concepts/understanding_slurm.html">2.1. Understanding SLURM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../general_hpc_concepts/job_submission_basics.html">2.2. Job Submission Basics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../general_hpc_concepts/array_jobs.html">2.3. Array Jobs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../general_hpc_concepts/job_dependencies.html">2.4. Job Dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../general_hpc_concepts/advanced_slurm_features.html">2.5. Advanced SLURM Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../general_hpc_concepts/open_ondemand.html">2.6. Open OnDemand</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../s1_high_performance_computing/general_hpc_concepts/README.html">2. Job Submission</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/general_hpc_concepts/understanding_slurm.html">2.1. Understanding SLURM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/general_hpc_concepts/job_submission_basics.html">2.2. Job Submission Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/general_hpc_concepts/array_jobs.html">2.3. Array Jobs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/general_hpc_concepts/job_dependencies.html">2.4. Job Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/general_hpc_concepts/advanced_slurm_features.html">2.5. Advanced SLURM Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/general_hpc_concepts/open_ondemand.html">2.6. Open OnDemand</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../development_and_runtime_envs/README.html">3. Development Environment</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../development_and_runtime_envs/software_module_and_environment_management.html">3.1. Software Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../development_and_runtime_envs/containerization.html">3.2. Containerization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../development_and_runtime_envs/using_vscode_for_remote_development.html">3.3. VSCode for Remote Dev</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../development_and_runtime_envs/using_conda_env.html">3.4. Conda Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../development_and_runtime_envs/handling_dependencies_with_spack.html">3.5. Spack Package Manager</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../development_and_runtime_envs/customizing_bashrc.html">3.6. Shell Configuration</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../s1_high_performance_computing/development_and_runtime_envs/README.html">3. Development Environment</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/development_and_runtime_envs/software_module_and_environment_management.html">3.1. Software Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/development_and_runtime_envs/containerization.html">3.2. Containerization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/development_and_runtime_envs/using_vscode_for_remote_development.html">3.3. VSCode for Remote Dev</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/development_and_runtime_envs/using_conda_env.html">3.4. Conda Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/development_and_runtime_envs/handling_dependencies_with_spack.html">3.5. Spack Package Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/development_and_runtime_envs/customizing_bashrc.html">3.6. Shell Configuration</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="README.html">4. Storage and Data Transfer</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="understanding_storage_options.html">4.1. Storage Options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="data_transfer.html">4.2. Data Transfer</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">4.3. Shared Data/Model Repository</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../s1_high_performance_computing/storage_and_data_transfer/README.html">4. Storage and Data Transfer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/storage_and_data_transfer/understanding_storage_options.html">4.1. Storage Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/storage_and_data_transfer/data_transfer.html">4.2. Data Transfer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/storage_and_data_transfer/shared_data_repository.html">4.3. Shared Data/Model Repository</a></li>
 </ul>
 </details></li>
 </ul>
@@ -291,12 +290,12 @@
 </details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Workshops</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../s9_workshops_and_trainings/README.html">23. About Workshops @ Kempner</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../s9_workshops_and_trainings/intro_to_kempner_ai_cluster/intro_to_kempner_ai_cluster.html">23.2. Introduction to the Kempner AI cluster Workshop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../s9_workshops_and_trainings/intro_to_distributed_computing/intro_to_distributed_computing.html">23.3. Introduction to Distributed Computing Workshop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../s9_workshops_and_trainings/llm_distributed_training/llm_distributed_training.html">23.4. Large Language Model Distributed Training Workshop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../s9_workshops_and_trainings/transformer_from_scratch/transformer_from_scratch.html">23.5. Building a Transformer from Scratch Workshop</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../README.html">23. About Workshops @ Kempner</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../intro_to_kempner_ai_cluster/intro_to_kempner_ai_cluster.html">23.2. Introduction to the Kempner AI cluster Workshop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro_to_distributed_computing/intro_to_distributed_computing.html">23.3. Introduction to Distributed Computing Workshop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../llm_distributed_training/llm_distributed_training.html">23.4. Large Language Model Distributed Training Workshop</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">23.5. Building a Transformer from Scratch Workshop</a></li>
 </ul>
 </details></li>
 </ul>
@@ -370,7 +369,7 @@
       
       
       
-      <li><a href="https://github.com/KempnerInstitute/kempner-computing-handbook/issues/new?title=Issue%20on%20page%20%2Fs1_high_performance_computing/storage_and_data_transfer/shared_data_repository.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/KempnerInstitute/kempner-computing-handbook/issues/new?title=Issue%20on%20page%20%2Fs9_workshops_and_trainings/transformer_from_scratch/transformer_from_scratch.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -400,7 +399,7 @@
       
       
       
-      <li><a href="../../_sources/s1_high_performance_computing/storage_and_data_transfer/shared_data_repository.md" target="_blank"
+      <li><a href="../../_sources/s9_workshops_and_trainings/transformer_from_scratch/transformer_from_scratch.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -484,7 +483,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Shared Data/Model Repository</h1>
+    <h1>Building a Transformer from Scratch Workshop</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -494,8 +493,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-current-list-of-ml-models">4.3.1. The current list of ML models</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-current-list-of-ml-datasets">4.3.2. The current list of ML datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workshop-summary">23.5.1. Workshop Summary</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">23.5.1.1. Prerequisites</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workshop-slides">23.5.2. Workshop Slides</a></li>
 </ul>
             </nav>
         </div>
@@ -507,126 +509,26 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="shared-data-model-repository">
-<h1><span class="section-number">4.3. </span>Shared Data/Model Repository<a class="headerlink" href="#shared-data-model-repository" title="Link to this heading">#</a></h1>
-<p>We host several popular ML datasets and models on the Kempner AI cluster. This approach reduces the need for multiple transfers of the same data/model by researchers and provides a central, read-only repository for all Kempner Institute users to access for their ML workflows. Only the admin team has write access, but users can submit requests for popular data/models. After a careful review, we may place a copy in the shared data/model repository. The current path on the cluster is:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">DATA_PATH</span><span class="o">=</span>/n/holylfs06/LABS/kempner_shared/Lab/data
-<span class="nv">MODEL_PATH</span><span class="o">=</span>/n/holylfs06/LABS/kempner_shared/Lab/model
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>We will develop a web interface later for data and model discovery.</p>
-</div>
-<section id="the-current-list-of-ml-models">
-<h2><span class="section-number">4.3.1. </span>The current list of ML models<a class="headerlink" href="#the-current-list-of-ml-models" title="Link to this heading">#</a></h2>
+  <section class="tex2jax_ignore mathjax_ignore" id="building-a-transformer-from-scratch-workshop">
+<span id="s9-workshops-and-trainings-transformer-from-scratch"></span><h1><span class="section-number">23.5. </span>Building a Transformer from Scratch Workshop<a class="headerlink" href="#building-a-transformer-from-scratch-workshop" title="Link to this heading">#</a></h1>
+<section id="workshop-summary">
+<h2><span class="section-number">23.5.1. </span>Workshop Summary<a class="headerlink" href="#workshop-summary" title="Link to this heading">#</a></h2>
+<p>This workshop provides a practical, interactive way to learn about transformers by building a simple language model.  Participants dive into model components, training pipelines, and the ingredients of a typical end-to-end language model set-up.</p>
+<section id="prerequisites">
+<h3><span class="section-number">23.5.1.1. </span>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p><strong>CodeLlama</strong></p>
-<ul>
-<li><p>Path: <code class="docutils literal notranslate"><span class="pre">$MODEL_PATH/models--codellama--CodeLlama-7b-hf</span></code> (see on <a class="reference external" href="https://huggingface.co/codellama/CodeLlama-7b-hf">HuggingFace</a>)</p>
-<ul>
-<li><p>Size: 16 G</p></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<hr class="docutils" />
-<ul class="simple">
-<li><p><strong>EleutherAI</strong></p>
-<ul>
-<li><p>Path: <code class="docutils literal notranslate"><span class="pre">$MODEL_PATH/models--EleutherAI--pythia-160m-deduped</span></code> (see on <a class="reference external" href="https://huggingface.co/EleutherAI/pythia-160m-deduped">HuggingFace</a></p>
-<ul>
-<li><p>Size: 435 M</p></li>
-</ul>
-</li>
-<li><p>Path: <code class="docutils literal notranslate"><span class="pre">$MODEL_PATH/models--EleutherAI--pythia-70m-deduped</span></code> (see on <a class="reference external" href="https://huggingface.co/EleutherAI/pythia-70m-deduped">HuggingFace</a></p>
-<ul>
-<li><p>Size: 195 M</p></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<hr class="docutils" />
-<ul class="simple">
-<li><p><strong>OpenAI</strong></p>
-<ul>
-<li><p>Path: <code class="docutils literal notranslate"><span class="pre">$MODEL_PATH/models--gpt2</span></code> (see on <a class="reference external" href="https://huggingface.co/gpt2">HuggingFace</a>)</p>
-<ul>
-<li><p>Size: 4.5 M</p></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<hr class="docutils" />
-<ul class="simple">
-<li><p><strong>Google</strong></p>
-<ul>
-<li><p>Path: <code class="docutils literal notranslate"><span class="pre">$MODEL_PATH/models--t5-base</span></code> (see on <a class="reference external" href="https://huggingface.co/t5-base">HuggingFace</a>)</p>
-<ul>
-<li><p>Size: 3.4 M</p></li>
-</ul>
-</li>
-</ul>
-</li>
+<li><p>Familiarity with PyTorch framework</p></li>
+<li><p>Familiarity with foundational machine learning topics, such as feedforward networks and gradient descent</p></li>
 </ul>
 </section>
-<section id="the-current-list-of-ml-datasets">
-<h2><span class="section-number">4.3.2. </span>The current list of ML datasets<a class="headerlink" href="#the-current-list-of-ml-datasets" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p><strong>c4_original</strong></p>
-<ul>
-<li><p>Path: <code class="docutils literal notranslate"><span class="pre">$DATA_PATH/c4_original</span></code></p>
-<ul>
-<li><p>Subfolders:</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">preprocessed</span></code> (434 M)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">raw</span></code> (157 G)</p></li>
-</ul>
-</li>
-<li><p>Description: The original version of the “Colossal Clean Crawled Corpus” (C4) dataset, designed for training natural language processing models.</p></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<hr class="docutils" />
-<ul class="simple">
-<li><p><strong>dolma</strong></p>
-<ul>
-<li><p>Path: <code class="docutils literal notranslate"><span class="pre">$DATA_PATH/dolma</span></code></p>
-<ul>
-<li><p>Subfolders:</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">preprocessed</span></code> (6.8 T)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">raw</span></code> (5.9 T)</p></li>
-</ul>
-</li>
-<li><p>Description: Dolma is a dataset of 3 trillion tokens from a diverse mix of web content, academic publications, code, books, and encyclopedic materials.</p></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<hr class="docutils" />
-<ul class="simple">
-<li><p><strong>imagenet_winter21_whole</strong></p>
-<ul>
-<li><p>Path: <code class="docutils literal notranslate"><span class="pre">$DATA_PATH/imagenet_winter21_whole</span></code></p>
-<ul>
-<li><p>Subfolders:</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">winter21_whole.tar.gz</span></code> (1.3 T)</p></li>
-</ul>
-</li>
-<li><p>Description: An updated version of the ImageNet dataset, containing a wide variety of annotated images for visual object recognition, collected during the winter of 2021.</p></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+</section>
+<section id="workshop-slides">
+<h2><span class="section-number">23.5.2. </span>Workshop Slides<a class="headerlink" href="#workshop-slides" title="Link to this heading">#</a></h2>
+<p>To download the “Building a Transformer from Scratch” workshop slides, click the link below.</p>
+<p><a class="reference download internal" download="" href="../../_downloads/56ebe2866a013ca51acd665bd007f46b/Kempner_Building_a_Transformer_from_Scratch_Workshop.pdf"><code class="xref download docutils literal notranslate"><span class="pre">KempnerLLM</span> <span class="pre">Distributed</span> <span class="pre">Training</span> <span class="pre">Workshop</span></code></a></p>
+<div style="text-align: center;">
+ <iframe src="/_static/workshop/Kempner_Building_a_Transformer_from_Scratch_Workshop.pdf" width="90%" height="460px" style="border: none;"></iframe>
+</div>
 </section>
 </section>
 
@@ -643,7 +545,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./s1_high_performance_computing/storage_and_data_transfer"
+            path: "./s9_workshops_and_trainings/transformer_from_scratch"
         },
         predefinedOutput: true
     }
@@ -661,22 +563,13 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="data_transfer.html"
+       href="../llm_distributed_training/llm_distributed_training.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">4.2. </span>Data Transfer</p>
+        <p class="prev-next-title"><span class="section-number">23.4. </span>Large Language Model Distributed Training Workshop</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="../../s2_swe_for_research/collaborative_code_development.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">5. </span>Collaborative Code Development</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -694,8 +587,11 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-current-list-of-ml-models">4.3.1. The current list of ML models</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-current-list-of-ml-datasets">4.3.2. The current list of ML datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workshop-summary">23.5.1. Workshop Summary</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">23.5.1.1. Prerequisites</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workshop-slides">23.5.2. Workshop Slides</a></li>
 </ul>
   </nav></div>
 

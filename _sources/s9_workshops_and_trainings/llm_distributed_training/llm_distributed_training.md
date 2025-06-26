@@ -4,7 +4,7 @@
 
 ## Workshop Summary
 
-The Large Language Model (LLM) Distributed Training workshop highlights parallelization techniques for training large language models.  The workshop covers techniques such as Distributed Data Parallelism (DDP), Model Parallelism (MP), Tensor Parallelism (TP), Pipeline Parallelism (PP), and Fully Sharded Data Parallelism (FSDP). In addition to reviewing the advantages of each technique and their use cases, this workshop provides hands-on examples to help with understanding LLM distributed training approaches.
+This workshop highlights parallelization techniques for training large language models.  The workshop covers techniques such as Distributed Data Parallelism (DDP), Model Parallelism (MP), Tensor Parallelism (TP), Pipeline Parallelism (PP), and Fully Sharded Data Parallelism (FSDP). In addition to reviewing the advantages of each technique and their use cases, this workshop provides hands-on examples to help with understanding LLM distributed training approaches.
 
 ### Prerequisites
 - Familiarity with PyTorch framework and Python programming
