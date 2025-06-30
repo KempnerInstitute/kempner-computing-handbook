@@ -15,7 +15,7 @@ This workshop highlights parallelization techniques for training large language 
 
 To download the "Large Language Model Distributed Training" workshop slides, click the link below.
 
-{download}`KempnerLLM Distributed Training Workshop </_static/workshop/Kempner_LLM_Distributed_Training_Workshop.pdf>`
+{download}`Kempner LLM Distributed Training Workshop </_static/workshop/Kempner_LLM_Distributed_Training_Workshop.pdf>`
 
 <div style="text-align: center;">
  <iframe src="/_static/workshop/Kempner_LLM_Distributed_Training_Workshop.pdf" width="90%" height="460px" style="border: none;"></iframe>
