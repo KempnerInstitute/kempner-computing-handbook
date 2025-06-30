@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>2.2. Job Submission Basics &#8212; Kempner Institute Computing Handbook</title>
+    <title>23.7. Spike Sorting on an HPC Cluster Workshop &#8212; Kempner Institute Computing Handbook</title>
   
   
   
@@ -71,12 +71,11 @@
                 gtag('config', 'G-QFZEXWFW26');
             </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 's1_high_performance_computing/general_hpc_concepts/job_submission_basics';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 's9_workshops_and_trainings/spike_sorting_on_hpc_cluster/spike_sorting_on_hpc_cluster';</script>
     <script src="../../_static/custom.js?v=ba1c093d"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="2.3. Array Jobs" href="array_jobs.html" />
-    <link rel="prev" title="2.1. Understanding SLURM" href="understanding_slurm.html" />
+    <link rel="prev" title="23.6. Large Language Model Distributed Inference Workshop" href="../llm_distributed_inference/llm_distributed_inference.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -195,38 +194,38 @@
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">High Performance Computing</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../kempner_cluster/README.html">1. Kempner AI Cluster</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../kempner_cluster/introduction_and_cluster_basics.html">1.1. Introduction and Basics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../kempner_cluster/overview_of_kempner_cluster.html">1.2. Overview of Cluster</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../kempner_cluster/kempner_policies_for_responsible_use.html">1.3. Cluster Usage Policies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../kempner_cluster/accessing_and_navigating_the_cluster.html">1.4. Accessing the Cluster</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../kempner_cluster/accessing_gpu_by_fasrc_users.html">1.5. Access by FASRC Users</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../efficient_use_of_resources/fair_use_and_prioritization_policies.html">1.6. Fairshare Policy</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../s1_high_performance_computing/kempner_cluster/README.html">1. Kempner AI Cluster</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/kempner_cluster/introduction_and_cluster_basics.html">1.1. Introduction and Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/kempner_cluster/overview_of_kempner_cluster.html">1.2. Overview of Cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/kempner_cluster/kempner_policies_for_responsible_use.html">1.3. Cluster Usage Policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/kempner_cluster/accessing_and_navigating_the_cluster.html">1.4. Accessing the Cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/kempner_cluster/accessing_gpu_by_fasrc_users.html">1.5. Access by FASRC Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/efficient_use_of_resources/fair_use_and_prioritization_policies.html">1.6. Fairshare Policy</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="README.html">2. Job Submission</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="understanding_slurm.html">2.1. Understanding SLURM</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">2.2. Job Submission Basics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="array_jobs.html">2.3. Array Jobs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="job_dependencies.html">2.4. Job Dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="advanced_slurm_features.html">2.5. Advanced SLURM Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="open_ondemand.html">2.6. Open OnDemand</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../s1_high_performance_computing/general_hpc_concepts/README.html">2. Job Submission</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/general_hpc_concepts/understanding_slurm.html">2.1. Understanding SLURM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/general_hpc_concepts/job_submission_basics.html">2.2. Job Submission Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/general_hpc_concepts/array_jobs.html">2.3. Array Jobs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/general_hpc_concepts/job_dependencies.html">2.4. Job Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/general_hpc_concepts/advanced_slurm_features.html">2.5. Advanced SLURM Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/general_hpc_concepts/open_ondemand.html">2.6. Open OnDemand</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../development_and_runtime_envs/README.html">3. Development Environment</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../development_and_runtime_envs/software_module_and_environment_management.html">3.1. Software Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../development_and_runtime_envs/containerization.html">3.2. Containerization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../development_and_runtime_envs/using_vscode_for_remote_development.html">3.3. VSCode for Remote Dev</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../development_and_runtime_envs/using_conda_env.html">3.4. Conda Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../development_and_runtime_envs/handling_dependencies_with_spack.html">3.5. Spack Package Manager</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../development_and_runtime_envs/customizing_bashrc.html">3.6. Shell Configuration</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../s1_high_performance_computing/development_and_runtime_envs/README.html">3. Development Environment</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/development_and_runtime_envs/software_module_and_environment_management.html">3.1. Software Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/development_and_runtime_envs/containerization.html">3.2. Containerization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/development_and_runtime_envs/using_vscode_for_remote_development.html">3.3. VSCode for Remote Dev</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/development_and_runtime_envs/using_conda_env.html">3.4. Conda Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/development_and_runtime_envs/handling_dependencies_with_spack.html">3.5. Spack Package Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/development_and_runtime_envs/customizing_bashrc.html">3.6. Shell Configuration</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../storage_and_data_transfer/README.html">4. Storage and Data Transfer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../storage_and_data_transfer/understanding_storage_options.html">4.1. Storage Options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../storage_and_data_transfer/data_transfer.html">4.2. Data Transfer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../storage_and_data_transfer/shared_data_repository.html">4.3. Shared Data/Model Repository</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../s1_high_performance_computing/storage_and_data_transfer/README.html">4. Storage and Data Transfer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/storage_and_data_transfer/understanding_storage_options.html">4.1. Storage Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/storage_and_data_transfer/data_transfer.html">4.2. Data Transfer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s1_high_performance_computing/storage_and_data_transfer/shared_data_repository.html">4.3. Shared Data/Model Repository</a></li>
 </ul>
 </details></li>
 </ul>
@@ -291,14 +290,14 @@
 </details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Workshops</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../s9_workshops_and_trainings/README.html">23. About Workshops @ Kempner</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../s9_workshops_and_trainings/intro_to_kempner_ai_cluster/intro_to_kempner_ai_cluster.html">23.2. Introduction to the Kempner AI cluster Workshop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../s9_workshops_and_trainings/intro_to_distributed_computing/intro_to_distributed_computing.html">23.3. Introduction to Distributed Computing Workshop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../s9_workshops_and_trainings/llm_distributed_training/llm_distributed_training.html">23.4. Large Language Model Distributed Training Workshop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../s9_workshops_and_trainings/transformer_from_scratch/transformer_from_scratch.html">23.5. Building a Transformer from Scratch Workshop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../s9_workshops_and_trainings/llm_distributed_inference/llm_distributed_inference.html">23.6. Large Language Model Distributed Inference Workshop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../s9_workshops_and_trainings/spike_sorting_on_hpc_cluster/spike_sorting_on_hpc_cluster.html">23.7. Spike Sorting on an HPC Cluster Workshop</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../README.html">23. About Workshops @ Kempner</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../intro_to_kempner_ai_cluster/intro_to_kempner_ai_cluster.html">23.2. Introduction to the Kempner AI cluster Workshop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro_to_distributed_computing/intro_to_distributed_computing.html">23.3. Introduction to Distributed Computing Workshop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../llm_distributed_training/llm_distributed_training.html">23.4. Large Language Model Distributed Training Workshop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transformer_from_scratch/transformer_from_scratch.html">23.5. Building a Transformer from Scratch Workshop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../llm_distributed_inference/llm_distributed_inference.html">23.6. Large Language Model Distributed Inference Workshop</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">23.7. Spike Sorting on an HPC Cluster Workshop</a></li>
 </ul>
 </details></li>
 </ul>
@@ -372,7 +371,7 @@
       
       
       
-      <li><a href="https://github.com/KempnerInstitute/kempner-computing-handbook/issues/new?title=Issue%20on%20page%20%2Fs1_high_performance_computing/general_hpc_concepts/job_submission_basics.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/KempnerInstitute/kempner-computing-handbook/issues/new?title=Issue%20on%20page%20%2Fs9_workshops_and_trainings/spike_sorting_on_hpc_cluster/spike_sorting_on_hpc_cluster.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -402,7 +401,7 @@
       
       
       
-      <li><a href="../../_sources/s1_high_performance_computing/general_hpc_concepts/job_submission_basics.md" target="_blank"
+      <li><a href="../../_sources/s9_workshops_and_trainings/spike_sorting_on_hpc_cluster/spike_sorting_on_hpc_cluster.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -486,7 +485,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Job Submission Basics</h1>
+    <h1>Spike Sorting on an HPC Cluster Workshop</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -496,9 +495,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interactive-jobs">2.2.1. Interactive Jobs</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-jobs">2.2.2. Batch Jobs</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-batch-job-specifications">2.2.3. Example Batch Job Specifications</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workshop-summary">23.7.1. Workshop Summary</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">23.7.1.1. Prerequisites</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workshop-slides">23.7.2. Workshop Slides</a></li>
 </ul>
             </nav>
         </div>
@@ -510,164 +511,27 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="job-submission-basics">
-<h1><span class="section-number">2.2. </span>Job Submission Basics<a class="headerlink" href="#job-submission-basics" title="Link to this heading">#</a></h1>
-<p>You can either run your jobs interactively (with allocating compute resources) or submit them as batch jobs. Interactive jobs are useful for testing and debugging, while batch jobs are useful for running large-scale simulations and analyses. In this section, we will cover the basics of job submission on the Kempner Institute AI cluster. In both cases, you will need to specify the Kempner Institute partitions and the fairshare account to which the resources will be charged.</p>
-<section id="interactive-jobs">
-<h2><span class="section-number">2.2.1. </span>Interactive Jobs<a class="headerlink" href="#interactive-jobs" title="Link to this heading">#</a></h2>
-<p>Below are the steps to allocate 1 TB of RAM, 64 CPU cores, and 4 A100 40GB GPUs for an interactive job on the <code class="docutils literal notranslate"><span class="pre">kempner</span></code> partition, with the resources charged to the <code class="docutils literal notranslate"><span class="pre">kempner_grads</span></code> fairshare account for one hour.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="spike-sorting-on-an-hpc-cluster-workshop">
+<span id="s9-workshops-and-trainings-spike-sorting-on-hpc-cluster"></span><h1><span class="section-number">23.7. </span>Spike Sorting on an HPC Cluster Workshop<a class="headerlink" href="#spike-sorting-on-an-hpc-cluster-workshop" title="Link to this heading">#</a></h1>
+<section id="workshop-summary">
+<h2><span class="section-number">23.7.1. </span>Workshop Summary<a class="headerlink" href="#workshop-summary" title="Link to this heading">#</a></h2>
+<p>This workshop describes how to implement spike sorting algorithms for neural data on an HPC cluster.  A comprehensive pipeline guides participants to efficiently spike sort data using GPUs and visualize their outputs on a web app.  The workshop provides interactive examples using Neuropixels data and Kilosort4, though participants can use custom data loaders and SpykingCircus2 instead.</p>
+<section id="prerequisites">
+<h3><span class="section-number">23.7.1.1. </span>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>step 1: Connect to the cluster using SSH (<code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">&lt;username&gt;&#64;login.rc.fas.harvard.edu</span></code>)</p></li>
-<li><p>step 2: Allocate resources using the <code class="docutils literal notranslate"><span class="pre">salloc</span></code> command:</p></li>
+<li><p>Familiarity with HPC, including SLURM batch job submission</p></li>
+<li><p>Familiarity with the concept of spike sorting</p></li>
+<li><p>Access to O2 or the FASRC cluster (Kempner AI cluster access is not necessary)</p></li>
 </ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>salloc<span class="w"> </span>--partition<span class="o">=</span>kempner<span class="w"> </span>--account<span class="o">=</span>kempner_grads<span class="w"> </span>--time<span class="o">=</span><span class="m">0</span>-01:00<span class="w"> </span>--mem<span class="o">=</span>1000G<span class="w"> </span>--gres<span class="o">=</span>gpu:4<span class="w"> </span>--cpus-per-task<span class="o">=</span><span class="m">64</span>
-</pre></div>
-</div>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p>For details on how to connect this interactive session to VSCode, plese see the section <a class="reference internal" href="../development_and_runtime_envs/using_vscode_for_remote_development.html#development-and-runtime-envs-using-vscode-for-remote-development-compute-node"><span class="std std-ref">Connecting to the FASRC cluster (Compute node)</span></a>.</p>
-</div>
 </section>
-<section id="batch-jobs">
-<span id="resource-management-job-submission-basics-batch-jobs"></span><h2><span class="section-number">2.2.2. </span>Batch Jobs<a class="headerlink" href="#batch-jobs" title="Link to this heading">#</a></h2>
-<p>Submitting a batch job in SLURM involves creating a job script that specifies the resources required for the job and the commands to be executed. The job script is essentially a shell script that includes 3 sections:</p>
-<ul class="simple">
-<li><p>Resource and job specifications,</p></li>
-<li><p>Loading modules, setting environment variables, other pre-job tasks, and</p></li>
-<li><p>Running the job.</p></li>
-</ul>
-<p>The following is an example of a very simple job script.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
-<span class="c1">#SBATCH --job-name=my_job</span>
-<span class="c1">#SBATCH --account=kempner_grads</span>
-<span class="c1">#SBATCH --partition=kempner</span>
-<span class="c1">#SBATCH --nodes=1</span>
-<span class="c1">#SBATCH --ntasks-per-node=1</span>
-<span class="c1">#SBATCH --cpus-per-task=16</span>
-<span class="c1">#SBATCH --gpus-per-node=1</span>
-<span class="c1">#SBATCH --time=0-01:00</span>
-<span class="c1">#SBATCH --mem=256G</span>
-<span class="c1">#SBATCH --output=my_job_output.out</span>
-<span class="c1">#SBATCH --error=my_job_error.err</span>
-<span class="c1">#SBATCH --mail-type=END</span>
-<span class="c1">#SBATCH --mail-user=&lt;username&gt;@harvard.edu</span>
-
-<span class="c1"># Load modules</span>
-module<span class="w"> </span>load<span class="w"> </span>python/3.10.9-fasrc01<span class="w"> </span>
-
-<span class="c1"># Activate conda environment (optional)</span>
-
-<span class="c1"># Run the job</span>
-python<span class="w"> </span>my_script.py
-</pre></div>
-</div>
-<p>In the following table we provide a brief description of the SLURM directives used in the job script.</p>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Directive</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--job-name</span></code></p></td>
-<td><p>The name of the job.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--account</span></code></p></td>
-<td><p>The account to which the resources will be charged.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--partition</span></code></p></td>
-<td><p>The partition to which the job will be submitted.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--nodes</span></code></p></td>
-<td><p>The number of nodes required for the job.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--ntasks-per-node</span></code></p></td>
-<td><p>The number of tasks to be launched on each node.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--cpus-per-task</span></code></p></td>
-<td><p>The number of CPUs per task.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--gpus-per-node</span></code></p></td>
-<td><p>The number of GPUs per node.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--time</span></code></p></td>
-<td><p>The time limit for the job.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--mem</span></code></p></td>
-<td><p>The memory required for the job.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--output</span></code></p></td>
-<td><p>The file to which the standard output will be written.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--error</span></code></p></td>
-<td><p>The file to which the standard error will be written.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--mail-type</span></code></p></td>
-<td><p>The type of email notification to be sent.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--mail-user</span></code></p></td>
-<td><p>The email address to which the notifications will be sent.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>You can submit the job script using the <code class="docutils literal notranslate"><span class="pre">sbatch</span></code> command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sbatch<span class="w"> </span>my_job_script.sh
-</pre></div>
-</div>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p>For more details on the SLURM directives run <code class="docutils literal notranslate"><span class="pre">sbatch</span>&#160; <span class="pre">--help</span></code> and the <a class="reference external" href="https://slurm.schedmd.com/sbatch.html">SLURM documentation</a>.</p>
-</div>
 </section>
-<section id="example-batch-job-specifications">
-<h2><span class="section-number">2.2.3. </span>Example Batch Job Specifications<a class="headerlink" href="#example-batch-job-specifications" title="Link to this heading">#</a></h2>
-<p>The following list details several batch jobs, each with a different SLURM configuration and their respective use cases.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Please note that some of the following combinations may not work on Kempner partitions, as they require the <code class="docutils literal notranslate"><span class="pre">--gres=gpu:</span></code> option; otherwise, they will fail. The Kempner cluster is available only for GPU jobs, and the shared public partitions on the FASRC cluster should be used for CPU workflows.</p>
-</div>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Combination</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--ntasks=8</span> <span class="pre">--mem=32G</span></code></p></td>
-<td><p>Allocates 8 tasks with a total of 32GB memory for the job. Useful for jobs that require multiple tasks without specific node distribution or GPU requirements.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--ntasks-per-node=4</span> <span class="pre">--nodes=2</span> <span class="pre">--mem-per-node=64G</span></code></p></td>
-<td><p>Allocates 2 nodes with 4 tasks per node and 64GB memory per node. Ideal for parallel tasks that can efficiently utilize a fixed amount of memory on each node.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--cpus-per-task=2</span> <span class="pre">--ntasks=4</span> <span class="pre">--gres=gpu:1</span></code></p></td>
-<td><p>Allocates 4 tasks, each with 2 CPU cores and 1 shared GPU among all tasks. Suitable for multi-threaded GPU-accelerated applications.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--nodes=3</span> <span class="pre">--ntasks=12</span> <span class="pre">--ntasks-per-node=4</span> <span class="pre">--mem=128G</span></code></p></td>
-<td><p>Distributes 12 tasks across 3 nodes, with 4 tasks per node, using a total of 128GB memory. Good for balanced load distribution across nodes.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--ntasks=6</span> <span class="pre">--cpus-per-task=4</span> <span class="pre">--mem-per-cpu=8G</span></code></p></td>
-<td><p>Allocates 6 tasks, each with 4 CPU cores and 8GB of memory per CPU. This setup is beneficial for CPU-intensive applications requiring significant memory per core.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--nodes=2</span> <span class="pre">--gpus-per-node=2</span> <span class="pre">--mem-per-node=48G</span></code></p></td>
-<td><p>Allocates 2 nodes, each with 2 GPUs and 48GB of memory. Targets GPU-based computations needing substantial memory but with a clear node division.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--ntasks=10</span> <span class="pre">--cpus-per-task=1</span> <span class="pre">--gres=gpu:2</span> <span class="pre">--mem=128G</span></code></p></td>
-<td><p>Allocates 10 tasks with 1 CPU each, 2 GPUs shared among tasks, and 128GB of memory. This combination is tailored for lightweight tasks in a GPU-enhanced environment.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--ntasks-per-node=2</span> <span class="pre">--nodes=4</span> <span class="pre">--mem-per-cpu=4G</span> <span class="pre">--gres=gpu:1</span></code></p></td>
-<td><p>Uses 4 nodes with 2 tasks each, 4GB memory per CPU, and 1 GPU per node. Designed for tasks that are GPU intensive, spread evenly across multiple nodes.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--nodes=1</span> <span class="pre">--cpus-per-task=8</span> <span class="pre">--mem=64G</span> <span class="pre">--gres=gpu:2</span></code></p></td>
-<td><p>Single-node job with tasks that require 8 CPUs each, a total of 64GB memory, and 2 GPUs. Fits high-performance computing tasks on a single node with substantial GPU requirements.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--ntasks=5</span> <span class="pre">--cpus-per-task=2</span> <span class="pre">--mem-per-cpu=16G</span> <span class="pre">--gpus-per-node=1</span></code></p></td>
-<td><p>Allocates 5 tasks, each with 2 CPU cores and 16GB memory per CPU, with at least 1 GPU per node. This setup is optimal for moderately demanding tasks, ensuring enough memory and GPU access.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
+<section id="workshop-slides">
+<h2><span class="section-number">23.7.2. </span>Workshop Slides<a class="headerlink" href="#workshop-slides" title="Link to this heading">#</a></h2>
+<p>To download the “Spike Sorting on an HPC Cluster” workshop slides, click the link below.</p>
+<p><a class="reference download internal" download="" href="../../_downloads/acbd4c5c4c72d822ac5a2d4f24a57ce7/Kempner_Spike_Sorting_on_HPC_Cluster_Workshop.pdf"><code class="xref download docutils literal notranslate"><span class="pre">Kempner</span> <span class="pre">Spike</span> <span class="pre">Sorting</span> <span class="pre">on</span> <span class="pre">an</span> <span class="pre">HPC</span> <span class="pre">Cluster</span> <span class="pre">Workshop</span></code></a></p>
+<div style="text-align: center;">
+ <iframe src="/_static/workshop/Kempner_Spike_Sorting_on_HPC_Cluster_Workshop.pdf" width="90%" height="460px" style="border: none;"></iframe>
+</div></section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -683,7 +547,7 @@ python<span class="w"> </span>my_script.py
         },
         kernelOptions: {
             name: "python3",
-            path: "./s1_high_performance_computing/general_hpc_concepts"
+            path: "./s9_workshops_and_trainings/spike_sorting_on_hpc_cluster"
         },
         predefinedOutput: true
     }
@@ -701,22 +565,13 @@ python<span class="w"> </span>my_script.py
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="understanding_slurm.html"
+       href="../llm_distributed_inference/llm_distributed_inference.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">2.1. </span>Understanding SLURM</p>
+        <p class="prev-next-title"><span class="section-number">23.6. </span>Large Language Model Distributed Inference Workshop</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="array_jobs.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">2.3. </span>Array Jobs</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -734,9 +589,11 @@ python<span class="w"> </span>my_script.py
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interactive-jobs">2.2.1. Interactive Jobs</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-jobs">2.2.2. Batch Jobs</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-batch-job-specifications">2.2.3. Example Batch Job Specifications</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workshop-summary">23.7.1. Workshop Summary</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">23.7.1.1. Prerequisites</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workshop-slides">23.7.2. Workshop Slides</a></li>
 </ul>
   </nav></div>
 
