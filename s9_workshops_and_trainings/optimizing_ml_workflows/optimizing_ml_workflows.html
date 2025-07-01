@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>23.3. Introduction to Distributed Computing Workshop &#8212; Kempner Institute Computing Handbook</title>
+    <title>23.8. Optimizing ML Workflows on an AI Cluster Workshop &#8212; Kempner Institute Computing Handbook</title>
   
   
   
@@ -71,12 +71,11 @@
                 gtag('config', 'G-QFZEXWFW26');
             </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 's9_workshops_and_trainings/intro_to_distributed_computing/intro_to_distributed_computing';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 's9_workshops_and_trainings/optimizing_ml_workflows/optimizing_ml_workflows';</script>
     <script src="../../_static/custom.js?v=ba1c093d"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="23.4. Large Language Model Distributed Training Workshop" href="../llm_distributed_training/llm_distributed_training.html" />
-    <link rel="prev" title="23.2. Introduction to the Kempner AI cluster Workshop" href="../intro_to_kempner_ai_cluster/intro_to_kempner_ai_cluster.html" />
+    <link rel="prev" title="23.7. Spike Sorting on an HPC Cluster Workshop" href="../spike_sorting_on_hpc_cluster/spike_sorting_on_hpc_cluster.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -293,12 +292,12 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../README.html">23. About Workshops @ Kempner</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../intro_to_kempner_ai_cluster/intro_to_kempner_ai_cluster.html">23.2. Introduction to the Kempner AI cluster Workshop</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">23.3. Introduction to Distributed Computing Workshop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro_to_distributed_computing/intro_to_distributed_computing.html">23.3. Introduction to Distributed Computing Workshop</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../llm_distributed_training/llm_distributed_training.html">23.4. Large Language Model Distributed Training Workshop</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../transformer_from_scratch/transformer_from_scratch.html">23.5. Building a Transformer from Scratch Workshop</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../llm_distributed_inference/llm_distributed_inference.html">23.6. Large Language Model Distributed Inference Workshop</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../spike_sorting_on_hpc_cluster/spike_sorting_on_hpc_cluster.html">23.7. Spike Sorting on an HPC Cluster Workshop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../optimizing_ml_workflows/optimizing_ml_workflows.html">23.8. Optimizing ML Workflows on an AI Cluster Workshop</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">23.8. Optimizing ML Workflows on an AI Cluster Workshop</a></li>
 </ul>
 </details></li>
 </ul>
@@ -372,7 +371,7 @@
       
       
       
-      <li><a href="https://github.com/KempnerInstitute/kempner-computing-handbook/issues/new?title=Issue%20on%20page%20%2Fs9_workshops_and_trainings/intro_to_distributed_computing/intro_to_distributed_computing.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/KempnerInstitute/kempner-computing-handbook/issues/new?title=Issue%20on%20page%20%2Fs9_workshops_and_trainings/optimizing_ml_workflows/optimizing_ml_workflows.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -402,7 +401,7 @@
       
       
       
-      <li><a href="../../_sources/s9_workshops_and_trainings/intro_to_distributed_computing/intro_to_distributed_computing.md" target="_blank"
+      <li><a href="../../_sources/s9_workshops_and_trainings/optimizing_ml_workflows/optimizing_ml_workflows.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -486,7 +485,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Introduction to Distributed Computing Workshop</h1>
+    <h1>Optimizing ML Workflows on an AI Cluster Workshop</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -496,11 +495,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workshop-summary">23.3.1. Workshop Summary</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">23.3.1.1. Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workshop-summary">23.8.1. Workshop Summary</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">23.8.1.1. Prerequisites</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workshop-slides">23.3.2. Workshop Slides</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workshop-slides">23.8.2. Workshop Slides</a></li>
 </ul>
             </nav>
         </div>
@@ -512,34 +511,26 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-distributed-computing-workshop">
-<span id="s9-workshops-and-trainings-intro-to-distributed-computing"></span><h1><span class="section-number">23.3. </span>Introduction to Distributed Computing Workshop<a class="headerlink" href="#introduction-to-distributed-computing-workshop" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="optimizing-ml-workflows-on-an-ai-cluster-workshop">
+<span id="s9-workshops-and-trainings-optimizing-ml-workflows"></span><h1><span class="section-number">23.8. </span>Optimizing ML Workflows on an AI Cluster Workshop<a class="headerlink" href="#optimizing-ml-workflows-on-an-ai-cluster-workshop" title="Link to this heading">#</a></h1>
 <section id="workshop-summary">
-<h2><span class="section-number">23.3.1. </span>Workshop Summary<a class="headerlink" href="#workshop-summary" title="Link to this heading">#</a></h2>
-<p>This workshop covers the types of computational problems that distributed computing can address and key forms of communication between computing servers. The focus is on two widely-used forms of distributed computing: embarrassingly parallel processes, useful for tasks like hyperparameter sweeps, and Distributed Data Parallel (DDP) processes, which facilitate training machine learning models across multiple GPUs.</p>
-<p>As part of the Workshops &#64; Kempner series, this interactive workshop provides a practical introduction to distributed computing in research settings. Topics include:</p>
-<ul class="simple">
-<li><p>What distributed computing is and when to use it</p></li>
-<li><p>Forms of communication between distributed systems</p></li>
-<li><p>Embarrassingly parallel processes using SLURM array jobs (e.g., for hyperparameter sweeps)</p></li>
-<li><p>Distributed Data Parallel (DDP) in PyTorch for training multi-layer perceptrons across multiple GPUs</p></li>
-</ul>
+<h2><span class="section-number">23.8.1. </span>Workshop Summary<a class="headerlink" href="#workshop-summary" title="Link to this heading">#</a></h2>
+<p>This workshop demonstrates how to optimize machine learning workflows for efficient, reproducible training on an AI cluster. Using <a class="reference external" href="https://docs.pytorch.org/vision/main/models.html">Torchvision models</a>, such as AlexNet and ResNet, trained on <a class="reference external" href="https://www.cs.toronto.edu/~kriz/cifar.html">CIFAR-10</a> and <a class="reference external" href="https://www.image-net.org/index.php">ImageNet-1k</a> as examples, the workshop walks through the challenges and solutions at each stage of a machine learning pipeline - from environment setup and data management to experiment tracking, model training, evaluation, and deployment. A special focus is placed on using <a class="reference external" href="https://wandb.ai/home">Weights &amp; Biases (W&amp;B)</a> for managing experiments and hyperparameter sweeps, as well as implementing checkpointing during training.</p>
 <section id="prerequisites">
-<h3><span class="section-number">23.3.1.1. </span>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">23.8.1.1. </span>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Basic knowledge of SLURM</p></li>
-<li><p>Familiarity with multi-layer perceptrons</p></li>
-<li><p>PyTorch and backpropagation knowledge is helpful but not required</p></li>
+<li><p>Familiarity with PyTorch</p></li>
+<li><p>Familiarity with HPC, including SLURM batch job submission</p></li>
+<li><p>Access to the FASRC cluster (Kempner AI cluster access is not necessary)</p></li>
 </ul>
 </section>
 </section>
 <section id="workshop-slides">
-<h2><span class="section-number">23.3.2. </span>Workshop Slides<a class="headerlink" href="#workshop-slides" title="Link to this heading">#</a></h2>
-<p>To view the “Introduction to Distributed Computing” workshop slides, click the following link:</p>
-<p><a class="reference download internal" download="" href="../../_downloads/4a80da221bd08a0d1195ad24628c245c/Kempner_Intro_to_Distributed_Computing_Workshop.pdf"><code class="xref download docutils literal notranslate"><span class="pre">Introduction</span> <span class="pre">to</span> <span class="pre">Distributed</span> <span class="pre">Computing</span> <span class="pre">Workshop</span></code></a></p>
+<h2><span class="section-number">23.8.2. </span>Workshop Slides<a class="headerlink" href="#workshop-slides" title="Link to this heading">#</a></h2>
+<p>To download the “Optimizing ML Workflows on an AI Cluster” workshop slides, click the link below.</p>
+<p><a class="reference download internal" download="" href="../../_downloads/cc89d2b9ca1ccdc96be2901e3631b1f7/Kempner_Optimizing_ML_Workflows_Workshop.pdf"><code class="xref download docutils literal notranslate"><span class="pre">Kempner</span> <span class="pre">Optimizing</span> <span class="pre">ML</span> <span class="pre">Workflows</span> <span class="pre">on</span> <span class="pre">an</span> <span class="pre">AI</span> <span class="pre">Cluster</span> <span class="pre">Workshop</span></code></a></p>
 <div style="text-align: center;">
-  <iframe src="/_static/workshop/Kempner_Intro_to_Distributed_Computing_Workshop.pdf" width="90%" height="460px" style="border: none;">
-  </iframe>
+ <iframe src="/_static/workshop/Kempner_Optimizing_ML_Workflows_Workshop.pdf" width="90%" height="460px" style="border: none;"></iframe>
 </div></section>
 </section>
 
@@ -556,7 +547,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./s9_workshops_and_trainings/intro_to_distributed_computing"
+            path: "./s9_workshops_and_trainings/optimizing_ml_workflows"
         },
         predefinedOutput: true
     }
@@ -574,22 +565,13 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../intro_to_kempner_ai_cluster/intro_to_kempner_ai_cluster.html"
+       href="../spike_sorting_on_hpc_cluster/spike_sorting_on_hpc_cluster.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">23.2. </span>Introduction to the Kempner AI cluster Workshop</p>
+        <p class="prev-next-title"><span class="section-number">23.7. </span>Spike Sorting on an HPC Cluster Workshop</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="../llm_distributed_training/llm_distributed_training.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">23.4. </span>Large Language Model Distributed Training Workshop</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -607,11 +589,11 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workshop-summary">23.3.1. Workshop Summary</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">23.3.1.1. Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workshop-summary">23.8.1. Workshop Summary</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">23.8.1.1. Prerequisites</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workshop-slides">23.3.2. Workshop Slides</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workshop-slides">23.8.2. Workshop Slides</a></li>
 </ul>
   </nav></div>
 
