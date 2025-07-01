@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>17.3. GPU Computing &#8212; Kempner Institute Computing Handbook</title>
+    <title>17.2. GPU Computing &#8212; Kempner Institute Computing Handbook</title>
   
   
   
@@ -75,8 +75,8 @@
     <script src="../../_static/custom.js?v=ba1c093d"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="17.4. GPU Profiling" href="gpu_profiling.html" />
-    <link rel="prev" title="17.2. Intro to Parallel Computing" href="introduction_to_parallel_computing.html" />
+    <link rel="next" title="17.3. GPU Profiling" href="gpu_profiling.html" />
+    <link rel="prev" title="17.1. Intro to Parallel Computing" href="introduction_to_parallel_computing.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -254,12 +254,11 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">AI Scaling and Engineering</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="README.html">17. Scalability</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="distributed_computing.html">17.1. Distributed Computing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="introduction_to_parallel_computing.html">17.2. Intro to Parallel Computing</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">17.3. GPU Computing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gpu_profiling.html">17.4. GPU Profiling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="distributed_gpu_computing.html">17.5. Distributed GPU Computing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="parallel_io.html">17.6. Parallel I/O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction_to_parallel_computing.html">17.1. Intro to Parallel Computing</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">17.2. GPU Computing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gpu_profiling.html">17.3. GPU Profiling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="distributed_gpu_computing.html">17.4. Distributed GPU Computing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parallel_io.html">17.5. Parallel I/O</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../efficiency/README.html">18. Efficiency</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -496,11 +495,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gpu-vs-cpu-computing">17.3.1. GPU vs CPU Computing</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-use-gpus">17.3.2. How to use GPUs</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-frameworks-and-libraries">17.3.3. More Frameworks and Libraries</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nvidia-rapids">17.3.3.1. Nvidia RAPIDS</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch-lightning">17.3.3.2. Pytorch Lightning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gpu-vs-cpu-computing">17.2.1. GPU vs CPU Computing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-use-gpus">17.2.2. How to use GPUs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-frameworks-and-libraries">17.2.3. More Frameworks and Libraries</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nvidia-rapids">17.2.3.1. Nvidia RAPIDS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch-lightning">17.2.3.2. Pytorch Lightning</a></li>
 </ul>
 </li>
 </ul>
@@ -515,9 +514,9 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="gpu-computing">
-<h1><span class="section-number">17.3. </span>GPU Computing<a class="headerlink" href="#gpu-computing" title="Link to this heading">#</a></h1>
+<h1><span class="section-number">17.2. </span>GPU Computing<a class="headerlink" href="#gpu-computing" title="Link to this heading">#</a></h1>
 <section id="gpu-vs-cpu-computing">
-<h2><span class="section-number">17.3.1. </span>GPU vs CPU Computing<a class="headerlink" href="#gpu-vs-cpu-computing" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">17.2.1. </span>GPU vs CPU Computing<a class="headerlink" href="#gpu-vs-cpu-computing" title="Link to this heading">#</a></h2>
 <p>The difference in CPU and GPU computing capabilities comes from their design. CPUs are designed to execute a sequence of instructions (aka thread) as fast as possible and with multicore design to run multiple threads simultaneously, mostly targeting lower response time. While GPU design focuses on providing higher throughput by executing thousands of threads concurrently by providing more computing resources aiming to excel parallel workloads efficiently.</p>
 <figure class="align-default" id="gpu-compute-resources">
 <a class="reference internal image-reference" href="../../_images/gpu_vs_cpu.png"><img alt="../../_images/gpu_vs_cpu.png" src="../../_images/gpu_vs_cpu.png" style="height: 300px;" />
@@ -528,7 +527,7 @@ document.write(`
 </figure>
 </section>
 <section id="how-to-use-gpus">
-<h2><span class="section-number">17.3.2. </span>How to use GPUs<a class="headerlink" href="#how-to-use-gpus" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">17.2.2. </span>How to use GPUs<a class="headerlink" href="#how-to-use-gpus" title="Link to this heading">#</a></h2>
 <p>Here is how we can utilize the compute power of GPUs for Matrix Multiplication using the CuPy package (equivalent of NumPy for GPUs).</p>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
@@ -645,14 +644,14 @@ document.write(`
 </div>
 </details></section>
 <section id="more-frameworks-and-libraries">
-<h2><span class="section-number">17.3.3. </span>More Frameworks and Libraries<a class="headerlink" href="#more-frameworks-and-libraries" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">17.2.3. </span>More Frameworks and Libraries<a class="headerlink" href="#more-frameworks-and-libraries" title="Link to this heading">#</a></h2>
 <p>In addition to the aforementioned CuPy and PyTorch, there are many more Frameworks and Libraries that enable applications to run computation on GPUs.</p>
 <section id="nvidia-rapids">
-<h3><span class="section-number">17.3.3.1. </span>Nvidia RAPIDS<a class="headerlink" href="#nvidia-rapids" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">17.2.3.1. </span>Nvidia RAPIDS<a class="headerlink" href="#nvidia-rapids" title="Link to this heading">#</a></h3>
 <p>TBD</p>
 </section>
 <section id="pytorch-lightning">
-<h3><span class="section-number">17.3.3.2. </span>Pytorch Lightning<a class="headerlink" href="#pytorch-lightning" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">17.2.3.2. </span>Pytorch Lightning<a class="headerlink" href="#pytorch-lightning" title="Link to this heading">#</a></h3>
 <p>TBD</p>
 </section>
 </section>
@@ -694,7 +693,7 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">17.2. </span>Intro to Parallel Computing</p>
+        <p class="prev-next-title"><span class="section-number">17.1. </span>Intro to Parallel Computing</p>
       </div>
     </a>
     <a class="right-next"
@@ -702,7 +701,7 @@ document.write(`
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">17.4. </span>GPU Profiling</p>
+        <p class="prev-next-title"><span class="section-number">17.3. </span>GPU Profiling</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -722,11 +721,11 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gpu-vs-cpu-computing">17.3.1. GPU vs CPU Computing</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-use-gpus">17.3.2. How to use GPUs</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-frameworks-and-libraries">17.3.3. More Frameworks and Libraries</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nvidia-rapids">17.3.3.1. Nvidia RAPIDS</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch-lightning">17.3.3.2. Pytorch Lightning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gpu-vs-cpu-computing">17.2.1. GPU vs CPU Computing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-use-gpus">17.2.2. How to use GPUs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-frameworks-and-libraries">17.2.3. More Frameworks and Libraries</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nvidia-rapids">17.2.3.1. Nvidia RAPIDS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch-lightning">17.2.3.2. Pytorch Lightning</a></li>
 </ul>
 </li>
 </ul>

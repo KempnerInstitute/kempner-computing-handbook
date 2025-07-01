@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>17.2. Intro to Parallel Computing &#8212; Kempner Institute Computing Handbook</title>
+    <title>17.1. Intro to Parallel Computing &#8212; Kempner Institute Computing Handbook</title>
   
   
   
@@ -75,8 +75,8 @@
     <script src="../../_static/custom.js?v=ba1c093d"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="17.3. GPU Computing" href="gpu_computing.html" />
-    <link rel="prev" title="17.1. Distributed Computing" href="distributed_computing.html" />
+    <link rel="next" title="17.2. GPU Computing" href="gpu_computing.html" />
+    <link rel="prev" title="17. Scalability" href="README.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -254,12 +254,11 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">AI Scaling and Engineering</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="README.html">17. Scalability</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="distributed_computing.html">17.1. Distributed Computing</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">17.2. Intro to Parallel Computing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gpu_computing.html">17.3. GPU Computing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gpu_profiling.html">17.4. GPU Profiling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="distributed_gpu_computing.html">17.5. Distributed GPU Computing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="parallel_io.html">17.6. Parallel I/O</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">17.1. Intro to Parallel Computing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gpu_computing.html">17.2. GPU Computing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gpu_profiling.html">17.3. GPU Profiling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="distributed_gpu_computing.html">17.4. Distributed GPU Computing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parallel_io.html">17.5. Parallel I/O</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../efficiency/README.html">18. Efficiency</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -496,10 +495,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parallelizing-computations-in-high-performance-computing-hpc">17.2.1. Parallelizing Computations in High-Performance Computing (HPC)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loosely-vs-tightly-coupled-parallelism">17.2.1.1. Loosely vs. Tightly Coupled Parallelism</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shared-vs-distributed-memory">17.2.1.2. Shared vs. Distributed Memory</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parallel-programming-models">17.2.1.3. Parallel Programming Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parallelizing-computations-in-high-performance-computing-hpc">17.1.1. Parallelizing Computations in High-Performance Computing (HPC)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loosely-vs-tightly-coupled-parallelism">17.1.1.1. Loosely vs. Tightly Coupled Parallelism</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shared-vs-distributed-memory">17.1.1.2. Shared vs. Distributed Memory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parallel-programming-models">17.1.1.3. Parallel Programming Models</a></li>
 </ul>
 </li>
 </ul>
@@ -514,22 +513,22 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="intro-to-parallel-computing">
-<h1><span class="section-number">17.2. </span>Intro to Parallel Computing<a class="headerlink" href="#intro-to-parallel-computing" title="Link to this heading">#</a></h1>
+<h1><span class="section-number">17.1. </span>Intro to Parallel Computing<a class="headerlink" href="#intro-to-parallel-computing" title="Link to this heading">#</a></h1>
 <section id="parallelizing-computations-in-high-performance-computing-hpc">
-<h2><span class="section-number">17.2.1. </span>Parallelizing Computations in High-Performance Computing (HPC)<a class="headerlink" href="#parallelizing-computations-in-high-performance-computing-hpc" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">17.1.1. </span>Parallelizing Computations in High-Performance Computing (HPC)<a class="headerlink" href="#parallelizing-computations-in-high-performance-computing-hpc" title="Link to this heading">#</a></h2>
 <p>Parallel computing is a technique used to enhance computational speeds by dividing tasks across multiple processors or computers/servers. This section introduces the basic concepts and techniques necessary for parallelizing computations effectively within a High-Performance Computing (HPC) environment.</p>
 <section id="loosely-vs-tightly-coupled-parallelism">
-<h3><span class="section-number">17.2.1.1. </span>Loosely vs. Tightly Coupled Parallelism<a class="headerlink" href="#loosely-vs-tightly-coupled-parallelism" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">17.1.1.1. </span>Loosely vs. Tightly Coupled Parallelism<a class="headerlink" href="#loosely-vs-tightly-coupled-parallelism" title="Link to this heading">#</a></h3>
 <p><strong>Loosely Coupled Parallelism</strong>: In this model, each processor operates independently, with minimal need for communication. This is often used in distributed computing environments where tasks do not require constant interaction.</p>
 <p><strong>Tightly Coupled Parallelism</strong>: Contrasts with loosely coupled parallelism by featuring processors that work in close coordination, often requiring frequent data exchanges. This model is typical in systems with shared memory.</p>
 </section>
 <section id="shared-vs-distributed-memory">
-<h3><span class="section-number">17.2.1.2. </span>Shared vs. Distributed Memory<a class="headerlink" href="#shared-vs-distributed-memory" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">17.1.1.2. </span>Shared vs. Distributed Memory<a class="headerlink" href="#shared-vs-distributed-memory" title="Link to this heading">#</a></h3>
 <p><strong>Shared Memory</strong>: In a shared memory model, multiple processors access the same memory space. This allows for efficient communication but requires careful management to avoid conflicts.</p>
 <p><strong>Distributed Memory</strong>: Each processor has its own private memory in distributed memory models. Processors communicate by passing messages, which suits large, distributed systems.</p>
 </section>
 <section id="parallel-programming-models">
-<h3><span class="section-number">17.2.1.3. </span>Parallel Programming Models<a class="headerlink" href="#parallel-programming-models" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">17.1.1.3. </span>Parallel Programming Models<a class="headerlink" href="#parallel-programming-models" title="Link to this heading">#</a></h3>
 <p>Parallel programming models are frameworks or paradigms that guide the development of parallel software.</p>
 <p><strong>Message Passing Interface (MPI)</strong>: A standard for passing messages between processes in a distributed memory system. Ideal for high scalability across multiple nodes.</p>
 <figure class="align-default" id="mpi-workflow-diagram">
@@ -590,12 +589,12 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="distributed_computing.html"
+       href="README.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">17.1. </span>Distributed Computing</p>
+        <p class="prev-next-title"><span class="section-number">17. </span>Scalability</p>
       </div>
     </a>
     <a class="right-next"
@@ -603,7 +602,7 @@ document.write(`
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">17.3. </span>GPU Computing</p>
+        <p class="prev-next-title"><span class="section-number">17.2. </span>GPU Computing</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -623,10 +622,10 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parallelizing-computations-in-high-performance-computing-hpc">17.2.1. Parallelizing Computations in High-Performance Computing (HPC)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loosely-vs-tightly-coupled-parallelism">17.2.1.1. Loosely vs. Tightly Coupled Parallelism</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shared-vs-distributed-memory">17.2.1.2. Shared vs. Distributed Memory</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parallel-programming-models">17.2.1.3. Parallel Programming Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parallelizing-computations-in-high-performance-computing-hpc">17.1.1. Parallelizing Computations in High-Performance Computing (HPC)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loosely-vs-tightly-coupled-parallelism">17.1.1.1. Loosely vs. Tightly Coupled Parallelism</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shared-vs-distributed-memory">17.1.1.2. Shared vs. Distributed Memory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parallel-programming-models">17.1.1.3. Parallel Programming Models</a></li>
 </ul>
 </li>
 </ul>

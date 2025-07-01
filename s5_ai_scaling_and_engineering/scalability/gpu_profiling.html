@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>17.4. GPU Profiling &#8212; Kempner Institute Computing Handbook</title>
+    <title>17.3. GPU Profiling &#8212; Kempner Institute Computing Handbook</title>
   
   
   
@@ -75,8 +75,8 @@
     <script src="../../_static/custom.js?v=ba1c093d"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="17.5. Distributed GPU Computing" href="distributed_gpu_computing.html" />
-    <link rel="prev" title="17.3. GPU Computing" href="gpu_computing.html" />
+    <link rel="next" title="17.4. Distributed GPU Computing" href="distributed_gpu_computing.html" />
+    <link rel="prev" title="17.2. GPU Computing" href="gpu_computing.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -254,12 +254,11 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">AI Scaling and Engineering</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="README.html">17. Scalability</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="distributed_computing.html">17.1. Distributed Computing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="introduction_to_parallel_computing.html">17.2. Intro to Parallel Computing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gpu_computing.html">17.3. GPU Computing</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">17.4. GPU Profiling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="distributed_gpu_computing.html">17.5. Distributed GPU Computing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="parallel_io.html">17.6. Parallel I/O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction_to_parallel_computing.html">17.1. Intro to Parallel Computing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gpu_computing.html">17.2. GPU Computing</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">17.3. GPU Profiling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="distributed_gpu_computing.html">17.4. Distributed GPU Computing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parallel_io.html">17.5. Parallel I/O</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../efficiency/README.html">18. Efficiency</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -496,13 +495,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#profiling-using-pytorch-profiler">17.4.1. Profiling using Pytorch Profiler</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#holistic-trace-analysis-hta">17.4.2. Holistic Trace Analysis (HTA)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nvidia-nsight-tools">17.4.3. Nvidia Nsight Tools</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alexnet-toy-example">17.4.3.1. Alexnet Toy Example</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-experimental-environment-on-the-cluster">17.4.3.2. Prepare The Experimental Environment on the Cluster</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#system-level-profiling-using-nsight-system">17.4.3.3. System-Level Profiling Using Nsight System</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-specific-profiling-using-nisht-compute">17.4.3.4. Kernel-Specific Profiling Using Nisht Compute</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#profiling-using-pytorch-profiler">17.3.1. Profiling using Pytorch Profiler</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#holistic-trace-analysis-hta">17.3.2. Holistic Trace Analysis (HTA)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nvidia-nsight-tools">17.3.3. Nvidia Nsight Tools</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alexnet-toy-example">17.3.3.1. Alexnet Toy Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-experimental-environment-on-the-cluster">17.3.3.2. Prepare The Experimental Environment on the Cluster</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#system-level-profiling-using-nsight-system">17.3.3.3. System-Level Profiling Using Nsight System</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-specific-profiling-using-nisht-compute">17.3.3.4. Kernel-Specific Profiling Using Nisht Compute</a></li>
 </ul>
 </li>
 </ul>
@@ -517,7 +516,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="gpu-profiling">
-<h1><span class="section-number">17.4. </span>GPU Profiling<a class="headerlink" href="#gpu-profiling" title="Link to this heading">#</a></h1>
+<h1><span class="section-number">17.3. </span>GPU Profiling<a class="headerlink" href="#gpu-profiling" title="Link to this heading">#</a></h1>
 <p>This section explains how to profile GPUs to design a better performent code. GPU profiling helps to get some insights of GPUs behavior to identify and fix performance bottlenecks. The following steps are performed iteratively until achieving the desired performance:</p>
 <ul class="simple">
 <li><p>Profile the code</p></li>
@@ -532,7 +531,7 @@ document.write(`
 </figcaption>
 </figure>
 <section id="profiling-using-pytorch-profiler">
-<h2><span class="section-number">17.4.1. </span>Profiling using Pytorch Profiler<a class="headerlink" href="#profiling-using-pytorch-profiler" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">17.3.1. </span>Profiling using Pytorch Profiler<a class="headerlink" href="#profiling-using-pytorch-profiler" title="Link to this heading">#</a></h2>
 <p>PyTorch profiler is a tool that facilitates collecting different performance metrics at runtime to better understand what happens behind the scene. For example, during training of a ML model, torch profiler can be used for understanding the most expensive model operators, their impact and studying device kernel activity. More particularly to answer the following questions:</p>
 <ul class="simple">
 <li><p>How much GPU run time contirbutes to Computation, Communication or Memory related kernels.</p></li>
@@ -582,7 +581,7 @@ document.write(`
 </div>
 </details></section>
 <section id="holistic-trace-analysis-hta">
-<h2><span class="section-number">17.4.2. </span>Holistic Trace Analysis (HTA)<a class="headerlink" href="#holistic-trace-analysis-hta" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">17.3.2. </span>Holistic Trace Analysis (HTA)<a class="headerlink" href="#holistic-trace-analysis-hta" title="Link to this heading">#</a></h2>
 <p>Holistic Trace Analysis (HTA) is an open source performance analysis and visualization Python library for PyTorch users. HTA takes as input Kineto traces collected by the PyTorch Profiler and up-levels the performance information contained in the traces. Kineto Traces are outputted by the torch profiler when using the <code class="docutils literal notranslate"><span class="pre">tensorboard_trace_handler</span></code> as the <code class="docutils literal notranslate"><span class="pre">on_trace_ready</span></code> callable (Please see <a class="reference internal" href="#torch-profiler-code"><span class="std std-numref">Listing 17.1</span></a>).</p>
 <p>Following are some of the features HTA provides however one can use the library to write their own analysis functions if needed.</p>
 <ul class="simple">
@@ -656,7 +655,7 @@ document.write(`
 </div>
 </section>
 <section id="nvidia-nsight-tools">
-<h2><span class="section-number">17.4.3. </span>Nvidia Nsight Tools<a class="headerlink" href="#nvidia-nsight-tools" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">17.3.3. </span>Nvidia Nsight Tools<a class="headerlink" href="#nvidia-nsight-tools" title="Link to this heading">#</a></h2>
 <p>Alternatively, Nvidia Nsight Systems and Nsight Compute combination can be used to analyze and visualize the insight of application’s algorithms. Nsight Systems (High-Level Profiling) checks our code overall to see if there are any problems (e.g., with host and device communication or GPU kernels) identifying non-performant/top kernel(s) and then Nsight Compute (Kernel-Specific Profiling) dives into the details of the identified kernel(s) to help with optimizing, debugging and fixing the issue.</p>
 <figure class="align-default" id="nvidia-nsight-system-and-compute">
 <a class="reference internal image-reference" href="../../_images/nsight_systems_compute.png"><img alt="../../_images/nsight_systems_compute.png" src="../../_images/nsight_systems_compute.png" style="height: 250px;" />
@@ -666,7 +665,7 @@ document.write(`
 </figcaption>
 </figure>
 <section id="alexnet-toy-example">
-<h3><span class="section-number">17.4.3.1. </span>Alexnet Toy Example<a class="headerlink" href="#alexnet-toy-example" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">17.3.3.1. </span>Alexnet Toy Example<a class="headerlink" href="#alexnet-toy-example" title="Link to this heading">#</a></h3>
 <p>The Following code is a toy example of training an Alexnet model. This example is used here to show how Nvidia Nsight Tools work. The <code class="docutils literal notranslate"><span class="pre">torch.cuda.nvtx</span></code> is used to specify what regions of the code to be profiled and when:</p>
 <div class="literal-block-wrapper docutils container" id="nsight-alexnet-example">
 <div class="code-block-caption"><span class="caption-number">Listing 17.2 </span><span class="caption-text">Anotating an Alexnet toy example using <code class="docutils literal notranslate"><span class="pre">torch.cuda.nvtx</span></code> to specify what region in the code and when to profile using Nsight System and Compute.</span><a class="headerlink" href="#nsight-alexnet-example" title="Link to this code">#</a></div>
@@ -726,7 +725,7 @@ document.write(`
 </div>
 </section>
 <section id="prepare-the-experimental-environment-on-the-cluster">
-<h3><span class="section-number">17.4.3.2. </span>Prepare The Experimental Environment on the Cluster<a class="headerlink" href="#prepare-the-experimental-environment-on-the-cluster" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">17.3.3.2. </span>Prepare The Experimental Environment on the Cluster<a class="headerlink" href="#prepare-the-experimental-environment-on-the-cluster" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Following modules needs to be loaded on the cluster using the following command line. These command line is added to the slurm scripts for running Nsight System and Nsight Comput on <a class="reference internal" href="#nsight-system-slurm"><span class="std std-numref">Listing 17.3</span></a> and <a class="reference internal" href="#nsight-compute-slurm"><span class="std std-numref">Listing 17.4</span></a> respectively.</p></li>
 </ul>
@@ -749,7 +748,7 @@ pip3<span class="w"> </span>install<span class="w"> </span>torch<span class="w">
 <p>The conda environment activation needs also be added to the slurm scripts.</p>
 </section>
 <section id="system-level-profiling-using-nsight-system">
-<h3><span class="section-number">17.4.3.3. </span>System-Level Profiling Using Nsight System<a class="headerlink" href="#system-level-profiling-using-nsight-system" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">17.3.3.3. </span>System-Level Profiling Using Nsight System<a class="headerlink" href="#system-level-profiling-using-nsight-system" title="Link to this heading">#</a></h3>
 <p>To use Nsight Systems one can profile the training process for 3 epochs after a 5-epoch warmup. Usually it is a good practice to skip a few iterations since it might add overhead training due to memory allocations, <code class="docutils literal notranslate"><span class="pre">cudnn</span></code> benchmarking etc. A slurm script to run it on the cluster could be as follows:</p>
 <div class="literal-block-wrapper docutils container" id="nsight-system-slurm">
 <div class="code-block-caption"><span class="caption-number">Listing 17.3 </span><span class="caption-text">Slurm script to run Alexnet example of <a class="reference internal" href="#nsight-alexnet-example"><span class="std std-numref">Listing 17.2</span></a> and Using Nsight System for Profiling.</span><a class="headerlink" href="#nsight-system-slurm" title="Link to this code">#</a></div>
@@ -846,7 +845,7 @@ nsys<span class="w"> </span>profile<span class="w"> </span>--gpu-metrics-device<
 </div>
 </section>
 <section id="kernel-specific-profiling-using-nisht-compute">
-<h3><span class="section-number">17.4.3.4. </span>Kernel-Specific Profiling Using Nisht Compute<a class="headerlink" href="#kernel-specific-profiling-using-nisht-compute" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">17.3.3.4. </span>Kernel-Specific Profiling Using Nisht Compute<a class="headerlink" href="#kernel-specific-profiling-using-nisht-compute" title="Link to this heading">#</a></h3>
 <p>Now for example one can pick the <code class="docutils literal notranslate"><span class="pre">ampere_gcgemm_64x64_nt</span></code> kernel and get more detail about this specific kernel (it takes 13.6% of the gpu time) using Nsight Compute. We can use the following slurm script.</p>
 <div class="literal-block-wrapper docutils container" id="nsight-compute-slurm">
 <div class="code-block-caption"><span class="caption-number">Listing 17.4 </span><span class="caption-text">Slurm script to run Alexnet example of <a class="reference internal" href="#nsight-alexnet-example"><span class="std std-numref">Listing 17.2</span></a> and Using Nsight Compute to profile the <code class="docutils literal notranslate"><span class="pre">ampere_gcgemm_64x64_nt</span></code> kernel.</span><a class="headerlink" href="#nsight-compute-slurm" title="Link to this code">#</a></div>
@@ -930,7 +929,7 @@ ncu<span class="w"> </span>--nvtx<span class="w"> </span>--nvtx-include<span cla
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">17.3. </span>GPU Computing</p>
+        <p class="prev-next-title"><span class="section-number">17.2. </span>GPU Computing</p>
       </div>
     </a>
     <a class="right-next"
@@ -938,7 +937,7 @@ ncu<span class="w"> </span>--nvtx<span class="w"> </span>--nvtx-include<span cla
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">17.5. </span>Distributed GPU Computing</p>
+        <p class="prev-next-title"><span class="section-number">17.4. </span>Distributed GPU Computing</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -958,13 +957,13 @@ ncu<span class="w"> </span>--nvtx<span class="w"> </span>--nvtx-include<span cla
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#profiling-using-pytorch-profiler">17.4.1. Profiling using Pytorch Profiler</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#holistic-trace-analysis-hta">17.4.2. Holistic Trace Analysis (HTA)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nvidia-nsight-tools">17.4.3. Nvidia Nsight Tools</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alexnet-toy-example">17.4.3.1. Alexnet Toy Example</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-experimental-environment-on-the-cluster">17.4.3.2. Prepare The Experimental Environment on the Cluster</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#system-level-profiling-using-nsight-system">17.4.3.3. System-Level Profiling Using Nsight System</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-specific-profiling-using-nisht-compute">17.4.3.4. Kernel-Specific Profiling Using Nisht Compute</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#profiling-using-pytorch-profiler">17.3.1. Profiling using Pytorch Profiler</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#holistic-trace-analysis-hta">17.3.2. Holistic Trace Analysis (HTA)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nvidia-nsight-tools">17.3.3. Nvidia Nsight Tools</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alexnet-toy-example">17.3.3.1. Alexnet Toy Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-experimental-environment-on-the-cluster">17.3.3.2. Prepare The Experimental Environment on the Cluster</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#system-level-profiling-using-nsight-system">17.3.3.3. System-Level Profiling Using Nsight System</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-specific-profiling-using-nisht-compute">17.3.3.4. Kernel-Specific Profiling Using Nisht Compute</a></li>
 </ul>
 </li>
 </ul>
