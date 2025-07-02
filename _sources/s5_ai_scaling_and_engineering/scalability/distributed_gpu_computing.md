@@ -4,10 +4,10 @@ The scaling of machine learning (ML) workloads in HPC environments can be achiev
 One can decide to use multiple GPUs on their AI/ML applications for different reasons including but not limited to:
 * Handling large-scale datasets
 * Hyperparameter tuning
-* Train/inferece large-scale Model that does not fit into the memory of a single GPU. 
+* Train/inference large-scale Model that does not fit into the memory of a single GPU. 
 
 ## Inter GPU Communication
-In majority of use-cases of multi-GPU computation there is the need for different GPU to communicate and send their partail computation to one another to sync. NCCL libarary from NVIDIA is widely in use for NIVIDA based GPU communication.
+In majority of use-cases of multi-GPU computation there is the need for different GPU to communicate and send their partial computation to one another to sync. NCCL library from NVIDIA is widely in use for NVIDIA based GPU communication.
 
 (sec-nccl)=
 ### NVIDIA Collective Communication Library (NCCL)
@@ -193,7 +193,7 @@ If you don't have a conda environment already in which PyTorch is installed, you
 ```{code-block} bash
 :name: conda_setup
 :caption: Conda Environment Setup
-# Creating the conda envireonment named `dist_computing` (one can use their own customized name).
+# Creating the conda environment named `dist_computing` (one can use their own customized name).
 conda create -n dist_computing python=3.10
 
 # Activating the conda environment and install PyTorch:
@@ -236,7 +236,7 @@ Particularly, in each training step, GPUs perform forward and backward passes lo
 height: 500px
 name: ddp
 ---
-Schematic Diagram of DDP Computation, Communication and Their Potential Overlapp.
+Schematic Diagram of DDP Computation, Communication and Their Potential Overlap.
 ```
 ```{note}
 The limitation is that DDP requires all model parameters, gradients, and optimizer states to fit into the memory of a single GPU device.
@@ -250,7 +250,7 @@ name: mlp_ddp_figure
 ---
 DDP for the simple MLP example. For simplicity it does not show communication overlap.
 ```
-{numref}`mlp_ddp_figure` shows that each GPU take a copy of the model, both has the whole $W_1$, $b_1$, $W_2$ and $b_2$. It shows the dataset is divided into two parts and each GPU sees only its own batches of the data perform the forward and backward passes locally. After each backward pass and before updating model, the GPUs needs to sync on gradients since each GPU compute their own gradiens for the model parameters based on the data batches that they process. The average of the parameter garaients across the GPUs are computed and synced across all GPUs using All-Reduce commpunication primitive, see {numref}`sec-nccl`. it guarantees the model on all GPUs are consistent before starting the next iteration.
+{numref}`mlp_ddp_figure` shows that each GPU take a copy of the model, both has the whole $W_1$, $b_1$, $W_2$ and $b_2$. It shows the dataset is divided into two parts and each GPU sees only its own batches of the data perform the forward and backward passes locally. After each backward pass and before updating model, the GPUs needs to sync on gradients since each GPU compute their own gradients for the model parameters based on the data batches that they process. The average of the parameter gradients across the GPUs are computed and synced across all GPUs using All-Reduce communication primitive, see {numref}`sec-nccl`. it guarantees the model on all GPUs are consistent before starting the next iteration.
 
 Next, we can take the single-GPU code of our simple mlp example from {numref}`mlp_single_gpu` and modify to use two GPUs using DDP.
 ````{dropdown} Using DDP To Run The Simple MLP Example On Two GPUs
@@ -489,14 +489,14 @@ To run it you can just follow the same steps when running the single GPU {numref
 As you see in {numref}`mlp_mp_figure`, the main drawback of this method is that at any given time only one of the GPUs are active and the other GPUs are idle leading to underutilization of the compute resources. Tensor Parallelism (sharding model horizontally) and Pipeline Parallelism are other forms of Model parallelism that aim to mitigate this drawback.
 
 
-````{list-table} Model Partitioned Into Two GPUs Using Pipeline Parallelism (left) vs Tensor Prallelism (right).
+````{list-table} Model Partitioned Into Two GPUs Using Pipeline Parallelism (left) vs Tensor Parallelism (right).
 :header-rows: 0
 * - ![](figures/png/mlp_network_mp.png)
   - ![](figures/png/mlp_network_tp.png)
 ````
 
 ### Pipeline Parallelism (PP)
-It is very similar to the naive model parallelism while it combines aspects of data and model parallelism by splitting the model into stages that are processed in a pipeline fashion to mitigate the GPU idle time issue in model prallelism. Each stage of the model is processed on different GPU, allowing for efficient parallel processing of large models and datasets.
+It is very similar to the naive model parallelism while it combines aspects of data and model parallelism by splitting the model into stages that are processed in a pipeline fashion to mitigate the GPU idle time issue in model parallelism. Each stage of the model is processed on different GPU, allowing for efficient parallel processing of large models and datasets.
 
 ### Tensor Parallelism (TP)
 Tensor Parallelism is a form of Model Parallelism in which we divide the parameter tensors of each layer into slices and each GPU will hold one slice instead of putting the entire layer in one GPU. In this way each GPU participates in computation of every layer equally and does not have to be idle and waiting for other GPUs to perform previous layers’ computation.
@@ -507,7 +507,7 @@ Tensor Parallelism is a form of Model Parallelism in which we divide the paramet
 width: 100%
 name: mlp_tp_figure
 ---
-Tensor Parallelism for the simple MLP example. In this example each tensor is divided into two slices column-wise. Each GPU computing a part of the output and then communication needed to gather the partail compuation across GPUs.
+Tensor Parallelism for the simple MLP example. In this example each tensor is divided into two slices column-wise. Each GPU computing a part of the output and then communication needed to gather the partail computation across GPUs.
 ```
 
 ````{dropdown} Using TP To Run The Simple MLP Example On Two GPUs 
@@ -630,20 +630,20 @@ for i in range(max_epochs):
 
 destroy_process_group()
 ```
-To run this code we need the `random_sataset.py` from {numref}`random_dataset` and a conda environment in which PyTorch is installed, refer to {numref}`conda_setup` to create one if you don't have one already.
+To run this code we need the `random_dataset.py` from {numref}`random_dataset` and a conda environment in which PyTorch is installed, refer to {numref}`conda_setup` to create one if you don't have one already.
 
 Now use the same slurm script skeleton in {numref}`multi_gpu_slurm` to run the `mlp_tensor_parallel.py` from {numref}`mlp_tp_code`.
 ````
 
 ### Fully Sharded Data Parallelism (FSDP)
-The idea of this strategy is to shards almost everything across GPUs to enable distributed training for very large models. FSDP shards the model (parameters and gradients), data and optimization states across GPUs. It combines Data Parallelism with Model Parallelism (sharding model both Vertically and Horizontally) in a unique way. FSDP breaks down a model instance into smaller units and then flattens and shards all of the parameters within each unit. It allows to train very large models using the combined memory of many GPUs. Before each computation, it requires to first gather all the paramater shards across GPUs (aka, parameter unsharding) using `All-Gather` and `Reduce_Scatter` collective communication primitives, see {numref}`sec-nccl`.
+The idea of this strategy is to shards almost everything across GPUs to enable distributed training for very large models. FSDP shards the model (parameters and gradients), data and optimization states across GPUs. It combines Data Parallelism with Model Parallelism (sharding model both Vertically and Horizontally) in a unique way. FSDP breaks down a model instance into smaller units and then flattens and shards all of the parameters within each unit. It allows to train very large models using the combined memory of many GPUs. Before each computation, it requires to first gather all the parameter shards across GPUs (aka, parameter unsharding) using `All-Gather` and `Reduce_Scatter` collective communication primitives, see {numref}`sec-nccl`.
 
 ```{figure} figures/png/FSDP.png
 ---
 height: 500px
 name: fsdp
 ---
-Schematic Diagram of FSDP Computation, Communication and Their Potential Overlapp.
+Schematic Diagram of FSDP Computation, Communication and Their Potential Overlap.
 ```
 As {numref}`fsdp` shows - Before performing each Forward or Backward pass for a given FSDP unit, it has to first All-Gather the unit’s parameters from all GPUs and then perform the Forward or Backward pass. Afterward it will release the remote shards to free memory for the next unit `All-Gather`.
 
