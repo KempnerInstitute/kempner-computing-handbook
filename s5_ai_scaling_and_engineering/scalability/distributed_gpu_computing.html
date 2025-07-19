@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=e97a2c88" />
@@ -265,7 +265,7 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../efficiency/README.html">18. Efficiency</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../efficiency/ml_scaling_and_efficiency.html">18.1. ML Efficiency</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../efficiency/performance_monitoring_and_optimization.html">18.2. Peformance Monitoring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../efficiency/performance_monitoring_and_optimization.html">18.2. Performance Monitoring</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../efficiency/efficient_deployment_and_inference.html">18.3. Deployment and Inference</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../efficiency/experiment_management_and_reproducibility.html">18.4. Experiment Management</a></li>
 </ul>
@@ -896,7 +896,7 @@ python<span class="w"> </span>mlp_single_gpu.py
 </pre></div>
 </div>
 </div>
-<p class="sd-card-text">To run this code we need the <code class="docutils literal notranslate"><span class="pre">random_sataset.py</span></code> from <a class="reference internal" href="#random-dataset"><span class="std std-numref">Listing 17.6</span></a> and a conda environment in which PyTorch is installed, refer to <a class="reference internal" href="#conda-setup"><span class="std std-numref">Listing 17.7</span></a> to create one if you don’t have one already.</p>
+<p class="sd-card-text">To run this code we need the <code class="docutils literal notranslate"><span class="pre">random_dataset.py</span></code> from <a class="reference internal" href="#random-dataset"><span class="std std-numref">Listing 17.6</span></a> and a conda environment in which PyTorch is installed, refer to <a class="reference internal" href="#conda-setup"><span class="std std-numref">Listing 17.7</span></a> to create one if you don’t have one already.</p>
 <p class="sd-card-text">Now use the following slurm script skeleton to run the <code class="docutils literal notranslate"><span class="pre">mlp_ddp.py</span></code> from <a class="reference internal" href="#mlp-ddp-code"><span class="std std-numref">Listing 17.9</span></a>. Note that we need to add environment variables to specify the Master node info, rank, local rank, etc.</p>
 <div class="literal-block-wrapper docutils container" id="multi-gpu-slurm">
 <div class="code-block-caption"><span class="caption-number">Listing 17.10 </span><span class="caption-text">Slurm script skeleton to run <a class="reference internal" href="#mlp-ddp-code"><span class="std std-numref">Listing 17.9</span></a> on multiple GPUs. Here, it requests for two nodes, one GPU on each node, a total of two GPUs.</span><a class="headerlink" href="#multi-gpu-slurm" title="Link to this code">#</a></div>

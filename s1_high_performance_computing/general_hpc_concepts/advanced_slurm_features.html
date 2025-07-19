@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=e97a2c88" />
@@ -263,7 +263,7 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../s5_ai_scaling_and_engineering/efficiency/README.html">18. Efficiency</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../s5_ai_scaling_and_engineering/efficiency/ml_scaling_and_efficiency.html">18.1. ML Efficiency</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../s5_ai_scaling_and_engineering/efficiency/performance_monitoring_and_optimization.html">18.2. Peformance Monitoring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../s5_ai_scaling_and_engineering/efficiency/performance_monitoring_and_optimization.html">18.2. Performance Monitoring</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../s5_ai_scaling_and_engineering/efficiency/efficient_deployment_and_inference.html">18.3. Deployment and Inference</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../s5_ai_scaling_and_engineering/efficiency/experiment_management_and_reproducibility.html">18.4. Experiment Management</a></li>
 </ul>
@@ -514,7 +514,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="advanced-slurm-features">
 <h1><span class="section-number">2.5. </span>Advanced SLURM Features<a class="headerlink" href="#advanced-slurm-features" title="Link to this heading">#</a></h1>
-<p>This section covers advanced topics in utlizing SLURM better for your computational workflows. This document will be updated over time by the engineers and our cluster community to cover a comprehensive list of SLURM advanved features.</p>
+<p>This section covers advanced topics in utilizing SLURM better for your computational workflows. This document will be updated over time by the engineers and our cluster community to cover a comprehensive list of SLURM advanced features.</p>
 <section id="exclusive-node-access">
 <h2><span class="section-number">2.5.1. </span>Exclusive Node Access<a class="headerlink" href="#exclusive-node-access" title="Link to this heading">#</a></h2>
 <p>For jobs that require the exclusive use of a compute node to avoid sharing resources with other jobs, you can specify the <code class="docutils literal notranslate"><span class="pre">--exclusive</span></code> flag with your batch job submission command (<code class="docutils literal notranslate"><span class="pre">sbatch</span></code>) when requesting an interactive session in SLURM,</p>
@@ -609,7 +609,7 @@ kempner_h100<span class="w"> </span>amd,holyndr,genoa,avx,avx2,avx512,gpu,h100,c
 <p>SLURM offers the capability to send email notifications regarding the status of jobs, allowing users to be informed about job start, end, and failure events. This feature is particularly useful for monitoring long-running or critical jobs without the need to manually check their status. This feature can be configured using the following options:</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
-<tr class="row-odd"><th class="head"><p>Paramter</p></th>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
 <th class="head"><p>Description</p></th>
 </tr>
 </thead>

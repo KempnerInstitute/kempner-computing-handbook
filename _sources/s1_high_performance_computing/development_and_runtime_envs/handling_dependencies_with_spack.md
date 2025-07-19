@@ -60,7 +60,7 @@ A list of useful Spack environment commands,
 | `spack env deactivate`          | Deactivate an environment.                     |
 | `spack install --add <package>` | Install a package in the new environment.      |
 
-{*Add more command for exportng Spack environment YAML file and importing in a different system.*}
+{*Add more command for exporting Spack environment YAML file and importing in a different system.*}
 
 
 ```{tip}

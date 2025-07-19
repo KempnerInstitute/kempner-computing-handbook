@@ -76,7 +76,7 @@ name: VSCode SSH Login 4
 (development_and_runtime_envs:using_vscode_for_remote_development:compute_node)=
 ## Connecting to the FASRC cluster (Compute node)
 
-Connecting to the compute nodes requries two additional configurations:
+Connecting to the compute nodes requires two additional configurations:
 
 1. Add the compute node configuration to the ssh configuration file on your local machine.
 
@@ -148,7 +148,7 @@ name: VSCode SSH Login 7
 You can open, edit, and run Jupyter notebooks within VSCode. To do so, you need to first install the [Jupyter extension](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter).
 
 
-The interface for notebooks within VSCode is similar to other methods of accessing them - there are tools for running individual cells, all cells, clearing all outputs, etc. See the [VSCode jupyter notebook documention](https://code.visualstudio.com/docs/datascience/jupyter-notebooks) for a detailed overview of these options.
+The interface for notebooks within VSCode is similar to other methods of accessing them - there are tools for running individual cells, all cells, clearing all outputs, etc. See the [VSCode jupyter notebook documentation](https://code.visualstudio.com/docs/datascience/jupyter-notebooks) for a detailed overview of these options.
 
 
 If you follow the instructions above, you will be able to open and run jupyter notebooks within an interactive session on the cluster. Open the notebook within VSCode and click on `Select Kernel` (in the top right corner):

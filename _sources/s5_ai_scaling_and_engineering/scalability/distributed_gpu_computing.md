@@ -363,7 +363,7 @@ for i in range(max_epochs):
 
 destroy_process_group()
 ```
-To run this code we need the `random_sataset.py` from {numref}`random_dataset` and a conda environment in which PyTorch is installed, refer to {numref}`conda_setup` to create one if you don't have one already.
+To run this code we need the `random_dataset.py` from {numref}`random_dataset` and a conda environment in which PyTorch is installed, refer to {numref}`conda_setup` to create one if you don't have one already.
 
 Now use the following slurm script skeleton to run the `mlp_ddp.py` from {numref}`mlp_ddp_code`. Note that we need to add environment variables to specify the Master node info, rank, local rank, etc.
 ```{code-block} bash

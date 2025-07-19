@@ -15,7 +15,7 @@ salloc --partition=kempner --account=kempner_grads --time=0-01:00 --mem=1000G --
 ```
 
 ```{seealso}
-For details on how to connect this interactive session to VSCode, plese see the section {ref}`development_and_runtime_envs:using_vscode_for_remote_development:compute_node`.
+For details on how to connect this interactive session to VSCode, please see the section {ref}`development_and_runtime_envs:using_vscode_for_remote_development:compute_node`.
 ```
 
 (resource_management:job_submission_basics:batch_jobs)=

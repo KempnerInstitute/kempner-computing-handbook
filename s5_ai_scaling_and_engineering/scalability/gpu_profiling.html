@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=e97a2c88" />
@@ -263,7 +263,7 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../efficiency/README.html">18. Efficiency</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../efficiency/ml_scaling_and_efficiency.html">18.1. ML Efficiency</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../efficiency/performance_monitoring_and_optimization.html">18.2. Peformance Monitoring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../efficiency/performance_monitoring_and_optimization.html">18.2. Performance Monitoring</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../efficiency/efficient_deployment_and_inference.html">18.3. Deployment and Inference</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../efficiency/experiment_management_and_reproducibility.html">18.4. Experiment Management</a></li>
 </ul>
@@ -502,7 +502,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alexnet-toy-example">17.3.3.1. Alexnet Toy Example</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-experimental-environment-on-the-cluster">17.3.3.2. Prepare The Experimental Environment on the Cluster</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#system-level-profiling-using-nsight-system">17.3.3.3. System-Level Profiling Using Nsight System</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-specific-profiling-using-nisht-compute">17.3.3.4. Kernel-Specific Profiling Using Nisht Compute</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-specific-profiling-using-nsight-compute">17.3.3.4. Kernel-Specific Profiling Using Nsight Compute</a></li>
 </ul>
 </li>
 </ul>
@@ -518,7 +518,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="gpu-profiling">
 <h1><span class="section-number">17.3. </span>GPU Profiling<a class="headerlink" href="#gpu-profiling" title="Link to this heading">#</a></h1>
-<p>This section explains how to profile GPUs to design a better performent code. GPU profiling helps to get some insights of GPUs behavior to identify and fix performance bottlenecks. The following steps are performed iteratively until achieving the desired performance:</p>
+<p>This section explains how to profile GPUs to design a better performant code. GPU profiling helps to get some insights of GPUs behavior to identify and fix performance bottlenecks. The following steps are performed iteratively until achieving the desired performance:</p>
 <ul class="simple">
 <li><p>Profile the code</p></li>
 <li><p>Analyze the traces to identify the possible performance bottlenecks</p></li>
@@ -535,13 +535,13 @@ document.write(`
 <h2><span class="section-number">17.3.1. </span>Profiling using Pytorch Profiler<a class="headerlink" href="#profiling-using-pytorch-profiler" title="Link to this heading">#</a></h2>
 <p>PyTorch profiler is a tool that facilitates collecting different performance metrics at runtime to better understand what happens behind the scene. For example, during training of a ML model, torch profiler can be used for understanding the most expensive model operators, their impact and studying device kernel activity. More particularly to answer the following questions:</p>
 <ul class="simple">
-<li><p>How much GPU run time contirbutes to Computation, Communication or Memory related kernels.</p></li>
+<li><p>How much GPU run time contributes to Computation, Communication or Memory related kernels.</p></li>
 <li><p>How much these different categories overlap one another (non-blocking kernel calls or multiple parallel cuda streams can be used to provide overlapping).</p></li>
 <li><p>What kernels are the most expensive ones within the above categories (breakdown).</p></li>
 </ul>
 <p>Following shows how we can wrap the training loop to be performed in the context of the torch profiler using <code class="docutils literal notranslate"><span class="pre">with</span></code> statement.</p>
 <div class="literal-block-wrapper docutils container" id="torch-profiler-code">
-<div class="code-block-caption"><span class="caption-number">Listing 17.1 </span><span class="caption-text">A example of applying PyTorch Profiler to profile the traing loop for the specific iterations using torch profiler scheduler.</span><a class="headerlink" href="#torch-profiler-code" title="Link to this code">#</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 17.1 </span><span class="caption-text">A example of applying PyTorch Profiler to profile the training loop for the specific iterations using torch profiler scheduler.</span><a class="headerlink" href="#torch-profiler-code" title="Link to this code">#</a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">torch.profiler</span><span class="w"> </span><span class="kn">import</span> <span class="n">profile</span><span class="p">,</span> <span class="n">schedule</span><span class="p">,</span> <span class="n">tensorboard_trace_handler</span>
 
 <span class="n">tracing_schedule</span> <span class="o">=</span> <span class="n">schedule</span><span class="p">(</span><span class="n">skip_first</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">warmup</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">active</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -606,7 +606,7 @@ document.write(`
 <li><p><code class="docutils literal notranslate"><span class="pre">kernel_type_metrics_df</span></code> contains the raw values of percentage time spent for each kernel type and is used to generate a pie chart if you pass <code class="docutils literal notranslate"><span class="pre">visualize=True</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">kernel_metrics_df</span></code> contains more details on duration summary statistics for each kernel. It shows the top 5 computation, communication and memory kernels by passing <code class="docutils literal notranslate"><span class="pre">num_kernels=5</span></code>.</p></li>
 </ul>
-<p>Output example of tthe first dataframe from traces collected during training of a model could be as follows:</p>
+<p>Output example of the first dataframe from traces collected during training of a model could be as follows:</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
@@ -669,7 +669,7 @@ document.write(`
 <h3><span class="section-number">17.3.3.1. </span>Alexnet Toy Example<a class="headerlink" href="#alexnet-toy-example" title="Link to this heading">#</a></h3>
 <p>The Following code is a toy example of training an Alexnet model. This example is used here to show how Nvidia Nsight Tools work. The <code class="docutils literal notranslate"><span class="pre">torch.cuda.nvtx</span></code> is used to specify what regions of the code to be profiled and when:</p>
 <div class="literal-block-wrapper docutils container" id="nsight-alexnet-example">
-<div class="code-block-caption"><span class="caption-number">Listing 17.2 </span><span class="caption-text">Anotating an Alexnet toy example using <code class="docutils literal notranslate"><span class="pre">torch.cuda.nvtx</span></code> to specify what region in the code and when to profile using Nsight System and Compute.</span><a class="headerlink" href="#nsight-alexnet-example" title="Link to this code">#</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 17.2 </span><span class="caption-text">Annotating an Alexnet toy example using <code class="docutils literal notranslate"><span class="pre">torch.cuda.nvtx</span></code> to specify what region in the code and when to profile using Nsight System and Compute.</span><a class="headerlink" href="#nsight-alexnet-example" title="Link to this code">#</a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.models</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">models</span>
 
@@ -709,7 +709,7 @@ document.write(`
 <span class="n">is_profiling</span> <span class="o">=</span> <span class="kc">False</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_steps</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;starting setp </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">max_steps</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;starting step </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">max_steps</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
     <span class="c1"># start profiling after the warmup iterations</span>
     <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">warmup_steps</span><span class="p">:</span>
         <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">cudart</span><span class="p">()</span><span class="o">.</span><span class="n">cudaProfilerStart</span><span class="p">()</span>
@@ -728,13 +728,13 @@ document.write(`
 <section id="prepare-the-experimental-environment-on-the-cluster">
 <h3><span class="section-number">17.3.3.2. </span>Prepare The Experimental Environment on the Cluster<a class="headerlink" href="#prepare-the-experimental-environment-on-the-cluster" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Following modules needs to be loaded on the cluster using the following command line. These command line is added to the slurm scripts for running Nsight System and Nsight Comput on <a class="reference internal" href="#nsight-system-slurm"><span class="std std-numref">Listing 17.3</span></a> and <a class="reference internal" href="#nsight-compute-slurm"><span class="std std-numref">Listing 17.4</span></a> respectively.</p></li>
+<li><p>Following modules needs to be loaded on the cluster using the following command line. These command line is added to the slurm scripts for running Nsight System and Nsight Compute on <a class="reference internal" href="#nsight-system-slurm"><span class="std std-numref">Listing 17.3</span></a> and <a class="reference internal" href="#nsight-compute-slurm"><span class="std std-numref">Listing 17.4</span></a> respectively.</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>module<span class="w"> </span>load<span class="w"> </span>python<span class="w"> </span>nvhpc<span class="w"> </span>cudnn<span class="w"> </span>cuda
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>Creating the conda envireonment named <code class="docutils literal notranslate"><span class="pre">profiling</span></code> (one can use their own customized name).</p></li>
+<li><p>Creating the conda environment named <code class="docutils literal notranslate"><span class="pre">profiling</span></code> (one can use their own customized name).</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>profiling<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10
 </pre></div>
@@ -845,8 +845,8 @@ nsys<span class="w"> </span>profile<span class="w"> </span>--gpu-metrics-device<
 </pre></div>
 </div>
 </section>
-<section id="kernel-specific-profiling-using-nisht-compute">
-<h3><span class="section-number">17.3.3.4. </span>Kernel-Specific Profiling Using Nisht Compute<a class="headerlink" href="#kernel-specific-profiling-using-nisht-compute" title="Link to this heading">#</a></h3>
+<section id="kernel-specific-profiling-using-nsight-compute">
+<h3><span class="section-number">17.3.3.4. </span>Kernel-Specific Profiling Using Nsight Compute<a class="headerlink" href="#kernel-specific-profiling-using-nsight-compute" title="Link to this heading">#</a></h3>
 <p>Now for example one can pick the <code class="docutils literal notranslate"><span class="pre">ampere_gcgemm_64x64_nt</span></code> kernel and get more detail about this specific kernel (it takes 13.6% of the gpu time) using Nsight Compute. We can use the following slurm script.</p>
 <div class="literal-block-wrapper docutils container" id="nsight-compute-slurm">
 <div class="code-block-caption"><span class="caption-number">Listing 17.4 </span><span class="caption-text">Slurm script to run Alexnet example of <a class="reference internal" href="#nsight-alexnet-example"><span class="std std-numref">Listing 17.2</span></a> and Using Nsight Compute to profile the <code class="docutils literal notranslate"><span class="pre">ampere_gcgemm_64x64_nt</span></code> kernel.</span><a class="headerlink" href="#nsight-compute-slurm" title="Link to this code">#</a></div>
@@ -866,7 +866,7 @@ nsys<span class="w"> </span>profile<span class="w"> </span>--gpu-metrics-device<
 module<span class="w"> </span>load<span class="w"> </span>python<span class="w"> </span>nvhpc<span class="w"> </span>cudnn<span class="w"> </span>cuda
 conda<span class="w"> </span>activate<span class="w"> </span>profiling
 
-<span class="c1">### Profiling the kernel `ampere_gcgemm_64x64_nt` (identified by Nisght Systems) </span>
+<span class="c1">### Profiling the kernel `ampere_gcgemm_64x64_nt` (identified by Nsight Systems) </span>
 ncu<span class="w"> </span>--nvtx<span class="w"> </span>--nvtx-include<span class="w"> </span><span class="s2">&quot;forward pass/&quot;</span><span class="w"> </span>--nvtx-include<span class="w"> </span><span class="s2">&quot;backward pass/&quot;</span><span class="w"> </span>--nvtx-include<span class="w"> </span><span class="s2">&quot;optimizer step/&quot;</span><span class="w"> </span>--launch-count<span class="w"> </span><span class="m">8</span><span class="w"> </span>-k<span class="w"> </span>--regex:ampere_gcgemm_64x64_nt<span class="w"> </span>-f<span class="w"> </span>-o<span class="w"> </span>outfile-profile<span class="w"> </span>--set<span class="w"> </span>full<span class="w"> </span>python3<span class="w"> </span>alexnet.py
 </pre></div>
 </div>
@@ -875,7 +875,7 @@ ncu<span class="w"> </span>--nvtx<span class="w"> </span>--nvtx-include<span cla
 <figure class="align-default" id="nsight-compute-throughput">
 <img alt="../../_images/nsight_compute_throughput.png" src="../../_images/nsight_compute_throughput.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 17.8 </span><span class="caption-text">Nsigt Compute GUI for Visualizing the SM and Memory throughput of the <code class="docutils literal notranslate"><span class="pre">ampere_gcgemm_64x64_nt</span></code> kernel.</span><a class="headerlink" href="#nsight-compute-throughput" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 17.8 </span><span class="caption-text">Nsight Compute GUI for Visualizing the SM and Memory throughput of the <code class="docutils literal notranslate"><span class="pre">ampere_gcgemm_64x64_nt</span></code> kernel.</span><a class="headerlink" href="#nsight-compute-throughput" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>In addition to the above GPU throughput, Nsight Compute provides very detailed insight of each kernel and suggests optimization recommendations on other metrics. For example <code class="docutils literal notranslate"><span class="pre">Inspect</span> <span class="pre">Memory</span> <span class="pre">Workload</span></code> section builds a visualization of memory transfer sizes and throughput on the profiled architecture, as well as a guide for improving performance.</p>
@@ -964,7 +964,7 @@ ncu<span class="w"> </span>--nvtx<span class="w"> </span>--nvtx-include<span cla
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alexnet-toy-example">17.3.3.1. Alexnet Toy Example</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-experimental-environment-on-the-cluster">17.3.3.2. Prepare The Experimental Environment on the Cluster</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#system-level-profiling-using-nsight-system">17.3.3.3. System-Level Profiling Using Nsight System</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-specific-profiling-using-nisht-compute">17.3.3.4. Kernel-Specific Profiling Using Nisht Compute</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-specific-profiling-using-nsight-compute">17.3.3.4. Kernel-Specific Profiling Using Nsight Compute</a></li>
 </ul>
 </li>
 </ul>

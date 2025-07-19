@@ -1,8 +1,8 @@
-(storage_and_data_trnasfer:data_transfer)=
+(storage_and_data_transfer:data_transfer)=
 # Data Transfer
 
 
-There are many possible methods for transferring data between local environments (such as your laptop) and the Kempner cluster. We focus on three methods in detail below: [scp](scp_section), [rsync](rsync_section), and [globus](globus_section). 
+There are many possible methods for transferring data between local environments (such as your laptop) and the Kempner cluster. We focus on three methods in detail below: [scp](scp_section), [rsync](rsync_section), and [Globus](globus_section). 
 
 Your choice of method will primarily depend on the size and complexity of the data transfer. Of the three methods we cover below, [scp](scp_section) is the simplest and most straight-forward tool. It may be the best choice for transferring a few small files. [rsync](rsync_section) has improved efficiency and additional functionality, including the advantage of preserving progress if a transfer is interrupted. [Globus](globus_section) should be used for large-scale data transfers.
 
@@ -153,7 +153,7 @@ Globus is a file sharing service designed for the secure and efficient transfer 
 
 **Set up Kempner cluster as an endpoint**
 1. After logging in, you should be on the File Manager page. In the "Collection" field, search for "Harvard FAS RC Holyoke".
-2. Select "Harvard FAS RC Holyoke" in the search results. It will ask you to authenticate your FASRC account, using your username and verfication code (code from your 2-factor authentication, not your password)
+2. Select "Harvard FAS RC Holyoke" in the search results. It will ask you to authenticate your FASRC account, using your username and verification code (code from your 2-factor authentication, not your password)
 3. You should now be able to see files and folders on the Kempner cluster. You will have the same permissions as if you were accessing the cluster via traditional log in. You can type a path into the "Path" field to go directly to a particular directory. 
 
 **Set up your local machine as an endpoint**

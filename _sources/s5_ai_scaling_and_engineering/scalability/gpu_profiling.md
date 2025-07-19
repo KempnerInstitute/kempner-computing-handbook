@@ -1,5 +1,5 @@
 # GPU Profiling
-This section explains how to profile GPUs to design a better performent code. GPU profiling helps to get some insights of GPUs behavior to identify and fix performance bottlenecks. The following steps are performed iteratively until achieving the desired performance:
+This section explains how to profile GPUs to design a better performant code. GPU profiling helps to get some insights of GPUs behavior to identify and fix performance bottlenecks. The following steps are performed iteratively until achieving the desired performance:
 * Profile the code
 * Analyze the traces to identify the possible performance bottlenecks
 * Fix the bottlenecks and optimize the code.
@@ -13,7 +13,7 @@ Profiling Loop to Optimize Code
 ```
 ## Profiling using Pytorch Profiler
 PyTorch profiler is a tool that facilitates collecting different performance metrics at runtime to better understand what happens behind the scene. For example, during training of a ML model, torch profiler can be used for understanding the most expensive model operators, their impact and studying device kernel activity. More particularly to answer the following questions:
-* How much GPU run time contirbutes to Computation, Communication or Memory related kernels.
+* How much GPU run time contributes to Computation, Communication or Memory related kernels.
 * How much these different categories overlap one another (non-blocking kernel calls or multiple parallel cuda streams can be used to provide overlapping).
 * What kernels are the most expensive ones within the above categories (breakdown).
 
@@ -21,7 +21,7 @@ Following shows how we can wrap the training loop to be performed in the context
 
 ```{code-block} python
 :name: torch-profiler-code
-:caption: A example of applying PyTorch Profiler to profile the traing loop for the specific iterations using torch profiler scheduler. 
+:caption: A example of applying PyTorch Profiler to profile the training loop for the specific iterations using torch profiler scheduler. 
 from torch.profiler import profile, schedule, tensorboard_trace_handler
 
 tracing_schedule = schedule(skip_first=5, wait=5, warmup=2, active=2, repeat=1)
@@ -79,7 +79,7 @@ The function returns two dataframes:
 * `kernel_type_metrics_df` contains the raw values of percentage time spent for each kernel type and is used to generate a pie chart if you pass `visualize=True`. 
 * `kernel_metrics_df` contains more details on duration summary statistics for each kernel. It shows the top 5 computation, communication and memory kernels by passing `num_kernels=5`.
 
-Output example of tthe first dataframe from traces collected during training of a model could be as follows:
+Output example of the first dataframe from traces collected during training of a model could be as follows:
 
 |	| kernel_type | sum | percentage |
 |---|---------------------------------------|------------|-----|
@@ -109,7 +109,7 @@ NVIDIA Nsight System and Compute
 The Following code is a toy example of training an Alexnet model. This example is used here to show how Nvidia Nsight Tools work. The `torch.cuda.nvtx` is used to specify what regions of the code to be profiled and when:
 ```{code-block} python
 :name: Nsight-alexnet-example
-:caption: Anotating an Alexnet toy example using `torch.cuda.nvtx` to specify what region in the code and when to profile using Nsight System and Compute.
+:caption: Annotating an Alexnet toy example using `torch.cuda.nvtx` to specify what region in the code and when to profile using Nsight System and Compute.
 
 import torch
 import torchvision.models as models
@@ -150,7 +150,7 @@ warmup_steps = 5
 is_profiling = False
 
 for i in range(max_steps):
-    print(f'starting setp {i} ({i+1}/{max_steps})')
+    print(f'starting step {i} ({i+1}/{max_steps})')
     # start profiling after the warmup iterations
     if i == warmup_steps:
         torch.cuda.cudart().cudaProfilerStart()
@@ -165,11 +165,11 @@ torch.cuda.cudart().cudaProfilerStop()
 ```
 
 ### Prepare The Experimental Environment on the Cluster
-* Following modules needs to be loaded on the cluster using the following command line. These command line is added to the slurm scripts for running Nsight System and Nsight Comput on {numref}`Nsight-System-Slurm` and {numref}`Nsight-Compute-Slurm` respectively.
+* Following modules needs to be loaded on the cluster using the following command line. These command line is added to the slurm scripts for running Nsight System and Nsight Compute on {numref}`Nsight-System-Slurm` and {numref}`Nsight-Compute-Slurm` respectively.
 ```{code-block} bash
 module load python nvhpc cudnn cuda
 ```
-* Creating the conda envireonment named `profiling` (one can use their own customized name).
+* Creating the conda environment named `profiling` (one can use their own customized name).
 ```{code-block} bash
 conda create -n profiling python=3.10
 ```
@@ -272,7 +272,7 @@ Nsight System GUI for Visualizing the Profiling of 3 Steps of Above Example.
 ```{code-block} bash
 sqlite3 report_file.sqlite "SELECT AVG(value) FROM GPU_Metrics WHERE metricId = (SELECT metricId from TARGET_INFO_GPU_METRICS where metricName LIKE '%SM Active%')"
 ```
-### Kernel-Specific Profiling Using Nisht Compute 
+### Kernel-Specific Profiling Using Nsight Compute  
 Now for example one can pick the `ampere_gcgemm_64x64_nt` kernel and get more detail about this specific kernel (it takes 13.6% of the gpu time) using Nsight Compute. We can use the following slurm script.
 ```{code-block} bash
 :name: Nsight-Compute-Slurm
@@ -293,7 +293,7 @@ Now for example one can pick the `ampere_gcgemm_64x64_nt` kernel and get more de
 module load python nvhpc cudnn cuda
 conda activate profiling
 
-### Profiling the kernel `ampere_gcgemm_64x64_nt` (identified by Nisght Systems) 
+### Profiling the kernel `ampere_gcgemm_64x64_nt` (identified by Nsight Systems) 
 ncu --nvtx --nvtx-include "forward pass/" --nvtx-include "backward pass/" --nvtx-include "optimizer step/" --launch-count 8 -k --regex:ampere_gcgemm_64x64_nt -f -o outfile-profile --set full python3 alexnet.py
 ```
 It will generate the outfile-profiling.ncu_rep that one can move it to their local machine and open it with the Nsight Compute GUI. Following you can see the SM and Memory throughput of the above kernel.
@@ -301,7 +301,7 @@ It will generate the outfile-profiling.ncu_rep that one can move it to their loc
 ---
 name: Nsight Compute Throughput
 ---
-Nsigt Compute GUI for Visualizing the SM and Memory throughput of the `ampere_gcgemm_64x64_nt` kernel. 
+Nsight Compute GUI for Visualizing the SM and Memory throughput of the `ampere_gcgemm_64x64_nt` kernel. 
 ```
 In addition to the above GPU throughput, Nsight Compute provides very detailed insight of each kernel and suggests optimization recommendations on other metrics. For example `Inspect Memory Workload` section builds a visualization of memory transfer sizes and throughput on the profiled architecture, as well as a guide for improving performance.
 ```{figure} figures/png/nsight_compute_memory.png

@@ -42,7 +42,7 @@ Overall, conda environments allow you to isolate package versions for different 
       mamba create --name myenv python=3.12 pip numpy -c conda-forge
       ```     
 
-      You can also specify the list and order of channels to look for the software pacakges. 
+      You can also specify the list and order of channels to look for the software packages. 
 
       ```bash
       conda config --add channels conda-forge

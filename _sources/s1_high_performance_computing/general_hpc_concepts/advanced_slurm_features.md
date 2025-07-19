@@ -1,6 +1,6 @@
 # Advanced SLURM Features 
 
-This section covers advanced topics in utlizing SLURM better for your computational workflows. This document will be updated over time by the engineers and our cluster community to cover a comprehensive list of SLURM advanved features. 
+This section covers advanced topics in utilizing SLURM better for your computational workflows. This document will be updated over time by the engineers and our cluster community to cover a comprehensive list of SLURM advanced features. 
 
 ## Exclusive Node Access
 
@@ -80,7 +80,7 @@ The following table describes each of the features in the Kempner AI cluster:
 
 SLURM offers the capability to send email notifications regarding the status of jobs, allowing users to be informed about job start, end, and failure events. This feature is particularly useful for monitoring long-running or critical jobs without the need to manually check their status. This feature can be configured using the following options:
 
-| Paramter     | Description                                                |
+| Parameter     | Description                                                |
 |--------------|------------------------------------------------------------|
 |`--mail-type` | specifies the type of events you want to be notified about.|
 |`--mail-user` | specifies the email address to receive the notifications.  |

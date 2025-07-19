@@ -44,7 +44,7 @@ Going through each of these commands in detail is beyond the scope of this handb
 
 ## SLURM Partitions
 
-The following partitions are available for Kempner affliates on the FASRC cluster:
+The following partitions are available for Kempner affiliates on the FASRC cluster:
 
 | Partition | Description |
 |-----------|-------------|

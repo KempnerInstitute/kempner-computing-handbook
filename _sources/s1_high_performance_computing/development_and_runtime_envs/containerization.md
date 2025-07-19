@@ -34,7 +34,7 @@ singularity pull docker://pytorch/pytorch:2.2.1-cuda12.1-cudnn8-devel
 
 4. Terminate the light interactive session:
 
-Doublecheck that you have the image file in your current directory. If you have the image file, you can terminate the session. If you don't have the image file, you can keep the session open and try to pull the image again.
+Double-check that you have the image file in your current directory. If you have the image file, you can terminate the session. If you don't have the image file, you can keep the session open and try to pull the image again.
 
 ```bash
 exit
