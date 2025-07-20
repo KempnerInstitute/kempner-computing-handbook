@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>8. Testing and Continues Integration &#8212; Kempner Institute Computing Handbook</title>
+    <title>8. Testing and Continuous Integration &#8212; Kempner Institute Computing Handbook</title>
   
   
   
@@ -235,7 +235,7 @@
 <li class="toctree-l1"><a class="reference internal" href="collaborative_code_development.html">5. Collaborative Code Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="software_design_principles.html">6. Software Design Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="documentation_and_readibility.html">7. Documentation and Readability</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">8. Testing and Continues Integration</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">8. Testing and Continuous Integration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="package_development.html">9. Package Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reproducible_research.html">10. Reproducible Research</a></li>
 </ul>
@@ -473,7 +473,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -484,11 +486,25 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Testing and Continues Integration</h1>
+    <h1>Testing and Continuous Integration</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-tests">8.1. Types of Tests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-tools-and-frameworks">8.2. Testing Tools and Frameworks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-effective-tests">8.3. Writing Effective Tests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#test-coverage">8.4. Test Coverage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#continuous-integration-ci">8.5. Continuous Integration (CI)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#research-specific-advice">8.6. Research-Specific Advice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-checklist">8.7. Summary Checklist</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -498,8 +514,43 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="testing-and-continues-integration">
-<h1><span class="section-number">8. </span>Testing and Continues Integration<a class="headerlink" href="#testing-and-continues-integration" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="testing-and-continuous-integration">
+<h1><span class="section-number">8. </span>Testing and Continuous Integration<a class="headerlink" href="#testing-and-continuous-integration" title="Link to this heading">#</a></h1>
+<p>Reliable testing and Continuous Integration (CI) are foundational for ensuring software correctness, especially in collaborative and evolving research environments. This section outlines different types of tests, tools for writing and maintaining them, and how to integrate testing into automated workflows.</p>
+<p>Why Testing and Continuous Integration Matters</p>
+<ul class="simple">
+<li><p>Prevents regressions and errors as projects grow.</p></li>
+<li><p>Encourages modular, maintainable code.</p></li>
+<li><p>Enables safe collaboration through automated checks.</p></li>
+</ul>
+<section id="types-of-tests">
+<h2><span class="section-number">8.1. </span>Types of Tests<a class="headerlink" href="#types-of-tests" title="Link to this heading">#</a></h2>
+</section>
+<section id="testing-tools-and-frameworks">
+<h2><span class="section-number">8.2. </span>Testing Tools and Frameworks<a class="headerlink" href="#testing-tools-and-frameworks" title="Link to this heading">#</a></h2>
+</section>
+<section id="writing-effective-tests">
+<h2><span class="section-number">8.3. </span>Writing Effective Tests<a class="headerlink" href="#writing-effective-tests" title="Link to this heading">#</a></h2>
+</section>
+<section id="test-coverage">
+<h2><span class="section-number">8.4. </span>Test Coverage<a class="headerlink" href="#test-coverage" title="Link to this heading">#</a></h2>
+</section>
+<section id="continuous-integration-ci">
+<h2><span class="section-number">8.5. </span>Continuous Integration (CI)<a class="headerlink" href="#continuous-integration-ci" title="Link to this heading">#</a></h2>
+</section>
+<section id="research-specific-advice">
+<h2><span class="section-number">8.6. </span>Research-Specific Advice<a class="headerlink" href="#research-specific-advice" title="Link to this heading">#</a></h2>
+</section>
+<section id="summary-checklist">
+<h2><span class="section-number">8.7. </span>Summary Checklist<a class="headerlink" href="#summary-checklist" title="Link to this heading">#</a></h2>
+<ul class="contains-task-list simple">
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> All core functionality has unit tests</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> CI runs on pull requests</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Linting and formatting checks automated</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Code coverage tracked</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Tests are reproducible and deterministic</p></li>
+</ul>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -556,6 +607,27 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-tests">8.1. Types of Tests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-tools-and-frameworks">8.2. Testing Tools and Frameworks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-effective-tests">8.3. Writing Effective Tests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#test-coverage">8.4. Test Coverage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#continuous-integration-ci">8.5. Continuous Integration (CI)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#research-specific-advice">8.6. Research-Specific Advice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-checklist">8.7. Summary Checklist</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
