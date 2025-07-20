@@ -473,7 +473,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -489,6 +491,19 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-documentation">7.1. Types of Documentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-readability-best-practices">7.2. Code Readability Best Practices</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tools-and-practices">7.3. Tools and Practices</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation-in-research-context">7.4. Documentation in Research Context</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mental-models-for-readers">7.5. Mental Models for Readers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-checklist">7.6. Summary Checklist</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -500,6 +515,37 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="documentation-and-readability">
 <h1><span class="section-number">7. </span>Documentation and Readability<a class="headerlink" href="#documentation-and-readability" title="Link to this heading">#</a></h1>
+<p>This section focuses on best practices and tools that improve documentation and code clarity in research software.</p>
+<p>Why Does Documentation Matter?</p>
+<ul class="simple">
+<li><p>Clear documentation ensures reproducibility, collaboration, and long-term usability.</p></li>
+<li><p>Readable code is easier to debug, extend, and validate - critical for research integrity.</p></li>
+</ul>
+<section id="types-of-documentation">
+<h2><span class="section-number">7.1. </span>Types of Documentation<a class="headerlink" href="#types-of-documentation" title="Link to this heading">#</a></h2>
+</section>
+<section id="code-readability-best-practices">
+<h2><span class="section-number">7.2. </span>Code Readability Best Practices<a class="headerlink" href="#code-readability-best-practices" title="Link to this heading">#</a></h2>
+</section>
+<section id="tools-and-practices">
+<h2><span class="section-number">7.3. </span>Tools and Practices<a class="headerlink" href="#tools-and-practices" title="Link to this heading">#</a></h2>
+</section>
+<section id="documentation-in-research-context">
+<h2><span class="section-number">7.4. </span>Documentation in Research Context<a class="headerlink" href="#documentation-in-research-context" title="Link to this heading">#</a></h2>
+</section>
+<section id="mental-models-for-readers">
+<h2><span class="section-number">7.5. </span>Mental Models for Readers<a class="headerlink" href="#mental-models-for-readers" title="Link to this heading">#</a></h2>
+</section>
+<section id="summary-checklist">
+<h2><span class="section-number">7.6. </span>Summary Checklist<a class="headerlink" href="#summary-checklist" title="Link to this heading">#</a></h2>
+<ul class="contains-task-list simple">
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Docstrings on all public functions/classes</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> README explains purpose, usage, and setup</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Style guide followed consistently</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Notebook outputs cleared before commit</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> All dependencies documented</p></li>
+</ul>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -556,6 +602,26 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-documentation">7.1. Types of Documentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-readability-best-practices">7.2. Code Readability Best Practices</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tools-and-practices">7.3. Tools and Practices</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation-in-research-context">7.4. Documentation in Research Context</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mental-models-for-readers">7.5. Mental Models for Readers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-checklist">7.6. Summary Checklist</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
