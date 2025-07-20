@@ -473,7 +473,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -489,6 +491,26 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-control-systems-vcs">5.1. Version Control Systems (VCS)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#branching-collaboration-models">5.2. Branching &amp; Collaboration Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-review-continuous-integration-ci">5.3. Code Review &amp; Continuous Integration (CI)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merge-conflicts-resolution-strategies">5.4. Merge Conflicts &amp; Resolution Strategies</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#realtime-collaboration-tools">5.5. Real‑Time Collaboration Tools</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modular-design">5.6. Modular Design</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-flags-controlled-integration">5.7. Feature Flags &amp; Controlled Integration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-ecosystem">5.8. Testing Ecosystem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependency-environment-management">5.9. Dependency &amp; Environment Management</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-consistency-tools">5.10. Code Consistency Tools</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#security-licensing-code-compliance">5.11. Security, Licensing &amp; Code Compliance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integrations">5.12. Integrations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-checklist">5.13. Summary Checklist</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -500,6 +522,54 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="collaborative-code-development">
 <h1><span class="section-number">5. </span>Collaborative Code Development<a class="headerlink" href="#collaborative-code-development" title="Link to this heading">#</a></h1>
+<p>Collaborative code development promotes reproducible, maintainable, and scalable research software. This section provides an overview of the tools and practices, from version control and branching strategies to continuous integration, dependency management, and secure automation, that enable research teams to work together efficiently.</p>
+<section id="version-control-systems-vcs">
+<h2><span class="section-number">5.1. </span>Version Control Systems (VCS)<a class="headerlink" href="#version-control-systems-vcs" title="Link to this heading">#</a></h2>
+</section>
+<section id="branching-collaboration-models">
+<h2><span class="section-number">5.2. </span>Branching &amp; Collaboration Models<a class="headerlink" href="#branching-collaboration-models" title="Link to this heading">#</a></h2>
+</section>
+<section id="code-review-continuous-integration-ci">
+<h2><span class="section-number">5.3. </span>Code Review &amp; Continuous Integration (CI)<a class="headerlink" href="#code-review-continuous-integration-ci" title="Link to this heading">#</a></h2>
+</section>
+<section id="merge-conflicts-resolution-strategies">
+<h2><span class="section-number">5.4. </span>Merge Conflicts &amp; Resolution Strategies<a class="headerlink" href="#merge-conflicts-resolution-strategies" title="Link to this heading">#</a></h2>
+</section>
+<section id="realtime-collaboration-tools">
+<h2><span class="section-number">5.5. </span>Real‑Time Collaboration Tools<a class="headerlink" href="#realtime-collaboration-tools" title="Link to this heading">#</a></h2>
+</section>
+<section id="modular-design">
+<h2><span class="section-number">5.6. </span>Modular Design<a class="headerlink" href="#modular-design" title="Link to this heading">#</a></h2>
+</section>
+<section id="feature-flags-controlled-integration">
+<h2><span class="section-number">5.7. </span>Feature Flags &amp; Controlled Integration<a class="headerlink" href="#feature-flags-controlled-integration" title="Link to this heading">#</a></h2>
+</section>
+<section id="testing-ecosystem">
+<h2><span class="section-number">5.8. </span>Testing Ecosystem<a class="headerlink" href="#testing-ecosystem" title="Link to this heading">#</a></h2>
+</section>
+<section id="dependency-environment-management">
+<h2><span class="section-number">5.9. </span>Dependency &amp; Environment Management<a class="headerlink" href="#dependency-environment-management" title="Link to this heading">#</a></h2>
+</section>
+<section id="code-consistency-tools">
+<h2><span class="section-number">5.10. </span>Code Consistency Tools<a class="headerlink" href="#code-consistency-tools" title="Link to this heading">#</a></h2>
+</section>
+<section id="security-licensing-code-compliance">
+<h2><span class="section-number">5.11. </span>Security, Licensing &amp; Code Compliance<a class="headerlink" href="#security-licensing-code-compliance" title="Link to this heading">#</a></h2>
+</section>
+<section id="integrations">
+<h2><span class="section-number">5.12. </span>Integrations<a class="headerlink" href="#integrations" title="Link to this heading">#</a></h2>
+</section>
+<section id="summary-checklist">
+<h2><span class="section-number">5.13. </span>Summary Checklist<a class="headerlink" href="#summary-checklist" title="Link to this heading">#</a></h2>
+<ul class="contains-task-list simple">
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Overview of version control and workflows</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Branching models &amp; conflict mitigation</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Review workflows + CI integration</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Real‑time collaborative tooling</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Environment, dependency, and style standardization</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Security/compliance + automation integrations</p></li>
+</ul>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -556,6 +626,33 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-control-systems-vcs">5.1. Version Control Systems (VCS)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#branching-collaboration-models">5.2. Branching &amp; Collaboration Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-review-continuous-integration-ci">5.3. Code Review &amp; Continuous Integration (CI)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merge-conflicts-resolution-strategies">5.4. Merge Conflicts &amp; Resolution Strategies</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#realtime-collaboration-tools">5.5. Real‑Time Collaboration Tools</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modular-design">5.6. Modular Design</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-flags-controlled-integration">5.7. Feature Flags &amp; Controlled Integration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-ecosystem">5.8. Testing Ecosystem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependency-environment-management">5.9. Dependency &amp; Environment Management</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-consistency-tools">5.10. Code Consistency Tools</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#security-licensing-code-compliance">5.11. Security, Licensing &amp; Code Compliance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integrations">5.12. Integrations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-checklist">5.13. Summary Checklist</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
