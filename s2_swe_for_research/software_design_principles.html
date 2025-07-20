@@ -473,7 +473,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -489,6 +491,26 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fundamental-design-principles">6.1. Fundamental Design Principles</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modularity-and-abstraction">6.2. Modularity and Abstraction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testability-and-maintainability">6.3. Testability and Maintainability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reusability-and-extensibility">6.4. Reusability and Extensibility</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#design-patterns-introductory-level">6.5. Design Patterns (Introductory Level)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependency-management-and-isolation">6.6. Dependency Management and Isolation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation-as-part-of-design">6.7. Documentation as Part of Design</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iterative-design-refactoring">6.8. Iterative Design &amp; Refactoring</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#designing-for-reproducibility">6.9. Designing for Reproducibility</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functional-vs-object-oriented-design">6.10. Functional vs. Object-Oriented Design</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#designing-apis-and-clis-for-research-tools">6.11. Designing APIs and CLIs for Research Tools</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#layered-architecture-in-scientific-computing-software">6.12. Layered Architecture in Scientific Computing Software</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-checklist">6.13. Summary Checklist</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -500,6 +522,54 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="software-design-principles">
 <h1><span class="section-number">6. </span>Software Design Principles<a class="headerlink" href="#software-design-principles" title="Link to this heading">#</a></h1>
+<p>Sound software design is essential for building research tools that are maintainable, testable, extensible, and reproducible. This section outlines key principles and strategies that guide the structure and evolution of well-architected research codebases.</p>
+<section id="fundamental-design-principles">
+<h2><span class="section-number">6.1. </span>Fundamental Design Principles<a class="headerlink" href="#fundamental-design-principles" title="Link to this heading">#</a></h2>
+</section>
+<section id="modularity-and-abstraction">
+<h2><span class="section-number">6.2. </span>Modularity and Abstraction<a class="headerlink" href="#modularity-and-abstraction" title="Link to this heading">#</a></h2>
+</section>
+<section id="testability-and-maintainability">
+<h2><span class="section-number">6.3. </span>Testability and Maintainability<a class="headerlink" href="#testability-and-maintainability" title="Link to this heading">#</a></h2>
+</section>
+<section id="reusability-and-extensibility">
+<h2><span class="section-number">6.4. </span>Reusability and Extensibility<a class="headerlink" href="#reusability-and-extensibility" title="Link to this heading">#</a></h2>
+</section>
+<section id="design-patterns-introductory-level">
+<h2><span class="section-number">6.5. </span>Design Patterns (Introductory Level)<a class="headerlink" href="#design-patterns-introductory-level" title="Link to this heading">#</a></h2>
+</section>
+<section id="dependency-management-and-isolation">
+<h2><span class="section-number">6.6. </span>Dependency Management and Isolation<a class="headerlink" href="#dependency-management-and-isolation" title="Link to this heading">#</a></h2>
+</section>
+<section id="documentation-as-part-of-design">
+<h2><span class="section-number">6.7. </span>Documentation as Part of Design<a class="headerlink" href="#documentation-as-part-of-design" title="Link to this heading">#</a></h2>
+</section>
+<section id="iterative-design-refactoring">
+<h2><span class="section-number">6.8. </span>Iterative Design &amp; Refactoring<a class="headerlink" href="#iterative-design-refactoring" title="Link to this heading">#</a></h2>
+</section>
+<section id="designing-for-reproducibility">
+<h2><span class="section-number">6.9. </span>Designing for Reproducibility<a class="headerlink" href="#designing-for-reproducibility" title="Link to this heading">#</a></h2>
+</section>
+<section id="functional-vs-object-oriented-design">
+<h2><span class="section-number">6.10. </span>Functional vs. Object-Oriented Design<a class="headerlink" href="#functional-vs-object-oriented-design" title="Link to this heading">#</a></h2>
+</section>
+<section id="designing-apis-and-clis-for-research-tools">
+<h2><span class="section-number">6.11. </span>Designing APIs and CLIs for Research Tools<a class="headerlink" href="#designing-apis-and-clis-for-research-tools" title="Link to this heading">#</a></h2>
+</section>
+<section id="layered-architecture-in-scientific-computing-software">
+<h2><span class="section-number">6.12. </span>Layered Architecture in Scientific Computing Software<a class="headerlink" href="#layered-architecture-in-scientific-computing-software" title="Link to this heading">#</a></h2>
+</section>
+<section id="summary-checklist">
+<h2><span class="section-number">6.13. </span>Summary Checklist<a class="headerlink" href="#summary-checklist" title="Link to this heading">#</a></h2>
+<ul class="contains-task-list simple">
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Follow core principles (KISS, DRY, SRP)</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Use modular, loosely coupled design</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Design for testability and reuse</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Document key design decisions</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Enable reproducibility (configs, versioning)</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Refactor and iterate regularly</p></li>
+</ul>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -556,6 +626,33 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fundamental-design-principles">6.1. Fundamental Design Principles</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modularity-and-abstraction">6.2. Modularity and Abstraction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testability-and-maintainability">6.3. Testability and Maintainability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reusability-and-extensibility">6.4. Reusability and Extensibility</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#design-patterns-introductory-level">6.5. Design Patterns (Introductory Level)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependency-management-and-isolation">6.6. Dependency Management and Isolation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation-as-part-of-design">6.7. Documentation as Part of Design</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iterative-design-refactoring">6.8. Iterative Design &amp; Refactoring</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#designing-for-reproducibility">6.9. Designing for Reproducibility</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functional-vs-object-oriented-design">6.10. Functional vs. Object-Oriented Design</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#designing-apis-and-clis-for-research-tools">6.11. Designing APIs and CLIs for Research Tools</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#layered-architecture-in-scientific-computing-software">6.12. Layered Architecture in Scientific Computing Software</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-checklist">6.13. Summary Checklist</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
