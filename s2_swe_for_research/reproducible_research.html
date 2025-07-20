@@ -473,7 +473,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -489,6 +491,22 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-principles-of-reproducible-code">10.1. Key Principles of Reproducible Code</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-reproducibility">10.2. Environment Reproducibility</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-versioning-and-management">10.3. Data Versioning and Management</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#randomness-and-seeds">10.4. Randomness and Seeds</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation-of-experiments">10.5. Documentation of Experiments</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-reproducibility">10.6. Testing Reproducibility</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#output-and-artifact-management">10.7. Output and Artifact Management</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sharing-and-archiving">10.8. Sharing and Archiving</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-checklist">10.9. Summary Checklist</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -500,6 +518,49 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="reproducible-research">
 <h1><span class="section-number">10. </span>Reproducible Research<a class="headerlink" href="#reproducible-research" title="Link to this heading">#</a></h1>
+<p>Reproducibility ensures that research findings can be independently verified and built upon. This section presents core principles and practical strategies for making research code, data, and workflows reproducible.</p>
+<p>Why Reproducibility Matters</p>
+<ul class="simple">
+<li><p>Essential for scientific integrity and validation.</p></li>
+<li><p>Enables collaboration and reuse across projects and labs.</p></li>
+<li><p>Required by many journals, conferences, and funding agencies.</p></li>
+</ul>
+<section id="key-principles-of-reproducible-code">
+<h2><span class="section-number">10.1. </span>Key Principles of Reproducible Code<a class="headerlink" href="#key-principles-of-reproducible-code" title="Link to this heading">#</a></h2>
+</section>
+<section id="environment-reproducibility">
+<h2><span class="section-number">10.2. </span>Environment Reproducibility<a class="headerlink" href="#environment-reproducibility" title="Link to this heading">#</a></h2>
+</section>
+<section id="data-versioning-and-management">
+<h2><span class="section-number">10.3. </span>Data Versioning and Management<a class="headerlink" href="#data-versioning-and-management" title="Link to this heading">#</a></h2>
+</section>
+<section id="randomness-and-seeds">
+<h2><span class="section-number">10.4. </span>Randomness and Seeds<a class="headerlink" href="#randomness-and-seeds" title="Link to this heading">#</a></h2>
+</section>
+<section id="documentation-of-experiments">
+<h2><span class="section-number">10.5. </span>Documentation of Experiments<a class="headerlink" href="#documentation-of-experiments" title="Link to this heading">#</a></h2>
+</section>
+<section id="testing-reproducibility">
+<h2><span class="section-number">10.6. </span>Testing Reproducibility<a class="headerlink" href="#testing-reproducibility" title="Link to this heading">#</a></h2>
+</section>
+<section id="output-and-artifact-management">
+<h2><span class="section-number">10.7. </span>Output and Artifact Management<a class="headerlink" href="#output-and-artifact-management" title="Link to this heading">#</a></h2>
+</section>
+<section id="sharing-and-archiving">
+<h2><span class="section-number">10.8. </span>Sharing and Archiving<a class="headerlink" href="#sharing-and-archiving" title="Link to this heading">#</a></h2>
+</section>
+<section id="summary-checklist">
+<h2><span class="section-number">10.9. </span>Summary Checklist<a class="headerlink" href="#summary-checklist" title="Link to this heading">#</a></h2>
+<ul class="contains-task-list simple">
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> All code is under version control</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Dependencies are pinned and documented</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Random seeds are set</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Environment is isolated (virtual env or container)</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Data and config files are versioned</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Instructions exist to reproduce full pipeline</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Outputs (models, figures) are archived with metadata</p></li>
+</ul>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -556,6 +617,29 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-principles-of-reproducible-code">10.1. Key Principles of Reproducible Code</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-reproducibility">10.2. Environment Reproducibility</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-versioning-and-management">10.3. Data Versioning and Management</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#randomness-and-seeds">10.4. Randomness and Seeds</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation-of-experiments">10.5. Documentation of Experiments</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-reproducibility">10.6. Testing Reproducibility</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#output-and-artifact-management">10.7. Output and Artifact Management</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sharing-and-archiving">10.8. Sharing and Archiving</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-checklist">10.9. Summary Checklist</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
