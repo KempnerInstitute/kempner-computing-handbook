@@ -473,7 +473,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -489,6 +491,22 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#package-structure-and-layout-python-example">9.1. Package Structure and Layout (Python Example)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tools-for-building-packages">9.2. Tools for Building Packages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-the-package">9.3. Testing the Package</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-distributing">9.4. Installing &amp; Distributing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation">9.5. Documentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#research-specific-tips">9.6. Research-Specific Tips</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#versioning-releases">9.7. Versioning &amp; Releases</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#licensing">9.8. Licensing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-checklist">9.9. Summary Checklist</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -500,6 +518,47 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="package-development">
 <h1><span class="section-number">9. </span>Package Development<a class="headerlink" href="#package-development" title="Link to this heading">#</a></h1>
+<p>Packaging your code turns scripts into reusable, shareable tools that support collaboration and long-term maintenance. This section outlines the essential steps for developing, testing, and distributing research software as a package.</p>
+<p>Why Package Your Code?</p>
+<ul class="simple">
+<li><p>Encourages modularity, reusability, and distribution.</p></li>
+<li><p>Makes it easier to share code within your group or publish with a paper.</p></li>
+<li><p>Enables versioning and reproducibility across projects.</p></li>
+</ul>
+<section id="package-structure-and-layout-python-example">
+<h2><span class="section-number">9.1. </span>Package Structure and Layout (Python Example)<a class="headerlink" href="#package-structure-and-layout-python-example" title="Link to this heading">#</a></h2>
+</section>
+<section id="tools-for-building-packages">
+<h2><span class="section-number">9.2. </span>Tools for Building Packages<a class="headerlink" href="#tools-for-building-packages" title="Link to this heading">#</a></h2>
+</section>
+<section id="testing-the-package">
+<h2><span class="section-number">9.3. </span>Testing the Package<a class="headerlink" href="#testing-the-package" title="Link to this heading">#</a></h2>
+</section>
+<section id="installing-distributing">
+<h2><span class="section-number">9.4. </span>Installing &amp; Distributing<a class="headerlink" href="#installing-distributing" title="Link to this heading">#</a></h2>
+</section>
+<section id="documentation">
+<h2><span class="section-number">9.5. </span>Documentation<a class="headerlink" href="#documentation" title="Link to this heading">#</a></h2>
+</section>
+<section id="research-specific-tips">
+<h2><span class="section-number">9.6. </span>Research-Specific Tips<a class="headerlink" href="#research-specific-tips" title="Link to this heading">#</a></h2>
+</section>
+<section id="versioning-releases">
+<h2><span class="section-number">9.7. </span>Versioning &amp; Releases<a class="headerlink" href="#versioning-releases" title="Link to this heading">#</a></h2>
+</section>
+<section id="licensing">
+<h2><span class="section-number">9.8. </span>Licensing<a class="headerlink" href="#licensing" title="Link to this heading">#</a></h2>
+</section>
+<section id="summary-checklist">
+<h2><span class="section-number">9.9. </span>Summary Checklist<a class="headerlink" href="#summary-checklist" title="Link to this heading">#</a></h2>
+<ul class="contains-task-list simple">
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Package is installable via <code class="docutils literal notranslate"><span class="pre">pip</span></code> in case of a Python package.</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Code is modular and documented</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Tests are included and pass in CI</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">README.md</span></code> explains usage and purpose</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Versioned and ready for sharing or publication</p></li>
+</ul>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -556,6 +615,29 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#package-structure-and-layout-python-example">9.1. Package Structure and Layout (Python Example)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tools-for-building-packages">9.2. Tools for Building Packages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-the-package">9.3. Testing the Package</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-distributing">9.4. Installing &amp; Distributing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation">9.5. Documentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#research-specific-tips">9.6. Research-Specific Tips</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#versioning-releases">9.7. Versioning &amp; Releases</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#licensing">9.8. Licensing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-checklist">9.9. Summary Checklist</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
