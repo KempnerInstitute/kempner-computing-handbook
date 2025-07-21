@@ -35,8 +35,9 @@ To use these workflows, ensure the following:
 - Access to pretrained models (e.g., [Llama 3](https://huggingface.co/meta-llama), [Megatron GPT2](https://huggingface.co/nvidia/megatron-gpt2-345m))
 - Approved access to any [Gated Repositories](https://huggingface.co/settings/gated-repos) on Hugging Face
 
-> [!NOTE]  
-> Some models require token-based authentication and acceptance of usage terms on Hugging Face before use.
+```{note}
+Some models require token-based authentication and acceptance of usage terms on Hugging Face before use.
+```
 
 ## Available NeMo Workflows
 
