@@ -6,7 +6,7 @@ We host several popular ML datasets and models on the Kempner AI cluster. This a
 MODEL_PATH= /n/holylfs06/LABS/kempner_shared/Everyone/testbed/models
 DATA_PATH= /n/holylfs06/LABS/kempner_shared/Everyone/testbed/<data-type>
 ```
-where <data-type> is audio, vision, code, etc. 
+where `<data-type>` is audio, vision, code, etc. 
 
 
 ```{note}
