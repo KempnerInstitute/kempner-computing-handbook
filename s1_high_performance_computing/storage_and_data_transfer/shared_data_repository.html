@@ -512,10 +512,11 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="shared-data-model-repository">
 <h1><span class="section-number">4.3. </span>Shared Data/Model Repository<a class="headerlink" href="#shared-data-model-repository" title="Link to this heading">#</a></h1>
 <p>We host several popular ML datasets and models on the Kempner AI cluster. This approach reduces the need for multiple transfers of the same data/model by researchers and provides a central, read-only repository for all Kempner Institute users to access for their ML workflows. Only the admin team has write access, but users can submit requests for popular data/models. After a careful review, we may place a copy in the shared data/model repository. The current path on the cluster is:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">DATA_PATH</span><span class="o">=</span>/n/holylfs06/LABS/kempner_shared/Lab/data
-<span class="nv">MODEL_PATH</span><span class="o">=</span>/n/holylfs06/LABS/kempner_shared/Lab/model
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">MODEL_PATH</span><span class="o">=</span><span class="w"> </span>/n/holylfs06/LABS/kempner_shared/Everyone/testbed/models
+<span class="nv">DATA_PATH</span><span class="o">=</span><span class="w"> </span>/n/holylfs06/LABS/kempner_shared/Everyone/testbed/&lt;data-type&gt;
 </pre></div>
 </div>
+<p>where <data-type> is audio, vision, code, etc.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>We will develop a web interface later for data and model discovery.</p>
@@ -525,7 +526,7 @@ document.write(`
 <ul class="simple">
 <li><p><strong>CodeLlama</strong></p>
 <ul>
-<li><p>Path: <code class="docutils literal notranslate"><span class="pre">$MODEL_PATH/models--codellama--CodeLlama-7b-hf</span></code> (see on <a class="reference external" href="https://huggingface.co/codellama/CodeLlama-7b-hf">HuggingFace</a>)</p>
+<li><p>Path: <code class="docutils literal notranslate"><span class="pre">$MODEL_PATH/CodeLlama-7b-hf</span></code> (see on <a class="reference external" href="https://huggingface.co/codellama/CodeLlama-7b-hf">HuggingFace</a>)</p>
 <ul>
 <li><p>Size: 16 G</p></li>
 </ul>
@@ -537,12 +538,12 @@ document.write(`
 <ul class="simple">
 <li><p><strong>EleutherAI</strong></p>
 <ul>
-<li><p>Path: <code class="docutils literal notranslate"><span class="pre">$MODEL_PATH/models--EleutherAI--pythia-160m-deduped</span></code> (see on <a class="reference external" href="https://huggingface.co/EleutherAI/pythia-160m-deduped">HuggingFace</a></p>
+<li><p>Path: <code class="docutils literal notranslate"><span class="pre">$MODEL_PATH/pythia-160m-deduped</span></code> (see on <a class="reference external" href="https://huggingface.co/EleutherAI/pythia-160m-deduped">HuggingFace</a></p>
 <ul>
 <li><p>Size: 435 M</p></li>
 </ul>
 </li>
-<li><p>Path: <code class="docutils literal notranslate"><span class="pre">$MODEL_PATH/models--EleutherAI--pythia-70m-deduped</span></code> (see on <a class="reference external" href="https://huggingface.co/EleutherAI/pythia-70m-deduped">HuggingFace</a></p>
+<li><p>Path: <code class="docutils literal notranslate"><span class="pre">$MODEL_PATH/pythia-70m-deduped</span></code> (see on <a class="reference external" href="https://huggingface.co/EleutherAI/pythia-70m-deduped">HuggingFace</a></p>
 <ul>
 <li><p>Size: 195 M</p></li>
 </ul>
@@ -554,7 +555,7 @@ document.write(`
 <ul class="simple">
 <li><p><strong>OpenAI</strong></p>
 <ul>
-<li><p>Path: <code class="docutils literal notranslate"><span class="pre">$MODEL_PATH/models--gpt2</span></code> (see on <a class="reference external" href="https://huggingface.co/gpt2">HuggingFace</a>)</p>
+<li><p>Path: <code class="docutils literal notranslate"><span class="pre">$MODEL_PATH/gpt2</span></code> (see on <a class="reference external" href="https://huggingface.co/gpt2">HuggingFace</a>)</p>
 <ul>
 <li><p>Size: 4.5 M</p></li>
 </ul>
@@ -566,7 +567,7 @@ document.write(`
 <ul class="simple">
 <li><p><strong>Google</strong></p>
 <ul>
-<li><p>Path: <code class="docutils literal notranslate"><span class="pre">$MODEL_PATH/models--t5-base</span></code> (see on <a class="reference external" href="https://huggingface.co/t5-base">HuggingFace</a>)</p>
+<li><p>Path: <code class="docutils literal notranslate"><span class="pre">$MODEL_PATH/t5-base</span></code> (see on <a class="reference external" href="https://huggingface.co/t5-base">HuggingFace</a>)</p>
 <ul>
 <li><p>Size: 3.4 M</p></li>
 </ul>
@@ -580,7 +581,7 @@ document.write(`
 <ul class="simple">
 <li><p><strong>c4_original</strong></p>
 <ul>
-<li><p>Path: <code class="docutils literal notranslate"><span class="pre">$DATA_PATH/c4_original</span></code></p>
+<li><p>Path: <code class="docutils literal notranslate"><span class="pre">$DATA_PATH/text/c4_original</span></code></p>
 <ul>
 <li><p>Subfolders:</p>
 <ul>
@@ -598,7 +599,7 @@ document.write(`
 <ul class="simple">
 <li><p><strong>dolma</strong></p>
 <ul>
-<li><p>Path: <code class="docutils literal notranslate"><span class="pre">$DATA_PATH/dolma</span></code></p>
+<li><p>Path: <code class="docutils literal notranslate"><span class="pre">$DATA_PATH/text/dolma</span></code></p>
 <ul>
 <li><p>Subfolders:</p>
 <ul>
@@ -616,14 +617,14 @@ document.write(`
 <ul class="simple">
 <li><p><strong>imagenet_winter21_whole</strong></p>
 <ul>
-<li><p>Path: <code class="docutils literal notranslate"><span class="pre">$DATA_PATH/imagenet_winter21_whole</span></code></p>
+<li><p>Path: <code class="docutils literal notranslate"><span class="pre">$DATA_PATH/vision/imagenet_winter21_whole/</span></code></p>
 <ul>
 <li><p>Subfolders:</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">winter21_whole.tar.gz</span></code> (1.3 T)</p></li>
+<li><p>`` (1.3 T)</p></li>
 </ul>
 </li>
-<li><p>Description: An updated version of the ImageNet dataset, containing a wide variety of annotated images for visual object recognition, collected during the winter of 2021.</p></li>
+<li><p>Description: An updated version of the ImageNet dataset, containing a wide variety of annotated images for visual object recognition.</p></li>
 </ul>
 </li>
 </ul>
