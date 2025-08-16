@@ -496,7 +496,12 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-control-systems-vcs">5.1. Version Control Systems (VCS)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-control-systems-vcs">5.1. Version Control Systems (VCS)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#git-fundamentals">5.1.1. Git Fundamentals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#remote-workflows-with-github">5.1.2. Remote Workflows with GitHub</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices">5.1.3. Best Practices</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#branching-collaboration-models">5.2. Branching &amp; Collaboration Models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-review-continuous-integration-ci">5.3. Code Review &amp; Continuous Integration (CI)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merge-conflicts-resolution-strategies">5.4. Merge Conflicts &amp; Resolution Strategies</a></li>
@@ -525,6 +530,228 @@ document.write(`
 <p>Collaborative code development promotes reproducible, maintainable, and scalable research software. This section provides an overview of the tools and practices, from version control and branching strategies to continuous integration, dependency management, and secure automation, that enable research teams to work together efficiently.</p>
 <section id="version-control-systems-vcs">
 <h2><span class="section-number">5.1. </span>Version Control Systems (VCS)<a class="headerlink" href="#version-control-systems-vcs" title="Link to this heading">#</a></h2>
+<p>Version control systems are essential tools for managing code changes, enabling collaboration, and maintaining project history in research software development. Some common VCS types are Git and Mercurial, both of which are distributed version control systems. There are also Subversion (SVN) and Perforce (centralized version control systems). This section covers Git fundamentals and best practices for collaborative development at the Kempner Institute.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Git</strong> is the version control software that runs locally on your computer while <strong>GitHub</strong> is a cloud-based hosting service for Git repositories. Other Git hosting platforms include GitLab, Bitbucket, and SourceForge.</p>
+</div>
+<section id="git-fundamentals">
+<h3><span class="section-number">5.1.1. </span>Git Fundamentals<a class="headerlink" href="#git-fundamentals" title="Link to this heading">#</a></h3>
+<p><strong>Repository Structure</strong></p>
+<ul class="simple">
+<li><p>Working directory: where you edit files</p></li>
+<li><p>Staging area (index): where changes are prepared for commit</p></li>
+<li><p>Repository: where Git stores project history and metadata</p></li>
+<li><p>Remote repositories: shared versions hosted on platforms like GitHub</p></li>
+</ul>
+<p><strong>Basic Workflow</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check status of working directory</span>
+git<span class="w"> </span>status
+
+<span class="c1"># Stage changes for commit</span>
+git<span class="w"> </span>add<span class="w"> </span>&lt;file&gt;
+git<span class="w"> </span>add<span class="w"> </span>.<span class="w">  </span><span class="c1"># stage all changes</span>
+
+<span class="c1"># Commit staged changes</span>
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Descriptive commit message&quot;</span>
+
+<span class="c1"># Push changes to remote repository</span>
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>main
+</pre></div>
+</div>
+<p><strong>Branching</strong></p>
+<p>Git branches let you work on different features or experiments in parallel without affecting the main code. Think of them as separate workspaces where you can make changes safely before merging them back.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create and switch to new branch</span>
+git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>feature/new-analysis
+
+<span class="c1"># Switch between branches</span>
+git<span class="w"> </span>checkout<span class="w"> </span>main
+git<span class="w"> </span>checkout<span class="w"> </span>feature/new-analysis
+
+<span class="c1"># List all branches</span>
+git<span class="w"> </span>branch<span class="w"> </span>-a
+
+<span class="c1"># Delete a branch (after merging)</span>
+git<span class="w"> </span>branch<span class="w"> </span>-d<span class="w"> </span>feature/new-analysis
+</pre></div>
+</div>
+<p><strong>Merging vs Rebasing</strong></p>
+<p><em>Merge</em>: Combines branches while preserving history</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>checkout<span class="w"> </span>main<span class="w">                 </span><span class="c1"># Switch to target branch</span>
+git<span class="w"> </span>merge<span class="w"> </span>feature/new-analysis<span class="w">    </span><span class="c1"># Merge feature branch into main</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Pros: Preserves complete history, shows when features were integrated</p></li>
+<li><p>Cons: Can create complex history graphs with many merge commits</p></li>
+</ul>
+<p><em>Rebase</em>: Replays commits from one branch onto another</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>checkout<span class="w"> </span>feature/new-analysis<span class="w">    </span><span class="c1"># Switch to feature branch</span>
+git<span class="w"> </span>rebase<span class="w"> </span>main<span class="w">                      </span><span class="c1"># Replay feature commits on top of main</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Pros: Creates linear, clean history</p></li>
+<li><p>Cons: Rewrites commit history, can be dangerous on shared branches</p></li>
+</ul>
+<p><em>When to Use Each</em></p>
+<ul class="simple">
+<li><p>Use merge for: shared branches, preserving collaboration context</p></li>
+<li><p>Use rebase for: cleaning up local feature branches before merging</p></li>
+</ul>
+<p><strong>Resolving Conflicts</strong></p>
+<p>Git marks conflicts in files with special markers:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span> <span class="n">HEAD</span>
+<span class="n">Current</span> <span class="n">branch</span> <span class="n">content</span>
+<span class="o">=======</span>
+<span class="n">Incoming</span> <span class="n">branch</span> <span class="n">content</span>
+<span class="o">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="n">feature</span><span class="o">-</span><span class="n">branch</span>
+</pre></div>
+</div>
+<p><em>Resolution Process</em></p>
+<ol class="arabic simple">
+<li><p>Open conflicted files in your editor</p></li>
+<li><p>Choose which changes to keep (or combine them)</p></li>
+<li><p>Remove conflict markers</p></li>
+<li><p>Stage resolved files: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span> <span class="pre">&lt;file&gt;</span></code></p></li>
+<li><p>Complete merge/rebase: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span></code> or <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">rebase</span> <span class="pre">--continue</span></code></p></li>
+</ol>
+</section>
+<section id="remote-workflows-with-github">
+<h3><span class="section-number">5.1.2. </span>Remote Workflows with GitHub<a class="headerlink" href="#remote-workflows-with-github" title="Link to this heading">#</a></h3>
+<p><strong>Repository Setup and Access Control</strong></p>
+<p><em>Repository Visibility</em></p>
+<ul class="simple">
+<li><p><strong>Private</strong>: Default for unpublished research work</p></li>
+<li><p><strong>Public</strong>: Only after work has been disseminated or published</p></li>
+</ul>
+<p><em>External Repository Management</em></p>
+<ul>
+<li><p><strong>Cloning</strong>: You can clone a repository locally and start making changes on it</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Clone the external repository</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/external-org/research-repo.git
+<span class="nb">cd</span><span class="w"> </span>research-repo
+
+<span class="c1"># Make some changes (preferrably on a an issue branch instead of main)</span>
+
+<span class="c1"># Push to the remote repository</span>
+git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>&lt;branch_name&gt;
+</pre></div>
+</div>
+</li>
+<li><p><strong>Forking</strong>: For public collaborative work. See <a class="reference external" href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo">GitHub’s forking guide</a> for detailed instructions.</p></li>
+<li><p><strong>Licensing</strong>: Always follow original codebase licensing conditions</p></li>
+<li><p><strong>Attribution</strong>: Credit original repository in README, preserve .git folder for contribution history</p></li>
+</ul>
+<p><strong>Issues and Project Management</strong></p>
+<p>Issues are GitHub’s way to track bugs, request features, and organize work on your project. Create issues for new features before starting work to document what you’re building and track progress. Use specific, descriptive titles and apply appropriate labels like <code class="docutils literal notranslate"><span class="pre">bug</span></code> or <code class="docutils literal notranslate"><span class="pre">enhancement</span></code> to help organize your work. For bugs, include reproduction steps and screenshots to help others understand the problem. Assign issues to yourself when working on them. Comment on issues regularly to communicate progress and keep collaborators informed.</p>
+<p><strong>Pull Requests</strong></p>
+<p>All code contributions require pull requests, even single-character changes. Pull requests let you propose changes to a repository and have others review your code before it gets merged into the main branch. Reference issue numbers in PRs like “Closes #23” to automatically link your work to the relevant issue.</p>
+<ol class="arabic">
+<li><p><strong>Preparation</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ensure branch is up-to-date</span>
+git<span class="w"> </span>checkout<span class="w"> </span>main
+git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>main
+git<span class="w"> </span>checkout<span class="w"> </span>iss23_new_feature_js
+git<span class="w"> </span>rebase<span class="w"> </span>main
+</pre></div>
+</div>
+<p>For an extensive guide on how to create a pull request, click <a class="reference external" href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request?tool=cli">here</a></p>
+</li>
+<li><p><strong>PR Guidelines</strong></p>
+<ul class="simple">
+<li><p>Submit PRs to <code class="docutils literal notranslate"><span class="pre">develop</span></code> branch (or <code class="docutils literal notranslate"><span class="pre">main</span></code> if no develop branch)</p></li>
+<li><p>Open PRs early for visibility and feedback</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">[WIP]</span></code> prefix for work-in-progress PRs</p></li>
+<li><p>Review changed files count matches expectations</p></li>
+</ul>
+</li>
+<li><p><strong>Review and Merge Process</strong></p>
+<ul class="simple">
+<li><p>Author submits PR</p></li>
+<li><p>Maintainer reviews and provides feedback</p></li>
+<li><p>Author addresses feedback promptly</p></li>
+<li><p>Maintainer approves</p></li>
+<li><p><strong>Author merges their own PR</strong> (gives final responsibility)</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="best-practices">
+<h3><span class="section-number">5.1.3. </span>Best Practices<a class="headerlink" href="#best-practices" title="Link to this heading">#</a></h3>
+<p><strong>Commit Message Conventions</strong></p>
+<p><em>Structure and Rules</em></p>
+<ul class="simple">
+<li><p>Subject line answers: “If applied, this commit will [subject line]”</p></li>
+<li><p>Write as imperative (“Fix bug” not “Fixed bug”)</p></li>
+<li><p>Start with capital letter, no period</p></li>
+<li><p>Wrap at 72 characters</p></li>
+<li><p>Answer what/why, not necessarily how</p></li>
+</ul>
+<p><em>Examples</em></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Good</span>
+Fix<span class="w"> </span>data<span class="w"> </span>loading<span class="w"> </span>error<span class="w"> </span>with<span class="w"> </span>empty<span class="w"> </span>CSV<span class="w"> </span>files
+
+Program<span class="w"> </span>was<span class="w"> </span>crashing<span class="w"> </span>when<span class="w"> </span>CSV<span class="w"> </span>files<span class="w"> </span>had<span class="w"> </span>no<span class="w"> </span>data<span class="w"> </span>rows.
+Now<span class="w"> </span>handles<span class="w"> </span>empty<span class="w"> </span>files<span class="w"> </span>and<span class="w"> </span>shows<span class="w"> </span>helpful<span class="w"> </span>error<span class="w"> </span>message.
+
+Closes<span class="w"> </span><span class="c1">#23</span>
+
+<span class="c1"># Bad  </span>
+Fix<span class="w"> </span>bug
+</pre></div>
+</div>
+<p><em>Required Elements</em></p>
+<ul class="simple">
+<li><p>One logical change per commit</p></li>
+<li><p>Don’t mix whitespace and functional changes</p></li>
+<li><p>Subject line should stand alone</p></li>
+<li><p>Include explanations for significant changes</p></li>
+<li><p>Reference issues with explanation, not just numbers</p></li>
+</ul>
+<p><em>Co-authorship</em>
+When adapting others’ code:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Add<span class="w"> </span>feature<span class="w"> </span>X<span class="w"> </span>based<span class="w"> </span>on<span class="w"> </span>code<span class="w"> </span>by<span class="w"> </span>Alice
+
+Co-authored-by:<span class="w"> </span>Alice<span class="w"> </span>&lt;alice@example.com&gt;
+</pre></div>
+</div>
+<p><strong>Review Processes</strong></p>
+<p><em>For Authors</em></p>
+<ul class="simple">
+<li><p>Keep PRs focused and reasonably sized (&lt; 400 lines when possible)</p></li>
+<li><p>Write clear, descriptive commit messages following best practices</p></li>
+<li><p>Include tests for new functionality</p></li>
+<li><p>Respond to reviews promptly and professionally</p></li>
+<li><p>Merge your own approved PRs in a timely manner</p></li>
+</ul>
+<p><em>For Reviewers</em></p>
+<ul class="simple">
+<li><p>Review code within 24-48 hours</p></li>
+<li><p>Focus on correctness, readability, and maintainability</p></li>
+<li><p>Suggest improvements, don’t just point out problems</p></li>
+<li><p>Approve when ready, even if minor suggestions remain</p></li>
+<li><p>Use “Request Changes” sparingly, for significant issues only</p></li>
+</ul>
+<p><strong>Repository Organization</strong></p>
+<p><em>Essential Files</em></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">README.md</span></code>: Project description, setup instructions, usage examples</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> or <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code>: Dependency specifications</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.gitignore</span></code>: Exclude build artifacts, IDE files, sensitive data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CONTRIBUTING.md</span></code>: Guidelines for contributors</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LICENSE</span></code>: MIT license recommended for uncertainty</p></li>
+</ul>
+<p><em>Review Checklist</em></p>
+<ul class="contains-task-list simple">
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Code follows style guidelines</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Logic is correct and handles edge cases</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Tests are comprehensive and meaningful</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Documentation updated</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> No sensitive data or credentials exposed</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Issue references are descriptive, not just numbers</p></li>
+</ul>
+</section>
 </section>
 <section id="branching-collaboration-models">
 <h2><span class="section-number">5.2. </span>Branching &amp; Collaboration Models<a class="headerlink" href="#branching-collaboration-models" title="Link to this heading">#</a></h2>
@@ -636,7 +863,12 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-control-systems-vcs">5.1. Version Control Systems (VCS)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-control-systems-vcs">5.1. Version Control Systems (VCS)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#git-fundamentals">5.1.1. Git Fundamentals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#remote-workflows-with-github">5.1.2. Remote Workflows with GitHub</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices">5.1.3. Best Practices</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#branching-collaboration-models">5.2. Branching &amp; Collaboration Models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-review-continuous-integration-ci">5.3. Code Review &amp; Continuous Integration (CI)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merge-conflicts-resolution-strategies">5.4. Merge Conflicts &amp; Resolution Strategies</a></li>
