@@ -5,7 +5,7 @@ HPC comes with a wide variety of software packages and libraries. These software
 
 ## Available Modules
 
-Use the `module avail` command to list all the software modules available on the cluster. The output will show the available software modules and their versions. 
+Use the `module avail` command to list all the software modules available on the cluster. The output will show the available software modules and their versions. You can also use `module avail <pattern>` to search for `<pattern>` in the module name.
 
 ```{note}
 See a list of software modules available on the FASRC Cannon cluster [here](https://docs.rc.fas.harvard.edu/kb/all-modules/).
@@ -24,6 +24,13 @@ The following commands are used to manage software modules:
 | `module list`                 |  List all loaded software modules.   |
 | `module purge`                | Unload all loaded software modules.  |
 
+You can also type `ml` as a shortcut for `module`.
 
+## How do modules work?
 
+Each module is defined by a **modulefile** that contains the commands to run when the module is loaded.
+These commands modify environment variables such as `PATH`, `LD_LIBRARY_PATH`, etc. to make the software accessible from your terminal session.
+You can use `module show <module_name>` to show the modulefile for a module.
 
+These changes to the terminal environment will persist until `module unload` is called.
+They act independently of other modifications to environment variables, namely virtual environments.
