@@ -34,3 +34,5 @@ You can use `module show <module_name>` to show a module's script.
 
 These changes to the terminal environment will persist until `module unload` is called.
 They act independently of other modifications to environment variables, namely virtual environments.
+
+You can read more about modules at the [Lmod documentation](https://lmod.readthedocs.io/).
