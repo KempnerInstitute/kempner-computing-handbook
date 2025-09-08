@@ -526,7 +526,7 @@ document.write(`
 <h2><span class="section-number">1.4.1. </span>Access Requirements<a class="headerlink" href="#access-requirements" title="Link to this heading">#</a></h2>
 <section id="installing-openauth-2fa">
 <span id="kempner-cluster-installing-openauth-2fa"></span><h3><span class="section-number">1.4.1.1. </span>Installing OpenAuth 2FA<a class="headerlink" href="#installing-openauth-2fa" title="Link to this heading">#</a></h3>
-<p>FASRC  uses its own two-factor authentication tool, <a class="reference external" href="https://docs.rc.fas.harvard.edu/kb/openauth/">OpenAuth</a>, which is different than Harvard Key.</p>
+<p>FASRC uses its own two-factor authentication tool, <a class="reference external" href="https://docs.rc.fas.harvard.edu/kb/openauth/">OpenAuth</a>, which is different than Harvard Key.</p>
 <p>To use OpenAuth, follow these steps:</p>
 <ol class="arabic">
 <li><p><strong>Request OpenAuth</strong>: Click <a class="reference external" href="https://two-factor.rc.fas.harvard.edu/">here</a> to request OpenAuth instructions and installation links from FASRC.
@@ -548,12 +548,13 @@ Use the following credentials:</p>
 </li>
 <li><p><strong>Select and Install 2FA Tool</strong>: Choose among these options:</p>
 <ul class="simple">
-<li><p><strong>Smart phone app</strong>: uses a QR code for use in Google Authenticator (<a class="reference external" href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&amp;amp;pli=1">Android</a> or <a class="reference external" href="https://apps.apple.com/us/app/google-authenticator/id388497605">IOS</a>)</p></li>
-<li><p><strong>Duo Mobile</strong>: tokens are separate from Harvard Key tokens</p></li>
+<li><p><strong>Smart phone app</strong>: Scan the QR code above in Google Authenticator (available on <a class="reference external" href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&amp;amp;pli=1">Android</a> and <a class="reference external" href="https://apps.apple.com/us/app/google-authenticator/id388497605">iOS</a>).</p></li>
+<li><p><strong>1Password</strong>: <a class="reference external" href="https://www.huit.harvard.edu/password-manager">1Password</a> is the recommended password manager for Harvard faculty, staff, and students. Enter the token above into a <code class="docutils literal notranslate"><span class="pre">one-time</span> <span class="pre">password</span></code> field. 1Password will then generate the 2FA codes.</p></li>
+<li><p><strong>Duo Mobile</strong>: Note that the FASRC token is different from the Harvard Key token.</p></li>
 <li><p><strong>Java Desktop App</strong>:</p>
 <ul>
-<li><p>Java runtime is required.  Installation instructions are <a class="reference external" href="https://www.java.com/en/download/help/index_installing.html">here</a></p></li>
-<li><p>Double-click the Jauth.jar file to start the Java applet.  Alternatively, use one of the installation scripts for Windows (.bat) and Linux (.sh).</p></li>
+<li><p>A Java runtime is required. Installation instructions are <a class="reference external" href="https://www.java.com/en/download/help/index_installing.html">here</a>.</p></li>
+<li><p>Double-click the <code class="docutils literal notranslate"><span class="pre">JAuth.jar</span></code> file to start the Java applet. Alternatively, use one of the installation scripts for Windows (<code class="docutils literal notranslate"><span class="pre">.bat</span></code>) and Linux (<code class="docutils literal notranslate"><span class="pre">.sh</span></code>).</p></li>
 </ul>
 </li>
 </ul>

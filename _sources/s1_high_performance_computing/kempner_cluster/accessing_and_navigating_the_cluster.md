@@ -14,13 +14,13 @@ To utilize the resources, one may need to install [OpenAuth](https://docs.rc.fas
 (kempner_cluster:installing_openauth_2fa)=
 ### Installing OpenAuth 2FA
 
-FASRC  uses its own two-factor authentication tool, [OpenAuth](https://docs.rc.fas.harvard.edu/kb/openauth/), which is different than Harvard Key.
+FASRC uses its own two-factor authentication tool, [OpenAuth](https://docs.rc.fas.harvard.edu/kb/openauth/), which is different than Harvard Key.
 
 To use OpenAuth, follow these steps:
 
 1. **Request OpenAuth**: Click [here](https://two-factor.rc.fas.harvard.edu/) to request OpenAuth instructions and installation links from FASRC.
 Use the following credentials:
-     - **username**: your [FASRC account username](https://docs.rc.fas.harvard.edu/kb/about-usernames/)
+    - **username**: your [FASRC account username](https://docs.rc.fas.harvard.edu/kb/about-usernames/)
     - **password**: your [FASRC account password](https://docs.rc.fas.harvard.edu/kb/quickstart-guide/#2_Set_a_password_and_setup_OpenAuth_for_two-factor_authentication)
 
 
@@ -33,11 +33,12 @@ Use the following credentials:
         - A personalized token
 
     - **Select and Install 2FA Tool**: Choose among these options:
-        - **Smart phone app**: uses a QR code for use in Google Authenticator ([Android](https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&pli=1) or [IOS](https://apps.apple.com/us/app/google-authenticator/id388497605))
-        - **Duo Mobile**: tokens are separate from Harvard Key tokens
+        - **Smart phone app**: Scan the QR code above in Google Authenticator (available on [Android](https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&pli=1) and [iOS](https://apps.apple.com/us/app/google-authenticator/id388497605)).
+        - **1Password**: [1Password](https://www.huit.harvard.edu/password-manager) is the recommended password manager for Harvard faculty, staff, and students. Enter the token above into a `one-time password` field. 1Password will then generate the 2FA codes.
+        - **Duo Mobile**: Note that the FASRC token is different from the Harvard Key token.
         - **Java Desktop App**: 
-            - Java runtime is required.  Installation instructions are [here](https://www.java.com/en/download/help/index_installing.html)
-            - Double-click the Jauth.jar file to start the Java applet.  Alternatively, use one of the installation scripts for Windows (.bat) and Linux (.sh).
+            - A Java runtime is required. Installation instructions are [here](https://www.java.com/en/download/help/index_installing.html).
+            - Double-click the `JAuth.jar` file to start the Java applet. Alternatively, use one of the installation scripts for Windows (`.bat`) and Linux (`.sh`).
 
 Credit for OpenAuth instructions: [FASRC OpenAuth site](https://docs.rc.fas.harvard.edu/kb/openauth/).
 
