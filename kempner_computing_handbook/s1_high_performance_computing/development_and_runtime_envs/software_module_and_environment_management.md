@@ -5,7 +5,10 @@ HPC comes with a wide variety of software packages and libraries. These software
 
 ## Available Modules
 
-Use the `module avail` command to list all the software modules available on the cluster. The output will show the available software modules and their versions. You can also use `module avail <pattern>` to search for `<pattern>` in the module name.
+Use the `module avail` command to list all the software modules available on the cluster. The output will show the available software modules and their versions.
+You can also use `module avail <string>` to search for `<string>` in the module name.
+For example, to list all modules with `cuda` in the name,
+run `module avail cuda`.
 
 ```{note}
 See a list of software modules available on the FASRC Cannon cluster [here](https://docs.rc.fas.harvard.edu/kb/all-modules/).
@@ -21,10 +24,8 @@ The following commands are used to manage software modules:
 | `module avail`                | List all available software modules. |
 | `module load <module_name>`   | Load a software module.              |
 | `module unload <module_name>` | Unload a software module.            |
-| `module list`                 |  List all loaded software modules.   |
+| `module list`                 | List all loaded software modules.    |
 | `module purge`                | Unload all loaded software modules.  |
-
-You can also type `ml` as a shortcut for `module`.
 
 ## How do modules work?
 
