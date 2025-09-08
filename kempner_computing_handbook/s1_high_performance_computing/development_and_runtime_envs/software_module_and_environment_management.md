@@ -42,6 +42,6 @@ You can use `ml` as a shortcut for common commands:
 
 Each module is defined by a script that runs when the module is loaded. This script modifies environment variables such as `PATH`, `LD_LIBRARY_PATH`, etc. to make the software accessible from your terminal session. You can use `module show <module_name>` to show a module's script.
 
-These changes to the terminal environment will persist until `module unload` is called. They act independently of other modifications to environment variables, namely virtual environments.
+These changes to the terminal environment will persist until `module unload <module_name>` or `module purge` is called. They act independently of other modifications to environment variables, namely virtual environments.
 
 You can read more about modules at the [Lmod documentation](https://lmod.readthedocs.io/).
