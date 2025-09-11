@@ -64,12 +64,23 @@ Overall, conda environments allow you to isolate package versions for different 
     ```
 
 
-- Step 7: Activate the conda environment using the `mamba activate` command. For example, to activate the `myenv` environment, you can use the following command:
+- Step 7: Activate the conda environment using the `mamba activate` command. For example, to activate the `myenv` environment, you can use the following command if the version is Mambaforge-23.11.0-0 or older:
 
     ```bash
-    mamba activate myenv
+    mamba activate myenv 
     ```
+    For mamba versions later than Mambaforge-23.11.0-0, `source activate` the environment
 
+  ```bash
+    source activate myenv 
+  ```
+
+    or initialize the shell and then `mamba activate` as follows:
+
+  ```bash
+    eval "$(mamba shell hook --shell bash)"
+    mamba activate myenv 
+  ```
 
 ```{warning}
 Be aware that the size of the new conda environment can occupy several gigabytes, depending on the number of packages being installed. To conserve disk space, it is advisable to delete any outdated environments. Read more [here](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#removing-an-environment).
