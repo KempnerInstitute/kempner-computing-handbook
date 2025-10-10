@@ -200,3 +200,7 @@ The bottom execution pattern shows one run per task in an SLURM array job (`--co
 ```{note}
 Use `--count 1` if you want each array job to handle a single, isolated hyperparameter configuration from the sweep.
 ```
+
+## Cross-Run Live Loss Averaging
+
+In this section we focus on computing cross-run averages of training and validation losses in real time during W&B hyperparameter sweeps. Workers publish per-epoch losses to a shared [Redis](https://redis.io/docs/latest/develop/clients/redis-py/) server; aggregators compute averages and publish them back so all workers log synchronized Train Loss Average and Validation Loss Average metrics to W&B. For the complete workflow follow [this example](https://github.com/KempnerInstitute/optimizing-ml-workflow/tree/main/workshop_exercises/wandb_aggregate).
