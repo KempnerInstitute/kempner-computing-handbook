@@ -506,6 +506,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#note-on-mapping-sweep-runs-to-slurm-array-jobs">19.2.7. Note on Mapping Sweep Runs to SLURM Array Jobs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-run-live-loss-averaging">19.2.8. Cross-Run Live Loss Averaging</a></li>
 </ul>
             </nav>
         </div>
@@ -709,6 +710,10 @@ wandb:<span class="w"> </span>Run<span class="w"> </span>sweep<span class="w"> <
 <p>Use <code class="docutils literal notranslate"><span class="pre">--count</span> <span class="pre">1</span></code> if you want each array job to handle a single, isolated hyperparameter configuration from the sweep.</p>
 </div>
 </section>
+<section id="cross-run-live-loss-averaging">
+<h2><span class="section-number">19.2.8. </span>Cross-Run Live Loss Averaging<a class="headerlink" href="#cross-run-live-loss-averaging" title="Link to this heading">#</a></h2>
+<p>In this section we focus on computing cross-run averages of training and validation losses in real time during W&amp;B hyperparameter sweeps. Workers publish per-epoch losses to a shared <a class="reference external" href="https://redis.io/docs/latest/develop/clients/redis-py/">Redis</a> server; aggregators compute averages and publish them back so all workers log synchronized Train Loss Average and Validation Loss Average metrics to W&amp;B. For the complete workflow follow <a class="reference external" href="https://github.com/KempnerInstitute/optimizing-ml-workflow/tree/main/workshop_exercises/wandb_aggregate">this example</a>.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -785,6 +790,7 @@ wandb:<span class="w"> </span>Run<span class="w"> </span>sweep<span class="w"> <
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#note-on-mapping-sweep-runs-to-slurm-array-jobs">19.2.7. Note on Mapping Sweep Runs to SLURM Array Jobs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-run-live-loss-averaging">19.2.8. Cross-Run Live Loss Averaging</a></li>
 </ul>
   </nav></div>
 
