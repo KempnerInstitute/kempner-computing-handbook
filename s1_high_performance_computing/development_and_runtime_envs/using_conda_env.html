@@ -568,8 +568,17 @@ base<span class="w">                     </span>/n/sw/Mambaforge-23.11.0-0
 </pre></div>
 </div>
 </li>
-<li><p>Step 7: Activate the conda environment using the <code class="docutils literal notranslate"><span class="pre">mamba</span> <span class="pre">activate</span></code> command. For example, to activate the <code class="docutils literal notranslate"><span class="pre">myenv</span></code> environment, you can use the following command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mamba<span class="w"> </span>activate<span class="w"> </span>myenv
+<li><p>Step 7: Activate the conda environment using the <code class="docutils literal notranslate"><span class="pre">mamba</span> <span class="pre">activate</span></code> command. For example, to activate the <code class="docutils literal notranslate"><span class="pre">myenv</span></code> environment, you can use the following command if the version is Mambaforge-23.11.0-0 or older:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mamba<span class="w"> </span>activate<span class="w"> </span>myenv<span class="w"> </span>
+</pre></div>
+</div>
+<p>For mamba versions later than Mambaforge-23.11.0-0, <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">activate</span></code> the environment</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="nb">source</span><span class="w"> </span>activate<span class="w"> </span>myenv<span class="w"> </span>
+</pre></div>
+</div>
+<p>or initialize the shell and then <code class="docutils literal notranslate"><span class="pre">mamba</span> <span class="pre">activate</span></code> as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="nb">eval</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>mamba<span class="w"> </span>shell<span class="w"> </span>hook<span class="w"> </span>--shell<span class="w"> </span>bash<span class="k">)</span><span class="s2">&quot;</span>
+<span class="w">  </span>mamba<span class="w"> </span>activate<span class="w"> </span>myenv<span class="w"> </span>
 </pre></div>
 </div>
 </li>
