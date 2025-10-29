@@ -233,14 +233,13 @@ Verify the channels defined in your environment configuration, such as:
 - `environment.yml`
 - `.condarc` or  `.conda/config.yml`  
 
-By default, Conda channels are defined in your `.condarc` file.
+By default, Conda channels are defined in your `.condarc` or `.conda/config.yml` file.
 
-### Fix the Channel Configuration
-You can either edit your `.condarc` file manually or run the following command to set the default channel to **conda-forge**:
+### Fix the default Channel Configuration
+You can either edit your `.condarc` or `.conda/config.yml`  file manually or run the following command to set the default channel to **conda-forge**:
 
 ```bash
 conda config --remove channels anaconda
 conda config --add default_channels conda-forge
 ```
-
 After updating the channel configuration, try reinstalling your packages.
