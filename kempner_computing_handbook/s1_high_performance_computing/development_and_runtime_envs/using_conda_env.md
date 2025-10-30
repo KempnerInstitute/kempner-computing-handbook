@@ -234,3 +234,23 @@ The labs are located at the following path: `/n/holylabs/LABS` (or other filesys
 
 - Done! You have successfully created a Conda environment in the lab directory.
 
+## Troubleshooting: Unable to Install Packages
+
+If you are unable to install packages, or if the installation process is taking unusually long, it may be due to the use of the **Anaconda channel**, which is **not supported on the cluster**.
+
+### Check Your Conda Channels
+Verify the channels defined in your environment configuration, such as:
+
+- `environment.yml`
+- `.condarc` or  `.conda/config.yml`  
+
+By default, Conda channels are defined in your `.condarc` or `.conda/config.yml` file.
+
+### Fix the default Channel Configuration
+You can either edit your `.condarc` or `.conda/config.yml`  file manually or run the following command to set the default channel to **conda-forge**:
+
+```bash
+conda config --remove channels anaconda
+conda config --add default_channels conda-forge
+```
+After updating the channel configuration, try reinstalling your packages.
