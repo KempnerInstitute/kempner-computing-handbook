@@ -1,2 +1,0 @@
-# Efficient Use of Resources
-

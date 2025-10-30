@@ -1,0 +1,37 @@
+name: 📖 Fix Incorrect or Outdated Material
+description: Report material that is incorrect, outdated, or unclear in the handbook.
+title: "[Fix]: "
+labels: ["bug", "documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: "## 📖 Report Incorrect or Outdated Material"
+  
+  - type: textarea
+    id: what-is-wrong
+    attributes:
+      label: "What needs to be fixed?"
+      description: "Describe the incorrect or outdated content and why it needs updating."
+      placeholder: "The content on [page] states X, but it should be Y..."
+    validations:
+      required: true
+
+  - type: input
+    id: related-pages
+    attributes:
+      label: "Relevant Page(s) (if applicable)"
+      description: "Provide links or section names where the incorrect material is found."
+  
+  - type: textarea
+    id: suggested-fix
+    attributes:
+      label: "Suggested Fix"
+      description: "If possible, suggest a correction or update for the content."
+  
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: "Pre-Submission Checklist"
+      options:
+        - label: "I have checked that this issue is not already reported."
+        - label: "I have reviewed the related content to ensure my report is valid."

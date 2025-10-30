@@ -1,0 +1,36 @@
+name: 🏫 Submit Workshop Material
+description: Contribute materials for a new or existing workshop.
+title: "[Workshop]: "
+labels: ["workshop"]
+body:
+  - type: markdown
+    attributes:
+      value: "## 🏫 Submit Workshop Material"
+
+  - type: input
+    id: workshop-title
+    attributes:
+      label: "Workshop Title"
+      description: "Provide the name of the workshop."
+      placeholder: "Introduction to X"
+
+  - type: textarea
+    id: workshop-description
+    attributes:
+      label: "Workshop Description"
+      description: "Briefly describe the workshop topic and objectives."
+  
+  - type: textarea
+    id: material-links
+    attributes:
+      label: "Workshop Materials"
+      description: "Provide links or attach files for the workshop slides, notebooks, or other materials."
+  
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: "Pre-Submission Checklist"
+      options:
+        - label: "I have read the contribution guidelines on how to submit workshop materials."
+        - label: "I have reviewed the materials to ensure they follow the handbook style."
+        - label: "The workshop has clear objectives and structured content."

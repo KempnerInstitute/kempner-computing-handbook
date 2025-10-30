@@ -24,9 +24,14 @@ jobs:
         pip install jupyter-book
     - name: Build
       run: |
-        jupyter-book build kempner_computing_handbook
+        set -o pipefail
+        jupyter-book build kempner_computing_handbook 2>&1 | tee build.log
+        if grep -q "WARNING: " build.log; then
+        echo "::error ::Build produced warnings"
+        exit 1
+        fi
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: book
         path: kempner_computing_handbook/_build/html

@@ -1,3 +1,0 @@
-# Workshops and Trainings
-
-[TBD]

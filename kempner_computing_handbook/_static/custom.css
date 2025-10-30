@@ -9,3 +9,16 @@ h2 {
 h3 {
     font-size: 18px;
 }
+
+.caption {
+    background-color: #c6c8f438; /* Replace with your desired background color */
+    border-radius: 10px; /* Adjust the value to control the roundness of the corners */
+    padding: 10px; /* Optional: Adds space inside the element */
+    display: inline-block; /* Ensures the background doesn't cover the full width */
+}
+
+
+/* Custom styling for the sidenav for space between sections */
+ul.nav.bd-sidenav {
+    line-height: 1.0; /* Set your desired line height */
+}

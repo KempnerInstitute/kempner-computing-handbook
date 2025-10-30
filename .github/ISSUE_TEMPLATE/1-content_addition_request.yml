@@ -1,0 +1,30 @@
+name: ✨ Content Addition Request
+description: Suggest a new feature or improvement for the handbook.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: "## ✨ Content Addition Request"
+
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: "Describe the Feature"
+      description: "What improvement or new feature would you like to see?"
+      placeholder: "I would like to see a section about..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: use-case
+    attributes:
+      label: "Use Case"
+      description: "Explain why this feature is useful and how it will improve the handbook."
+  
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: "Pre-Submission Checklist"
+      options:
+        - label: "I have checked that this feature is not already requested."

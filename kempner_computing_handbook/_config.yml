@@ -1,5 +1,5 @@
 title: Kempner Institute Computing Handbook
-copyright: " 2024, The President and Fellows of Harvard College"
+copyright: " 2025, The President and Fellows of Harvard College"
 author: Kempner Institute
 logo: figures/svg/Kempner-logo_Full-Color-Full-Name-Harvard.svg
 execute:
@@ -17,12 +17,23 @@ repository:
   path: kempner_computing_handbook
   branch: main
 
+extra_files:
+  - files/**
+
 html:
   use_issues_button: true
   use_repository_button: true
-  extra_css: ["_static/custom.css"]
+  extra_css:
+    - _static/custom.css
+  extra_js:
+    - _static/custom.js
   google_analytics_id: G-QFZEXWFW26
-
+  extra_static_paths: 
+   - _static
+  static_path: ["_static"]
 
 exclude_patterns:
   - scalability/distributed_computing.md
+  - s9_workshops_and_trainings/workshops/*›
+  - s9_workshops_and_trainings/intro_to_hpc/*
+  - s5_ai_scaling_and_engineering/scalability/distributed_computing.md
