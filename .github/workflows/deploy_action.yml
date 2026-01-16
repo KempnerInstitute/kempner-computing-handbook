@@ -26,8 +26,15 @@ jobs:
       run: |
         jupyter-book build kempner_computing_handbook 
 
+    - name: Inspect build output
+      run: |
+        ls -la kempner_computing_handbook/_build/html
+        test -f kempner_computing_handbook/_build/html/index.html
+
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: kempner_computing_handbook/_build/html
+        publish_dir: ./kempner_computing_handbook/_build/html
+        force_orphan: true
+
