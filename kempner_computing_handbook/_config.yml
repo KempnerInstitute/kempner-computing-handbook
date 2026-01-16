@@ -17,8 +17,8 @@ repository:
   path: kempner_computing_handbook
   branch: main
 
-extra_files:
-  - files/**
+# extra_files:
+#   - files/**
 
 html:
   use_issues_button: true
