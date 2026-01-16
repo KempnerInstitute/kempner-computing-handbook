@@ -24,7 +24,7 @@ jobs:
     # Build the book
     - name: Build the book
       run: |
-        jupyter-book clean kempner_computing_handbook || true
+        jupyter-book clean kempner_computing_handbook --all
         jupyter-book build kempner_computing_handbook 
 
     - name: Inspect build output
