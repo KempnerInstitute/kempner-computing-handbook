@@ -27,12 +27,14 @@ html:
     - _static/custom.css
   extra_js:
     - _static/custom.js
-  google_analytics_id: G-QFZEXWFW26
+  analytics:
+    google_analytics_id: G-QFZEXWFW26
   extra_static_paths: 
    - _static
-  static_path: ["_static"]
 
 exclude_patterns:
+  - _build
+  - .DS_Store
   - scalability/distributed_computing.md
   - s9_workshops_and_trainings/workshops/*
   - s9_workshops_and_trainings/intro_to_hpc/*
