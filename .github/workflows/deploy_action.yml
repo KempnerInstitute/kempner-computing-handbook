@@ -19,7 +19,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install jupyter-book
+        pip install "jupyter-book<2"
 
     # Build the book
     - name: Build the book
@@ -29,15 +29,10 @@ jobs:
         cd ..
         jupyter-book build kempner_computing_handbook 
 
-    - name: Inspect build output
-      run: |
-        ls -la kempner_computing_handbook/_build/html
-        test -f kempner_computing_handbook/_build/html/index.html
-
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./kempner_computing_handbook/_build/html
-        force_orphan: true
+        publish_dir: kempner_computing_handbook/_build/html
+        cname: handbook.eng.kempnerinstitute.harvard.edu
 
