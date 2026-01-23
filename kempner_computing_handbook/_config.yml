@@ -17,8 +17,8 @@ repository:
   path: kempner_computing_handbook
   branch: main
 
-extra_files:
-  - files/**
+# extra_files:
+#   - files/**
 
 html:
   use_issues_button: true
@@ -27,13 +27,15 @@ html:
     - _static/custom.css
   extra_js:
     - _static/custom.js
-  google_analytics_id: G-QFZEXWFW26
+  analytics:
+    google_analytics_id: G-QFZEXWFW26
   extra_static_paths: 
    - _static
-  static_path: ["_static"]
 
 exclude_patterns:
+  - _build
+  - .DS_Store
   - scalability/distributed_computing.md
-  - s9_workshops_and_trainings/workshops/*›
+  - s9_workshops_and_trainings/workshops/*
   - s9_workshops_and_trainings/intro_to_hpc/*
   - s5_ai_scaling_and_engineering/scalability/distributed_computing.md
