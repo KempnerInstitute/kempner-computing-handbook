@@ -13,7 +13,7 @@ jobs:
   build_ubuntu:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Install uv
       uses: astral-sh/setup-uv@v8.1.0
       with:
@@ -27,7 +27,7 @@ jobs:
           exit 1
         fi
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: book
         path: kempner_computing_handbook/_build/html
