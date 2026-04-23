@@ -1,4 +1,4 @@
-name: deploy_computing_handbook
+name: deploy
 
 on:
   push:
