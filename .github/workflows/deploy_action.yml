@@ -11,23 +11,15 @@ jobs:
     steps:
     - uses: actions/checkout@v6
 
-    # Install dependencies
-    - name: Set up Python 3.12
-      uses: actions/setup-python@v5
+    - name: Install uv
+      uses: astral-sh/setup-uv@v5
       with:
-        python-version: '3.12'
+        enable-cache: true
 
-    - name: Install dependencies
-      run: |
-        pip install "jupyter-book<2"
-
-    # Build the book
     - name: Build the book
       run: |
-        cd kempner_computing_handbook
-        rm -rf _build
-        cd ..
-        jupyter-book build kempner_computing_handbook 
+        rm -rf kempner_computing_handbook/_build
+        uv run jupyter-book build kempner_computing_handbook
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v4
@@ -35,4 +27,3 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: kempner_computing_handbook/_build/html
         cname: handbook.eng.kempnerinstitute.harvard.edu
-
