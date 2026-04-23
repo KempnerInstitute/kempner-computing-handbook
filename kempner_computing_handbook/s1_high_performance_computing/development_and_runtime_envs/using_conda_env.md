@@ -14,6 +14,44 @@ A conda environment is a directory that contains a self-contained instance of Py
 Overall, conda environments allow you to isolate package versions for different projects or repositories, which reduces conflicts and dependency issues. The use of conda environments also ensures reproducibility; you can export your conda environment, allowing others to run your code in precisely the same environment.
 
 
+(development_and_runtime_envs:using_conda_env:conda_forge_default)=
+### Setting `conda-forge` as the default channel
+
+Before creating any environments on the Kempner or FASRC cluster, we recommend configuring `conda-forge` as your default (and only) channel. `conda-forge` is the community-maintained channel with the broadest coverage of scientific Python, HPC, and CUDA-adjacent packages, and it is the channel that the `mamba` solver is tuned for.
+
+To make `conda-forge` the sole channel for all future environments, run:
+
+```bash
+conda config --remove-key channels
+conda config --add channels conda-forge
+conda config --set channel_priority strict
+```
+
+These three commands update your `~/.condarc` file. The first clears any existing channel list (including `defaults`); the second adds `conda-forge`; the third tells the solver to resolve packages strictly from higher-priority channels, which prevents cross-channel dependency breakage.
+
+Verify the result with:
+
+```bash
+conda config --show channels
+conda config --show channel_priority
+```
+
+You should see exactly `- conda-forge` under channels and `strict` as the priority. Equivalently, your `~/.condarc` should contain:
+
+```yaml
+channels:
+  - conda-forge
+channel_priority: strict
+```
+
+```{tip}
+FASRC's `mambaforge` module already ships with `conda-forge` as its default channel and no `defaults` entry, so a fresh account on the cluster will effectively already be conda-forge-only. The commands above are most useful if you inherited a `~/.condarc` from an older setup, copied one from another machine, or followed a third-party install guide that wrote `defaults` into your config.
+```
+
+```{warning}
+Do **not** mix `defaults` and `conda-forge` in the same environment. The two build their packages against different base runtimes and ABIs, which frequently produces hard-to-diagnose linker, Python-version, or GLIBC conflicts. If you need a package from a scientific-specialty channel such as `bioconda` or `pytorch`, add it on top of a conda-forge-only base (both of those channels are themselves built to co-exist with `conda-forge`, not with `defaults`).
+```
+
 
 (development_and_runtime_envs:using_conda_env:creation)=
 ### Creating a Conda Environment
@@ -36,19 +74,13 @@ Overall, conda environments allow you to isolate package versions for different 
 
     ```
     ```{tip}
-      You can also add a channel to the command if needed:
-      
-      ```bash
-      mamba create --name myenv python=3.12 pip numpy -c conda-forge
-      ```     
-
-      You can also specify the list and order of channels to look for the software packages. 
+      You can override the channel for a single command with `-c` if you need a package from a specialty channel (e.g., `bioconda`, `pytorch`) that isn't in your global configuration:
 
       ```bash
-      conda config --add channels conda-forge
-      conda config --add channels bioconda
+      mamba create --name myenv python=3.12 pip numpy -c conda-forge -c bioconda
       ```
 
+      For setting your *global* default channel, see {ref}`development_and_runtime_envs:using_conda_env:conda_forge_default`.
     ```
 
 - Step 6: Check the location of the conda environment using the `mamba info --envs` command. This will show the list of conda environments and their locations. 
@@ -236,21 +268,34 @@ The labs are located at the following path: `/n/holylabs/LABS` (or other filesys
 
 ## Troubleshooting: Unable to Install Packages
 
-If you are unable to install packages, or if the installation process is taking unusually long, it may be due to the use of the **Anaconda channel**, which is **not supported on the cluster**.
+If you are unable to install packages, or the installation process is taking unusually long, the most common cause on this cluster is a channel configuration that isn't using `conda-forge`. See {ref}`development_and_runtime_envs:using_conda_env:conda_forge_default` for the recommended setup.
 
-### Check Your Conda Channels
-Verify the channels defined in your environment configuration, such as:
+### Check Your Channel Configuration
 
-- `environment.yml`
-- `.condarc` or  `.conda/config.yml`  
-
-By default, Conda channels are defined in your `.condarc` or `.conda/config.yml` file.
-
-### Fix the default Channel Configuration
-You can either edit your `.condarc` or `.conda/config.yml`  file manually or run the following command to set the default channel to **conda-forge**:
+Inspect your active channel list:
 
 ```bash
-conda config --remove channels anaconda
-conda config --add default_channels conda-forge
+conda config --show channels
+conda config --show channel_priority
 ```
-After updating the channel configuration, try reinstalling your packages.
+
+and any channel directives in these files:
+
+- `environment.yml` (inside the project you are installing into)
+- `~/.condarc` or `~/.conda/condarc` (user-level, overrides the install-level config)
+
+```{tip}
+To see which config files conda is actually reading and which values come from where, run `conda config --show-sources`. This is the fastest way to find an unexpected `defaults` entry that was written by an old script, a cluster-wide install, or a copied `.condarc`.
+```
+
+### Reset to a conda-forge-only Configuration
+
+If `conda config --show channels` shows anything other than a single `- conda-forge` line, reset your user-level configuration:
+
+```bash
+conda config --remove-key channels
+conda config --add channels conda-forge
+conda config --set channel_priority strict
+```
+
+`--remove-key channels` clears any stale entries (including `defaults` and any `anaconda`) before you re-add `conda-forge`. After updating, retry your install. If it still fails, the issue is almost certainly an actual package-availability or version-constraint problem rather than a channel misconfiguration — in that case, use `mamba install --dry-run <package>` to see what the solver is objecting to.
