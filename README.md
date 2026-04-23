@@ -1,7 +1,10 @@
 # Kempner Institute Computing Handbook
 
 <p align="center">
-<a href="https://github.com/KempnerInstitute/kempner-computing-handbook"><img src="https://github.com/KempnerInstitute/kempner-computing-handbook/actions/workflows/check_build.yml/badge.svg" alt="Build Status Badge"/></a>
+<a href="https://github.com/KempnerInstitute/kempner-computing-handbook/actions/workflows/check_build.yml"><img src="https://github.com/KempnerInstitute/kempner-computing-handbook/actions/workflows/check_build.yml/badge.svg" alt="Build Status"/></a>
+<a href="https://github.com/KempnerInstitute/kempner-computing-handbook/actions/workflows/deploy_action.yml"><img src="https://github.com/KempnerInstitute/kempner-computing-handbook/actions/workflows/deploy_action.yml/badge.svg" alt="Deploy Status"/></a>
+<a href="LICENSE"><img src="https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg" alt="License: CC BY-NC-ND 4.0"/></a>
+<a href="https://handbook.eng.kempnerinstitute.harvard.edu/"><img src="https://img.shields.io/badge/site-handbook.eng.kempnerinstitute.harvard.edu-blue" alt="Live Site"/></a>
 </p>
 
 
