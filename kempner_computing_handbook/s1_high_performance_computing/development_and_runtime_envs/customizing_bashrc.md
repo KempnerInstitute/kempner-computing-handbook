@@ -51,7 +51,7 @@ Get detailed information about a specific job.
 alias jobinfo='scontrol show job $1'
 ```
 
-Use this command as `jobinfo <job_id>`, where `<job_id>`is the job ID assgined by SLURM.
+Use this command as `jobinfo <job_id>`, where `<job_id>`is the job ID assigned by SLURM.
 
 Check status of jobs in a given partition,
 

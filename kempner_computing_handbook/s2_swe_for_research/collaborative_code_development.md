@@ -108,7 +108,7 @@ Incoming branch content
   git clone https://github.com/external-org/research-repo.git
   cd research-repo
   
-  # Make some changes (preferrably on a an issue branch instead of main)
+  # Make some changes (preferably on an issue branch instead of main)
 
   # Push to the remote repository
   git push -u origin <branch_name>

@@ -1,0 +1,5 @@
+# Words codespell should not flag.
+# Add one word per line, lowercase. Case is ignored at check time.
+# When CI flags a false positive (proper noun, acronym, deliberate
+# jargon, command/alias name), add it here in the same PR.
+golab
