@@ -10,7 +10,22 @@ Welcome to the Kempner Institute Computing Handbook, a comprehensive resource de
 
 ## How to build the handbook
 
+### Using `uv` (recommended)
+
+Install [uv](https://docs.astral.sh/uv/), then from the repo root:
+
 ```bash
+make build        # build into kempner_computing_handbook/_build/html/
+make build-live   # build, then serve at http://localhost:8000 (Ctrl-C to stop)
+make clean        # remove _build/
+```
+
+`uv` reads `pyproject.toml` + `uv.lock` and manages Python (≥3.12) and `jupyter-book<2` automatically. The venv lands in `.venv/` and is gitignored.
+
+### Using plain `pip`
+
+```bash
+pip install "jupyter-book<2"
 jupyter-book build kempner_computing_handbook
 ```
 

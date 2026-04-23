@@ -2,3 +2,4 @@
 */_build/*
 draft_notes.md
 cspell.json
+.venv/
