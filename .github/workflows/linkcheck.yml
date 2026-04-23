@@ -1,0 +1,42 @@
+name: linkcheck
+
+on:
+  schedule:
+    # Every Saturday at 06:00 UTC (02:00 ET)
+    - cron: '0 6 * * 6'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Run lychee link check
+      id: lychee
+      uses: lycheeverse/lychee-action@v2.8.0
+      with:
+        args: >-
+          --verbose
+          --no-progress
+          --max-retries 2
+          --accept 200,203,204,206,429
+          'kempner_computing_handbook/**/*.md'
+          'README.md'
+          'CONTRIBUTING.md'
+        fail: false
+        output: ./lychee-report.md
+
+    - name: Open or update link-check issue
+      if: steps.lychee.outputs.exit_code != 0
+      uses: peter-evans/create-issue-from-file@v6.0.0
+      with:
+        title: Link Checker Report
+        content-filepath: ./lychee-report.md
+        labels: |
+          automation
+          link-check
