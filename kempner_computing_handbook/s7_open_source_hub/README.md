@@ -56,11 +56,18 @@ Welcome to the Open Source Hub of Kempner Institute's Research and Engineering T
   </thead>
   <tbody>
     <tr>
-      <td>TMRC</td>
-      <td>Research Codebase</td>
+      <td>KempnerForge</td>
+      <td>AI Tool</td>
       <td>AI</td>
-      <td>Transformer Model Research Codebase</td>
-      <td><a href="https://github.com/KempnerInstitute/tmrc">GitHub</a></td>
+      <td>PyTorch-native framework for fault-tolerant distributed training of foundation models on AI clusters</td>
+      <td><a href="https://github.com/KempnerInstitute/KempnerForge">GitHub</a></td>
+    </tr>
+    <tr>
+      <td>KempnerPulse</td>
+      <td>Monitoring Tool</td>
+      <td>AI Cluster</td>
+      <td>Real-time GPU monitoring dashboard for DCGM metrics</td>
+      <td><a href="https://github.com/KempnerInstitute/kempnerpulse">GitHub</a></td>
     </tr>
     <tr>
       <td>TATM</td>
@@ -77,33 +84,12 @@ Welcome to the Open Source Hub of Kempner Institute's Research and Engineering T
       <td><a href="https://github.com/KempnerInstitute/ephys-spike-sorting">GitHub</a></td>
     </tr>
     <tr>
-        <td>minOLMo</td>
-        <td>Research Codebase</td>
-        <td>AI</td>
-        <td>An explainable and simplified version of OLMo model</td>
-        <td><a href="https://github.com/KempnerInstitute/minOLMo">GitHub</a></td>
-      </tr>
-    <tr>
-        <td>OLMo</td>
-        <td>Workflow</td>
-        <td>AI</td>
-        <td>Workflow to run OLMo on the Kempner AI cluster</td>
-        <td><a href="https://github.com/KempnerInstitute/OLMo">GitHub</a></td>
-      </tr>        
-    <tr>
-        <td>vLLM Distributed Inference</td>
-        <td>Workflow</td>
-        <td>AI</td>
-        <td>Distributed inference workflow with vLLM on Kempner AI cluster</td>
-        <td><a href="https://github.com/KempnerInstitute/distributed-inference-vllm">GitHub</a></td>
-      </tr>      
-    <tr>
-        <td>Python Package Template</td>
-        <td>Repository Template</td>
-        <td>Software Engineering</td>
-        <td>Python package GitHub repository template</td>
-        <td><a href="https://github.com/KempnerInstitute/python-package-template">GitHub</a></td>
-      </tr>        
+      <td>vLLM Distributed Inference</td>
+      <td>Workflow</td>
+      <td>AI</td>
+      <td>Distributed inference workflow with vLLM on Kempner AI cluster</td>
+      <td><a href="https://github.com/KempnerInstitute/distributed-inference-vllm">GitHub</a></td>
+    </tr>
   </tbody>
 </table>
 
