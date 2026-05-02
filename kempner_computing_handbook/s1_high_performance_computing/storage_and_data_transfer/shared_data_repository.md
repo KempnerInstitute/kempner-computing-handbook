@@ -30,13 +30,13 @@ We will develop a web interface later for data and model discovery.
 ---
 
 - **OpenAI**
-    - Path: `$MODEL_PATH/gpt2` (see on [HuggingFace](https://huggingface.co/gpt2))
+    - Path: `$MODEL_PATH/gpt2` (see on [HuggingFace](https://huggingface.co/openai-community/gpt2))
         - Size: 4.5 M
 
 --- 
 
 - **Google**
-    - Path: `$MODEL_PATH/t5-base` (see on [HuggingFace](https://huggingface.co/t5-base))
+    - Path: `$MODEL_PATH/t5-base` (see on [HuggingFace](https://huggingface.co/google-t5/t5-base))
         - Size: 3.4 M
 
 ## The current list of ML datasets

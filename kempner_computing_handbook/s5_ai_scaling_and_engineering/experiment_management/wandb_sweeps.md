@@ -91,7 +91,7 @@ Use `config.yaml` for fixed parameters not being searched. Values in `sweep_conf
 
 ## Step 2: Initialize the Sweep
 
-Once the sweep configuration is defined, the next step is to initialize the sweep. W&B uses [Sweep Controllers](https://docs.wandb.ai/ref/python/controller/) to manage and orchestrate sweeps.
+Once the sweep configuration is defined, the next step is to initialize the sweep. W&B uses [Sweep Controllers](https://docs.wandb.ai/ref/python/controller) to manage and orchestrate sweeps.
 
 From within your (e.g., `mamba`) environment, run the following command:
 

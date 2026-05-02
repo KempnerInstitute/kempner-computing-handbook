@@ -40,4 +40,4 @@ for epoch in range(epochs):
     wandb.log({"accuracy": acc, "loss": loss})
 ```
 
-Access your project and view your runs on [wandb.ai](https://wandb.ai/home) website. Additionally, invite any collaborators you have to your project at this page. Refer to the [W&B Quickstart](https://docs.wandb.ai/quickstart/) for more details.
+Access your project and view your runs on [wandb.ai](https://wandb.ai/home) website. Additionally, invite any collaborators you have to your project at this page. Refer to the [W&B Quickstart](https://docs.wandb.ai/models/quickstart) for more details.

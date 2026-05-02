@@ -1,11 +1,11 @@
 # Support and Troubleshooting
 
 If you are new to the FASRC cluster, we recommend taking the FASRC new users training: 
-  - https://www.rc.fas.harvard.edu/training/. 
+  - https://www.rc.fas.harvard.edu/upcoming-training/. 
 You can also watch a pre-recorded version: 
   - https://docs.rc.fas.harvard.edu/wp-content/uploads/fasrc-getting-started-23-mar-2022.mp4 ,  
 or look at their online documentation and training videos: 
-  - https://docs.rc.fas.harvard.edu/kb/introduction-to-cluster-online. 
+  - https://docs.rc.fas.harvard.edu/kb/quickstart-guide/. 
   
 FASRC also hosts other workshops that may be of interest. Additionally, FASRC holds zoom office hours every Wednesday from 12 - 3 pm.
 

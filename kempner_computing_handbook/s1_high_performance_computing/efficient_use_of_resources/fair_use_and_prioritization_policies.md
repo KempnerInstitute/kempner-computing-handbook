@@ -5,7 +5,7 @@
 
 The Kempner cluster uses a system called fairshare to determine prioritization and which jobs run when. The fairshare algorithm prioritizes a balanced allocation of resources, aimed at facilitating the timely completion of tasks from various user groups. This means that jobs, particularly those that are resource intensive or are being run in labs with high recent usage, may not run immediately or on demand. 
 
-As an approved user of the Kempner cluster, you will be part of one or more [fairshare groups (called slurm accounts)](resource_management:understanding_slurm:slurm_accounts), through which you receive a share of the cluster resources.  For more information, please see the [Cluster Governance guidelines](https://sites.harvard.edu/kempner/computing/).
+As an approved user of the Kempner cluster, you will be part of one or more [fairshare groups (called slurm accounts)](resource_management:understanding_slurm:slurm_accounts), through which you receive a share of the cluster resources.  For more information, please see the [Cluster Governance guidelines](https://kempnerinstitute.harvard.edu/kempner-community/).
 
 ```{tip}
 One common misconception around fairshare is that a given user or lab should have access at any given moment to exactly "their share" of the cluster. Instead, fairshare guarantees access to resources averaged over a period of several months. At any given moment, a user or lab may be using a greater or lesser amount of their available share.

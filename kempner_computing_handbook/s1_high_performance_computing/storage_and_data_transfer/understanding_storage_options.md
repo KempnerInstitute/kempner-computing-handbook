@@ -93,7 +93,7 @@ The following table summarizes the details of the default scratch storage (`nets
 | **Use Cases**       | Optimized for Varieties of Workflows including High I/O AI Workflows |
 
 
-The following table summarizes the storage options available on the cluster, visit [data storage](https://www.rc.fas.harvard.edu/services/data-storage/) for more information.
+The following table summarizes the storage options available on the cluster, visit [data storage](https://www.rc.fas.harvard.edu/data-storage/) for more information.
 
 ```{figure} figures/png/storage_table_20240324.png
 ---
