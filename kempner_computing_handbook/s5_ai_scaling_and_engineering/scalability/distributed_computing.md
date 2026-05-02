@@ -53,7 +53,7 @@ Pytorch and Pytorch lightning support multiple communication backends including 
 
 ### Ray
 
-[Ray](https://ray.io) is a distributed computation library for python that supports both single and multi-node execution. Ray is designed to be easy to use and provides a number of high-level abstractions for distributed computing, including a task-based API, a distributed actor API, and a distributed data API. Ray also includes a number of utilities for distributed machine learning, including a distributed data loader and a distributed hyperparameter search library.
+[Ray](https://www.ray.io) is a distributed computation library for python that supports both single and multi-node execution. Ray is designed to be easy to use and provides a number of high-level abstractions for distributed computing, including a task-based API, a distributed actor API, and a distributed data API. Ray also includes a number of utilities for distributed machine learning, including a distributed data loader and a distributed hyperparameter search library.
 
 It serves as the backend for a number of tools in the modern AI/ML ecosystem, including [vLLM](https://github.com/vllm-project/vllm), [DCLM](https://github.com/mlfoundations/dclm) and others. 
 

@@ -25,6 +25,10 @@ jobs:
           --no-progress
           --max-retries 2
           --accept 200,203,204,206,429
+          --scheme http
+          --scheme https
+          --exclude '^https?://vdi\.rc\.fas\.harvard\.edu/?$'
+          --exclude '^https?://(www\.)?cs\.toronto\.edu/~kriz/cifar\.html$'
           'kempner_computing_handbook/**/*.md'
           'README.md'
           'CONTRIBUTING.md'

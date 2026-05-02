@@ -4,7 +4,7 @@ This section documents NVIDIA NeMo Workflows, designed for training and finetuni
 
 ## Overview
 
-This section provides a modular, cluster-ready workflow built on top of the [NVIDIA NeMo](https://github.com/NVIDIA/NeMo) framework. It supports:
+This section provides a modular, cluster-ready workflow built on top of the [NVIDIA NeMo](https://github.com/NVIDIA-NeMo/NeMo) framework. It supports:
 
 - Pretraining and finetuning of LLMs such as GPT2 and Llama 3
 - Scalable distributed training utilizing SLURM

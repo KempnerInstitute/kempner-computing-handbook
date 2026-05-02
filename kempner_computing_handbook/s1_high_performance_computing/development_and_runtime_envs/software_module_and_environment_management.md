@@ -44,4 +44,4 @@ Each module is defined by a script that runs when the module is loaded. This scr
 
 These changes to the terminal environment will persist until `module unload <module_name>` or `module purge` is called. They act independently of other modifications to environment variables, namely virtual environments.
 
-You can read more about modules at the [Lmod documentation](https://lmod.readthedocs.io/).
+You can read more about modules at the [Lmod documentation](https://lmod.readthedocs.io/en/latest/).

@@ -293,6 +293,6 @@ sbatch run_array_job.sh
 ## Support and Troubleshooting
 
 - Troubleshooting Common Issues
-- Support Framework: FASRC and Kempner Engineering Team (<a href="https://www.rc.fas.harvard.edu/training/office-hours/" target="_blank">Click Here</a>)
+- Support Framework: FASRC and Kempner Engineering Team (<a href="https://www.rc.fas.harvard.edu/office-hours/" target="_blank">Click Here</a>)
     - Send a ticket to FASRC (`rchelp [at] rc.fas.harvard.edu`)
 - Closing Remarks and Q&A Session

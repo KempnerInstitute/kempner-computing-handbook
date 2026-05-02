@@ -17,10 +17,10 @@ The following models have been tested and configured for distributed inference u
 
 | Model            | Model Size | Hugging Face                                                     | Deployment Guide                                                                                                                  |
 |------------------|------------|------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
-| Llama 3.1        | 70B        | [HF Link](https://huggingface.co/meta-llama/Llama-3.1-70B)       | [Llama 3.1 Deployment](https://github.com/KempnerInstitute/distributed-inference-vllm/blob/main/README_Llama3.1.md)               |
-| Llama 3.1        | 405B       | [HF Link](https://huggingface.co/meta-llama/Llama-3.1-405B)      | [Llama 3.1 Deployment](https://github.com/KempnerInstitute/distributed-inference-vllm/blob/main/README_Llama3.1.md)               |
-| DeepSeek-R1      | 671B       | [HF Link](https://huggingface.co/deepseek-ai/DeepSeek-R1)        | [DeepSeek-R1 Deployment](https://github.com/KempnerInstitute/distributed-inference-vllm/blob/main/README_DeepSeekR1.md)           |
-| DeepSeek-R1-0528 | 671B       | [HF Link](https://huggingface.co/deepseek-ai/DeepSeek-R1-0528)   | [DeepSeek-R1-0528 Deployment](https://github.com/KempnerInstitute/distributed-inference-vllm/blob/main/README_DeepSeekR1-0528.md) |
+| Llama 3.1        | 70B        | [HF Link](https://huggingface.co/meta-llama/Llama-3.1-70B)       | [Llama 3.1 Deployment](https://github.com/KempnerInstitute/distributed-inference-vllm/blob/main/workflows/Llama-3.1-70B_multinode-server/README.md)               |
+| Llama 3.1        | 405B       | [HF Link](https://huggingface.co/meta-llama/Llama-3.1-405B)      | [Llama 3.1 Deployment](https://github.com/KempnerInstitute/distributed-inference-vllm/blob/main/workflows/Llama-3.1-405B_multinode-server/README.md)               |
+| DeepSeek-R1      | 671B       | [HF Link](https://huggingface.co/deepseek-ai/DeepSeek-R1)        | [DeepSeek-R1 Deployment](https://github.com/KempnerInstitute/distributed-inference-vllm/blob/main/workflows/DeepSeek-R1_multinode-server/README.md)           |
+| DeepSeek-R1-0528 | 671B       | [HF Link](https://huggingface.co/deepseek-ai/DeepSeek-R1-0528)   | [DeepSeek-R1-0528 Deployment](https://github.com/KempnerInstitute/distributed-inference-vllm/blob/main/workflows/DeepSeek-R1-0528_multinode-server/README.md) |
 
 Each model's deployment page includes:
 
