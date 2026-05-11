@@ -27,6 +27,7 @@ jobs:
           --accept 200,203,204,206,429
           --scheme http
           --scheme https
+          --base 'https://handbook.eng.kempnerinstitute.harvard.edu'
           --exclude '^https?://vdi\.rc\.fas\.harvard\.edu/?$'
           --exclude '^https?://(www\.)?cs\.toronto\.edu/~kriz/cifar\.html$'
           'kempner_computing_handbook/**/*.md'
