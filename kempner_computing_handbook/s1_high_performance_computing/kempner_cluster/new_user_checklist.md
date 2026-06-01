@@ -7,7 +7,7 @@ Use this checklist when onboarding to the Kempner AI cluster for the first time.
 
 - [ ] Confirm that your work is eligible for Kempner AI cluster access. See {doc}`Overview of Cluster <overview_of_kempner_cluster>`.
 - [ ] Review the expected use cases, fair-use expectations, GPU-only policy, and communication norms in {doc}`Cluster Usage Policies <kempner_policies_for_responsible_use>`.
-- [ ] If you are already a FASRC user but not a Kempner-affiliated user, review {doc}`Access by FASRC Users <accessing_gpu_by_fasrc_users>` to understand access through shared FASRC GPU partitions.
+
 
 ## Request Your FASRC and Kempner AI Cluster Account
 
