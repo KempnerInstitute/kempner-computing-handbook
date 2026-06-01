@@ -9,17 +9,29 @@ Use this checklist when onboarding to the Kempner AI cluster for the first time.
 - [ ] Review the expected use cases, fair-use expectations, GPU-only policy, and communication norms in {doc}`Cluster Usage Policies <kempner_policies_for_responsible_use>`.
 - [ ] If you are already a FASRC user but not a Kempner-affiliated user, review {doc}`Access by FASRC Users <accessing_gpu_by_fasrc_users>` to understand access through shared FASRC GPU partitions.
 
-## Request Your Account
+## Request Your FASRC and Kempner AI Cluster Account
+
+### FASRC Account
+
+If you already have a FASRC account set up, you may jump to the *Kempner AI Cluster Account* section below.
 
 - [ ] Request a FASRC account through the [FASRC account request portal](https://portal.rc.fas.harvard.edu/request/account/new).
 - [ ] Select the correct PI and approver for your role. See {doc}`Introduction and Basics <introduction_and_cluster_basics>`.
 - [ ] Wait for your approver to approve the account request in the FASRC portal.
 - [ ] Set your FASRC account password when your account is created.
 
+### Kempner AI Cluster Account
+
+Once you have an active FASRC account, you can request access to the Kempner AI cluster:
+
+- [ ] Reach out to your PI and fill out the Kempner AI cluster account request form. Your PI will guide you through the form. See {doc}`Introduction and Basics <introduction_and_cluster_basics>` for whom to contact.
+- [ ] Allow up to two business days for the PI to confirm approval and for the account to be set up on the Kempner AI cluster.
+- [ ] If you have not heard back, email [rchelp@rc.fas.harvard.edu](mailto:rchelp@rc.fas.harvard.edu) with the subject `kempner cluster account`.
+
 ## Set Up Required Authentication
 
 - [ ] Install and configure OpenAuth two-factor authentication. See {ref}`kempner_cluster:installing_openauth_2fa`.
-- [ ] Install Cisco AnyConnect if you plan to use Open OnDemand or other VPN-only FASRC services.
+- [ ] Install the Cisco Secure Client (formerly AnyConnect) if you plan to use Open OnDemand or other VPN-only FASRC services.
 - [ ] Configure the FASRC VPN using `vpn.rc.fas.harvard.edu`. See {doc}`Accessing the Cluster <accessing_and_navigating_the_cluster>`.
 - [ ] Confirm that you can generate an OpenAuth code from your phone, password manager, Duo Mobile, or Java desktop app.
 
