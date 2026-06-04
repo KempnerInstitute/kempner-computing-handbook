@@ -9,7 +9,7 @@ Use this checklist when onboarding to the Kempner AI cluster for the first time.
 - [ ] Review the expected use cases, fair-use expectations, GPU-only policy, and communication norms in {doc}`Cluster Usage Policies <kempner_policies_for_responsible_use>`.
 
 
-## Request Your FASRC and Kempner AI Cluster Account
+## Request Your FASRC and Kempner AI Cluster Accounts
 
 ### FASRC Account
 
