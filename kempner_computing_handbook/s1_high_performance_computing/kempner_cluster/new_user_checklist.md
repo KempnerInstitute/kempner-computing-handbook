@@ -53,7 +53,7 @@ Once you have an active FASRC account, you can request access to the Kempner AI 
 
 - [ ] Find your home directory (`/n/home<NN>/<username>`) and understand its 100 GB persistent storage limit. Check current usage with `df -h ~/`. See {doc}`Storage Options <../storage_and_data_transfer/understanding_storage_options>`.
 - [ ] Find your lab directory at `/n/holylabs/LABS/<your_lab_name>` for persistent lab storage (4 TB per lab). See {doc}`Storage Options <../storage_and_data_transfer/understanding_storage_options>`.
-- [ ] Find your scratch directory at `/n/netscratch/<your_lab_name>` (referenced by the `$SCRATCH` variable) for active high-performance work (50 TB per lab), and review the 90-day scratch retention policy. See {doc}`Storage Options <../storage_and_data_transfer/understanding_storage_options>`.
+- [ ] Find your scratch directory under `$SCRATCH/<your_lab_name>` (typically `/n/netscratch/<your_lab_name>`) for active high-performance work (50 TB per lab), and review the 90-day scratch retention policy. See {doc}`Storage Options <../storage_and_data_transfer/understanding_storage_options>`.
 - [ ] Choose an appropriate data transfer method before moving files: `scp` or `rsync` for smaller transfers, and Globus for large transfers. See {ref}`storage_and_data_transfer:data_transfer`.
 
 ## Set Up a Working Environment
