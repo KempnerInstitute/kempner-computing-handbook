@@ -52,6 +52,11 @@ The following partitions are available for Kempner affiliates on the FASRC clust
 | `kempner_h100` | This GPU block includes 2304 AMD Genoa cores, 96 Nvidia H100 80GB GPUs, water-cooled nodes with 96 cores, 1.5TB RAM, and 4 H100 GPUs, interconnected via NDR Infiniband, with a 3-day limit. |
 | `kempner_requeue` | This partition utilizes `kempner` and `kempner_h100` partitions, designed for tasks that can be interrupted and restarted. This partition has a 7 day time limit.|
 | `kempner_dev` | This partition is dedicated to the engineering team and is not available to all users. |
+| `kempner_interactive` | This partition is dedicated to interactive jobs and lightweight development work. It provides 20GB A100 GPU slices created from full A100 40GB GPUs using NVIDIA Multi-Instance GPU (MIG) technology. |
+
+```{note}
+The `kempner_interactive` partition is intended for interactive sessions, prototyping, debugging, and other lightweight development tasks, not for full-scale training or production runs. Because the GPUs are partitioned with MIG, each job receives a 20GB slice of an A100 rather than a full GPU. For resource-intensive jobs, use the `kempner` or `kempner_h100` partitions instead.
+```
 
 ````{tip}
 Run the following command to see the list of Kempner partitions,
