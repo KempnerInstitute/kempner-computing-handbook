@@ -6,12 +6,12 @@ A data management plan (DMP) describes how research data are organized, stored, 
 This page summarizes the policies that govern research data at the Kempner Institute and on the FASRC cluster, and links to the practical resources elsewhere in this handbook for putting a plan into practice.
 
 ```{note}
-The policies summarized here are maintained by Harvard and FAS Research Computing (FASRC). These summaries are provided for convenience — always consult the linked source documents for the authoritative and most current language.
+The policies summarized here are maintained by Harvard and FAS Research Computing (FASRC). These summaries are provided for convenience; always consult the linked source documents for the authoritative and most current language.
 ```
 
 ## Open science at the Kempner Institute
 
-All research conducted at the Kempner Institute is open science: data, code, and models are intended to be shared openly with the broader research community. Plan for open release from the outset — choose open formats, document your datasets thoroughly, and track the licenses and provenance of any third-party data you incorporate.
+All research conducted at the Kempner Institute is open science: data, code, and models are intended to be shared openly with the broader research community. Plan for open release from the outset: choose open formats, document your datasets thoroughly, and track the licenses and provenance of any third-party data you incorporate.
 
 ```{seealso}
 Kempner Institute [Open Science Policies](https://kempnerinstitute.harvard.edu/open-science-policies/)
@@ -23,19 +23,19 @@ FASRC provides comprehensive guidance for authoring a DMP, covering University d
 
 A complete plan typically addresses:
 
-- **Data types and formats** — what data you will generate or collect, and in what formats.
-- **Organization and documentation** — naming conventions, directory structure, and metadata/`README` files that make the data understandable to others.
-- **Storage and security** — where active and archival data live and how they are protected (see [Storage Options](understanding_storage_options.md)).
-- **Access and sharing** — who may access the data and how it is shared internally and externally (see [Data Transfer](data_transfer.md)).
-- **Retention and disposal** — how long data are kept and how they are deleted at end of life.
+- **Data types and formats**: what data you will generate or collect, and in what formats.
+- **Organization and documentation**: naming conventions, directory structure, and metadata/`README` files that make the data understandable to others.
+- **Storage and security**: where active and archival data live and how they are protected (see [Storage Options](understanding_storage_options.md)).
+- **Access and sharing**: who may access the data and how they are shared internally and externally (see [Data Transfer](data_transfer.md)).
+- **Retention and disposal**: how long data are kept and how they are deleted at the end of their lifecycle.
 
 ```{seealso}
-[FASRC Research Data Management](https://www.rc.fas.harvard.edu/services/research-data-management/) — how to write a data management plan, University data policies, organizational recommendations, and storage and security requirements.
+[FASRC Research Data Management](https://www.rc.fas.harvard.edu/services/research-data-management/): writing a data management plan, University data policies, organizational recommendations, and storage and security requirements.
 ```
 
 ## Data ownership
 
-Harvard University asserts ownership over research data for all projects conducted at the University, under its auspices, or with University resources. Principal Investigators (PIs) are responsible for ensuring proper data management, storage, and accessibility, and for meeting all University, legal, and sponsor requirements. This includes establishing procedures for data retention, confidentiality, and sharing while honoring any data use agreements. Researchers should keep records current and coordinate with the Vice Provost for Research on any data transfers or related inquiries.
+Harvard University asserts ownership of research data for all projects conducted at the University, under its auspices, or with University resources. Principal Investigators (PIs) are responsible for ensuring proper data management, storage, and accessibility, and for meeting all University, legal, and sponsor requirements. This includes establishing procedures for data retention, confidentiality, and sharing while honoring any data use agreements. Researchers should keep records current and coordinate with the Vice Provost for Research on any data transfers or related inquiries.
 
 On the cluster, data stored in FASRC lab directories and other lab shares are owned and managed by the PI or group owner. Upon written approval from the PI or group owner, FASRC can modify data permissions to grant ownership and access as required.
 
@@ -48,25 +48,25 @@ On the cluster, data stored in FASRC lab directories and other lab shares are ow
 
 The Kempner AI cluster provides several storage tiers, each suited to a different stage of the data lifecycle:
 
-- **Home and lab directories** — persistent storage for long-term files, checkpoints, and datasets.
-- **Scratch (VAST)** — high-performance, *temporary* storage for data actively used by running jobs.
+- **Home and lab directories**: persistent storage for long-term files, checkpoints, and datasets.
+- **Scratch (VAST)**: high-performance, *temporary* storage for data actively used by running jobs.
 
 Match each part of your plan to the appropriate tier, and never treat scratch as long-term or archival storage. For full quotas, paths, and retention details, see [Storage Options](understanding_storage_options.md).
 
 ```{warning}
-Scratch storage is purged on a rolling basis: data older than 90 days is deleted. Do not rely on scratch to satisfy data retention requirements — copy anything you must keep to persistent or archival storage.
+Scratch storage is purged on a rolling basis: data older than 90 days will be deleted. Do not rely on scratch to satisfy data retention requirements. Copy anything you must keep to persistent or archival storage.
 ```
 
-Because Kempner research is open science, the cluster is generally used for non-sensitive data. If your project involves data with confidentiality, privacy, or other compliance obligations (for example, data governed by a data use agreement), coordinate with FASRC and the Kempner Institute *before* placing it on the cluster to confirm the appropriate handling and security controls.
+Because Kempner research is open science, the cluster is generally used for non-sensitive data. If your project involves data with confidentiality, privacy, or other compliance obligations (for example, data governed by a data use agreement), coordinate with FASRC and the Kempner Institute *before* placing such data on the cluster to confirm the appropriate handling and security controls.
 
 ## Data retention and deletion
 
-Harvard guidance states that research records should generally be retained for **no fewer than seven (7) years** after the end of a research project or activity. Build this requirement into your plan by identifying — well before a project ends — which data and records must be preserved and where they will be archived.
+Harvard guidance states that research records should generally be retained for **no fewer than seven (7) years** after the end of a research project or activity. Build this requirement into your plan by identifying, well before a project ends, which data and records must be preserved and where they will be archived.
 
 FASRC maintains its own standards and procedures for the retention and deletion of research data, outputs, temporary files, and associated digital resources held on FASRC storage.
 
 ```{important}
-Plan for the full seven-year retention horizon from the start. Active cluster storage — especially scratch — is not an archival solution; arrange durable archival storage for any data you are obligated to keep.
+Plan for the full seven-year retention horizon from the start. Active cluster storage, especially scratch, is not an archival solution; arrange durable archival storage for any data you are obligated to keep.
 ```
 
 ```{seealso}
