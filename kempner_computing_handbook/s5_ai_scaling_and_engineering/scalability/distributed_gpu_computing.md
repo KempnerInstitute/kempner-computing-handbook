@@ -636,7 +636,7 @@ Now use the same slurm script skeleton in {numref}`multi_gpu_slurm` to run the `
 ````
 
 ### Fully Sharded Data Parallelism (FSDP)
-The idea of this strategy is to shards almost everything across GPUs to enable distributed training for very large models. FSDP shards the model (parameters and gradients), data and optimization states across GPUs. It combines Data Parallelism with Model Parallelism (sharding model both Vertically and Horizontally) in a unique way. FSDP breaks down a model instance into smaller units and then flattens and shards all of the parameters within each unit. It allows to train very large models using the combined memory of many GPUs. Before each computation, it requires to first gather all the parameter shards across GPUs (aka, parameter unsharding) using `All-Gather` and `Reduce_Scatter` collective communication primitives, see {numref}`sec-nccl`.
+The idea of this strategy is to shard almost everything across GPUs to enable distributed training for very large models. FSDP shards the model (parameters and gradients), data and optimization states across GPUs. It combines Data Parallelism with Model Parallelism (sharding model both Vertically and Horizontally) in a unique way. FSDP breaks down a model instance into smaller units and then flattens and shards all of the parameters within each unit. It enables training of very large models using the combined memory of many GPUs. Before each computation, it needs to first gather all the parameter shards across GPUs (aka, parameter unsharding) using `All-Gather` and `Reduce_Scatter` collective communication primitives, see {numref}`sec-nccl`.
 
 ```{figure} figures/png/FSDP.png
 ---
