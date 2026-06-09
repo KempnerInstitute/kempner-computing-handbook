@@ -6,7 +6,7 @@ In the section on containerization, it's crucial to emphasize the significance o
 
 This leads us to Singularity, a containerization solution specifically designed for HPC and scientific computing. Singularity addresses the security and resource management issues posed by Docker in HPC settings. A significant advantage of Singularity is its ability to convert Docker images to Singularity format, enabling users to leverage Docker's vast repository of containers within HPC environments safely and efficiently.
 
-PyTorch, one of the most popular deep learning frameworks, provide official Docker images in their [Docker Hub](https://hub.docker.com/r/pytorch/pytorch). These images can be converted to Singularity format and used on AI clusters. This is a powerful feature that allows researchers to develop and test their models on local machines using Docker and then deploy them on AI clusters using Singularity.
+PyTorch, one of the most popular deep learning frameworks, provides official Docker images in their [Docker Hub](https://hub.docker.com/r/pytorch/pytorch). These images can be converted to Singularity format and used on AI clusters. This is a powerful feature that allows researchers to develop and test their models on local machines using Docker and then deploy them on AI clusters using Singularity.
 
 Here is a simple step by step guideline to convert pytorch's official Docker image to Singularity format and use it on AI clusters:
 
