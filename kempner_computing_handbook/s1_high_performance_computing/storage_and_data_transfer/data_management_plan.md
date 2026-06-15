@@ -103,6 +103,9 @@ At minimum, transition records should identify the dataset or directory, source 
 [FASRC Offboarding Policies and Procedures](https://docs.rc.fas.harvard.edu/kb/offboarding/)
 ```
 
+```{note}
+Note on Federal Grants (e.g., NIH): While overarching federal frameworks like Uniform Guidance (2 CFR § 200.334) and the NIH Grants Policy Statement (Section 8.4.2) only require a three (3) year data retention baseline, Harvard University's 7-year policy supersedes the federal minimum. All Kempner cluster users must ensure data used to validate grant outcomes is preserved for the full 7-year horizon.
+```
 ## Policy quick reference
 
 | Policy | What it covers |
