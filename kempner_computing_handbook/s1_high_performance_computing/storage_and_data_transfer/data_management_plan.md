@@ -104,7 +104,7 @@ At minimum, transition records should identify the dataset or directory, source 
 ```
 
 ```{note}
-Note on Federal Grants (e.g., NIH): While overarching federal frameworks like Uniform Guidance (2 CFR § 200.334) and the NIH Grants Policy Statement (Section 8.4.2) only require a three (3) year data retention baseline, Harvard University's 7-year policy supersedes the federal minimum. All Kempner cluster users must ensure data used to validate grant outcomes is preserved for the full 7-year horizon.
+Note on Federal Grants (e.g., NIH): While overarching federal frameworks like Uniform Guidance ([2 CFR § 200.334](https://www.ecfr.gov/current/title-2/part-200/section-200.334)) and the NIH Grants Policy Statement ([Section 8.4.2](https://grants.nih.gov/grants/policy/nihgps/html5/section_8/8.4.2_record_retention_and_access.htm)) only require a three (3) year data retention baseline, Harvard University's 7-year policy supersedes the federal minimum. All Kempner cluster users must ensure data used to validate grant outcomes is preserved for the full 7-year horizon.
 ```
 ## Policy quick reference
 
