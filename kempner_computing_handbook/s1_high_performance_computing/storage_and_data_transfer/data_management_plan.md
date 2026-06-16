@@ -28,6 +28,7 @@ A complete plan typically addresses:
 - **Storage and security**: where active and archival data live and how they are protected (see [Storage Options](understanding_storage_options.md)).
 - **Access and sharing**: who may access the data and how they are shared internally and externally (see [Data Transfer](data_transfer.md)).
 - **Retention and disposal**: how long data are kept and how they are deleted at the end of their lifecycle.
+- **Data transitions and offboarding**: what happens to project data when researchers leave Harvard, change groups, or move a project to another institution.
 
 ```{seealso}
 [FASRC Research Data Management](https://www.rc.fas.harvard.edu/services/research-data-management/): writing a data management plan, University data policies, organizational recommendations, and storage and security requirements.
@@ -74,12 +75,45 @@ Plan for the full seven-year retention horizon from the start. Active cluster st
 - [FASRC Research Data Retention and Deletion Policy](https://docs.rc.fas.harvard.edu/kb/fas-rc-research-data-retention-and-deletion-policy/)
 ```
 
+## Data transitions and offboarding
+
+Data management plans should include a transition plan for people, including students, postdoctoral researchers, research fellows, and PIs, who leave Harvard, change labs, or move a project to another institution. The goal is to keep research data available to the PI, collaborators, Harvard, sponsors, and the broader research community as required.
+
+Before a researcher leaves or changes groups, they should review data in home directories, lab directories, scratch, shared repositories, and external storage used for the project. In consultation with the PI or group owner, identify:
+
+- Which data must remain available to the PI, lab, Kempner Institute, Harvard, sponsors, or collaborators.
+- Which data should be moved from a personal or scratch location to a shared lab, project, repository, or archival location.
+- Which data, if any, may be copied or transferred to a new institution or role.
+- Which data, if any, may be deleted, and how deletion or migration will be documented.
+- Which open science, sponsor, data use agreement, privacy, confidentiality, or publication obligations continue after departure.
+
+Researchers may not independently decide to remove, transfer, or delete research data generated or curated at Harvard. Data disposition decisions should be made with the PI or group owner and, where needed, the Kempner Institute, the PI's department, the Vice Provost for Research, or other appropriate Harvard offices.
+
+If a departing researcher wants to take a copy of data to a new institution or role, they must obtain approval from the PI and department. Data governed by a data use agreement, sponsor agreement, human subjects protocol, confidentiality restriction, or other compliance requirement may require additional review or written permission before they can be copied or transferred.
+
+If a PI leaves Harvard and a project will move to another institution, consult the Harvard Research Data Ownership Policy and FASRC offboarding guidance before transferring original research data. Additional institutional approvals and written agreements may be required.
+
+```{important}
+Kempner open science obligations continue after a researcher leaves. Data, code, models, and other research outputs generated or curated through Kempner-supported work should continue to follow Kempner open science expectations unless an approved restriction applies.
+```
+
+At minimum, transition records should identify the dataset or directory, source location, destination location, date moved or deleted, person responsible, and any known access, sharing, or compliance restrictions.
+
+```{seealso}
+[FASRC Offboarding Policies and Procedures](https://docs.rc.fas.harvard.edu/kb/offboarding/)
+```
+
+```{note}
+Note on Federal Grants (e.g., NIH): While overarching federal frameworks like Uniform Guidance ([2 CFR § 200.334](https://www.ecfr.gov/current/title-2/part-200/section-200.334)) and the NIH Grants Policy Statement ([Section 8.4.2](https://grants.nih.gov/grants/policy/nihgps/html5/section_8/8.4.2_record_retention_and_access.htm)) only require a three (3) year data retention baseline, Harvard University's 7-year policy supersedes the federal minimum. All Kempner cluster users must ensure data used to validate grant outcomes are preserved for the full 7-year horizon.
+```
+
 ## Policy quick reference
 
 | Policy | What it covers |
 |--------|----------------|
 | [Kempner Open Science Policies](https://kempnerinstitute.harvard.edu/open-science-policies/) | The Institute's commitment to openly sharing research data and outputs. |
 | [FASRC Research Data Management](https://www.rc.fas.harvard.edu/services/research-data-management/) | How to write a DMP; University data policies; organization, storage, and security recommendations. |
+| [FASRC Offboarding Policies and Procedures](https://docs.rc.fas.harvard.edu/kb/offboarding/) | Researcher and PI checklists for leaving Harvard or changing labs/groups, including data review, migration, deletion, account transitions, and approval before taking data to a new institution or role. |
 | [FASRC Research Data Retention and Deletion Policy](https://docs.rc.fas.harvard.edu/kb/fas-rc-research-data-retention-and-deletion-policy/) | FASRC standards and procedures for retaining and deleting research data, outputs, and temporary files. |
 | [FASRC Data Ownership and Access Policy](https://docs.rc.fas.harvard.edu/kb/data-ownership-and-access-policy/) | Ownership and permission management of data in FASRC lab directories and shares. |
 | [Harvard Research Data Ownership Policy](https://bpb-us-e1.wpmucdn.com/websites.harvard.edu/dist/f/106/files/2022/10/Data-Ownership-Policy-2019_2021.pdf) | University ownership of research data and PI responsibilities. |
