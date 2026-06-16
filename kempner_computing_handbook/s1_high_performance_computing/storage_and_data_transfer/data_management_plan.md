@@ -89,7 +89,7 @@ Before a researcher leaves or changes groups, they should review data in home di
 
 Researchers may not independently decide to remove, transfer, or delete research data generated or curated at Harvard. Data disposition decisions should be made with the PI or group owner and, where needed, the Kempner Institute, the PI's department, the Vice Provost for Research, or other appropriate Harvard offices.
 
-If a departing researcher wants to take a copy of data to a new institution or role, they must obtain approval from the PI and department. Data governed by a data use agreement, sponsor agreement, human subjects protocol, confidentiality restriction, or other compliance requirement may require additional review or written permission before it can be copied or transferred.
+If a departing researcher wants to take a copy of data to a new institution or role, they must obtain approval from the PI and department. Data governed by a data use agreement, sponsor agreement, human subjects protocol, confidentiality restriction, or other compliance requirement may require additional review or written permission before they can be copied or transferred.
 
 If a PI leaves Harvard and a project will move to another institution, consult the Harvard Research Data Ownership Policy and FASRC offboarding guidance before transferring original research data. Additional institutional approvals and written agreements may be required.
 
@@ -104,8 +104,9 @@ At minimum, transition records should identify the dataset or directory, source 
 ```
 
 ```{note}
-Note on Federal Grants (e.g., NIH): While overarching federal frameworks like Uniform Guidance ([2 CFR § 200.334](https://www.ecfr.gov/current/title-2/part-200/section-200.334)) and the NIH Grants Policy Statement ([Section 8.4.2](https://grants.nih.gov/grants/policy/nihgps/html5/section_8/8.4.2_record_retention_and_access.htm)) only require a three (3) year data retention baseline, Harvard University's 7-year policy supersedes the federal minimum. All Kempner cluster users must ensure data used to validate grant outcomes is preserved for the full 7-year horizon.
+Note on Federal Grants (e.g., NIH): While overarching federal frameworks like Uniform Guidance ([2 CFR § 200.334](https://www.ecfr.gov/current/title-2/part-200/section-200.334)) and the NIH Grants Policy Statement ([Section 8.4.2](https://grants.nih.gov/grants/policy/nihgps/html5/section_8/8.4.2_record_retention_and_access.htm)) only require a three (3) year data retention baseline, Harvard University's 7-year policy supersedes the federal minimum. All Kempner cluster users must ensure data used to validate grant outcomes are preserved for the full 7-year horizon.
 ```
+
 ## Policy quick reference
 
 | Policy | What it covers |
