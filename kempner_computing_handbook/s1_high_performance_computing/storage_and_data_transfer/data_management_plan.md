@@ -86,5 +86,5 @@ Plan for the full seven-year retention horizon from the start. Active cluster st
 | [Retention and Maintenance of Research Records and Data (FAQs)](https://research.harvard.edu/files/2022/10/research_records_and_data_retention_and_maintenance_guidance_rev_2017.pdf) | Guidance on retaining research records for at least seven years. |
 
 ```{seealso}
-Related handbook pages: [Storage Options](understanding_storage_options.md) · [Data Transfer](data_transfer.md) · [Shared Data/Model Repository](shared_data_repository.md)
+Related handbook pages: [Storage Options](understanding_storage_options.md) · [Data Transfer](data_transfer.md) · [Shared Data/Model Repository](shared_data_repository.md) · [Data Management and Offboarding FAQ](data_management_plan_faq.md)
 ```
