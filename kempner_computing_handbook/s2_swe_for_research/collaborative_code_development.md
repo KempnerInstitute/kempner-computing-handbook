@@ -538,6 +538,44 @@ Agree on one formatter and commit its config (for example a `[tool.ruff]` table 
 
 ## Security, Licensing & Code Compliance
 
+Code that is shared or published needs more care than a private scratch script: a leaked credential, an unclear license, or an overlooked policy can expose secrets, block reuse, or violate funder rules. This section is a quick checklist; {ref}`Version Control Systems <collaborative_code_development:version_control_systems>` already covers keeping repos private by default and following upstream licenses.
+
+**Security**
+
+- **Never commit secrets** (API keys, tokens, passwords). Keep them out of the repo with `.gitignore` and load them at runtime from environment variables or a secrets manager.
+- **Scan for leaked secrets.** Enable [GitHub secret scanning and push protection](https://docs.github.com/en/code-security/secret-scanning/introduction/about-secret-scanning), which can block a push that contains a credential, or run [gitleaks](https://github.com/gitleaks/gitleaks) locally and in CI.
+- **Scan dependencies for known vulnerabilities** using [GitHub Dependabot](https://docs.github.com/en/code-security/dependabot/dependabot-alerts/about-dependabot-alerts) or [pip-audit](https://pypi.org/project/pip-audit/) for Python.
+
+```bash
+# .gitignore: keep secret files out of version control
+.env
+*.key
+secrets.yaml
+```
+
+```bash
+pip-audit                    # audit the current environment for vulnerable packages
+pip-audit -r requirements.txt   # or audit a pinned requirements file
+gitleaks git .               # scan the repo history for committed secrets
+```
+
+```{note}
+A secret that was ever committed must be treated as compromised: it stays in Git history even after you delete it, so rotate or revoke it rather than just removing the line.
+```
+
+**Licensing**
+
+- **Add a `LICENSE` file** so others know how they may use, modify, and redistribute your code; code with no license is "all rights reserved" by default.
+- **Know the two broad families**: permissive licenses (MIT, BSD, Apache-2.0) allow almost any reuse including in closed-source software, while copyleft licenses (GPL) require derivative works to stay open under the same terms.
+- **Stay compatible with your dependencies and any reused code**, and attribute code you adapt (see the attribution note under {ref}`Version Control Systems <collaborative_code_development:version_control_systems>`).
+
+**Compliance**
+
+- **Follow your institution's and funders' data-use and security policies**, especially for sensitive, restricted, or human-subjects data; these can govern where code and data may live and who may access them.
+- **Check that dependency licenses are compatible** with how you intend to release: a GPL dependency, for example, constrains a permissively licensed project.
+
+To pick a license, use [choosealicense.com](https://choosealicense.com/), and for standardized license identifiers see the [SPDX License List](https://spdx.org/licenses/).
+
 ## Integrations
 
 ## Summary Checklist
