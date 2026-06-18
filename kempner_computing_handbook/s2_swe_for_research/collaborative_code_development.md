@@ -256,6 +256,7 @@ git push -u origin iss42_add_data_loader_js
 
 For a side-by-side comparison of these strategies, see Atlassian's [Comparing Git workflows](https://www.atlassian.com/git/tutorials/comparing-workflows) and GitHub's [GitHub flow](https://docs.github.com/en/get-started/using-github/github-flow).
 
+(collaborative_code_development:code_review_ci)=
 ## Code Review & Continuous Integration (CI)
 
 Code review and continuous integration are complementary: review applies human judgment to design, correctness, and clarity, while CI runs mechanical checks (tests, linting, builds) automatically on every change. Together they keep `main` releasable. Pull-request and review conventions are described above under {ref}`Version Control Systems <collaborative_code_development:version_control_systems>`; this section focuses on the automation layer.
@@ -399,6 +400,36 @@ Let the module interface (the set of functions a module exposes) be the contract
 This page covers modularity only as it supports collaboration. For the underlying design theory, including abstraction and how to decide module boundaries, see [Software Design Principles](software_design_principles.md), and for laying out and distributing a package, see [Package Development](package_development.md). For authoritative guidance, see the Python tutorial on [Modules and packages](https://docs.python.org/3/tutorial/modules.html), the Carpentries' [Good Enough Practices in Scientific Computing](https://carpentries-lab.github.io/good-enough-practices/03-software.html), and The Turing Way's [Code Quality](https://book.the-turing-way.org/reproducible-research/code-quality.html) chapter.
 
 ## Feature Flags & Controlled Integration
+
+A *feature flag* (or feature toggle) is a switch, usually read from a config file or environment variable, that turns a code path on or off without changing the code. It lets you merge incomplete or experimental work into `main` while it stays off by default, so the default analysis or pipeline is unaffected and collaborators avoid long-lived branches. This is the idea of *controlled integration*: integrate continuously, but enable deliberately.
+
+- **Integrate behind a flag to keep `main` releasable.** A teammate can merge a new experimental code path while it is dormant, which keeps branches short-lived and pairs naturally with {ref}`trunk-based development <collaborative_code_development:branching_collaboration_models>`.
+- **Default to off until ready.** The flag stays off so the standard pipeline behaves exactly as before; you flip it on for yourself to test, then for everyone once the work is validated.
+- **Combine with CI so all paths are tested.** Run your test suite with the flag both off and on so neither path silently breaks (see {ref}`Code Review & Continuous Integration (CI) <collaborative_code_development:code_review_ci>`).
+- **Remove stale flags.** Each flag is inventory with a carrying cost: once a feature is permanent, delete the flag and the dead branch so the code does not accumulate forgotten toggles.
+
+```python
+import os
+
+# Read a flag from the environment; default to the safe, existing behavior.
+USE_NEW_SAMPLER = os.environ.get("USE_NEW_SAMPLER", "false").lower() == "true"
+
+if USE_NEW_SAMPLER:
+    results = run_experimental_sampler(dataset)   # off by default
+else:
+    results = run_default_sampler(dataset)         # unchanged pipeline
+```
+
+```bash
+# Opt in to the new path for a single run, without editing any code
+USE_NEW_SAMPLER=true python analysis.py
+```
+
+```{tip}
+Keep flags simple and short-lived. Each one adds a code path to test and reason about, so prefer a single boolean read from config, and schedule a "review for delete" date so toggles do not outlive the feature they guarded.
+```
+
+For terminology and patterns, see Martin Fowler's [Feature Toggles (aka Feature Flags)](https://martinfowler.com/articles/feature-toggles.html), the [Feature Flags](https://trunkbaseddevelopment.com/feature-flags/) page on trunkbaseddevelopment.com, and GitHub's [How we ship code faster and safer with feature flags](https://github.blog/engineering/infrastructure/ship-code-faster-safer-feature-flags/).
 
 ## Testing Ecosystem
 
