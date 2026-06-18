@@ -469,6 +469,36 @@ For details, see the official docs: [pytest](https://docs.pytest.org/en/stable/)
 
 ## Dependency & Environment Management
 
+Collaborators, CI, and future-you should all run the same dependencies in the same kind of environment, so code behaves identically everywhere and you avoid "works on my machine." The practical way to get there is to share and pin the environment in the repository rather than rely on whatever each person happens to have installed.
+
+**Core practices**
+
+- **Use an isolated environment per project.** A dedicated virtual environment keeps each project's dependencies separate, so upgrading one project never breaks another.
+- **Pin versions and commit the spec.** Record exact versions (for example `numpy==2.1.0`) in a spec or lock file and commit it, so everyone resolves the same packages.
+- **Pick one tool for the project.** Agree on a single workflow so the whole team creates and updates the environment the same way.
+- **Regenerate from the committed spec.** Build the environment from the checked-in file rather than ad hoc installs, and update the file when dependencies change.
+
+**Common options**
+
+- **pip + `requirements.txt` with `venv`**: the standard-library virtual environment plus a pinned requirements file; simple and universally available.
+- **conda/mamba with `environment.yml`**: manages Python and non-Python dependencies together, which suits scientific stacks; mamba is a faster drop-in resolver.
+- **uv or Poetry**: modern all-in-one project managers that create the environment, resolve dependencies, and write a lock file (`uv.lock`, `poetry.lock`); restore with `uv sync` or `poetry install`.
+
+A minimal pip + `venv` workflow that pins what you install:
+
+```bash
+python -m venv .venv             # create an isolated environment
+source .venv/bin/activate        # activate it (Unix/macOS)
+pip install -r requirements.txt  # install the pinned dependencies
+pip freeze > requirements.txt    # record exact versions to commit
+```
+
+```{tip}
+Commit the lock or spec file so collaborators reproduce the exact environment, and so {ref}`CI <collaborative_code_development:code_review_ci>` installs the same pinned dependencies it tests against.
+```
+
+This section is a quick reference for sharing a team environment. For environment reproducibility in depth, including capturing the full computational environment, see the [Reproducible Research](reproducible_research.md) chapter; for declaring a package's own dependencies, see [Package Development](package_development.md). For command details, see the official docs: [venv](https://docs.python.org/3/library/venv.html), [pip requirements files](https://pip.pypa.io/en/stable/reference/requirements-file-format/), [conda environments](https://docs.conda.io/projects/conda/en/stable/user-guide/tasks/manage-environments.html), [uv](https://docs.astral.sh/uv/), and [Poetry](https://python-poetry.org/docs/basic-usage/).
+
 ## Code Consistency Tools
 
 ## Security, Licensing & Code Compliance
