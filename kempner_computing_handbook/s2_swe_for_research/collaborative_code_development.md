@@ -363,6 +363,41 @@ For setup and usage details, see the official docs: [VS Code Live Share](https:/
 
 ## Modular Design
 
+Splitting a project into modules with clear interfaces is one of the most effective ways to make collaboration smooth: when each part has a well-defined boundary, teammates can work on different modules in parallel and rarely touch the same lines, which means fewer merge conflicts and clearer ownership.
+
+**Separate concerns into modules with clear interfaces.** Group related logic into short, single-purpose functions and modules, and let other code depend on what a module *does* (its function signatures) rather than how it does it. This lets a collaborator change a module's internals without breaking everyone else's code.
+
+**Keep modules loosely coupled.** When modules communicate only through small, explicit interfaces, a change usually stays local to one file. Pass data in through parameters instead of relying on shared global state, so behavior is predictable when several people edit the codebase at once.
+
+**Align module boundaries with how the team divides work.** Map files and modules to the way responsibilities are split (for example, data loading, modeling, and plotting in separate modules). Keeping each person's work in well-separated files is also a practical way to reduce conflicts, as noted under {ref}`Merge Conflicts & Resolution Strategies <collaborative_code_development:merge_conflicts>`.
+
+For example, refactor a single monolithic script into a small package so each concern lives in its own importable module:
+
+```text
+myproject/
+├── __init__.py        # marks the directory as a package
+├── data.py            # data loading and cleaning
+├── model.py           # model definition and training
+└── plot.py            # figures and reporting
+```
+
+Code then depends on a clear, stable interface rather than copied-and-pasted blocks:
+
+```python
+# analysis.py
+from myproject.data import load_dataset   # import one function from a module
+from myproject.model import train
+
+dataset = load_dataset("experiment.csv")
+results = train(dataset, epochs=10)        # interact only through public functions
+```
+
+```{tip}
+Let the module interface (the set of functions a module exposes) be the contract between collaborators. Agree on function names and arguments early, and changes to a module's internals stay invisible to the rest of the team.
+```
+
+This page covers modularity only as it supports collaboration. For the underlying design theory, including abstraction and how to decide module boundaries, see [Software Design Principles](software_design_principles.md), and for laying out and distributing a package, see [Package Development](package_development.md). For authoritative guidance, see the Python tutorial on [Modules and packages](https://docs.python.org/3/tutorial/modules.html), the Carpentries' [Good Enough Practices in Scientific Computing](https://carpentries-lab.github.io/good-enough-practices/03-software.html), and The Turing Way's [Code Quality](https://book.the-turing-way.org/reproducible-research/code-quality.html) chapter.
+
 ## Feature Flags & Controlled Integration
 
 ## Testing Ecosystem
