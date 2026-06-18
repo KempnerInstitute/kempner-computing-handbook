@@ -222,6 +222,7 @@ Co-authored-by: Alice <alice@example.com>
 - [ ] Documentation updated
 - [ ] No sensitive data or credentials exposed
 - [ ] Issue references are descriptive, not just numbers
+(collaborative_code_development:branching_collaboration_models)=
 ## Branching & Collaboration Models
 
 A *branching model* defines how a team organizes parallel work, while a *collaboration model* defines how contributors access the shared repository. Agreeing on both keeps `main` stable and makes integration predictable. The mechanics of creating, switching, and merging branches are covered above under {ref}`Version Control Systems <collaborative_code_development:version_control_systems>`; this section is about choosing a team-wide strategy.
@@ -294,7 +295,46 @@ Start small: a workflow that only runs your test suite on pull requests already 
 
 For details, see GitHub's [GitHub Actions documentation](https://docs.github.com/en/actions), and the [Testing and Continuous Integration](testing_and_continuous_integration.md) chapter for guidance on writing the tests CI runs.
 
+(collaborative_code_development:merge_conflicts)=
 ## Merge Conflicts & Resolution Strategies
+
+Merge conflicts happen when two branches change the same lines, or when one branch edits a file another deletes, and Git cannot decide which version to keep. The conflict markers and the basic edit-then-stage workflow are covered under {ref}`Version Control Systems <collaborative_code_development:version_control_systems>`; this section focuses on strategies to prevent conflicts and resolve them with less friction.
+
+**Preventing conflicts**
+
+- **Integrate in small, frequent steps.** Commit often and pull or fetch the latest `main` before you start work and before you push, so divergence stays small and easy to reconcile.
+- **Communicate about overlapping work.** Coordinate with teammates when you expect to touch the same files, and agree on a shared branching workflow (see {ref}`Branching & Collaboration Models <collaborative_code_development:branching_collaboration_models>`).
+- **Establish clear module ownership.** Keeping features in well-separated files or modules means two people rarely edit the same lines at once.
+
+**Resolving conflicts**
+
+- **Use a merge or diff tool.** Run `git mergetool` to open conflicts side by side in a three-way merge view instead of editing markers by hand.
+- **Choose merge or rebase deliberately.** Both can raise conflicts; pick based on the tradeoffs described under {ref}`Version Control Systems <collaborative_code_development:version_control_systems>`, and avoid rebasing branches others have already pulled.
+- **Reuse recorded resolutions.** Enable `git rerere` so Git remembers how you resolved a conflict and replays that resolution automatically the next time the same conflict appears, which helps on long-lived branches and repeated rebases.
+
+```bash
+# Configure a merge tool once, then launch it on conflicted files
+git config --global merge.tool meld   # or kdiff3, vimdiff, etc.
+git mergetool
+
+# Remember conflict resolutions and reuse them automatically
+git config --global rerere.enabled true
+```
+
+**Aborting safely**
+
+If a merge or rebase goes wrong, you can back out and return to the pre-operation state:
+
+```bash
+git merge --abort     # cancel a conflicted merge, restore pre-merge state
+git rebase --abort    # cancel a rebase, reset HEAD to the original branch
+```
+
+```{tip}
+Commit or stash your work before starting a merge or rebase. With a clean working tree, `git merge --abort` and `git rebase --abort` can reliably restore your previous state.
+```
+
+For deeper guidance, see GitHub's [Resolving a merge conflict using the command line](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-using-the-command-line), Atlassian's [merge conflicts tutorial](https://www.atlassian.com/git/tutorials/using-branches/merge-conflicts), and the Pro Git book's [Rerere](https://git-scm.com/book/en/v2/Git-Tools-Rerere) chapter.
 
 ## Real‑Time Collaboration Tools
 
