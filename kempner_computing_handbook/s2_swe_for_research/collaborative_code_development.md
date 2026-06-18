@@ -433,6 +433,40 @@ For terminology and patterns, see Martin Fowler's [Feature Toggles (aka Feature 
 
 ## Testing Ecosystem
 
+A shared, automated test suite is the safety net that makes collaboration safe: when everyone's changes are checked against the same tests, contributors can refactor and extend a codebase that others depend on without fear of silently breaking it. This section is a quick map of the common Python testing tools; for how to write effective tests, measure coverage, and wire them into CI, see the dedicated [Testing and Continuous Integration](testing_and_continuous_integration.md) chapter.
+
+**The ecosystem at a glance**
+
+- **pytest**: a popular third-party framework for writing small, readable tests with plain `assert` statements.
+- **unittest**: the standard library's built-in testing framework, available without installing anything.
+- **coverage.py**: measures which lines of code your tests actually exercise, highlighting untested paths.
+- **tox**: automates running your tests across multiple Python versions and environments.
+- **nox**: a similar multi-environment test runner that uses a Python (`noxfile.py`) configuration instead of a config file.
+- **Hypothesis**: property-based testing that generates many inputs to find edge cases you would not think to write by hand.
+
+A minimal pytest test is just a `test_` function with an `assert`:
+
+```python
+# test_math.py
+def add(a, b):
+    return a + b
+
+def test_add():          # pytest discovers functions named test_*
+    assert add(2, 3) == 5
+```
+
+```bash
+pytest   # discovers and runs every test_* function, then reports pass/fail
+```
+
+The shared suite is what lets CI vouch for each pull request: see {ref}`Code Review & Continuous Integration (CI) <collaborative_code_development:code_review_ci>` for how it runs automatically on every change.
+
+```{tip}
+Pick one framework for the project (pytest is a common default) so the whole team writes and runs tests the same way. A test that passes on your machine but is skipped by everyone else is no safety net at all.
+```
+
+For details, see the official docs: [pytest](https://docs.pytest.org/en/stable/), [unittest](https://docs.python.org/3/library/unittest.html), [coverage.py](https://coverage.readthedocs.io/), [tox](https://tox.wiki/en/stable/), [nox](https://nox.thea.codes/en/stable/), and [Hypothesis](https://hypothesis.readthedocs.io/en/latest/).
+
 ## Dependency & Environment Management
 
 ## Code Consistency Tools
