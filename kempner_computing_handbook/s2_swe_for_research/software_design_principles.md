@@ -68,7 +68,46 @@ A good test of a module boundary: can you describe what the module does in one s
 
 For more depth, see [Modular programming](https://en.wikipedia.org/wiki/Modular_programming), [Abstraction](https://en.wikipedia.org/wiki/Abstraction_(computer_science)), [Information hiding](https://en.wikipedia.org/wiki/Information_hiding), and refactoring.guru's [Couplers](https://refactoring.guru/refactoring/smells/couplers) on the smells that signal too-tight coupling. Modularity also underpins team workflows on the [Collaborative Code Development](collaborative_code_development.md) page.
 
+(software_design_principles:testability_and_maintainability)=
 ## Testability and Maintainability
+
+Testable code and maintainable code grow from the same habits: build small, decoupled, predictable units. [Testability](https://en.wikipedia.org/wiki/Software_testability) is the degree to which code supports testing, and code with weak cohesion, tight coupling, or hidden state is hard to test; the same traits also make it hard to maintain, where [maintainability](https://en.wikipedia.org/wiki/Maintainability) is the ease of changing code safely over time. Designing for both connects directly to {ref}`Fundamental Design Principles <software_design_principles:fundamental_design_principles>` and {ref}`Modularity and Abstraction <software_design_principles:modularity_and_abstraction>`.
+
+- **Prefer pure functions and determinism:** A [pure function](https://en.wikipedia.org/wiki/Pure_function) returns the same output for the same input and has no side effects. Such functions are the easiest things to test, because a test is just an input and an expected output, with no setup or teardown.
+- **Separate computation from I/O and side effects:** Keep file access, network calls, randomness, and printing in thin wrappers, and put the real logic in pure functions that take data in and return a result. You can then test the logic without touching the filesystem or network.
+- **Inject dependencies instead of hard-coding them:** With [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection), a function or object receives its collaborators from the outside rather than constructing them internally. This lets a test pass in a simple stand-in (a [test double](https://martinfowler.com/bliki/TestDouble.html)) in place of a database, model, or clock.
+- **Avoid hidden global mutable state:** Functions that read or write module-level globals behave differently depending on what ran before them, which makes results order-dependent and tests flaky. Pass state in as arguments instead.
+- **Keep units small and readable:** Short functions with one clear job (see single responsibility) are easier to read, change, and trust. Maintainability comes from code that is obvious rather than clever, so the next reader (often you) can follow it.
+
+The refactor below splits a function that both reads a file and computes into a thin I/O wrapper plus a pure function. The pure function is trivially testable: pass in numbers, check the result, no file required.
+
+```python
+# Before: reading and computing are tangled, so a test needs a real file on disk.
+def mean_from_file(path):
+    with open(path) as f:
+        values = [float(line) for line in f]
+    return sum(values) / len(values)
+
+# After: a pure function holds the logic, and a thin wrapper does the I/O.
+def mean(values):
+    """Return the arithmetic mean. Pure: same input -> same output, no side effects."""
+    return sum(values) / len(values)
+
+def mean_from_file(path):
+    """Thin I/O wrapper: read the file, then delegate to the pure function."""
+    with open(path) as f:
+        values = [float(line) for line in f]
+    return mean(values)
+
+# The logic is now testable without any file:
+assert mean([1.0, 2.0, 3.0]) == 2.0
+```
+
+```{tip}
+A quick check: if testing a function requires creating files, network access, or a specific global state first, that is a hint to extract the core logic into a pure function and push the side effects to the edges.
+```
+
+For the mechanics of writing and running tests, including frameworks and test doubles, see the [Testing and Continuous Integration](testing_and_continuous_integration.md) page and The Turing Way's [Code Testing](https://book.the-turing-way.org/reproducible-research/testing) guide. Martin Fowler's [Inversion of Control Containers and the Dependency Injection pattern](https://martinfowler.com/articles/injection.html) covers dependency injection in more depth.
 
 ## Reusability and Extensibility
 
