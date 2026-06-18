@@ -1,21 +1,6 @@
-# Tools and Frameworks
+# KempnerForge
 
-The Kempner ecosystem includes tools for observing GPU workloads and building large-scale AI training runs.
-
-## [KempnerPulse](https://github.com/KempnerInstitute/kempnerpulse)
-
-KempnerPulse is a terminal dashboard for NVIDIA DCGM hardware-counter metrics on AI clusters. It helps distinguish headline GPU utilization from actual SM, tensor-core, memory, and graphics-engine activity, with awareness of SLURM and CUDA GPU visibility.
-
-**Best for**
-
-- Monitoring live GPU jobs on SLURM-managed NVIDIA clusters.
-- Inspecting per-GPU activity through Fleet, Focus, Plot, and Job views.
-- Capturing or replaying DCGM metrics for debugging, comparison, and utilization analysis.
-
-
-## [KempnerForge](https://github.com/KempnerInstitute/KempnerForge)
-
-KempnerForge is a PyTorch-native framework for fault-tolerant distributed training of foundation models on AI clusters. It is designed for config-driven experiments that need to scale from small debug runs to multi-node training jobs.
+[KempnerForge](https://github.com/KempnerInstitute/KempnerForge) is a PyTorch-native framework for fault-tolerant distributed training of foundation models on AI clusters. It is designed for config-driven experiments that need to scale from small debug runs to multi-node training jobs.
 
 **Best for**
 

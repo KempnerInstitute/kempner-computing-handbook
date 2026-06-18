@@ -59,6 +59,8 @@ parts:
     - file: s3_ai_workflows/nemo_workflow
     - file: s3_ai_workflows/scalable_vision_workflows
     - file: s3_ai_workflows/get_hf_model
+    - file: s3_ai_workflows/kempnerpulse
+    - file: s3_ai_workflows/kempnerforge
   - caption: Neuro AI Workflows
     numbered: true
     chapters:
@@ -84,7 +86,6 @@ parts:
       sections:
       - file: s5_ai_scaling_and_engineering/experiment_management/logging_and_monitoring
       - file: s5_ai_scaling_and_engineering/experiment_management/wandb_sweeps
-    - file: s5_ai_scaling_and_engineering/tools_and_frameworks/tools_and_frameworks
   - caption: Security and Compliance
     numbered: true
     chapters:
