@@ -338,6 +338,29 @@ For deeper guidance, see GitHub's [Resolving a merge conflict using the command 
 
 ## Real‑Time Collaboration Tools
 
+The pull-request workflow described above is *asynchronous*: each person works on their own branch and integrates later through review. Real-time (synchronous) collaboration is the complement: two or more people edit the same file or notebook at once and see each other's cursors and changes live, which suits pair programming, debugging together, and walking a collaborator through code.
+
+**Common tools for researchers**
+
+- **VS Code Live Share**: a Visual Studio Code extension that lets you co-edit and co-debug a shared session in real time; guests join from a link and keep their own editor settings and cursor.
+- **JupyterLab real-time collaboration**: the `jupyter-collaboration` server extension adds live multi-user editing to JupyterLab notebooks, with each collaborator shown as a colored cursor.
+- **Google Colab**: hosted notebooks shared like a Google Doc through the **Share** button, with Viewer, Commenter, and Editor roles and simultaneous editing.
+- **GitHub Codespaces**: a cloud-hosted development environment you open in the browser or in VS Code; you can start a Live Share session from within a codespace to collaborate on it.
+
+For JupyterLab, real-time editing is off by default. Install the extension, then launch JupyterLab as usual:
+
+```bash
+# Requires JupyterLab 4+
+pip install jupyter-collaboration
+jupyter lab   # collaborative editing is now enabled
+```
+
+```{note}
+Real-time editing does not replace version control. Treat a live session like a shared scratchpad: once the work settles, still commit it and integrate it through the normal review workflow described under {ref}`Version Control Systems <collaborative_code_development:version_control_systems>` and {ref}`Branching & Collaboration Models <collaborative_code_development:branching_collaboration_models>`.
+```
+
+For setup and usage details, see the official docs: [VS Code Live Share](https://learn.microsoft.com/en-us/visualstudio/liveshare/), [JupyterLab real-time collaboration](https://jupyterlab.readthedocs.io/en/stable/user/rtc.html), [Google Colab](https://research.google.com/colaboratory/faq.html), and [collaborating in a GitHub codespace](https://docs.github.com/en/codespaces/developing-in-a-codespace/working-collaboratively-in-a-codespace).
+
 ## Modular Design
 
 ## Feature Flags & Controlled Integration
