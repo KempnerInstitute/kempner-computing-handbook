@@ -578,6 +578,33 @@ To pick a license, use [choosealicense.com](https://choosealicense.com/), and fo
 
 ## Integrations
 
+Integrations connect your repository to external services, usually through your Git host (for example via GitHub Apps and the GitHub Marketplace), that automate parts of the collaborative workflow: testing, documentation, coverage, archiving, and notifications. Wiring these up once means each push or release triggers the right service automatically.
+
+**Research-relevant integrations**
+
+- **Continuous integration**: GitHub Actions runs your tests, linters, and builds on every push and pull request. This is the automation backbone and is covered above under {ref}`Code Review & Continuous Integration (CI) <collaborative_code_development:code_review_ci>`.
+- **Zenodo for citable DOIs** *(especially important for research software)*: link a repository on Zenodo's GitHub settings page, and Zenodo archives a snapshot and mints a new DOI each time you publish a GitHub release. The DOI is a persistent identifier you can cite in papers, so collaborators reference a fixed archived version rather than a moving branch. The repository must be public and include a license.
+- **Documentation hosting**: Read the Docs builds and hosts your documentation. After you import a project, it adds a webhook so the docs rebuild automatically when you push.
+- **Code coverage reporting**: Codecov and Coveralls receive the coverage data your CI uploads, then post coverage changes as a pull-request comment and expose a coverage badge.
+- **Status badges**: small images in your `README` that surface build, coverage, and DOI status at a glance, so anyone landing on the repo can see its health and how to cite it.
+
+A few badges near the top of `README.md`:
+
+```markdown
+<!-- Build status from a GitHub Actions workflow -->
+![CI](https://github.com/your-org/your-repo/actions/workflows/ci.yml/badge.svg)
+<!-- Coverage from Codecov -->
+[![codecov](https://codecov.io/gh/your-org/your-repo/branch/main/graph/badge.svg)](https://app.codecov.io/gh/your-org/your-repo)
+<!-- Citable DOI from Zenodo (replace with the DOI Zenodo issues) -->
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.0000000.svg)](https://doi.org/10.5281/zenodo.0000000)
+```
+
+```{tip}
+For research software, archive a tagged release on Zenodo and cite the resulting DOI in both your paper and your `README` so others reproduce and credit the exact version you used.
+```
+
+For setup, see the official docs: GitHub's [referencing and citing content with Zenodo](https://docs.github.com/en/repositories/archiving-a-github-repository/referencing-and-citing-content), [Read the Docs](https://docs.readthedocs.io/en/stable/), [Codecov](https://docs.codecov.com/docs/quick-start), and GitHub's [Actions documentation](https://docs.github.com/en/actions). The [Testing and Continuous Integration](testing_and_continuous_integration.md) chapter covers producing the coverage reports these services consume.
+
 ## Summary Checklist
 
 - [ ] Overview of version control and workflows  
