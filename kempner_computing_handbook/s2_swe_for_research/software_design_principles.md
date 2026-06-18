@@ -311,7 +311,39 @@ Refactor in the green: change structure only while your tests pass, commit, then
 
 For more depth, see refactoring.guru on [what refactoring is](https://refactoring.guru/refactoring), its [code smells catalog](https://refactoring.guru/refactoring/smells) and [Extract Method](https://refactoring.guru/extract-method), Martin Fowler's [refactoring definition](https://refactoring.com/) and [Code Smell](https://martinfowler.com/bliki/CodeSmell.html), and Wikipedia's [Code refactoring](https://en.wikipedia.org/wiki/Code_refactoring) and [Code smell](https://en.wikipedia.org/wiki/Code_smell).
 
+(software_design_principles:designing_for_reproducibility)=
 ## Designing for Reproducibility
+
+A result is reproducible when the same analysis steps on the same data produce the same answer ([The Turing Way](https://book.the-turing-way.org/reproducible-research/overview/overview-definitions)). Several design choices make that achievable in the first place; for the full treatment of environments, data versioning, and archiving, see the [Reproducible Research](reproducible_research.md) page.
+
+- **Make computations deterministic:** Control sources of randomness explicitly by seeding them, and avoid logic whose output depends on iteration order or accumulated state. A run that quietly depends on dictionary order, wall-clock time, or an unseeded generator cannot be repeated reliably.
+- **Separate configuration from code:** Pass parameters as arguments or read them from a config file rather than burying magic numbers in the body of a function. This is the parameterization habit from {ref}`Reusability and Extensibility <software_design_principles:reusability_and_extensibility>`, and it lets you rerun the same code under a different setting without editing it.
+- **Keep inputs and outputs explicit:** Functions that read or write hidden global state behave differently depending on what ran before them, so the same call may not give the same result twice. Passing inputs in and returning outputs out is the no-hidden-state idea from {ref}`Testability and Maintainability <software_design_principles:testability_and_maintainability>`.
+- **Record the configuration that produced a result:** Save the parameters, seed, and code version alongside each output so a run can be traced and repeated later. Provenance is what turns "it worked once" into "anyone can rerun it."
+
+The example below draws random numbers from a local NumPy [`Generator`](https://numpy.org/doc/stable/reference/random/generator.html) created with [`numpy.random.default_rng(seed)`](https://numpy.org/doc/stable/reference/random/generated/numpy.random.default_rng.html), the recommended constructor. Passing the seed in as a parameter keeps configuration out of the code, and using a local generator avoids the shared global state of the legacy `numpy.random.seed`.
+
+```python
+import numpy as np
+
+def sample_means(n_samples, seed):
+    """Return two sample means, reproducible for a given seed.
+
+    The seed is a parameter (not hard-coded), and the Generator is local,
+    so the same seed yields the same result on every run.
+    """
+    rng = np.random.default_rng(seed)     # local Generator, no global state
+    return rng.normal(size=n_samples).mean(), rng.normal(size=n_samples).mean()
+
+# Same seed in -> same numbers out, here and on any machine.
+assert sample_means(1000, seed=42) == sample_means(1000, seed=42)
+```
+
+```{tip}
+Pass the seed in rather than fixing it inside a function, and log it with the run's other parameters. A result you cannot tie back to its seed and configuration is hard to reproduce, even when the code is deterministic.
+```
+
+For depth, see [The Turing Way](https://book.the-turing-way.org/reproducible-research/reproducible-research)'s reproducible research guide, NumPy's [random Generator](https://numpy.org/doc/stable/reference/random/generator.html) documentation, and the [Notes on Reproducibility](https://docs.python.org/3/library/random.html#notes-on-reproducibility) in Python's `random` module. The [Reproducible Research](reproducible_research.md) page covers environments, data versioning, and archiving.
 
 ## Functional vs. Object-Oriented Design
 
