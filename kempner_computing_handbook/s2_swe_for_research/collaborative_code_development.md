@@ -2,6 +2,7 @@
 
 Collaborative code development promotes reproducible, maintainable, and scalable research software. This section provides an overview of the tools and practices, from version control and branching strategies to continuous integration, dependency management, and secure automation, that enable research teams to work together efficiently.
 
+(collaborative_code_development:version_control_systems)=
 ## Version Control Systems (VCS)
 
 Version control systems are essential tools for managing code changes, enabling collaboration, and maintaining project history in research software development. Some common VCS types are Git and Mercurial, both of which are distributed version control systems. There are also Subversion (SVN) and Perforce (centralized version control systems). This section covers Git fundamentals and best practices for collaborative development at the Kempner Institute.
@@ -222,6 +223,37 @@ Co-authored-by: Alice <alice@example.com>
 - [ ] No sensitive data or credentials exposed
 - [ ] Issue references are descriptive, not just numbers
 ## Branching & Collaboration Models
+
+A *branching model* defines how a team organizes parallel work, while a *collaboration model* defines how contributors access the shared repository. Agreeing on both keeps `main` stable and makes integration predictable. The mechanics of creating, switching, and merging branches are covered above under {ref}`Version Control Systems <collaborative_code_development:version_control_systems>`; this section is about choosing a team-wide strategy.
+
+**Branching strategies**
+
+- **GitHub Flow** *(recommended for most research teams)*: branch off `main` for each issue, open a pull request, and merge after review. Simple and well suited to continuous, paper-driven work.
+- **Git Flow**: maintains long-lived `develop`, `release`, and `hotfix` branches. Useful when you ship versioned releases, but heavier than most labs need.
+- **Trunk-based**: very short-lived branches merged into `main` many times a day. Best once you have strong automated tests and CI.
+
+**Collaboration models**
+
+- **Shared repository**: team members have write access and collaborate on branches in the same repo. This is the default for a lab or project repository.
+- **Fork and pull**: contributors work in a personal fork and open pull requests. Use this for external or open-source contributors who should not have direct write access.
+
+```{tip}
+A practical default for most research teams is to use **issue branches in a shared repository** for internal work and **fork-and-pull** for external collaborators. Name branches after the issue and keep them short-lived.
+```
+
+```bash
+# Start from an up-to-date main
+git checkout main
+git pull origin main
+
+# Create a short-lived issue branch (issue 42, author initials "js")
+git checkout -b iss42_add_data_loader_js
+
+# Commit your work, then publish the branch and open a pull request
+git push -u origin iss42_add_data_loader_js
+```
+
+For a side-by-side comparison of these strategies, see Atlassian's [Comparing Git workflows](https://www.atlassian.com/git/tutorials/comparing-workflows) and GitHub's [GitHub flow](https://docs.github.com/en/get-started/using-github/github-flow).
 
 ## Code Review & Continuous Integration (CI)
 
