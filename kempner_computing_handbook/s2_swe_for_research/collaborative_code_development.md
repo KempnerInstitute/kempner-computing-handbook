@@ -501,6 +501,41 @@ This section is a quick reference for sharing a team environment. For environmen
 
 ## Code Consistency Tools
 
+When everyone formats and lints code the same way, diffs stay small and reviews focus on substance instead of style. Automate consistency so it is not a manual chore, and let tooling, not reviewers, enforce the rules.
+
+**The toolbox at a glance**
+
+- **Formatters** apply a uniform style automatically so layout never appears in a diff: [Black](https://black.readthedocs.io/en/stable/) is a widely used opinionated formatter, and [Ruff](https://docs.astral.sh/ruff/) ships a fast, Black-compatible formatter as well.
+- **Import sorters** order and group imports consistently: [isort](https://isort.readthedocs.io/en/latest/) sorts them alphabetically and into sections (Ruff can do this too).
+- **Linters** catch likely bugs and style issues before review: [Ruff](https://docs.astral.sh/ruff/linter/), [flake8](https://flake8.pycqa.org/en/latest/), and [pylint](https://pylint.readthedocs.io/en/stable/) all flag problems statically.
+- **[EditorConfig](https://editorconfig.org/)** keeps whitespace, indentation, and line endings consistent across editors and IDEs via a shared `.editorconfig` file.
+- **[pre-commit](https://pre-commit.com/)** runs all of the above automatically on staged files before each commit, so unformatted code never lands.
+
+The simplest entry point is to run a formatter and a linter directly:
+
+```bash
+ruff format .   # auto-format every file in the current directory
+ruff check .    # lint for likely errors and style issues
+```
+
+To run them automatically on every commit, add a `.pre-commit-config.yaml` and install the hook with `pre-commit install`:
+
+```yaml
+# .pre-commit-config.yaml
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.17            # pin to a released Ruff version
+    hooks:
+      - id: ruff-check       # lint (add args: [--fix] to auto-fix)
+      - id: ruff-format      # format
+```
+
+Run these checks both locally through pre-commit and in CI so nothing slips through if someone commits without the hook installed. The {ref}`Code Review & Continuous Integration (CI) <collaborative_code_development:code_review_ci>` section already runs `ruff check` in a workflow; pointing CI and pre-commit at the same config keeps local and remote results identical. For readability principles beyond tool mechanics, see [Documentation and Readability](documentation_and_readibility.md).
+
+```{tip}
+Agree on one formatter and commit its config (for example a `[tool.ruff]` table in `pyproject.toml`) so the whole team matches automatically. Reformatting an existing codebase once, in a single dedicated commit, keeps that noise out of later reviews.
+```
+
 ## Security, Licensing & Code Compliance
 
 ## Integrations
