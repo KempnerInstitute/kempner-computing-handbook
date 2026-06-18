@@ -194,7 +194,51 @@ Learn patterns mainly for the vocabulary and the design ideas behind them. When 
 
 For concise references, see refactoring.guru on [what a design pattern is](https://refactoring.guru/design-patterns/what-is-pattern), the [Factory Method](https://refactoring.guru/design-patterns/factory-method), and [Strategy](https://refactoring.guru/design-patterns/strategy); Wikipedia's [Software design pattern](https://en.wikipedia.org/wiki/Software_design_pattern) and [Factory method pattern](https://en.wikipedia.org/wiki/Factory_method_pattern); and Brandon Rhodes's [Python Patterns Guide](https://python-patterns.guide/) for Pythonic guidance, including why first-class functions make some classic patterns unnecessary.
 
+(software_design_principles:dependency_management_and_isolation)=
 ## Dependency Management and Isolation
+
+Dependency management here is a design concern: how your own components depend on one another, and how you keep external dependencies (third-party libraries, files, networks, databases, and services) from leaking into your core logic. This is distinct from installing packages, pinning versions, or managing virtual environments, which the [Collaborative Code Development](collaborative_code_development.md), [Package Development](package_development.md), and [Reproducible Research](reproducible_research.md) pages cover.
+
+- **Mind the direction of dependencies (Dependency Inversion Principle):** High-level logic should not depend on low-level details; both should depend on an abstraction, and details should depend on the abstraction rather than the reverse. This is the [Dependency Inversion Principle](https://en.wikipedia.org/wiki/Dependency_inversion_principle), the "D" in SOLID, formulated by Robert C. Martin. Concretely, your analysis code should depend on an interface you define, not on a specific client or file format.
+- **Isolate volatile dependencies behind a thin wrapper:** Wrap an external library or service behind your own small interface, so the rest of the code talks to your wrapper instead of the third party. This is the [Adapter pattern](https://refactoring.guru/design-patterns/adapter): when you swap a backend or weather an API change or outage, the edit touches one file rather than every call site.
+- **Isolation aids testing:** Once the core depends on your interface, a test can pass in a simple fake in place of a real database or network call. This is the same substitution idea behind {ref}`Testability and Maintainability <software_design_principles:testability_and_maintainability>`: depending on an abstraction lets you supply a stand-in.
+- **Keep third-party specifics at the edges:** Confine library-specific calls and types to the wrapper, not threaded through the core, which connects to the boundary thinking in {ref}`Modularity and Abstraction <software_design_principles:modularity_and_abstraction>`. The pattern of pushing external systems to the boundary is also the idea behind [ports and adapters (hexagonal) architecture](https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)).
+
+In the example below, the core `summarize_run` depends only on the small `Storage` interface, so a cloud client, a local file, or an in-memory fake can all be used interchangeably.
+
+```python
+from typing import Protocol
+
+class Storage(Protocol):
+    """Our own minimal interface: the core depends on this, not on a library."""
+    def read_text(self, key: str) -> str: ...
+
+class S3Storage:
+    """Adapter: wraps a third-party client behind the Storage interface."""
+    def __init__(self, client, bucket):
+        self._client = client          # library-specific details stay here
+        self._bucket = bucket
+
+    def read_text(self, key):
+        obj = self._client.get_object(Bucket=self._bucket, Key=key)
+        return obj["Body"].read().decode()
+
+def summarize_run(store: Storage, key: str) -> int:
+    """Core logic depends on the abstraction, so any Storage works here."""
+    return len(store.read_text(key).splitlines())
+
+# A test can substitute a fake with no network or library required.
+class FakeStorage:
+    def read_text(self, key): return "line 1\nline 2"
+
+assert summarize_run(FakeStorage(), "run.log") == 2
+```
+
+```{tip}
+A useful signal: if importing or changing one third-party library forces edits across many files, that dependency is not isolated. Funnel it through a single wrapper so the rest of the code depends on your interface instead.
+```
+
+For more depth, see Wikipedia on the [Dependency inversion principle](https://en.wikipedia.org/wiki/Dependency_inversion_principle) and the [Adapter pattern](https://en.wikipedia.org/wiki/Adapter_pattern), refactoring.guru's [Adapter](https://refactoring.guru/design-patterns/adapter), and Martin Fowler's [Inversion of Control Containers and the Dependency Injection pattern](https://martinfowler.com/articles/injection.html).
 
 ## Documentation as Part of Design
 
