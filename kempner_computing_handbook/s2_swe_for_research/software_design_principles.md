@@ -148,7 +148,51 @@ score = evaluate(y_true, y_pred, mae)
 Do not over-generalize. Adding extension points you do not yet need is speculative complexity (recall YAGNI). Build the flexible version when a second real use case appears, not before.
 ```
 
+(software_design_principles:design_patterns)=
 ## Design Patterns (Introductory Level)
+
+A [design pattern](https://refactoring.guru/design-patterns/what-is-pattern) is a named, reusable solution to a commonly recurring design problem. The idea was popularized by the "Gang of Four" (Erich Gamma, Richard Helm, Ralph Johnson, and John Vlissides) in their 1994 book *Design Patterns: Elements of Reusable Object-Oriented Software*, which sorts patterns into three families. You do not need to memorize the catalog; a few patterns are genuinely useful for keeping analysis code flexible.
+
+- **Patterns are shared vocabulary:** Naming a recurring structure lets you describe a design in a word or two ("pass in a strategy", "use a factory") instead of re-explaining the mechanics, which helps when reading code or discussing it with collaborators.
+- **The three families:** [Creational](https://refactoring.guru/design-patterns/creational-patterns) patterns concern how objects are made, [structural](https://refactoring.guru/design-patterns/structural-patterns) patterns concern how objects and classes are composed, and [behavioral](https://refactoring.guru/design-patterns/behavioral-patterns) patterns concern how objects collaborate and divide responsibility.
+- **Strategy (behavioral):** You have already seen this one. Passing an interchangeable function so an algorithm can vary independently of the code that uses it is the [Strategy pattern](https://refactoring.guru/design-patterns/strategy), shown in {ref}`Reusability and Extensibility <software_design_principles:reusability_and_extensibility>`.
+- **Factory (creational):** A [factory](https://refactoring.guru/design-patterns/factory-method) is code whose job is to construct the right object, often selected by a name or a config value. Centralizing construction in one place replaces conditionals scattered across the codebase and gives callers one thing to call.
+- **Patterns are tools, not goals:** Reach for a pattern when it removes real, present pain, not to make code look sophisticated. Forcing a pattern adds indirection you must read and maintain, which works against KISS and YAGNI from {ref}`Fundamental Design Principles <software_design_principles:fundamental_design_principles>`. In Python, first-class functions often make a plain function the simplest "factory" you need.
+
+The example below uses a small factory to build a model from a name. Callers ask for a model by string, so the choice can come from a config file or a command-line argument, and adding a model means extending one mapping rather than editing every call site.
+
+```python
+from sklearn.linear_model import LinearRegression, Ridge
+from sklearn.ensemble import RandomForestRegressor
+
+# A factory: one place that maps a name to the object to construct.
+_MODELS = {
+    "linear": LinearRegression,
+    "ridge": Ridge,
+    "forest": RandomForestRegressor,
+}
+
+def make_model(name, **kwargs):
+    """Return a fresh model instance selected by name.
+
+    Centralizing construction here replaces 'if name == ...' chains
+    scattered through the code with a single, extensible mapping.
+    """
+    try:
+        model_cls = _MODELS[name]
+    except KeyError:
+        raise ValueError(f"unknown model {name!r}; choose from {sorted(_MODELS)}")
+    return model_cls(**kwargs)
+
+# The caller picks a model by name, e.g. from a config or CLI argument.
+model = make_model("ridge", alpha=1.0)
+```
+
+```{tip}
+Learn patterns mainly for the vocabulary and the design ideas behind them. When a pattern fits, name it so others recognize it; when it does not, the simpler code is the better code.
+```
+
+For concise references, see refactoring.guru on [what a design pattern is](https://refactoring.guru/design-patterns/what-is-pattern), the [Factory Method](https://refactoring.guru/design-patterns/factory-method), and [Strategy](https://refactoring.guru/design-patterns/strategy); Wikipedia's [Software design pattern](https://en.wikipedia.org/wiki/Software_design_pattern) and [Factory method pattern](https://en.wikipedia.org/wiki/Factory_method_pattern); and Brandon Rhodes's [Python Patterns Guide](https://python-patterns.guide/) for Pythonic guidance, including why first-class functions make some classic patterns unnecessary.
 
 ## Dependency Management and Isolation
 
