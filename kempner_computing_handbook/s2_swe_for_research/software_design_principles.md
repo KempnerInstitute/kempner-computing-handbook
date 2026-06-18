@@ -35,7 +35,38 @@ Favor clarity over cleverness. If a simpler version is a little longer but obvio
 
 The rest of this page builds on these ideas, covering modularity and abstraction, dependency management, refactoring, and reproducibility in more depth. Related practices live on the [Collaborative Code Development](collaborative_code_development.md) and [Reproducible Research](reproducible_research.md) pages.
 
+(software_design_principles:modularity_and_abstraction)=
 ## Modularity and Abstraction
+
+Modularity and abstraction are two sides of the same idea: split a system into self-contained modules, and let each module expose a small, stable interface that hides how it works inside. This builds directly on {ref}`Fundamental Design Principles <software_design_principles:fundamental_design_principles>`, since separation of concerns and single responsibility are what give a module a clear boundary and one job.
+
+- **Modularity and high cohesion:** Decompose a program into [modules](https://en.wikipedia.org/wiki/Modular_programming) (functions, classes, or files) that each handle one logically related task, for example data loading, model training, or plotting. A module has high [cohesion](https://en.wikipedia.org/wiki/Cohesion_(computer_science)) when its parts genuinely belong together and work toward a single purpose, which makes it easier to read, test, and reuse.
+- **Low coupling:** [Coupling](https://en.wikipedia.org/wiki/Coupling_(computer_programming)) measures how much modules depend on each other. Keep it low by having modules interact through simple, stable interfaces rather than reaching into each other's internals, so a change in one place does not ripple through the rest of the code. High cohesion and low coupling tend to go together.
+- **Abstraction and information hiding:** [Abstraction](https://en.wikipedia.org/wiki/Abstraction_(computer_science)) means exposing *what* a component does and hiding *how* it does it. Callers depend on the interface (a function signature or a class's public methods), not on the implementation, so you can change or swap the internals without breaking them. This is [information hiding](https://en.wikipedia.org/wiki/Information_hiding), also called encapsulation.
+- **Choosing good module boundaries:** A useful guideline from David Parnas is to draw module boundaries around the design decisions most likely to change, such as a file format, a storage backend, or a numerical method, and hide each decision behind an interface. That way an expected change stays contained within one module.
+
+The example below hides the details of loading data behind a single function. Callers only rely on `load_dataset(path)`, so the internals can change without affecting them.
+
+```python
+def load_dataset(path):
+    """Return a feature matrix and labels from a dataset file.
+
+    Callers depend only on this signature, not on how the data is read,
+    so the body could switch from CSV to Parquet without breaking them.
+    """
+    import pandas as pd
+    df = pd.read_csv(path)            # implementation detail, hidden from callers
+    return df.drop(columns="label"), df["label"]
+
+# The caller works at the level of the interface, not the file format.
+features, labels = load_dataset("experiment.csv")
+```
+
+```{tip}
+A good test of a module boundary: can you describe what the module does in one sentence without mentioning how it works? If not, it may be doing too much or leaking its internals.
+```
+
+For more depth, see [Modular programming](https://en.wikipedia.org/wiki/Modular_programming), [Abstraction](https://en.wikipedia.org/wiki/Abstraction_(computer_science)), [Information hiding](https://en.wikipedia.org/wiki/Information_hiding), and refactoring.guru's [Couplers](https://refactoring.guru/refactoring/smells/couplers) on the smells that signal too-tight coupling. Modularity also underpins team workflows on the [Collaborative Code Development](collaborative_code_development.md) page.
 
 ## Testability and Maintainability
 
