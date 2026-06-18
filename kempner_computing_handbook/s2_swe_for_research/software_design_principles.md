@@ -278,7 +278,38 @@ Try writing the docstring before the implementation. If stating the inputs, outp
 
 For conventions, see [PEP 257](https://peps.python.org/pep-0257/) on docstrings and the [ADR](https://adr.github.io/) resources on recording decisions. For documentation practices and tooling, see the [Documentation and Readability](documentation_and_readibility.md) page.
 
+(software_design_principles:iterative_design_and_refactoring)=
 ## Iterative Design & Refactoring
+
+Good design is rarely reached in one attempt: it emerges as your understanding of the problem grows, which suits research, where requirements shift as the science develops. Refactoring is the disciplined way to improve a design after the fact, by changing the internal structure of code while leaving its behavior intact.
+
+- **Design iteratively:** Start with the simplest thing that works (recall KISS and YAGNI in {ref}`Fundamental Design Principles <software_design_principles:fundamental_design_principles>`) and let the structure evolve as the code grows, rather than trying to anticipate the final design up front.
+- **Refactoring preserves external behavior:** Martin Fowler defines it as "a change made to the internal structure of software to make it easier to understand and cheaper to modify without changing its observable behavior." Clarity improves; results do not.
+- **Tests are the safety net:** Refactoring is only safe when you can confirm behavior is unchanged, so run tests after each step. This is where {ref}`Testability and Maintainability <software_design_principles:testability_and_maintainability>` pays off; for frameworks and mechanics, see the [Testing and Continuous Integration](testing_and_continuous_integration.md) page.
+- **Let code smells trigger refactoring:** A [code smell](https://martinfowler.com/bliki/CodeSmell.html) is a surface hint of a deeper problem. Common ones are duplicated code, long functions, and unclear names. Treat them as prompts to look for an improvement, not as proof of a defect.
+- **Work in small, separate steps:** Make one small change at a time, and keep pure refactoring commits separate from commits that change behavior, so a regression is easy to locate and review. See [Collaborative Code Development](collaborative_code_development.md) for commit practices.
+
+A frequent first refactoring is Extract Function: pull a block or a dense expression into a well-named function so the intent is clear and the logic can be reused. The behavior is unchanged.
+
+```python
+# Before: the discount rule is an inline expression whose intent is unclear.
+def final_price(item):
+    return item.price - (item.price * 0.1 if item.price > 100 else 0)
+
+# After: the rule is extracted into a named function. Same result, clearer code.
+def discount(price):
+    """Return the discount: 10% on amounts over 100, otherwise none."""
+    return price * 0.1 if price > 100 else 0
+
+def final_price(item):
+    return item.price - discount(item.price)
+```
+
+```{tip}
+Refactor in the green: change structure only while your tests pass, commit, then move on. If a test breaks mid-refactor, the last small step is the suspect.
+```
+
+For more depth, see refactoring.guru on [what refactoring is](https://refactoring.guru/refactoring), its [code smells catalog](https://refactoring.guru/refactoring/smells) and [Extract Method](https://refactoring.guru/extract-method), Martin Fowler's [refactoring definition](https://refactoring.com/) and [Code Smell](https://martinfowler.com/bliki/CodeSmell.html), and Wikipedia's [Code refactoring](https://en.wikipedia.org/wiki/Code_refactoring) and [Code smell](https://en.wikipedia.org/wiki/Code_smell).
 
 ## Designing for Reproducibility
 
