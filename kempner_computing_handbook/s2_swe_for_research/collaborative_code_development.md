@@ -257,6 +257,43 @@ For a side-by-side comparison of these strategies, see Atlassian's [Comparing Gi
 
 ## Code Review & Continuous Integration (CI)
 
+Code review and continuous integration are complementary: review applies human judgment to design, correctness, and clarity, while CI runs mechanical checks (tests, linting, builds) automatically on every change. Together they keep `main` releasable. Pull-request and review conventions are described above under {ref}`Version Control Systems <collaborative_code_development:version_control_systems>`; this section focuses on the automation layer.
+
+**What to look for in review**
+
+- Correctness and edge cases, not just style.
+- Readability and clear naming, so the next person can follow the logic.
+- Reproducibility: pinned dependencies, seeds set, and no hard-coded local paths.
+
+**Continuous integration**
+
+CI automatically builds and tests your code whenever you push or open a pull request, so problems surface before they reach `main`. On GitHub, add a workflow file under `.github/workflows/`:
+
+```yaml
+# .github/workflows/ci.yml
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[dev]"
+      - run: ruff check .      # lint
+      - run: pytest            # run the test suite
+```
+
+Each pull request then shows a green check when tests and linting pass and a red one when they fail, so reviewers know the change is safe before merging.
+
+```{tip}
+Start small: a workflow that only runs your test suite on pull requests already prevents most regressions. Add linting, type checks, and coverage as the project grows.
+```
+
+For details, see GitHub's [GitHub Actions documentation](https://docs.github.com/en/actions), and the [Testing and Continuous Integration](testing_and_continuous_integration.md) chapter for guidance on writing the tests CI runs.
+
 ## Merge Conflicts & Resolution Strategies
 
 ## Real‑Time Collaboration Tools
