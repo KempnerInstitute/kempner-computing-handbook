@@ -148,7 +148,32 @@ doi: 10.5281/zenodo.1234567   # DOI for the archived release
 Update the `version` and `doi` each time you archive a new release, so a citation points to the exact version that produced a result.
 ```
 
+(documentation_and_readibility:mental_models_for_readers)=
 ## Mental Models for Readers
+
+As someone reads your code or docs, they build a [mental model](https://www.nngroup.com/articles/mental-models/) of how it works: an internal picture of the moving parts and how they fit together. Your job is to help them build an accurate one quickly. Clear code and docs do this for you; surprising or unexplained code forces the reader to reverse-engineer your intent.
+
+- **Beware the curse of knowledge.** The [curse of knowledge](https://en.wikipedia.org/wiki/Curse_of_knowledge) is the bias that, once you know something, you assume others share that context. What is obvious to you as the author is not obvious to a newcomer or to your future self, so write for a reader who lacks your background and spell out the assumptions you take for granted.
+- **Follow the principle of least astonishment.** A component should [behave the way most readers expect](https://en.wikipedia.org/wiki/Principle_of_least_astonishment), so names and behavior should match conventions and hold no hidden surprises. A function named like a pure lookup should not quietly write a file or mutate its input. See {ref}`documentation_and_readibility:code_readability_best_practices` for naming that reveals intent.
+- **Use progressive disclosure.** [Progressive disclosure](https://www.nngroup.com/articles/progressive-disclosure/) means leading with the few most important things and deferring the rest. Put the common case and a high-level overview first, and push details, options, and edge cases lower so a reader is not flooded before they have the big picture.
+- **Lead with the why.** Before the mechanics, give a short conceptual overview of what the code is for and why it exists. This is the explanation type from {ref}`documentation_and_readibility:types_of_documentation`, and it is the context a reader needs to interpret everything that follows.
+
+A name that matches behavior keeps the reader's mental model accurate:
+
+```python
+# Astonishing: the name implies a read-only lookup, but it mutates input
+def get_user(users, index):
+    users.sort()           # surprising side effect hidden behind a "get"
+    return users[index]
+
+# Unsurprising: the name matches what the function actually does
+def find_user(users, index):
+    return users[index]    # pure lookup, no side effects
+```
+
+```{tip}
+A quick check: skim your README or module top-down and ask whether a reader who has never seen the project would, after the first few lines, know what it does and why. If not, add a short overview before the details.
+```
 
 ## Summary Checklist
 
