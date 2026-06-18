@@ -122,7 +122,31 @@ python -m doctest example.py
 Keeping a `>>> ` example in the docstring means the same snippet documents the function and serves as a regression test. Writing readable code in the first place (see {ref}`documentation_and_readibility:code_readability_best_practices`) makes that documentation shorter and clearer.
 ```
 
+(documentation_and_readibility:documentation_in_research_context)=
 ## Documentation in Research Context
+
+Research code carries documentation needs beyond general software: the documentation must let others, and your future self, understand the work, reproduce a result, and cite it correctly.
+
+- **Document methods, parameters, and assumptions.** Record the method, the parameter values and ranges, random seeds, software versions, and any assumptions a result depends on, so the result can be regenerated rather than guessed at. This is the heart of reproducibility; for the full treatment see the [Reproducible Research](reproducible_research.md) chapter.
+- **Document the data.** Ship a dataset README or a data dictionary (also called a codebook) that lists each variable with its meaning, units, allowed values, and provenance. The [Turing Way](https://book.the-turing-way.org/reproducible-research/rdm/rdm-metadata/) calls a data dictionary one of the most important pieces of documentation in a study. At a high level, aim for [FAIR](https://www.go-fair.org/fair-principles/) data: Findable, Accessible, Interoperable, and Reusable.
+- **Make the work citable.** Add a [`CITATION.cff`](https://citation-file-format.github.io/) file to the repository root. It is a small YAML file that tools can read, and GitHub uses it to add a "Cite this repository" link and to offer APA and BibTeX citations (see GitHub's [about-citation-files](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-citation-files)). To get a citable, versioned DOI, archive a release with a service such as Zenodo, then record that DOI in the file.
+
+A minimal, valid `CITATION.cff`:
+
+```yaml
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Example Analysis Toolkit"
+authors:
+  - family-names: Smith
+    given-names: Jane
+version: 1.0.0
+doi: 10.5281/zenodo.1234567   # DOI for the archived release
+```
+
+```{tip}
+Update the `version` and `doi` each time you archive a new release, so a citation points to the exact version that produced a result.
+```
 
 ## Mental Models for Readers
 
