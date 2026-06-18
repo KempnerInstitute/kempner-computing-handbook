@@ -345,7 +345,51 @@ Pass the seed in rather than fixing it inside a function, and log it with the ru
 
 For depth, see [The Turing Way](https://book.the-turing-way.org/reproducible-research/reproducible-research)'s reproducible research guide, NumPy's [random Generator](https://numpy.org/doc/stable/reference/random/generator.html) documentation, and the [Notes on Reproducibility](https://docs.python.org/3/library/random.html#notes-on-reproducibility) in Python's `random` module. The [Reproducible Research](reproducible_research.md) page covers environments, data versioning, and archiving.
 
+(software_design_principles:functional_vs_object_oriented_design)=
 ## Functional vs. Object-Oriented Design
+
+Functional and object-oriented styles are two common ways to organize code, and neither is universally better: choose by fit, not fashion. Python is a [multi-paradigm language](https://docs.python.org/3/howto/functional.html), so you can write procedural, functional, or object-oriented code and freely mix them in one project.
+
+- **Functional style:** Build behavior from functions that transform data, ideally taking inputs and returning outputs with no internal state. The cleanest case is a [pure function](https://en.wikipedia.org/wiki/Pure_function), which returns the same output for the same input and has no side effects. Such functions are easy to test and to compose, the testability point from {ref}`Testability and Maintainability <software_design_principles:testability_and_maintainability>`. Functional style also favors [immutability](https://en.wikipedia.org/wiki/Immutable_object): not mutating data in place, so a value cannot change underneath you.
+- **Object-oriented style:** Bundle related data with the operations that act on it into objects, using [encapsulation](https://en.wikipedia.org/wiki/Object-oriented_programming) to hide internal details and sometimes inheritance to share behavior. This fits well when an entity has identity, a lifecycle, or many operations over the same shared state, for example a stateful connection or a model that is configured, trained, then queried.
+- **Mixing is normal:** Most real Python code is a blend: plain functions for transformations, a few classes where state and behavior genuinely belong together. You do not have to pick one paradigm for a whole project.
+- **A practical default for research:** Reach first for functions plus simple data containers, such as a [`dataclass`](https://docs.python.org/3/library/dataclasses.html). Elaborate class hierarchies are often over-engineering: deep inheritance is hard to follow and rarely pays off in analysis code. Recall KISS and YAGNI from {ref}`Fundamental Design Principles <software_design_principles:fundamental_design_principles>` and add a class only when shared state or identity makes it the simpler description.
+
+The example below contrasts the two for the same small task. The functional version is a pure function over a config object; the object-oriented version folds the same data and computation into a class.
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class Params:
+    """A simple data container: @dataclass writes __init__, __repr__, __eq__."""
+    learning_rate: float
+    n_steps: int = 100
+
+# Functional: a pure function transforms the data and returns a result.
+def total_decay(params: Params) -> float:
+    """Same input -> same output, no side effects."""
+    return params.learning_rate * params.n_steps
+
+cost = total_decay(Params(learning_rate=0.01))
+
+# Object-oriented: the data and the operation live together on one object.
+class Schedule:
+    def __init__(self, learning_rate: float, n_steps: int = 100):
+        self.learning_rate = learning_rate
+        self.n_steps = n_steps
+
+    def total_decay(self) -> float:
+        return self.learning_rate * self.n_steps
+
+cost = Schedule(learning_rate=0.01).total_decay()
+```
+
+```{tip}
+If a class has only an `__init__` plus one method you call once, a plain function (perhaps taking a `dataclass`) is usually clearer. Reach for a class when several operations share and update the same state.
+```
+
+For more depth, see Python's [Functional Programming HOWTO](https://docs.python.org/3/howto/functional.html) and [`dataclasses`](https://docs.python.org/3/library/dataclasses.html) documentation, and Wikipedia on [Functional programming](https://en.wikipedia.org/wiki/Functional_programming), [Object-oriented programming](https://en.wikipedia.org/wiki/Object-oriented_programming), and [Pure function](https://en.wikipedia.org/wiki/Pure_function).
 
 ## Designing APIs and CLIs for Research Tools
 
