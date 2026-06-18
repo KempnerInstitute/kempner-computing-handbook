@@ -43,7 +43,39 @@ How to reuse and how to cite.
 Keep the README short and link out for depth. For broader guidance on documenting research software, see [The Turing Way](https://book.the-turing-way.org/) and [Write the Docs](https://www.writethedocs.org/).
 ```
 
+(documentation_and_readibility:code_readability_best_practices)=
 ## Code Readability Best Practices
+
+Readable code is documentation in itself: it lowers the cost of every later read, debug, and change. As [PEP 8](https://peps.python.org/pep-0008/) notes, code is read far more often than it is written, and the [Zen of Python](https://peps.python.org/pep-0020/) puts it plainly: "Readability counts."
+
+- **Use meaningful, descriptive names.** Names should reveal intent so the reader does not have to decode them. Avoid ambiguous abbreviations and single-letter names except for short-lived loop counters.
+- **Follow a consistent style guide.** For Python, [PEP 8](https://peps.python.org/pep-0008/) is the common baseline: `snake_case` for functions and variables, `UPPER_CASE` for constants, and lines limited to 79 characters (teams may agree to extend to 99). Consistency within a project matters more than any single rule.
+- **Keep functions small and focused.** A function should do one thing. The [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html) suggests reconsidering a function once it grows past roughly 40 lines, since smaller functions are easier to read, test, and reuse.
+- **Reduce deep nesting with guard clauses.** "Flat is better than nested" (Zen of Python). Return early on invalid or edge cases so the main logic stays at a shallow indentation level.
+- **Let comments explain why, not what.** The code already shows what it does; comments should capture intent and non-obvious reasoning. See {ref}`documentation_and_readibility:types_of_documentation` for the role of inline comments.
+
+A small refactor that applies clear names plus an early-return guard clause:
+
+```python
+# Before: cryptic names and deep nesting
+def p(d):
+    if d:
+        if d > 0:
+            return d * 0.9  # what is 0.9?
+    return None
+
+# After: descriptive names and a guard clause
+DISCOUNT_RATE = 0.9  # 10% loyalty discount
+
+def apply_discount(price):
+    if price is None or price <= 0:
+        return None
+    return price * DISCOUNT_RATE
+```
+
+```{tip}
+You do not have to apply a style guide by hand. Automated formatters and linters can enforce these conventions for you; they are covered in the next section.
+```
 
 ## Tools and Practices
 
