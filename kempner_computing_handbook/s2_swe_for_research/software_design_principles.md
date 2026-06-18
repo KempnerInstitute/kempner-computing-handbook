@@ -109,7 +109,44 @@ A quick check: if testing a function requires creating files, network access, or
 
 For the mechanics of writing and running tests, including frameworks and test doubles, see the [Testing and Continuous Integration](testing_and_continuous_integration.md) page and The Turing Way's [Code Testing](https://book.the-turing-way.org/reproducible-research/testing) guide. Martin Fowler's [Inversion of Control Containers and the Dependency Injection pattern](https://martinfowler.com/articles/injection.html) covers dependency injection in more depth.
 
+(software_design_principles:reusability_and_extensibility)=
 ## Reusability and Extensibility
+
+Reusability and extensibility are about designing a piece of code once and then adapting it to new situations without rewriting what already works. Reusability builds on the DRY and modularity habits from {ref}`Fundamental Design Principles <software_design_principles:fundamental_design_principles>` and {ref}`Modularity and Abstraction <software_design_principles:modularity_and_abstraction>`: general, well-bounded code can serve more than one analysis.
+
+- **Parameterize instead of hard-coding:** A one-off script with a baked-in path, threshold, or constant works only once. Pass those values in as arguments so the same function serves many datasets and settings. Reusable code tends to be modular, loosely coupled, and free of hidden state. See [Code reuse](https://en.wikipedia.org/wiki/Code_reuse).
+- **Package genuinely reusable code:** When a function or module proves useful across projects, move it into an installable package so others can import it rather than copy it. See the [Package Development](package_development.md) page and The Turing Way's [Reusable Code](https://book.the-turing-way.org/reproducible-research/code-reuse) guide.
+- **Design for extension with the Open/Closed Principle:** Software entities should be "open for extension, but closed for modification" (Bertrand Meyer, later popularized by Robert C. Martin). New behavior should be addable without editing tested, working code. See [Open-closed principle](https://en.wikipedia.org/wiki/Open%E2%80%93closed_principle).
+- **Add behavior by passing in a function or strategy:** Instead of growing an `if`/`elif` chain in your core loop each time you need a new metric or model, accept the variable behavior as a parameter. This lightweight [Strategy pattern](https://en.wikipedia.org/wiki/Strategy_pattern) lets the algorithm vary independently of the code that uses it. Configuration files serve the same goal for choosing options without code changes.
+
+In the example below, `evaluate` takes the metric as a parameter, so a new metric can be added without touching `evaluate` itself.
+
+```python
+def mse(y_true, y_pred):
+    """Mean squared error."""
+    return ((y_true - y_pred) ** 2).mean()
+
+def evaluate(y_true, y_pred, metric):
+    """Score predictions with any metric(y_true, y_pred) -> float.
+
+    'metric' is passed in, so evaluate is closed for modification:
+    a new metric is a new function, not an edit here.
+    """
+    return metric(y_true, y_pred)
+
+score = evaluate(y_true, y_pred, mse)
+
+# A new metric is added without changing evaluate.
+def mae(y_true, y_pred):
+    """Mean absolute error."""
+    return (y_true - y_pred).abs().mean()
+
+score = evaluate(y_true, y_pred, mae)
+```
+
+```{tip}
+Do not over-generalize. Adding extension points you do not yet need is speculative complexity (recall YAGNI). Build the flexible version when a second real use case appears, not before.
+```
 
 ## Design Patterns (Introductory Level)
 
