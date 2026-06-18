@@ -433,7 +433,45 @@ Keep CLI parsing thin: have it gather arguments and call a normal function that 
 
 For depth, see Python's [`argparse`](https://docs.python.org/3/library/argparse.html) reference and its [argparse tutorial](https://docs.python.org/3/howto/argparse.html), [PEP 8 on public and internal interfaces](https://peps.python.org/pep-0008/#public-and-internal-interfaces), and the [Click](https://click.palletsprojects.com/) and [Typer](https://typer.tiangolo.com/) documentation. Packaging a CLI for installation is covered on the [Package Development](package_development.md) page.
 
+(software_design_principles:layered_architecture)=
 ## Layered Architecture in Scientific Computing Software
+
+A [layered architecture](https://en.wikipedia.org/wiki/Multitier_architecture) organizes a larger tool into layers that each have a distinct responsibility, with dependencies that run one way. It applies {ref}`Modularity and Abstraction <software_design_principles:modularity_and_abstraction>` and {ref}`Dependency Management and Isolation <software_design_principles:dependency_management_and_isolation>` at the scale of a whole program, so the scientific core stays independent of how a run is launched and where its data lives.
+
+- **Typical layers for scientific software:** A useful split has four roles. An **entry/interface** layer (a CLI, notebook, or API call) takes input and reports results. An **orchestration/workflow** layer ties a run together by sequencing the pipeline steps. A **core science** layer holds the actual work: models, numerical methods, and algorithms. An **infrastructure/data** layer handles file and network I/O, storage, and external services. This mirrors the presentation, domain, and data-source layers Martin Fowler describes in [Presentation Domain Data Layering](https://martinfowler.com/bliki/PresentationDomainDataLayering.html).
+- **Dependencies point one way, toward the stable core:** In a strict layering, each layer depends on the layer below it and can run without the layers above it ([Multitier architecture](https://en.wikipedia.org/wiki/Multitier_architecture)). Equivalently, lower layers should be agnostic of who calls them. To keep the core from depending on infrastructure, apply the Dependency Inversion idea from {ref}`Dependency Management and Isolation <software_design_principles:dependency_management_and_isolation>`: have the core define an interface, and let the I/O layer implement it.
+- **Keep the scientific core free of I/O and UI:** The model and numerical code should take data in and return results out, with no file paths, network calls, argument parsing, or printing inside. A core like this is testable in isolation, reusable across a CLI and a notebook, and portable between machines, which is the same payoff as in {ref}`Testability and Maintainability <software_design_principles:testability_and_maintainability>`.
+- **Do not over-layer a small script:** Layers earn their keep on tools that grow and gain more than one entry point or data source. A short analysis script needs no ceremony: recall KISS and YAGNI from {ref}`Fundamental Design Principles <software_design_principles:fundamental_design_principles>`, and add layers only as complexity makes the separation pay off.
+
+The layout below assigns each file one role. The interface and infrastructure files may import the core, but `core/model.py` imports neither, so the science can be tested and reused on its own.
+
+```text
+project/
+    cli.py            # entry/interface: parse arguments, call the pipeline, report results
+    pipeline.py       # orchestration: load -> compute -> save, the steps of one run
+    core/
+        model.py      # core science: pure functions and models, no I/O or UI
+    storage.py        # infrastructure/data: read inputs, write outputs, talk to services
+```
+
+The orchestration function makes the one-way flow concrete: it pulls data in through the infrastructure layer, hands plain values to the core, and sends results back out, so the core never touches I/O.
+
+```python
+from core.model import fit            # core science: takes data, returns a result
+from storage import load_dataset, save_result   # infrastructure: file and network I/O
+
+def run(input_path, output_path, seed):
+    """Orchestration: sequence one run; depend on lower layers, not the reverse."""
+    data = load_dataset(input_path)   # infrastructure in
+    result = fit(data, seed=seed)     # core science, free of I/O and UI
+    save_result(result, output_path)  # infrastructure out
+```
+
+```{tip}
+A quick test of the layering: can you import and run the core science in a notebook or a unit test without any files, network, or command-line arguments? If not, some I/O or interface code has leaked into the core and belongs in a lower layer.
+```
+
+For more depth, see Wikipedia on [Multitier architecture](https://en.wikipedia.org/wiki/Multitier_architecture) and [Separation of concerns](https://en.wikipedia.org/wiki/Separation_of_concerns), Martin Fowler's [Presentation Domain Data Layering](https://martinfowler.com/bliki/PresentationDomainDataLayering.html) and [Layering Principles](https://martinfowler.com/bliki/LayeringPrinciples.html), and The Turing Way's [Research Compendia](https://book.the-turing-way.org/reproducible-research/compendia/), which recommends keeping data, methods, and output clearly separated. The [Package Development](package_development.md) and [Reproducible Research](reproducible_research.md) pages cover related structure.
 
 ## Summary Checklist
 
