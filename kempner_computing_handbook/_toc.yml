@@ -37,8 +37,6 @@ parts:
       - file: s1_high_performance_computing/storage_and_data_transfer/understanding_storage_options
       - file: s1_high_performance_computing/storage_and_data_transfer/data_transfer
       - file: s1_high_performance_computing/storage_and_data_transfer/shared_data_repository
-      - file: s1_high_performance_computing/storage_and_data_transfer/data_management_plan
-      - file: s1_high_performance_computing/storage_and_data_transfer/data_management_plan_faq
     # - file: s1_high_performance_computing/efficient_use_of_resources/README
       # sections:
       # - file: s1_high_performance_computing/efficient_use_of_resources/best_practices_for_hpc_efficiency
@@ -86,6 +84,7 @@ parts:
       sections:
       - file: s5_ai_scaling_and_engineering/experiment_management/logging_and_monitoring
       - file: s5_ai_scaling_and_engineering/experiment_management/wandb_sweeps
+    - file: s5_ai_scaling_and_engineering/tools_and_frameworks/tools_and_frameworks
   - caption: Security and Compliance
     numbered: true
     chapters:
