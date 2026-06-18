@@ -391,7 +391,47 @@ If a class has only an `__init__` plus one method you call once, a plain functio
 
 For more depth, see Python's [Functional Programming HOWTO](https://docs.python.org/3/howto/functional.html) and [`dataclasses`](https://docs.python.org/3/library/dataclasses.html) documentation, and Wikipedia on [Functional programming](https://en.wikipedia.org/wiki/Functional_programming), [Object-oriented programming](https://en.wikipedia.org/wiki/Object-oriented_programming), and [Pure function](https://en.wikipedia.org/wiki/Pure_function).
 
+(software_design_principles:designing_apis_and_clis)=
 ## Designing APIs and CLIs for Research Tools
+
+How others use your tool, including your future self, depends on the interface you expose. There are two common kinds: an API, the functions and classes a library offers to be imported, and a CLI, a command-line interface for running a tool from the shell. Both are contracts, so the {ref}`Modularity and Abstraction <software_design_principles:modularity_and_abstraction>` idea of a small, stable interface that hides its internals applies to each.
+
+- **Name things clearly and consistently:** Use predictable, descriptive names and a consistent style across an API, so callers can guess the next name from the last one. Names are part of the contract, so changing one breaks callers.
+- **Keep the public surface small:** Expose only what users need and give it sensible defaults, so the common call is short and the rare options are still reachable. A smaller surface is easier to document, test, and keep stable.
+- **Mark internals private and keep the public part stable:** Per [PEP 8](https://peps.python.org/pep-0008/#public-and-internal-interfaces), prefix non-public names with a single leading underscore, and declare a module's public API with [`__all__`](https://docs.python.org/3/tutorial/modules.html#importing-from-a-package). This frees you to change internals without breaking callers, the information-hiding point from earlier.
+- **Fail with clear errors:** Validate inputs and raise specific exceptions with messages that say what was wrong and how to fix it, rather than failing deep inside with an obscure traceback.
+- **Use a real argument parser for a CLI:** Reach for the standard-library [`argparse`](https://docs.python.org/3/library/argparse.html) rather than reading `sys.argv` by hand. It validates input and generates a `--help` message for free; [Click](https://click.palletsprojects.com/) and [Typer](https://typer.tiangolo.com/) are popular third-party alternatives for larger tools.
+- **Provide help, sane defaults, and predictable exit codes:** Document each argument with `help` text (the docstring habit from {ref}`Documentation as Part of Design <software_design_principles:documentation_as_part_of_design>`), supply defaults so a basic run is short, and exit `0` on success and non-zero on failure so scripts and schedulers can detect errors.
+- **Log the arguments that were used:** Record the parsed arguments with each run so a result can be traced and repeated, the provenance point from {ref}`Designing for Reproducibility <software_design_principles:designing_for_reproducibility>`.
+
+The CLI below defines a parser, adds two arguments with defaults and help text, parses them, and delegates to a separate function so the logic stays testable and importable as an API.
+
+```python
+import argparse
+
+def run(input_path, threshold):
+    """Core logic, kept out of the CLI so it can be imported and tested."""
+    print(f"processing {input_path!r} with threshold={threshold}")
+
+def main():
+    parser = argparse.ArgumentParser(description="Filter records above a threshold.")
+    parser.add_argument("input_path", help="path to the input file")
+    parser.add_argument(
+        "--threshold", type=float, default=0.5, help="cutoff value (default: 0.5)"
+    )
+    args = parser.parse_args()        # -h/--help is added automatically
+    print(f"args: {vars(args)}")      # log the chosen arguments for reproducibility
+    run(args.input_path, args.threshold)
+
+if __name__ == "__main__":
+    main()
+```
+
+```{tip}
+Keep CLI parsing thin: have it gather arguments and call a normal function that does the work. The logic stays importable as an API and unit-testable, while the CLI is just one entry point into it.
+```
+
+For depth, see Python's [`argparse`](https://docs.python.org/3/library/argparse.html) reference and its [argparse tutorial](https://docs.python.org/3/howto/argparse.html), [PEP 8 on public and internal interfaces](https://peps.python.org/pep-0008/#public-and-internal-interfaces), and the [Click](https://click.palletsprojects.com/) and [Typer](https://typer.tiangolo.com/) documentation. Packaging a CLI for installation is covered on the [Package Development](package_development.md) page.
 
 ## Layered Architecture in Scientific Computing Software
 
