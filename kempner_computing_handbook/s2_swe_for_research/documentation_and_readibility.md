@@ -77,7 +77,50 @@ def apply_discount(price):
 You do not have to apply a style guide by hand. Automated formatters and linters can enforce these conventions for you; they are covered in the next section.
 ```
 
+(documentation_and_readibility:tools_and_practices)=
 ## Tools and Practices
+
+A small toolchain turns the docstrings described in {ref}`documentation_and_readibility:types_of_documentation` into browsable, searchable documentation, and keeps the examples inside them honest as the code changes.
+
+- **Pick a docstring style and stay consistent.** [PEP 257](https://peps.python.org/pep-0257/) defines what a docstring is and the basic one-line and multi-line conventions, but not how to lay out arguments and return values. The two common structured styles are [Google style](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings) and [NumPy style](https://numpydoc.readthedocs.io/en/latest/format.html). Either works; the goal is to use one consistently across a project.
+- **Generate docs from docstrings.** [Sphinx](https://www.sphinx-doc.org/) builds documentation directly from your code: the [autodoc](https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html) extension pulls in docstrings, and the [napoleon](https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html) extension lets autodoc understand Google- and NumPy-style docstrings. If your project documents in Markdown, [MkDocs](https://www.mkdocs.org/) with the [mkdocstrings](https://mkdocstrings.github.io/) plugin does the same job.
+- **Test the examples with doctest.** Python's [doctest](https://docs.python.org/3/library/doctest.html) module finds `>>>` examples in docstrings, runs them, and checks the output against what you wrote, so examples cannot silently drift out of date.
+- **Add type hints as checked interface documentation.** [PEP 484](https://peps.python.org/pep-0484/) annotations record the expected argument and return types in a form that a static checker can verify, documenting the interface without separate prose. Note that these are not enforced at runtime.
+- **Host the built docs.** [Read the Docs](https://docs.readthedocs.io/) builds and hosts Sphinx or MkDocs sites automatically from your Git repository, rebuilding on each push so the published docs track the code.
+
+A NumPy-style docstring with type hints and an embedded doctest:
+
+```python
+def normalize(values: list[float]) -> list[float]:
+    """Scale values so they sum to 1.
+
+    Parameters
+    ----------
+    values : list[float]
+        Non-empty list of non-negative numbers.
+
+    Returns
+    -------
+    list[float]
+        The input values divided by their total.
+
+    Examples
+    --------
+    >>> normalize([1.0, 1.0, 2.0])
+    [0.25, 0.25, 0.5]
+    """
+    total = sum(values)
+    return [v / total for v in values]
+```
+
+```bash
+# Run the embedded examples; no output means every example passed.
+python -m doctest example.py
+```
+
+```{tip}
+Keeping a `>>> ` example in the docstring means the same snippet documents the function and serves as a regression test. Writing readable code in the first place (see {ref}`documentation_and_readibility:code_readability_best_practices`) makes that documentation shorter and clearer.
+```
 
 ## Documentation in Research Context
 
