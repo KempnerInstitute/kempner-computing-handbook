@@ -240,7 +240,43 @@ A useful signal: if importing or changing one third-party library forces edits a
 
 For more depth, see Wikipedia on the [Dependency inversion principle](https://en.wikipedia.org/wiki/Dependency_inversion_principle) and the [Adapter pattern](https://en.wikipedia.org/wiki/Adapter_pattern), refactoring.guru's [Adapter](https://refactoring.guru/design-patterns/adapter), and Martin Fowler's [Inversion of Control Containers and the Dependency Injection pattern](https://martinfowler.com/articles/injection.html).
 
+(software_design_principles:documentation_as_part_of_design)=
 ## Documentation as Part of Design
+
+Documentation is part of designing software, not a chore bolted on at the end. Describing an interface in words is itself a design step: it forces you to decide what a component promises before you commit to how it works. This section is about that design angle; for documentation types, tools, and readability practices, see the [Documentation and Readability](documentation_and_readibility.md) page.
+
+- **A docstring is the contract for an interface:** Per [PEP 257](https://peps.python.org/pep-0257/), a function or method docstring should summarize its behavior and document its arguments, return values, side effects, exceptions raised, and any restrictions on when it can be called. That set of promises is what callers depend on, which is the interface idea from {ref}`Modularity and Abstraction <software_design_principles:modularity_and_abstraction>`.
+- **Write the interface and its docstring first:** Stating the contract before the body clarifies the design while it is still cheap to change. If you cannot describe the inputs, outputs, and failure modes cleanly, the boundary is not yet settled and the implementation is premature.
+- **Hard-to-document code is a design smell:** If a clear explanation needs many caveats or special cases, the unit is usually doing too much or leaking its internals. Treat that friction as a prompt to simplify or split, recalling KISS from {ref}`Fundamental Design Principles <software_design_principles:fundamental_design_principles>`.
+- **Record significant design decisions:** Capture the reasoning behind architecturally significant choices so the "why" survives as the project evolves. An [Architecture Decision Record (ADR)](https://adr.github.io/) is a short document, popularized by Michael Nygard, that records one decision with its [context, decision, and consequences](https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions); a sequence of them becomes a decision log future readers can follow.
+
+The docstring below defines the contract for `split_dataset`: what it returns, what it expects, and when it raises. A caller can rely on it without reading the body.
+
+```python
+def split_dataset(data, fraction):
+    """Split rows into train and test sets.
+
+    Args:
+        data: A sequence of samples to split.
+        fraction: Test-set share, a float in the open interval (0, 1).
+
+    Returns:
+        A (train, test) tuple of lists.
+
+    Raises:
+        ValueError: If 'fraction' is not strictly between 0 and 1.
+    """
+    if not 0 < fraction < 1:
+        raise ValueError(f"fraction must be in (0, 1), got {fraction!r}")
+    cut = int(len(data) * (1 - fraction))
+    return list(data[:cut]), list(data[cut:])
+```
+
+```{tip}
+Try writing the docstring before the implementation. If stating the inputs, outputs, and errors is awkward, redesign the interface now, while it is just text, rather than after the code is written.
+```
+
+For conventions, see [PEP 257](https://peps.python.org/pep-0257/) on docstrings and the [ADR](https://adr.github.io/) resources on recording decisions. For documentation practices and tooling, see the [Documentation and Readability](documentation_and_readibility.md) page.
 
 ## Iterative Design & Refactoring
 
