@@ -39,7 +39,36 @@ When a test fails, lower-level tests make the cause easier to find. Push tests a
 
 For deeper background, see Martin Fowler on [The Practical Test Pyramid](https://martinfowler.com/articles/practical-test-pyramid.html) and the [Test Pyramid](https://martinfowler.com/bliki/TestPyramid.html), the Wikipedia articles on [unit testing](https://en.wikipedia.org/wiki/Unit_testing), [integration testing](https://en.wikipedia.org/wiki/Integration_testing), [system testing](https://en.wikipedia.org/wiki/System_testing), and [regression testing](https://en.wikipedia.org/wiki/Regression_testing), and [The Turing Way on code testing](https://book.the-turing-way.org/reproducible-research/testing.html).
 
+(testing_and_continuous_integration:testing_tools_and_frameworks)=
 ## Testing Tools and Frameworks
+
+A small set of tools covers most research testing needs. The core choice is a test runner that finds and executes your tests; the rest help you write the {ref}`tests <testing_and_continuous_integration:types_of_tests>` themselves.
+
+- **pytest** is the most widely used Python testing framework. Tests are plain functions named `test_*` that use Python's built-in `assert`, and pytest reports rich, detailed output on failure (for example, the actual and expected values). Two features make it especially useful:
+  - **Fixtures** provide reusable setup (sample data, a temporary directory, a configured object). Define one with `@pytest.fixture` and a test receives it by listing its name as an argument.
+  - **Parametrize** runs one test over many input/expected pairs, so you cover several cases without duplicating code.
+- **unittest** is the standard library framework, so it needs no installation. Tests are methods on a class that subclasses `unittest.TestCase`, using assertion methods such as `assertEqual` and `assertRaises`. pytest can also discover and run `unittest`-style tests.
+- **Mocking** replaces a real dependency (a network call, a database, a slow model) with a stand-in so a test stays fast and deterministic. `unittest.mock` provides `Mock` objects and `patch` to swap out attributes during a test, while pytest's built-in `monkeypatch` fixture can set or delete attributes, dictionary items, and environment variables, then undo the change automatically afterward.
+- **Hypothesis** adds property-based testing: instead of fixed examples, you state a property that should hold for all inputs in a range and Hypothesis generates many cases, including edge cases you might not think of. You describe inputs with strategies and apply them via the `@given` decorator.
+
+A parametrized pytest test checks one function against several cases at once:
+
+```python
+import pytest
+
+def clip(x, lo, hi):
+    return max(lo, min(x, hi))  # constrain x to the range [lo, hi]
+
+@pytest.mark.parametrize("x,expected", [(-1, 0), (0, 0), (5, 5), (12, 10)])
+def test_clip(x, expected):
+    assert clip(x, 0, 10) == expected
+```
+
+```{tip}
+Reach for parametrize whenever you find yourself copying a test and changing only the inputs. Each case is reported separately, so a failure points straight to the input that broke.
+```
+
+For details, see the [pytest documentation](https://docs.pytest.org/en/stable/), including [fixtures](https://docs.pytest.org/en/stable/how-to/fixtures.html), [parametrize](https://docs.pytest.org/en/stable/how-to/parametrize.html), and [monkeypatch](https://docs.pytest.org/en/stable/how-to/monkeypatch.html); the Python docs for [unittest](https://docs.python.org/3/library/unittest.html) and [unittest.mock](https://docs.python.org/3/library/unittest.mock.html); and the [Hypothesis documentation](https://hypothesis.readthedocs.io/en/latest/).
 
 ## Writing Effective Tests
 
