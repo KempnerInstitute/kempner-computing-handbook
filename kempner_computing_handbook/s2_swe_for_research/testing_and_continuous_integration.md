@@ -70,7 +70,42 @@ Reach for parametrize whenever you find yourself copying a test and changing onl
 
 For details, see the [pytest documentation](https://docs.pytest.org/en/stable/), including [fixtures](https://docs.pytest.org/en/stable/how-to/fixtures.html), [parametrize](https://docs.pytest.org/en/stable/how-to/parametrize.html), and [monkeypatch](https://docs.pytest.org/en/stable/how-to/monkeypatch.html); the Python docs for [unittest](https://docs.python.org/3/library/unittest.html) and [unittest.mock](https://docs.python.org/3/library/unittest.mock.html); and the [Hypothesis documentation](https://hypothesis.readthedocs.io/en/latest/).
 
+(testing_and_continuous_integration:writing_effective_tests)=
 ## Writing Effective Tests
+
+The value of a test depends on how it is written. Good tests are clear about what they check, focused on one thing, and trustworthy enough that a failure always means something is genuinely wrong. The habits below keep a suite readable and low-maintenance as your code grows.
+
+- **Arrange-Act-Assert.** Structure each test in three steps: *Arrange* the inputs and any setup, *Act* by calling the code under test once, then *Assert* on the result. Keeping these phases visually separate makes a test easy to read and pinpoints where it fails.
+- **One behavior per test, with a descriptive name.** A test should check a single behavior so that a failure has one clear cause. Name it for the behavior it verifies (for example, `test_normalize_scales_values_to_sum_to_one`) so the report reads like a specification.
+- **Independent and deterministic.** Tests should not share mutable state or depend on running in a particular order, so each can run alone or in parallel. They should also produce the same result every time: seed random number generators, inject fixed timestamps instead of reading the wall clock, and replace network or database calls with stand-ins (see {ref}`mocking and monkeypatch <testing_and_continuous_integration:testing_tools_and_frameworks>`).
+- **Test edge cases and failure modes.** Beyond the typical case, cover empty input, boundary values, and invalid arguments. Assert that errors are raised when they should be: `pytest.raises` is a context manager that passes only if the wrapped code raises the expected exception.
+- **Test behavior, not implementation.** Check observable results through the public interface rather than internal details. Tests bound to implementation break on harmless refactors; tests bound to behavior keep passing as long as the contract holds.
+
+```python
+import pytest
+
+def normalize(values):
+    total = sum(values)
+    if total == 0:
+        raise ValueError("cannot normalize values that sum to zero")
+    return [v / total for v in values]  # scale values to sum to 1
+
+def test_normalize_scales_values_to_sum_to_one():
+    weights = [1, 1, 2]                  # Arrange
+    result = normalize(weights)          # Act
+    assert result == [0.25, 0.25, 0.5]  # Assert
+
+def test_normalize_rejects_zero_sum():
+    # the body must raise ValueError, or the test fails
+    with pytest.raises(ValueError):
+        normalize([0, 0])
+```
+
+```{tip}
+A useful shorthand for these habits is **FIRST**: tests should be Fast, Independent, Repeatable, Self-validating (they assert pass or fail with no manual checking), and Timely (written close to the code they cover). Writing for testability also helps; see [Software Design Principles](software_design_principles.md).
+```
+
+For more, see Bill Wake on [Arrange-Act-Assert](https://xp123.com/articles/3a-arrange-act-assert/), the pytest guide to [asserting expected exceptions](https://docs.pytest.org/en/stable/how-to/assert.html#assertions-about-expected-exceptions), the Google Testing Blog on [testing behavior, not implementation](https://testing.googleblog.com/2013/08/testing-on-toilet-test-behavior-not.html), and Robert C. Martin's [FIRST principles](https://medium.com/@tasdikrahman/f-i-r-s-t-principles-of-testing-1a497acda8d6).
 
 ## Test Coverage
 
