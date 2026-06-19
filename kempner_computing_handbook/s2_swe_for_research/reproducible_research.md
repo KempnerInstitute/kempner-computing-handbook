@@ -125,7 +125,37 @@ Decide what is raw versus derived early, and regenerate derived data from raw wi
 
 For depth, see the [DVC data versioning guide](https://dvc.org/doc/start/data-management/data-versioning), the [Git LFS documentation](https://git-lfs.com), and [The Turing Way on version control for data](https://book.the-turing-way.org/reproducible-research/vcs/vcs-data).
 
+(reproducible_research:randomness_and_seeds)=
 ## Randomness and Seeds
+
+Stochastic steps such as random sampling, weight initialization, data shuffling, and dropout make results vary from run to run unless you control the random number generators (RNGs). This section makes the {ref}`control randomness with seeds <reproducible_research:key_principles>` principle concrete: seed every RNG you use so a stochastic run repeats.
+
+- **Seed every RNG you actually use.** A single library's seed does not cover the others. If your code uses Python's `random`, NumPy, and a framework such as PyTorch, seed each one.
+- **Prefer explicit local generators over global state.** A local generator (NumPy `default_rng(seed)` or a `torch.Generator`) carries its own state, so its stream is not perturbed by unrelated library calls and is easy to pass around and reason about.
+- **Watch non-obvious sources of nondeterminism.** The `PYTHONHASHSEED` environment variable randomizes `str`/`bytes` hashing and therefore the iteration order of sets and dicts; set it to a fixed integer for stable ordering. Multi-threading and multi-processing reorder work, and some GPU operations (certain CUDA and cuDNN kernels, for example) are not deterministic by default.
+- **Enable deterministic algorithms when exact reproducibility matters.** In PyTorch, `torch.use_deterministic_algorithms(True)` (with `torch.backends.cudnn.deterministic = True` and `torch.backends.cudnn.benchmark = False`) opts into deterministic kernels. This can be slower, and even then PyTorch notes that results are not guaranteed to match across releases, platforms, or between CPU and GPU.
+- **Record the seed with the results.** Log the seed alongside outputs (see {ref}`record what produced each result <reproducible_research:key_principles>`) so a run can be reproduced later.
+
+```python
+import random
+import numpy as np
+
+SEED = 42
+random.seed(SEED)                 # Python's built-in random
+rng = np.random.default_rng(SEED)  # local NumPy generator (preferred)
+x = rng.random(3)                  # draw from the local generator, not np.random.*
+
+# If you use PyTorch, also seed it (covers CPU and CUDA):
+# import torch
+# torch.manual_seed(SEED)
+# torch.use_deterministic_algorithms(True)  # optional: exact, but slower
+```
+
+```{note}
+Seeding makes a run repeatable on the same setup, but it is not a guarantee of identical results across different hardware, library versions, or CPU versus GPU. Treat the seed as one recorded input, not a substitute for pinning your environment.
+```
+
+For the exact APIs and caveats, see the [NumPy `default_rng` reference](https://numpy.org/doc/stable/reference/random/generator.html), the [Python `random` docs](https://docs.python.org/3/library/random.html), [`PYTHONHASHSEED`](https://docs.python.org/3/using/cmdline.html#envvar-PYTHONHASHSEED), and the [PyTorch reproducibility note](https://pytorch.org/docs/stable/notes/randomness.html). Recording the seed connects to capturing your full environment, covered in {ref}`reproducible_research:environment_reproducibility`.
 
 ## Documentation of Experiments
 
