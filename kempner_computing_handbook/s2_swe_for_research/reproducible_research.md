@@ -227,7 +227,38 @@ When you change behavior on purpose, the regression test will fail because the s
 
 For depth, see [`numpy.testing.assert_allclose`](https://numpy.org/doc/stable/reference/generated/numpy.testing.assert_allclose.html), [`pytest.approx`](https://docs.pytest.org/en/stable/reference/reference.html#pytest-approx), the [characterization test definition](https://en.wikipedia.org/wiki/Characterization_test), and The Turing Way on [testing](https://book.the-turing-way.org/reproducible-research/testing) and [continuous integration](https://book.the-turing-way.org/reproducible-research/ci).
 
+(reproducible_research:output_and_artifact_management)=
 ## Output and Artifact Management
+
+Research produces artifacts: trained models, figures, tables, processed datasets, and logs. These are derived outputs, regenerated from code plus data, so managing them deliberately keeps results traceable and the repository clean.
+
+- **Treat artifacts as regenerable derived outputs, not source.** An artifact is the product of code, data, and configuration, so it should be reproduced by rerunning the pipeline rather than hand-edited. The code, data, and config are the source of truth; the artifact is not.
+- **Keep generated files out of Git.** Git is built for source text, not large or binary outputs, so list generated files in `.gitignore` rather than committing them. Store large artifacts (model checkpoints, large processed datasets) with a data-versioning tool or object storage, the same way you handle data: see {ref}`Data Versioning and Management <reproducible_research:data_versioning_and_management>`. [DVC](https://doc.dvc.org/start) versions models and other large outputs with the same `dvc add` and `dvc push` workflow used for inputs.
+- **Organize outputs in a dedicated directory, one folder per run.** Keep generated outputs separate from source code and raw data, as [The Turing Way](https://book.the-turing-way.org/reproducible-research/compendia/) recommends separating project-generated files from read-only and human-generated ones. A per-run subfolder keeps each run's artifacts together and prevents one run from overwriting another.
+- **Attach metadata to each artifact.** Record what produced it: the config, the code commit, the data version, and the seed. Saving this next to the artifact, or in an experiment tracker, makes the result traceable: see {ref}`Documentation of Experiments <reproducible_research:documentation_of_experiments>`.
+- **Name or version artifacts so versions are distinguishable.** [The Turing Way on file naming](https://book.the-turing-way.org/project-design/info-management/filenaming/) advises machine-readable names (no spaces, consistent delimiters) and a version number or an ISO 8601 date (`YYYY-MM-DD`) so files sort in order and different versions stay distinct.
+
+Ignore a whole outputs directory with a single trailing-slash pattern (per the [gitignore docs](https://git-scm.com/docs/gitignore), a trailing `/` matches only directories):
+
+```text
+# .gitignore: ignore generated outputs, but keep the folder's README
+outputs/
+!outputs/README.md
+```
+
+Save each artifact next to a small metadata sidecar so it stays self-describing:
+
+```text
+outputs/2026-06-18_run-a1b2c3d/
+├── model.pt          # the artifact
+└── model.meta.json   # {"commit": "a1b2c3d", "data_version": "v3", "seed": 42}
+```
+
+```{tip}
+A useful check: given only an artifact and its sidecar, could you regenerate it? If the commit, data version, and seed are recorded alongside it, the answer is yes.
+```
+
+For depth, see [The Turing Way on research compendia](https://book.the-turing-way.org/reproducible-research/compendia/) and [file naming](https://book.the-turing-way.org/project-design/info-management/filenaming/), the [DVC get-started guide](https://doc.dvc.org/start), and the [gitignore documentation](https://git-scm.com/docs/gitignore).
 
 ## Sharing and Archiving
 
