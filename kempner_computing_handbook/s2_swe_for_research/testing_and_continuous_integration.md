@@ -169,7 +169,37 @@ Keep CI fast so people actually wait for it: cache dependencies, and run the qui
 
 For details, see the GitHub docs on [building and testing Python](https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python), [using a matrix for your jobs](https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs), and [about protected branches](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches), plus the [actions/setup-python](https://github.com/actions/setup-python) action. CI pairs naturally with code review; see [Collaborative Code Development](collaborative_code_development.md).
 
+(testing_and_continuous_integration:research_specific_advice)=
 ## Research-Specific Advice
+
+Research code adds concerns that general testing advice does not stress: floating-point math, randomness, expensive computations, and code that changes as the science does. A few extra habits keep the {ref}`tests <testing_and_continuous_integration:writing_effective_tests>` meaningful in this setting.
+
+- **Compare floats with a tolerance, not `==`.** Rounding makes exact equality fail for results of real arithmetic. For a single number, use `pytest.approx`, which compares within a relative tolerance of `1e-6` or an absolute tolerance of `1e-12` by default. For arrays, use `numpy.testing.assert_allclose`, which defaults to `rtol=1e-7` and `atol=0`; set `atol` explicitly when expected values can be zero.
+- **Seed randomness and test the deterministic parts.** Construct a generator with a fixed seed, for example `numpy.random.default_rng(seed)`, so stochastic code produces the same sequence every run. Then assert on properties that hold regardless of the draw (shape, range, a mean within bounds) rather than on exact random values. See [Reproducible Research](reproducible_research.md) for more on seeds and determinism.
+- **Use small inputs with known or analytical answers.** A tiny case whose result you can work out by hand, or derive analytically, is the most trustworthy oracle. It runs fast and pins down the exact expected number.
+- **Regression-test pipeline outputs against saved references.** For computations too large to verify by hand, save a known-good output once and compare future runs against it with a tolerance (see {ref}`regression tests <testing_and_continuous_integration:types_of_tests>`). This catches silent changes from a refactor or a dependency update.
+- **Use property-based tests for invariants.** Some properties must always hold: an output shape, values within a valid range, or a conserved quantity. {ref}`Hypothesis <testing_and_continuous_integration:testing_tools_and_frameworks>` generates many inputs, including edge cases, and checks the invariant for each.
+- **Test data loading and preprocessing.** Parsing, cleaning, and reshaping are a frequent source of silent errors that quietly corrupt every downstream result. Test these steps on small fixtures, including missing values and malformed rows.
+
+```python
+import numpy as np
+from numpy.testing import assert_allclose
+
+def softmax(x):
+    e = np.exp(x - np.max(x))  # subtract max for numerical stability
+    return e / e.sum()
+
+def test_softmax_matches_known_values():
+    result = softmax(np.array([0.0, 0.0]))
+    assert_allclose(result, [0.5, 0.5])   # tolerance-based, not ==
+    assert_allclose(result.sum(), 1.0)    # probabilities sum to one
+```
+
+```{tip}
+When you assert a result is close to zero, set `atol` explicitly: the default `atol=0` in `assert_allclose` makes the relative tolerance alone govern the comparison, which is too strict near zero.
+```
+
+For details, see [`numpy.testing.assert_allclose`](https://numpy.org/doc/stable/reference/generated/numpy.testing.assert_allclose.html), [`pytest.approx`](https://docs.pytest.org/en/stable/reference/reference.html#pytest-approx), [`numpy.random.default_rng`](https://numpy.org/doc/stable/reference/random/generator.html), the [Hypothesis documentation](https://hypothesis.readthedocs.io/en/latest/), and [The Turing Way on code testing](https://book.the-turing-way.org/reproducible-research/testing.html).
 
 ## Summary Checklist
 
