@@ -107,7 +107,26 @@ A useful shorthand for these habits is **FIRST**: tests should be Fast, Independ
 
 For more, see Bill Wake on [Arrange-Act-Assert](https://xp123.com/articles/3a-arrange-act-assert/), the pytest guide to [asserting expected exceptions](https://docs.pytest.org/en/stable/how-to/assert.html#assertions-about-expected-exceptions), the Google Testing Blog on [testing behavior, not implementation](https://testing.googleblog.com/2013/08/testing-on-toilet-test-behavior-not.html), and Robert C. Martin's [FIRST principles](https://medium.com/@tasdikrahman/f-i-r-s-t-principles-of-testing-1a497acda8d6).
 
+(testing_and_continuous_integration:test_coverage)=
 ## Test Coverage
+
+Coverage measures how much of your code your {ref}`tests <testing_and_continuous_integration:types_of_tests>` actually run, which makes it a quick way to spot code that no test reaches. It is a guide for finding gaps, not a guarantee that the tests are any good.
+
+- **Line vs. branch coverage.** Line (statement) coverage reports whether each line executed at all. Branch coverage goes further: where a line can jump to more than one next line, such as an `if`, it checks that every outcome was taken, so it flags a condition whose `else` path was never tested. Branch coverage is stricter and usually the more informative of the two.
+- **Tools.** [coverage.py](https://coverage.readthedocs.io/) is the standard Python coverage tool. [pytest-cov](https://pytest-cov.readthedocs.io/) is the plugin that runs it through {ref}`pytest <testing_and_continuous_integration:testing_tools_and_frameworks>`, so coverage is collected as part of your normal test run.
+- **Reading the report.** The report lists each file with its covered percentage and the line numbers that never ran. Read it to find untested code that matters, such as an error handler or a rarely hit branch, rather than to admire the total.
+- **Coverage measures execution, not correctness.** A line counts as covered the moment it runs, even if no assertion checks the result, so a high percentage can hide weak tests. Martin Fowler argues coverage is useful for finding untested code but a poor target, since a mandated number is easy to reach with low-quality tests. Do not chase 100%: aim instead to cover the critical and error-handling paths well. See [Test Coverage](https://martinfowler.com/bliki/TestCoverage.html).
+
+```bash
+# run the test suite and measure coverage for your package
+pytest --cov=mypackage
+# add term-missing to list the line numbers that were never run
+pytest --cov=mypackage --cov-report=term-missing
+```
+
+```{tip}
+Enable branch coverage to catch untested conditional paths: pass `--cov-branch` to pytest-cov, or run `coverage run --branch` if you use coverage.py directly.
+```
 
 ## Continuous Integration (CI)
 
