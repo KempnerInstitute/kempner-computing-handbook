@@ -128,7 +128,46 @@ pytest --cov=mypackage --cov-report=term-missing
 Enable branch coverage to catch untested conditional paths: pass `--cov-branch` to pytest-cov, or run `coverage run --branch` if you use coverage.py directly.
 ```
 
+(testing_and_continuous_integration:continuous_integration)=
 ## Continuous Integration (CI)
+
+Continuous Integration runs your checks automatically on every change, so problems surface early and the main branch stays releasable. Instead of remembering to run things by hand, you describe the work once and a service repeats it for every push and pull request.
+
+- **What runs.** On each push and pull request, CI checks out the code, installs dependencies, and runs the {ref}`tests <testing_and_continuous_integration:writing_effective_tests>`. You can add a linter or formatter check and report {ref}`coverage <testing_and_continuous_integration:test_coverage>` in the same run.
+- **GitHub Actions.** A common choice on GitHub, configured by a workflow file under `.github/workflows/` (for example `ci.yml`). The file lists the events that trigger it, the runners to use, and the steps to run.
+- **Matrix testing.** A `matrix` strategy runs the same job across several configurations, such as multiple Python versions and operating systems, to catch problems that appear only on a specific combination.
+- **Require CI to pass before merge.** Configure branch protection on the default branch and mark the CI job as a required status check, so a pull request cannot merge until its checks succeed.
+- **Cache dependencies.** Caching the package manager's downloads (for example pip) speeds up later runs by avoiding repeated installs. The `actions/setup-python` action enables this with a single `cache` setting.
+
+A minimal workflow that tests across a small version matrix:
+
+```yaml
+# .github/workflows/ci.yml
+name: CI
+on: [push, pull_request]   # run on every push and pull request
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v7        # get the repository contents
+      - uses: actions/setup-python@v6     # install the chosen Python
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip                      # cache pip downloads between runs
+      - run: pip install -e ".[test]"     # install the package and test deps
+      - run: pytest                       # run the test suite
+```
+
+```{tip}
+Keep CI fast so people actually wait for it: cache dependencies, and run the quick checks (linting, unit tests) before slower ones. A run that takes minutes rather than tens of minutes is far more likely to be respected before merging.
+```
+
+For details, see the GitHub docs on [building and testing Python](https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python), [using a matrix for your jobs](https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs), and [about protected branches](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches), plus the [actions/setup-python](https://github.com/actions/setup-python) action. CI pairs naturally with code review; see [Collaborative Code Development](collaborative_code_development.md).
 
 ## Research-Specific Advice
 
