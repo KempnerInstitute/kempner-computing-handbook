@@ -134,7 +134,29 @@ A released version cannot be reused on PyPI: deleted files cannot be re-uploaded
 
 For details, see the Python Packaging User Guide's [Packaging Python Projects tutorial](https://packaging.python.org/en/latest/tutorials/packaging-projects/) (its "Uploading the distribution archives" section), the [twine documentation](https://twine.readthedocs.io/en/stable/), and pip's [pip install reference](https://pip.pypa.io/en/stable/cli/pip_install/).
 
+(package_development:documentation)=
 ## Documentation
+
+A package needs documentation so others (and your future self) can install and use it without reading the source. The `README` you place at the project root doubles as the package's landing page on PyPI, so packaging treats it as first-class metadata. For how to write and build docs (types, docstring styles, Sphinx, MkDocs), see [Documentation and Readability](documentation_and_readibility.md); this section covers only how documentation connects to packaging.
+
+- **The README as the PyPI front page.** Point the `readme` field in the `[project]` table of your {ref}`pyproject.toml <package_development:package_structure_and_layout>` at your README file. Its contents become the long description displayed on your project's PyPI page, so a `README.md` or `README.rst` that states what the package is and how to install it is what visitors see first. The format is inferred from the file extension.
+- **API reference from docstrings, hosted.** Fuller documentation, such as an API reference built from your docstrings, is best published online so users can browse it without checking out the code. [Read the Docs](https://docs.readthedocs.io/) builds and hosts documentation from your Git repository automatically and supports common tools like Sphinx and MkDocs. See [Documentation and Readability](documentation_and_readibility.md) for how to author and build those docs.
+- **Documentation links in the metadata.** Add a `[project.urls]` table so links such as `Documentation` and `Source` travel with the package and appear in the sidebar of your PyPI project page, making your docs easy to find from the listing.
+
+```toml
+[project]
+readme = "README.md"          # long description shown on the PyPI project page
+
+[project.urls]
+Documentation = "https://my-package.readthedocs.io/"   # hosted docs
+Source = "https://github.com/owner/my-package"          # source repository
+```
+
+```{tip}
+Keep the README short and install-focused: a one-line description, an install command, and a minimal usage example, then a link to the full documentation. It is the first thing visitors read on PyPI.
+```
+
+For details, see the Python Packaging User Guide's [Writing your pyproject.toml](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/) guide (the `readme` field and the `[project.urls]` table), its [Making a PyPI-friendly README](https://packaging.python.org/en/latest/guides/making-a-pypi-friendly-readme/) guide, and the [Read the Docs documentation](https://docs.readthedocs.io/).
 
 ## Research-Specific Tips
 
