@@ -158,7 +158,40 @@ Keep the README short and install-focused: a one-line description, an install co
 
 For details, see the Python Packaging User Guide's [Writing your pyproject.toml](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/) guide (the `readme` field and the `[project.urls]` table), its [Making a PyPI-friendly README](https://packaging.python.org/en/latest/guides/making-a-pypi-friendly-readme/) guide, and the [Read the Docs documentation](https://docs.readthedocs.io/).
 
+(package_development:research_specific_tips)=
 ## Research-Specific Tips
+
+Package research code once it is reused across projects or shipped alongside a paper, and keep it small and focused: a single installable package beats a folder of loose scripts, but resist over-engineering.
+
+- **Package when reused or shared, and keep it focused.** A simple, installable package that others can `pip install` is far more useful than scattered scripts, yet not every analysis needs to become a library. [The Turing Way](https://book.the-turing-way.org/reproducible-research/code-reuse/code-reuse-overview/) suggests promoting code into a package only after the reusable parts are factored out and validated, matching the effort to how the software will be reused.
+- **Make it citable.** Add a [`CITATION.cff`](https://citation-file-format.github.io/) file at the project root so others cite the software correctly, and mint a DOI by archiving a release. The citation file and DOI workflow are covered in [Documentation and Readability](documentation_and_readibility.md) and [Reproducible Research](reproducible_research.md); link them from your {ref}`pyproject.toml <package_development:documentation>` metadata.
+- **Use optional-dependency extras for heavy or optional deps.** Declare an extra in the `[project.optional-dependencies]` table of your {ref}`pyproject.toml <package_development:package_structure_and_layout>` so a basic install stays light and users opt in to heavy dependencies (for example a `gpu` or `viz` extra).
+- **Ship data files inside the package.** Bundle small data files (lookup tables, example inputs) within the package and read them with [`importlib.resources`](https://docs.python.org/3/library/importlib.resources.html) rather than hard-coded paths, which break once the package is installed elsewhere. Removing hardcoded paths is a core reuse practice in [The Turing Way](https://book.the-turing-way.org/reproducible-research/code-reuse/code-reuse-overview/).
+- **Declare and pin dependencies for reproducibility.** List dependencies in your `pyproject.toml`, and for reproducible analyses record exact versions of the full environment. See [Reproducible Research](reproducible_research.md).
+
+```toml
+# pyproject.toml: an optional "viz" extra
+[project.optional-dependencies]
+viz = ["matplotlib"]   # installed only on request
+```
+
+```bash
+# Install the package with the optional extra
+pip install "mypkg[viz]"
+```
+
+```python
+# Read a packaged data file, not a hard-coded path
+from importlib.resources import files
+
+content = files("mypkg").joinpath("data.csv").read_text(encoding="utf-8")
+```
+
+```{tip}
+Keep the default install minimal and move large or platform-specific dependencies into extras, so users who do not need plotting or GPU support are not forced to install them.
+```
+
+For details, see the Python Packaging User Guide's [Writing your pyproject.toml](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/) guide (the `[project.optional-dependencies]` table), the [`importlib.resources` documentation](https://docs.python.org/3/library/importlib.resources.html), and the [Citation File Format](https://citation-file-format.github.io/).
 
 ## Versioning & Releases
 
