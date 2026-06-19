@@ -198,7 +198,34 @@ A quick test: given only a run's output folder, could you rerun it? If the confi
 
 For depth, see [The Turing Way on research data management](https://book.the-turing-way.org/reproducible-research/rdm/) and the [MLflow Tracking](https://mlflow.org/docs/latest/ml/tracking/) and [Weights & Biases](https://docs.wandb.ai/guides/track/) docs. Writing clear configs and notes connects to good project documentation, covered in [Documentation and Readability](documentation_and_readibility.md).
 
+(reproducible_research:testing_reproducibility)=
 ## Testing Reproducibility
+
+Reproducibility is a claim, not an assumption: a pipeline is only reproducible once you have re-run it and confirmed the outputs match. The {ref}`principles above <reproducible_research:key_principles>` make a result *likely* to reproduce; the checks below confirm that it actually does.
+
+- **Re-run and compare, first on the same machine.** Run the pipeline twice from the same inputs and seeds and confirm the outputs agree. This catches uncontrolled randomness and accidental dependence on leftover state or cached files.
+- **Then re-run in a clean environment or on a different machine.** Rebuild the {ref}`environment <reproducible_research:environment_reproducibility>` from your lock file in a fresh virtual environment or container, or run on a collaborator's machine. A result that reproduces only on your laptop usually hides an undeclared dependency: an unpinned package, a local data file, or a hard-coded path.
+- **Add a regression test against a saved reference.** Save a known-good output once, then have a test re-run the pipeline and compare against it. Such a test (Michael Feathers' *characterization test*) pins current behavior so an unintended change is flagged on sight.
+- **Compare floating-point results with a tolerance, not exact equality.** Numerical output rarely matches bit-for-bit across runs, platforms, or library versions, so compare within a tolerance using `numpy.testing.assert_allclose` or `pytest.approx`.
+- **Run the pipeline end to end in CI.** Exercise the whole workflow on a small input on every change so reproducibility is checked continuously rather than rediscovered months later. The mechanics of writing tests and configuring CI are covered in [Testing and Continuous Integration](testing_and_continuous_integration.md).
+
+A minimal regression test runs the pipeline on a fixed input and compares to a saved reference within a tolerance:
+
+```python
+import numpy as np
+
+def test_pipeline_matches_reference():
+    result = run_pipeline("tests/data/small_input.csv")  # the function or pipeline under test
+    reference = np.load("tests/data/expected_output.npy")  # saved known-good output
+    # Pass if |result - reference| <= atol + rtol * |reference|; relax tolerances as needed
+    np.testing.assert_allclose(result, reference, rtol=1e-6, atol=0)
+```
+
+```{tip}
+When you change behavior on purpose, the regression test will fail because the saved reference is now stale. Inspect the diff, confirm the new output is correct, then regenerate the reference and commit it as a deliberate update.
+```
+
+For depth, see [`numpy.testing.assert_allclose`](https://numpy.org/doc/stable/reference/generated/numpy.testing.assert_allclose.html), [`pytest.approx`](https://docs.pytest.org/en/stable/reference/reference.html#pytest-approx), the [characterization test definition](https://en.wikipedia.org/wiki/Characterization_test), and The Turing Way on [testing](https://book.the-turing-way.org/reproducible-research/testing) and [continuous integration](https://book.the-turing-way.org/reproducible-research/ci).
 
 ## Output and Artifact Management
 
