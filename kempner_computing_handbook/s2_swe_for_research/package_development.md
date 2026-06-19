@@ -78,7 +78,30 @@ You do not need to build artifacts just to work on your code: an editable instal
 
 For details, see the Python Packaging User Guide's [Packaging Python Projects tutorial](https://packaging.python.org/en/latest/tutorials/packaging-projects/), its [overview of package formats](https://packaging.python.org/en/latest/discussions/package-formats/), and the [pypa `build` documentation](https://build.pypa.io/en/stable/).
 
+(package_development:testing_the_package)=
 ## Testing the Package
+
+Test your package as it will be installed, not just the files sitting in your checkout, so you catch packaging mistakes such as missing modules or data files, dependency gaps, and version incompatibilities. This section is about exercising the package as a package; for how to write and run tests, see [Testing and Continuous Integration](testing_and_continuous_integration.md).
+
+- **Editable install, then run pytest.** Install the project with `pip install -e .` and run `pytest` from the project root. With the {ref}`src layout <package_development:package_structure_and_layout>`, your importable code is not on the default import path, so pytest exercises the installed copy rather than loose files in the working directory. See the {ref}`editable install <package_development:tools_for_building_packages>` for background.
+- **Test in clean, isolated environments across Python versions.** Tools like [tox](https://tox.wiki/) and [nox](https://nox.thea.codes/) build and install your package into fresh virtual environments and run the tests there, across the Python versions you target. As the pytest docs note, this runs tests "against the installed package and not against your source code checkout, helping to detect packaging glitches" that a local run hides.
+- **Run it in CI.** Wire the same command into continuous integration so every push tests the installed package in a clean environment. See [Testing and Continuous Integration](testing_and_continuous_integration.md).
+
+```ini
+# tox.ini: build and install the package in fresh envs, then run pytest
+[tox]
+env_list = py310, py311   # one isolated environment per Python version
+
+[testenv]
+deps = pytest             # test-time dependencies for each environment
+commands = pytest         # tox installs the package, then runs the tests
+```
+
+```{tip}
+Running your suite under tox or nox before you publish is the surest way to catch a "works in my checkout" bug: if a module or data file is missing from the built package, the tests fail in the clean environment even when they pass locally.
+```
+
+For details, see pytest's [Good Integration Practices](https://docs.pytest.org/en/stable/explanation/goodpractices.html), the [tox](https://tox.wiki/en/stable/) and [nox](https://nox.thea.codes/en/stable/) documentation, and the [Python Packaging User Guide](https://packaging.python.org/).
 
 ## Installing & Distributing
 
