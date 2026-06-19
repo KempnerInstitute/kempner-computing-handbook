@@ -157,7 +157,46 @@ Seeding makes a run repeatable on the same setup, but it is not a guarantee of i
 
 For the exact APIs and caveats, see the [NumPy `default_rng` reference](https://numpy.org/doc/stable/reference/random/generator.html), the [Python `random` docs](https://docs.python.org/3/library/random.html), [`PYTHONHASHSEED`](https://docs.python.org/3/using/cmdline.html#envvar-PYTHONHASHSEED), and the [PyTorch reproducibility note](https://pytorch.org/docs/stable/notes/randomness.html). Recording the seed connects to capturing your full environment, covered in {ref}`reproducible_research:environment_reproducibility`.
 
+(reproducible_research:documentation_of_experiments)=
 ## Documentation of Experiments
+
+To reproduce or interpret a result months later, you need to recover everything that produced it. This section makes the {ref}`record what produced each result <reproducible_research:key_principles>` principle concrete: capture the full set of inputs behind every run, and keep a record of what you tried and why.
+
+- **Capture every input to a run.** Record the parameters and configuration, the code revision (a Git commit hash), the {ref}`computational environment <reproducible_research:environment_reproducibility>`, the {ref}`data version <reproducible_research:data_versioning_and_management>`, and the random {ref}`seed <reproducible_research:randomness_and_seeds>`. Any one of these can change a result, so all of them belong in the record.
+- **Externalize configuration into a config file.** Move parameters out of the code and into a config file (for example YAML or JSON) so the run is fully described by its config, not by edited source. The same script then reproduces a run by reading the same config.
+- **Save a per-run record.** Write the resolved config, the commit hash, and the seed into a per-run output directory, or use an experiment tracker. [MLflow](https://mlflow.org/docs/latest/ml/tracking/) and [Weights & Biases](https://docs.wandb.ai/guides/track/) both log parameters, metrics, and artifacts per run, and record the code version (the Git commit).
+- **Keep a project README or lab notebook.** Maintain a running note of what was tried, what worked, and why, so the reasoning behind a result is recoverable, not just its numbers. The Turing Way frames this as recording the [provenance](https://book.the-turing-way.org/reproducible-research/rdm/) of a project.
+
+A minimal config-driven pattern: read a YAML config, then save the resolved config, commit, and seed into the run's output folder.
+
+```yaml
+# config.yaml: the run is described entirely by this file
+seed: 42
+learning_rate: 0.001
+epochs: 20
+data_version: v3
+```
+
+```python
+import subprocess, shutil, json, yaml
+from pathlib import Path
+
+cfg = yaml.safe_load(open("config.yaml"))           # all parameters come from the config
+commit = subprocess.check_output(                   # the exact code revision
+    ["git", "rev-parse", "HEAD"], text=True).strip()
+
+out = Path("runs") / commit[:8]                      # one folder per run
+out.mkdir(parents=True, exist_ok=True)
+shutil.copy("config.yaml", out / "config.yaml")      # save the resolved config
+(out / "run_meta.json").write_text(                  # plus commit and seed
+    json.dumps({"commit": commit, "seed": cfg["seed"]}, indent=2))
+```
+
+```{tip}
+A quick test: given only a run's output folder, could you rerun it? If the config, commit, and seed are saved alongside the outputs, the answer is yes.
+```
+
+For depth, see [The Turing Way on research data management](https://book.the-turing-way.org/reproducible-research/rdm/) and the [MLflow Tracking](https://mlflow.org/docs/latest/ml/tracking/) and [Weights & Biases](https://docs.wandb.ai/guides/track/) docs. Writing clear configs and notes connects to good project documentation, covered in [Documentation and Readability](documentation_and_readibility.md).
 
 ## Testing Reproducibility
 
