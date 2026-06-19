@@ -260,7 +260,44 @@ A useful check: given only an artifact and its sidecar, could you regenerate it?
 
 For depth, see [The Turing Way on research compendia](https://book.the-turing-way.org/reproducible-research/compendia/) and [file naming](https://book.the-turing-way.org/project-design/info-management/filenaming/), the [DVC get-started guide](https://doc.dvc.org/start), and the [gitignore documentation](https://git-scm.com/docs/gitignore).
 
+(reproducible_research:sharing_and_archiving)=
 ## Sharing and Archiving
+
+Sharing makes your work reusable by others; archiving makes it permanent and citable. This is where the rest of the chapter pays off: code and data that reproduce a result become an artifact that another researcher, including your future self, can find, cite, and build on.
+
+- **Publish code in a public repository under a clear license.** Put the code on a public host such as GitHub, and add a license file so others know how they may reuse it; without one, default copyright leaves reuse rights unclear.
+- **Archive a tagged release for a persistent DOI.** A repository URL can move or disappear, so deposit a fixed release to a long-term archive that mints a [DOI](https://www.doi.org/). [Zenodo](https://help.zenodo.org/) integrates with GitHub: once you enable a public repository and create a GitHub release, Zenodo archives that release and issues a new DOI for it (and a concept DOI that always resolves to the latest version). The mechanics of making a release citable are covered in [Package Development](package_development.md).
+- **Deposit data in an appropriate repository.** Archive datasets where they get a DOI and persistent landing page, rather than as repository attachments. General-purpose options include [Zenodo](https://help.zenodo.org/), [Figshare](https://figshare.com/), [Dryad](https://datadryad.org/), and [Dataverse](https://dataverse.org/); a domain-specific repository is often preferable when one exists. Use the [re3data](https://www.re3data.org/) registry to find a suitable one. This extends {ref}`Data Versioning and Management <reproducible_research:data_versioning_and_management>` from your working copy to the published record.
+- **Follow the FAIR principles.** Aim to make outputs [Findable, Accessible, Interoperable, and Reusable](https://www.go-fair.org/fair-principles/): a persistent identifier and good metadata make work findable and accessible, open formats keep it interoperable, and a clear license plus documentation make it reusable.
+- **Bundle a research compendium.** Package code, data, and documentation together so the whole project reproduces as a unit. [The Turing Way](https://book.the-turing-way.org/reproducible-research/compendia/) describes such a compendium: a conventional folder layout, a clear separation of data from analysis from outputs, and a specified environment. Archive the compendium for a DOI and cite that DOI in the paper. A `CITATION.cff` file tells others how to cite it; see [Documentation and Readability](documentation_and_readibility.md).
+
+A research compendium gathers the pieces this chapter built, in a conventional layout:
+
+```text
+my-project/
+├── README.md             # what this is and how to run it
+├── LICENSE               # reuse terms (required to clarify rights)
+├── CITATION.cff          # how to cite this work
+├── environment.yml       # the pinned computational environment
+├── data/                 # raw (immutable) and derived data, or pointers to it
+├── analysis/             # scripts and notebooks
+└── outputs/              # generated figures, tables, models
+```
+
+The high-level path from a GitHub repository to a citable archive:
+
+```text
+1. Make the repository public and add a LICENSE.
+2. In Zenodo, sign in with GitHub and enable archiving for the repository.
+3. Create a tagged release on GitHub (for example, v1.0.0).
+4. Zenodo archives that release and mints a DOI; cite the DOI in your paper.
+```
+
+```{tip}
+Archive the exact version behind a paper, not just the latest code: cite the DOI of the specific release you used so a reader lands on the same snapshot that produced your results.
+```
+
+For depth, see The Turing Way on [open source software](https://book.the-turing-way.org/reproducible-research/open/open-source/), [sharing and archiving data](https://book.the-turing-way.org/reproducible-research/rdm/rdm-sharing/), and [research compendia](https://book.the-turing-way.org/reproducible-research/compendia/), the [GitHub guide to referencing and citing content](https://docs.github.com/en/repositories/archiving-a-github-repository/referencing-and-citing-content), and the [FAIR principles](https://www.go-fair.org/fair-principles/).
 
 ## Summary Checklist
 
