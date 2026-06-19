@@ -52,7 +52,39 @@ If you cannot yet reproduce a result with a single command, that gap is usually 
 
 For broader background, see [The Turing Way guide to reproducible research](https://book.the-turing-way.org/reproducible-research/overview) and the [ACM artifact review and badging definitions](https://www.acm.org/publications/policies/artifact-review-and-badging-current). The principles here connect to good software practices generally, covered in [Software Design Principles](software_design_principles.md).
 
+(reproducible_research:environment_reproducibility)=
 ## Environment Reproducibility
+
+Code only reproduces if it runs in the same software environment. This section makes the {ref}`capture the computational environment <reproducible_research:key_principles>` principle concrete: record what your code depends on so it behaves the same on a collaborator's laptop, a cluster, or your future self's machine. The options below form a fidelity spectrum, from pinning packages to capturing the whole operating system.
+
+- **Pin exact versions and commit a lock file.** Do not record loose ranges; pin to specific versions so installs are repeatable. With pip, `pip freeze` captures the currently installed versions, or use a resolver such as [pip-tools](https://pip-tools.readthedocs.io) or [uv](https://docs.astral.sh/uv/) to produce a true lock file. With conda, `conda env export` writes the full environment to a file. Commit the result alongside your code.
+- **Isolate dependencies in a virtual environment.** Install pinned dependencies into a per-project environment (a `venv` or a conda environment) rather than system-wide, so projects do not interfere and the environment can be rebuilt from scratch.
+- **Capture the full environment with a container.** A lock file pins your language packages, but [containers reproduce the whole system](https://book.the-turing-way.org/reproducible-research/renv/renv-containers), including the operating system and system libraries. [Docker](https://docs.docker.com/get-started/) is the general-purpose option; [Apptainer](https://apptainer.org/docs/user/main/introduction.html) (formerly Singularity) is common on HPC clusters because it runs containers without root privileges.
+- **Record the Python and key library versions.** Note the interpreter version (for example in your README or lock file) along with the versions of core libraries, since the same code can give different results under a different Python or library release.
+
+A minimal pip workflow, capturing the current environment and rebuilding it elsewhere:
+
+```bash
+# Capture: write installed package versions to a file (commit this)
+pip freeze > requirements.txt
+
+# Reproduce: fresh virtual environment, then install the pinned set
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+The conda equivalent records the channels and packages in one file:
+
+```bash
+conda env export > environment.yml   # capture (commit this)
+conda env create -f environment.yml  # reproduce
+```
+
+```{tip}
+A lock file pins your language dependencies, but only a container also pins the operating system and system libraries. Reach for a container when system-level details (compilers, CUDA, system packages) affect your results.
+```
+
+For depth, see [The Turing Way on reproducible environments](https://book.the-turing-way.org/reproducible-research/renv) and the [pip](https://pip.pypa.io/en/stable/reference/requirements-file-format/) and [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html) environment docs. Day-to-day dependency and environment management is covered in [Package Development](package_development.md).
 
 ## Data Versioning and Management
 
