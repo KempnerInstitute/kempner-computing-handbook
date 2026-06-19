@@ -52,7 +52,31 @@ You can start with the flat layout for a quick personal script, but adopting the
 
 For a step-by-step walkthrough, see the Python Packaging User Guide's [Packaging Python Projects tutorial](https://packaging.python.org/en/latest/tutorials/packaging-projects/) and the [Writing your pyproject.toml](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/) guide.
 
+(package_development:tools_for_building_packages)=
 ## Tools for Building Packages
+
+"Building" a package turns your source tree into installable artifacts that others (and your future self) can install with `pip`. You declare a build backend once, then run a build frontend to produce the artifacts.
+
+- **Build backend.** The tool that actually assembles the artifacts. You choose one and declare it in the `[build-system]` table of your `pyproject.toml`, as shown in {ref}`package_development:package_structure_and_layout`. Common backends include [setuptools](https://setuptools.pypa.io/), [hatchling](https://hatch.pypa.io/latest/), [flit-core](https://flit.pypa.io/), and [pdm-backend](https://backend.pdm-project.org/). They are interchangeable: pick whichever fits your project, since the resulting artifacts install the same way.
+- **Build frontend.** The command you run, which reads `[build-system]` and invokes your backend in an isolated environment. The standard frontend is [pypa `build`](https://build.pypa.io/), run as `python -m build`.
+- **sdist vs wheel.** A *source distribution* (sdist) is a `.tar.gz` of your raw source plus metadata. A *wheel* is a pre-built `.whl` archive that pip copies into place with no build step at install time, so it installs faster. `python -m build` produces both by default.
+- **Editable installs.** For day-to-day development, install your project in editable mode with `pip install -e .` so that edits to your source take effect without reinstalling.
+
+```bash
+# Build the sdist and wheel into ./dist/
+python -m build
+# dist/my_package-0.1.0.tar.gz          (sdist)
+# dist/my_package-0.1.0-py3-none-any.whl (wheel)
+
+# During development, install in editable mode instead
+pip install -e .
+```
+
+```{note}
+You do not need to build artifacts just to work on your code: an editable install is enough. Building sdists and wheels matters when you are ready to share or publish your package.
+```
+
+For details, see the Python Packaging User Guide's [Packaging Python Projects tutorial](https://packaging.python.org/en/latest/tutorials/packaging-projects/), its [overview of package formats](https://packaging.python.org/en/latest/discussions/package-formats/), and the [pypa `build` documentation](https://build.pypa.io/en/stable/).
 
 ## Testing the Package
 
