@@ -86,7 +86,44 @@ A lock file pins your language dependencies, but only a container also pins the 
 
 For depth, see [The Turing Way on reproducible environments](https://book.the-turing-way.org/reproducible-research/renv) and the [pip](https://pip.pypa.io/en/stable/reference/requirements-file-format/) and [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html) environment docs. Day-to-day dependency and environment management is covered in [Package Development](package_development.md).
 
+(reproducible_research:data_versioning_and_management)=
 ## Data Versioning and Management
+
+A result depends on its data as much as its code, so data must be tracked with the same care. This section makes the {ref}`track data and its provenance <reproducible_research:key_principles>` principle concrete: version data alongside code so any output can be traced to the exact inputs that produced it.
+
+- **Keep raw data immutable and separate from derived data.** Treat source data as read-only and never edit it in place; write cleaned or processed data to a separate location so the original is always recoverable.
+- **Do not commit large data to Git.** Git is built for text and handles large or binary files poorly: it bloats history, slows clones, is hard to purge after the fact, and hosts impose file-size limits (for example, 100 MB on GitHub).
+- **Version large or binary data with a dedicated tool.** [DVC](https://dvc.org/doc/start/data-management/data-versioning) and [Git LFS](https://git-lfs.com) keep large files out of Git history while still versioning them.
+- **Link each data version to a code commit with DVC.** `dvc add` records the data's content hash in a small `.dvc` pointer file and adds the data itself to `.gitignore`. You commit the pointer to Git, so checking out a commit selects the matching data version, while `dvc push` stores the actual bytes in remote storage (for example, S3 or a shared directory).
+- **Verify data integrity with checksums.** Record a hash (DVC uses MD5 internally) so you can confirm a file has not been altered or corrupted in transit.
+- **Record data provenance.** Note each dataset's source, version, license, and the preprocessing steps that produced any derived files, since the same code on different data gives a different result.
+
+A minimal DVC workflow tracks a file, commits its pointer to Git, and pushes the data to a remote:
+
+```bash
+# Track the data: creates data/raw.csv.dvc and adds raw.csv to data/.gitignore
+dvc add data/raw.csv
+
+# Commit the small pointer file and the .gitignore rule (not the data itself)
+git add data/raw.csv.dvc data/.gitignore
+git commit -m "Track raw dataset with DVC"
+
+# Upload the data bytes to the configured remote storage
+dvc push
+```
+
+Git LFS is an alternative that keeps the familiar Git workflow, replacing tracked files with pointers and storing the contents on a remote:
+
+```bash
+git lfs track "*.h5"   # records the pattern in .gitattributes
+git add .gitattributes
+```
+
+```{tip}
+Decide what is raw versus derived early, and regenerate derived data from raw with your pipeline rather than versioning every intermediate file. Version raw inputs and final outputs; rebuild the rest.
+```
+
+For depth, see the [DVC data versioning guide](https://dvc.org/doc/start/data-management/data-versioning), the [Git LFS documentation](https://git-lfs.com), and [The Turing Way on version control for data](https://book.the-turing-way.org/reproducible-research/vcs/vcs-data).
 
 ## Randomness and Seeds
 
