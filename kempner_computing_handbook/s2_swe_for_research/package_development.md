@@ -103,7 +103,36 @@ Running your suite under tox or nox before you publish is the surest way to catc
 
 For details, see pytest's [Good Integration Practices](https://docs.pytest.org/en/stable/explanation/goodpractices.html), the [tox](https://tox.wiki/en/stable/) and [nox](https://nox.thea.codes/en/stable/) documentation, and the [Python Packaging User Guide](https://packaging.python.org/).
 
+(package_development:installing_and_distributing)=
 ## Installing & Distributing
+
+Distributing your package means making it installable by others. The usual route is the [Python Package Index (PyPI)](https://pypi.org/), the public repository that `pip install name` reads from, so anyone can install your project with a single command.
+
+- **Installing a package.** Users install the published release from PyPI, a local checkout, or a Git URL directly:
+  - From PyPI by name: `pip install SomePackage`.
+  - From a local source tree (the project in the current directory): `pip install .`.
+  - From a Git repository, without cloning first: `pip install "git+https://github.com/owner/repo.git"`.
+- **Publishing to PyPI.** First {ref}`build the sdist and wheel <package_development:tools_for_building_packages>` into `dist/`, then upload them with [twine](https://twine.readthedocs.io/en/stable/). Authenticate with an [API token](https://pypi.org/help/#apitoken) rather than your account password: when twine prompts for credentials, use `__token__` as the username and the token value (including its `pypi-` prefix) as the password.
+- **Test on TestPyPI first.** [TestPyPI](https://packaging.python.org/en/latest/guides/using-testpypi/) is a separate instance of the index for trying out the upload process without touching the real PyPI. It uses its own accounts and tokens, so register there separately.
+- **Installing CLI tools.** For packages that provide a command-line tool, [pipx](https://pipx.pypa.io/stable/) installs each application into its own isolated environment and exposes its commands on your `PATH`, which avoids dependency conflicts between tools: `pipx install SomePackage`.
+
+```bash
+# Build the distribution artifacts into ./dist/ (see Tools for Building Packages)
+python -m build
+
+# Upload to TestPyPI first and verify the install works
+python -m twine upload --repository testpypi dist/*
+pip install --index-url https://test.pypi.org/simple/ --no-deps SomePackage
+
+# When you are satisfied, upload to the real PyPI
+python -m twine upload dist/*
+```
+
+```{tip}
+A released version cannot be reused on PyPI: deleted files cannot be re-uploaded, even after deleting and recreating the project. To ship a fix, bump the version number and build fresh artifacts.
+```
+
+For details, see the Python Packaging User Guide's [Packaging Python Projects tutorial](https://packaging.python.org/en/latest/tutorials/packaging-projects/) (its "Uploading the distribution archives" section), the [twine documentation](https://twine.readthedocs.io/en/stable/), and pip's [pip install reference](https://pip.pypa.io/en/stable/cli/pip_install/).
 
 ## Documentation
 
