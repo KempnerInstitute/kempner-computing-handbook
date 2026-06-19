@@ -215,7 +215,28 @@ git push origin v1.2.0                 # tags are not pushed by default
 Bump the version, update the CHANGELOG's "Unreleased" section into a dated entry, and create the tag in the same commit history, so the published version, its tag, and its changelog entry always agree.
 ```
 
+(package_development:licensing)=
 ## Licensing
+
+A license sets the terms on which others may use, modify, and redistribute your package. Without one the work is under exclusive copyright by default, so others have no permission to copy, modify, or share it: as [choosealicense.com](https://choosealicense.com/no-permission/) puts it, no license means "all rights reserved". An open project therefore needs a license to be legally reusable.
+
+- **Add a `LICENSE` file at the project root.** Place the full license text in a `LICENSE` file where users and packaging tools expect it, alongside the `README` (see {ref}`Package Structure and Layout <package_development:package_structure_and_layout>`).
+- **Choose a license.** At a high level, *permissive* licenses (such as MIT, BSD, or Apache-2.0) let others do almost anything, including shipping closed-source versions, while *copyleft* licenses (such as the GPL) require derivative works to stay open. [choosealicense.com](https://choosealicense.com/) walks you through the trade-offs and shows the exact text to use.
+- **Declare it in `pyproject.toml`.** In the `[project]` table of your {ref}`pyproject.toml <package_development:package_structure_and_layout>`, set `license` to an [SPDX license expression](https://spdx.org/licenses/) string (for example `license = "MIT"`), as standardized by [PEP 639](https://peps.python.org/pep-0639/). This ships in the package metadata so the license travels with the distribution. The older table form (`license = {text = ...}` or `{file = ...}`) is deprecated.
+- **Check license compatibility.** Confirm that the licenses of your dependencies and of any code you reuse are compatible with the license you pick, so you can legally combine and redistribute them.
+- **For research, permissive usually maximizes reuse.** A permissive license tends to make research software the easiest for others to adopt and build on, but follow your institution's and funders' policies, which may require a specific license.
+
+```toml
+[project]
+license = "MIT"                  # SPDX license expression (PEP 639)
+license-files = ["LICENSE"]      # license file(s) shipped with the package
+```
+
+```{note}
+Use SPDX identifiers from the [SPDX license list](https://spdx.org/licenses/) (for example `Apache-2.0`, `BSD-3-Clause`, `GPL-3.0-or-later`) so the declared license is unambiguous. Some older build backends still expect the deprecated table form, so check your backend's documentation if the SPDX string is rejected.
+```
+
+For details, see [PEP 639](https://peps.python.org/pep-0639/), the Python Packaging User Guide's [Writing your pyproject.toml](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/) guide (the `license` and `license-files` fields), [choosealicense.com](https://choosealicense.com/), and the [SPDX license list](https://spdx.org/licenses/).
 
 ## Summary Checklist
 
