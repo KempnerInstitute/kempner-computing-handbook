@@ -193,7 +193,27 @@ Keep the default install minimal and move large or platform-specific dependencie
 
 For details, see the Python Packaging User Guide's [Writing your pyproject.toml](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/) guide (the `[project.optional-dependencies]` table), the [`importlib.resources` documentation](https://docs.python.org/3/library/importlib.resources.html), and the [Citation File Format](https://citation-file-format.github.io/).
 
+(package_development:versioning_and_releases)=
 ## Versioning & Releases
+
+A version number communicates what changed between releases; a release is a tagged, published snapshot that people can install and cite. Picking a clear scheme and a repeatable release process makes your software easy to depend on and to reproduce.
+
+- **Use semantic versioning.** Number releases `MAJOR.MINOR.PATCH` and, following [Semantic Versioning](https://semver.org/), increment the MAJOR version for incompatible (breaking) API changes, the MINOR version when you add functionality in a backward-compatible way, and the PATCH version for backward-compatible bug fixes. This lets users tell at a glance whether an upgrade is safe.
+- **Single-source the version.** Define the version in one place rather than duplicating it. The simplest option is the `version` field of the `[project]` table in your {ref}`pyproject.toml <package_development:package_structure_and_layout>`. Alternatively, set `dynamic = ["version"]` and let your {ref}`build backend <package_development:tools_for_building_packages>` derive it from a source file or a Git tag, as described in the Python Packaging User Guide's [Single-sourcing the Project Version](https://packaging.python.org/en/latest/discussions/single-source-version/).
+- **Tag releases in Git.** Mark each release with an annotated tag (`git tag -a vX.Y.Z`), which records the tagger, date, and a message as a full object in the repository. See [Git Basics: Tagging](https://git-scm.com/book/en/v2/Git-Basics-Tagging).
+- **Keep a CHANGELOG.** Maintain a human-readable `CHANGELOG.md` following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/): group entries under headings such as Added, Changed, Deprecated, Removed, Fixed, and Security, and collect upcoming changes under an "Unreleased" heading. A curated changelog is far more useful than a raw commit log.
+- **Cut the release.** Create a [GitHub release](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository) from the tag with notes drawn from the changelog. Optionally {ref}`publish the release to PyPI <package_development:installing_and_distributing>` and archive it to mint a DOI so the version is citable (see {ref}`Research-Specific Tips <package_development:research_specific_tips>`).
+
+```bash
+# Set the version (in pyproject.toml's [project] version), then tag and push
+git commit -am "Release 1.2.0"
+git tag -a v1.2.0 -m "Release 1.2.0"   # annotated tag for the release
+git push origin v1.2.0                 # tags are not pushed by default
+```
+
+```{tip}
+Bump the version, update the CHANGELOG's "Unreleased" section into a dated entry, and create the tag in the same commit history, so the published version, its tag, and its changelog entry always agree.
+```
 
 ## Licensing
 
