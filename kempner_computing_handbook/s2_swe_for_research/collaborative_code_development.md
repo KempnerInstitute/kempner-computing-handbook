@@ -5,7 +5,7 @@ Collaborative code development promotes reproducible, maintainable, and scalable
 (collaborative_code_development:version_control_systems)=
 ## Version Control Systems (VCS)
 
-Version control systems are essential tools for managing code changes, enabling collaboration, and maintaining project history in research software development. Some common VCS types are Git and Mercurial, both of which are distributed version control systems. There are also Subversion (SVN) and Perforce (centralized version control systems). This section covers Git fundamentals and best practices for collaborative development at the Kempner Institute.
+Version control systems are essential tools for managing code changes, enabling collaboration, and maintaining project history in research software development. Some common VCS types are Git and Mercurial, both of which are distributed version control systems. There are also Subversion (SVN) and Perforce (centralized version control systems). This section covers Git fundamentals and best practices for collaborative development.
 
 ```{note}
 **Git** is the version control software that runs locally on your computer while **GitHub** is a cloud-based hosting service for Git repositories. Other Git hosting platforms include GitLab, Bitbucket, and SourceForge.
@@ -279,8 +279,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
       - run: pip install -e ".[dev]"
