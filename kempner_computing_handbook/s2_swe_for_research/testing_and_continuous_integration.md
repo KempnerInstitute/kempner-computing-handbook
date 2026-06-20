@@ -105,7 +105,7 @@ def test_normalize_rejects_zero_sum():
 A useful shorthand for these habits is **FIRST**: tests should be Fast, Independent, Repeatable, Self-validating (they assert pass or fail with no manual checking), and Timely (written close to the code they cover). Writing for testability also helps; see [Software Design Principles](software_design_principles.md).
 ```
 
-For more, see Bill Wake on [Arrange-Act-Assert](https://xp123.com/articles/3a-arrange-act-assert/), the pytest guide to [asserting expected exceptions](https://docs.pytest.org/en/stable/how-to/assert.html#assertions-about-expected-exceptions), the Google Testing Blog on [testing behavior, not implementation](https://testing.googleblog.com/2013/08/testing-on-toilet-test-behavior-not.html), and Robert C. Martin's [FIRST principles](https://medium.com/@tasdikrahman/f-i-r-s-t-principles-of-testing-1a497acda8d6).
+For more, see Bill Wake on [Arrange-Act-Assert](https://xp123.com/articles/3a-arrange-act-assert/), the pytest guide to [asserting expected exceptions](https://docs.pytest.org/en/stable/how-to/assert.html#assertions-about-expected-exceptions), the Google Testing Blog on [testing behavior, not implementation](https://testing.googleblog.com/2013/08/testing-on-toilet-test-behavior-not.html), and the [FIRST principles](https://agileinaflash.blogspot.com/2009/02/first.html) of unit testing.
 
 (testing_and_continuous_integration:test_coverage)=
 ## Test Coverage
