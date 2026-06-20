@@ -321,7 +321,7 @@ A result is reproducible when the same analysis steps on the same data produce t
 - **Keep inputs and outputs explicit:** Functions that read or write hidden global state behave differently depending on what ran before them, so the same call may not give the same result twice. Passing inputs in and returning outputs out is the no-hidden-state idea from {ref}`Testability and Maintainability <software_design_principles:testability_and_maintainability>`.
 - **Record the configuration that produced a result:** Save the parameters, seed, and code version alongside each output so a run can be traced and repeated later. Provenance is what turns "it worked once" into "anyone can rerun it."
 
-The example below draws random numbers from a local NumPy [`Generator`](https://numpy.org/doc/stable/reference/random/generator.html) created with [`numpy.random.default_rng(seed)`](https://numpy.org/doc/stable/reference/random/generated/numpy.random.default_rng.html), the recommended constructor. Passing the seed in as a parameter keeps configuration out of the code, and using a local generator avoids the shared global state of the legacy `numpy.random.seed`.
+The example below draws random numbers from a local NumPy [`Generator`](https://numpy.org/doc/stable/reference/random/generator.html) created with [`numpy.random.default_rng(seed)`](https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.default_rng), the recommended constructor. Passing the seed in as a parameter keeps configuration out of the code, and using a local generator avoids the shared global state of the legacy `numpy.random.seed`.
 
 ```python
 import numpy as np
