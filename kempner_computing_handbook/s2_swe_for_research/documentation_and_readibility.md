@@ -52,7 +52,7 @@ Readable code is documentation in itself: it lowers the cost of every later read
 - **Follow a consistent style guide.** For Python, [PEP 8](https://peps.python.org/pep-0008/) is the common baseline: `snake_case` for functions and variables, `UPPER_CASE` for constants, and lines limited to 79 characters (teams may agree to extend to 99). Consistency within a project matters more than any single rule.
 - **Keep functions small and focused.** A function should do one thing. The [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html) suggests reconsidering a function once it grows past roughly 40 lines, since smaller functions are easier to read, test, and reuse.
 - **Reduce deep nesting with guard clauses.** "Flat is better than nested" (Zen of Python). Return early on invalid or edge cases so the main logic stays at a shallow indentation level.
-- **Let comments explain why, not what.** The code already shows what it does; comments should capture intent and non-obvious reasoning. See {ref}`documentation_and_readibility:types_of_documentation` for the role of inline comments.
+- **Let comments explain why, not what.** The code already shows what it does; comments should capture intent and non-obvious reasoning. See {ref}`Types of Documentation <documentation_and_readibility:types_of_documentation>` for the role of inline comments.
 
 A small refactor that applies clear names plus an early-return guard clause:
 
@@ -80,7 +80,7 @@ You do not have to apply a style guide by hand. Automated formatters and linters
 (documentation_and_readibility:tools_and_practices)=
 ## Tools and Practices
 
-A small toolchain turns the docstrings described in {ref}`documentation_and_readibility:types_of_documentation` into browsable, searchable documentation, and keeps the examples inside them honest as the code changes.
+A small toolchain turns the docstrings described in {ref}`Types of Documentation <documentation_and_readibility:types_of_documentation>` into browsable, searchable documentation, and keeps the examples inside them honest as the code changes.
 
 - **Pick a docstring style and stay consistent.** [PEP 257](https://peps.python.org/pep-0257/) defines what a docstring is and the basic one-line and multi-line conventions, but not how to lay out arguments and return values. The two common structured styles are [Google style](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings) and [NumPy style](https://numpydoc.readthedocs.io/en/latest/format.html). Either works; the goal is to use one consistently across a project.
 - **Generate docs from docstrings.** [Sphinx](https://www.sphinx-doc.org/) builds documentation directly from your code: the [autodoc](https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html) extension pulls in docstrings, and the [napoleon](https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html) extension lets autodoc understand Google- and NumPy-style docstrings. If your project documents in Markdown, [MkDocs](https://www.mkdocs.org/) with the [mkdocstrings](https://mkdocstrings.github.io/) plugin does the same job.
@@ -119,7 +119,7 @@ python -m doctest example.py
 ```
 
 ```{tip}
-Keeping a `>>> ` example in the docstring means the same snippet documents the function and serves as a regression test. Writing readable code in the first place (see {ref}`documentation_and_readibility:code_readability_best_practices`) makes that documentation shorter and clearer.
+Keeping a `>>> ` example in the docstring means the same snippet documents the function and serves as a regression test. Writing readable code in the first place (see {ref}`Code Readability Best Practices <documentation_and_readibility:code_readability_best_practices>`) makes that documentation shorter and clearer.
 ```
 
 (documentation_and_readibility:documentation_in_research_context)=
@@ -154,9 +154,9 @@ Update the `version` and `doi` each time you archive a new release, so a citatio
 As someone reads your code or docs, they build a [mental model](https://www.nngroup.com/articles/mental-models/) of how it works: an internal picture of the moving parts and how they fit together. Your job is to help them build an accurate one quickly. Clear code and docs do this for you; surprising or unexplained code forces the reader to reverse-engineer your intent.
 
 - **Beware the curse of knowledge.** The [curse of knowledge](https://en.wikipedia.org/wiki/Curse_of_knowledge) is the bias that, once you know something, you assume others share that context. What is obvious to you as the author is not obvious to a newcomer or to your future self, so write for a reader who lacks your background and spell out the assumptions you take for granted.
-- **Follow the principle of least astonishment.** A component should [behave the way most readers expect](https://en.wikipedia.org/wiki/Principle_of_least_astonishment), so names and behavior should match conventions and hold no hidden surprises. A function named like a pure lookup should not quietly write a file or mutate its input. See {ref}`documentation_and_readibility:code_readability_best_practices` for naming that reveals intent.
+- **Follow the principle of least astonishment.** A component should [behave the way most readers expect](https://en.wikipedia.org/wiki/Principle_of_least_astonishment), so names and behavior should match conventions and hold no hidden surprises. A function named like a pure lookup should not quietly write a file or mutate its input. See {ref}`Code Readability Best Practices <documentation_and_readibility:code_readability_best_practices>` for naming that reveals intent.
 - **Use progressive disclosure.** [Progressive disclosure](https://www.nngroup.com/articles/progressive-disclosure/) means leading with the few most important things and deferring the rest. Put the common case and a high-level overview first, and push details, options, and edge cases lower so a reader is not flooded before they have the big picture.
-- **Lead with the why.** Before the mechanics, give a short conceptual overview of what the code is for and why it exists. This is the explanation type from {ref}`documentation_and_readibility:types_of_documentation`, and it is the context a reader needs to interpret everything that follows.
+- **Lead with the why.** Before the mechanics, give a short conceptual overview of what the code is for and why it exists. This is the explanation type from {ref}`Types of Documentation <documentation_and_readibility:types_of_documentation>`, and it is the context a reader needs to interpret everything that follows.
 
 A name that matches behavior keeps the reader's mental model accurate:
 
