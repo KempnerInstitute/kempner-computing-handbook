@@ -148,6 +148,8 @@ score = evaluate(y_true, y_pred, mae)
 Do not over-generalize. Adding extension points you do not yet need is speculative complexity (recall YAGNI). Build the flexible version when a second real use case appears, not before.
 ```
 
+For more depth, see Wikipedia on [Code reuse](https://en.wikipedia.org/wiki/Code_reuse), the [Open-closed principle](https://en.wikipedia.org/wiki/Open%E2%80%93closed_principle), and the [Strategy pattern](https://en.wikipedia.org/wiki/Strategy_pattern), and The Turing Way's [Reusable Code](https://book.the-turing-way.org/reproducible-research/code-reuse/) guide. Packaging reusable code so others can install it is covered on the [Package Development](package_development.md) page.
+
 (software_design_principles:design_patterns)=
 ## Design Patterns (Introductory Level)
 
@@ -279,7 +281,7 @@ Try writing the docstring before the implementation. If stating the inputs, outp
 For conventions, see [PEP 257](https://peps.python.org/pep-0257/) on docstrings and the [ADR](https://adr.github.io/) resources on recording decisions. For documentation practices and tooling, see the [Documentation and Readability](documentation_and_readibility.md) page.
 
 (software_design_principles:iterative_design_and_refactoring)=
-## Iterative Design & Refactoring
+## Iterative Design and Refactoring
 
 Good design is rarely reached in one attempt: it emerges as your understanding of the problem grows, which suits research, where requirements shift as the science develops. Refactoring is the disciplined way to improve a design after the fact, by changing the internal structure of code while leaving its behavior intact.
 
