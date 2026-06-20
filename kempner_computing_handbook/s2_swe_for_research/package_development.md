@@ -57,7 +57,7 @@ For a step-by-step walkthrough, see the Python Packaging User Guide's [Packaging
 
 "Building" a package turns your source tree into installable artifacts that others (and your future self) can install with `pip`. You declare a build backend once, then run a build frontend to produce the artifacts.
 
-- **Build backend.** The tool that actually assembles the artifacts. You choose one and declare it in the `[build-system]` table of your `pyproject.toml`, as shown in {ref}`package_development:package_structure_and_layout`. Common backends include [setuptools](https://setuptools.pypa.io/), [hatchling](https://hatch.pypa.io/latest/), [flit-core](https://flit.pypa.io/), and [pdm-backend](https://backend.pdm-project.org/). They are interchangeable: pick whichever fits your project, since the resulting artifacts install the same way.
+- **Build backend.** The tool that actually assembles the artifacts. You choose one and declare it in the `[build-system]` table of your `pyproject.toml`, as shown in {ref}`Package Structure and Layout <package_development:package_structure_and_layout>`. Common backends include [setuptools](https://setuptools.pypa.io/), [hatchling](https://hatch.pypa.io/latest/), [flit-core](https://flit.pypa.io/), and [pdm-backend](https://backend.pdm-project.org/). They are interchangeable: pick whichever fits your project, since the resulting artifacts install the same way.
 - **Build frontend.** The command you run, which reads `[build-system]` and invokes your backend in an isolated environment. The standard frontend is [pypa `build`](https://build.pypa.io/), run as `python -m build`.
 - **sdist vs wheel.** A *source distribution* (sdist) is a `.tar.gz` of your raw source plus metadata. A *wheel* is a pre-built `.whl` archive that pip copies into place with no build step at install time, so it installs faster. `python -m build` produces both by default.
 - **Editable installs.** For day-to-day development, install your project in editable mode with `pip install -e .` so that edits to your source take effect without reinstalling.
@@ -240,7 +240,7 @@ For details, see [PEP 639](https://peps.python.org/pep-0639/), the Python Packag
 
 ## Summary Checklist
 
-- [ ] Package is installable via `pip` in case of a Python package.
+- [ ] Package is installable via `pip` (for a Python package)  
 - [ ] Code is modular and documented  
 - [ ] Tests are included and pass in CI  
 - [ ] `README.md` explains usage and purpose  
