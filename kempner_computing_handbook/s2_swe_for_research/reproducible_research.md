@@ -155,7 +155,7 @@ x = rng.random(3)                  # draw from the local generator, not np.rando
 Seeding makes a run repeatable on the same setup, but it is not a guarantee of identical results across different hardware, library versions, or CPU versus GPU. Treat the seed as one recorded input, not a substitute for pinning your environment.
 ```
 
-For the exact APIs and caveats, see the [NumPy `default_rng` reference](https://numpy.org/doc/stable/reference/random/generator.html), the [Python `random` docs](https://docs.python.org/3/library/random.html), [`PYTHONHASHSEED`](https://docs.python.org/3/using/cmdline.html#envvar-PYTHONHASHSEED), and the [PyTorch reproducibility note](https://pytorch.org/docs/stable/notes/randomness.html). Recording the seed connects to capturing your full environment, covered in {ref}`reproducible_research:environment_reproducibility`.
+For the exact APIs and caveats, see the [NumPy `default_rng` reference](https://numpy.org/doc/stable/reference/random/generator.html), the [Python `random` docs](https://docs.python.org/3/library/random.html), [`PYTHONHASHSEED`](https://docs.python.org/3/using/cmdline.html#envvar-PYTHONHASHSEED), and the [PyTorch reproducibility note](https://pytorch.org/docs/stable/notes/randomness.html). Recording the seed connects to capturing your full environment, covered in {ref}`Environment Reproducibility <reproducible_research:environment_reproducibility>`.
 
 (reproducible_research:documentation_of_experiments)=
 ## Documentation of Experiments
