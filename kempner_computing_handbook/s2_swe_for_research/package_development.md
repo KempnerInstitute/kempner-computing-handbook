@@ -198,6 +198,14 @@ For details, see the Python Packaging User Guide's [Writing your pyproject.toml]
 
 A version number communicates what changed between releases; a release is a tagged, published snapshot that people can install and cite. Picking a clear scheme and a repeatable release process makes your software easy to depend on and to reproduce.
 
+```{figure} figures/png/semantic_versioning.png
+---
+width: 60%
+name: semantic-versioning
+---
+Semantic versioning: the MAJOR version signals breaking changes, MINOR adds backward-compatible features, and PATCH covers backward-compatible bug fixes. (*Credit: [Surjit Bains / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Semantic-versioning.svg), CC BY-SA 4.0*)
+```
+
 - **Use semantic versioning.** Number releases `MAJOR.MINOR.PATCH` and, following [Semantic Versioning](https://semver.org/), increment the MAJOR version for incompatible (breaking) API changes, the MINOR version when you add functionality in a backward-compatible way, and the PATCH version for backward-compatible bug fixes. This lets users tell at a glance whether an upgrade is safe.
 - **Single-source the version.** Define the version in one place rather than duplicating it. The simplest option is the `version` field of the `[project]` table in your {ref}`pyproject.toml <package_development:package_structure_and_layout>`. Alternatively, set `dynamic = ["version"]` and let your {ref}`build backend <package_development:tools_for_building_packages>` derive it from a source file or a Git tag, as described in the Python Packaging User Guide's [Single-sourcing the Project Version](https://packaging.python.org/en/latest/discussions/single-source-version/).
 - **Tag releases in Git.** Mark each release with an annotated tag (`git tag -a vX.Y.Z`), which records the tagger, date, and a message as a full object in the repository. See [Git Basics: Tagging](https://git-scm.com/book/en/v2/Git-Basics-Tagging).
@@ -225,6 +233,14 @@ A license sets the terms on which others may use, modify, and redistribute your 
 - **Declare it in `pyproject.toml`.** In the `[project]` table of your {ref}`pyproject.toml <package_development:package_structure_and_layout>`, set `license` to an [SPDX license expression](https://spdx.org/licenses/) string (for example `license = "MIT"`), as standardized by [PEP 639](https://peps.python.org/pep-0639/). This ships in the package metadata so the license travels with the distribution. The older table form (`license = {text = ...}` or `{file = ...}`) is deprecated.
 - **Check license compatibility.** Confirm that the licenses of your dependencies and of any code you reuse are compatible with the license you pick, so you can legally combine and redistribute them.
 - **For research, permissive usually maximizes reuse.** A permissive license tends to make research software the easiest for others to adopt and build on, but follow your institution's and funders' policies, which may require a specific license.
+
+```{figure} figures/png/license_compatibility.png
+---
+width: 95%
+name: license-compatibility
+---
+Compatibility of common open-source licenses, from permissive to strongly protective; code can generally be combined by following the arrows. (*Credit: [David A. Wheeler / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Floss-license-slide-image.svg), CC BY-SA 3.0*)
+```
 
 ```toml
 [project]
