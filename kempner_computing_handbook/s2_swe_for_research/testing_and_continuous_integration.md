@@ -18,6 +18,14 @@ Tests differ mainly by their scope: how much of your code each one exercises at 
 - **Regression tests** lock in a previously fixed bug or a known-good result so it cannot silently break again. When you fix a bug, add a test that fails on the old behavior and passes on the new one; when an output is verified correct, save it as a reference to compare against later.
 - **The test pyramid** captures a useful balance: write many fast unit tests at the base, fewer integration tests in the middle, and fewer end-to-end tests at the top. Lower-level tests run quickly and pinpoint exactly where a failure is, while end-to-end tests are slower and only tell you that something, somewhere, broke.
 
+```{figure} figures/png/test_pyramid.png
+---
+width: 55%
+name: test-pyramid
+---
+The test pyramid: many fast unit tests at the base, fewer integration tests in the middle, and few end-to-end (E2E) tests at the top. (*Credit: [Abbe98 / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Testing_Pyramid.svg), CC BY-SA 4.0*)
+```
+
 A minimal unit test pairs a function with a `test_` function that asserts the expected result:
 
 ```python
@@ -132,6 +140,14 @@ Enable branch coverage to catch untested conditional paths: pass `--cov-branch` 
 ## Continuous Integration (CI)
 
 Continuous Integration runs your checks automatically on every change, so problems surface early and the main branch stays releasable. Instead of remembering to run things by hand, you describe the work once and a service repeats it for every push and pull request.
+
+```{figure} figures/png/ci_flow.png
+---
+width: 85%
+name: ci-flow
+---
+A continuous integration flow: a developer's check-in triggers the CI server to build and test the change, then reports status back to the team. (*Credit: [Pratik89Roy / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Continuous_Integration.jpg), CC BY-SA 4.0*)
+```
 
 - **What runs.** On each push and pull request, CI checks out the code, installs dependencies, and runs the {ref}`tests <testing_and_continuous_integration:writing_effective_tests>`. You can add a linter or formatter check and report {ref}`coverage <testing_and_continuous_integration:test_coverage>` in the same run.
 - **GitHub Actions.** A common choice on GitHub, configured by a workflow file under `.github/workflows/` (for example `ci.yml`). The file lists the events that trigger it, the runners to use, and the steps to run.
