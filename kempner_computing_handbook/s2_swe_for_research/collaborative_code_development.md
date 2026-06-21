@@ -35,6 +35,14 @@ git commit -m "Descriptive commit message"
 git push origin main
 ```
 
+```{figure} figures/png/git_operations.png
+---
+width: 75%
+name: git-operations
+---
+How common Git commands move content between the working files, staging area, local repository, and remote. (*Credit: [Daniel Kinzler / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Git_operations.svg), CC BY 3.0*)
+```
+
 **Branching**
 
 Git branches let you work on different features or experiments in parallel without affecting the main code. Think of them as separate workspaces where you can make changes safely before merging them back.
@@ -252,6 +260,14 @@ git checkout -b iss42_add_data_loader_js
 
 # Commit your work, then publish the branch and open a pull request
 git push -u origin iss42_add_data_loader_js
+```
+
+```{figure} figures/png/git_branching_workflow.png
+---
+width: 95%
+name: git-branching-workflow
+---
+A basic branching workflow: cut a branch from `main`, develop on it via a merge (pull) request, then merge back and delete the branch. (*Credit: [TheresNoTime / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Basic_git_branching_workflow_%28GitLab%29.svg), CC BY-SA 4.0*)
 ```
 
 For a side-by-side comparison of these strategies, see Atlassian's [Comparing Git workflows](https://www.atlassian.com/git/tutorials/comparing-workflows) and GitHub's [GitHub flow](https://docs.github.com/en/get-started/using-github/github-flow).
