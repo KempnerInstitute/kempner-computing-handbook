@@ -16,6 +16,14 @@ Documentation is not a single thing: different types serve different reader need
 - **Reference (information-oriented):** accurate, lookup-friendly descriptions of the machinery, such as APIs, parameters, and configuration.
 - **Explanation (understanding-oriented):** background and discussion that clarifies concepts and answers "why" questions.
 
+```{figure} figures/png/diataxis_map.png
+---
+width: 85%
+name: diataxis-map
+---
+The Diátaxis map organizes the four documentation types along two axes: action versus cognition, and acquiring versus applying skill. (*Credit: [Daniele Procida / diataxis.fr](https://diataxis.fr/), CC BY-SA 4.0*)
+```
+
 Most research projects do not need all four as separate manuals, but they usually combine a few concrete artifacts:
 
 - **README (the front door):** the first file a reader opens. It should state what the project is, how to install it, and a minimal usage example, then point to anything deeper.
@@ -130,6 +138,14 @@ Research code carries documentation needs beyond general software: the documenta
 - **Document methods, parameters, and assumptions.** Record the method, the parameter values and ranges, random seeds, software versions, and any assumptions a result depends on, so the result can be regenerated rather than guessed at. This is the heart of reproducibility; for the full treatment see the [Reproducible Research](reproducible_research.md) chapter.
 - **Document the data.** Ship a dataset README or a data dictionary (also called a codebook) that lists each variable with its meaning, units, allowed values, and provenance. The [Turing Way](https://book.the-turing-way.org/reproducible-research/rdm/rdm-metadata/) calls a data dictionary one of the most important pieces of documentation in a study. At a high level, aim for [FAIR](https://www.go-fair.org/fair-principles/) data: Findable, Accessible, Interoperable, and Reusable.
 - **Make the work citable.** Add a [`CITATION.cff`](https://citation-file-format.github.io/) file to the repository root. It is a small YAML file that tools can read, and GitHub uses it to add a "Cite this repository" link and to offer APA and BibTeX citations (see GitHub's [about-citation-files](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-citation-files)). To get a citable, versioned DOI, archive a release with a service such as Zenodo, then record that DOI in the file.
+
+```{figure} figures/png/fair_principles.png
+---
+width: 90%
+name: fair-principles
+---
+The FAIR guiding principles for research data: Findable, Accessible, Interoperable, and Reusable. (*Credit: [SangyaPundir / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:FAIR_data_principles.svg), CC BY-SA 4.0*)
+```
 
 A minimal, valid `CITATION.cff`:
 
