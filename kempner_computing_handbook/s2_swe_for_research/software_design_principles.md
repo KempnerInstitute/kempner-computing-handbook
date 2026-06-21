@@ -161,6 +161,14 @@ A [design pattern](https://refactoring.guru/design-patterns/what-is-pattern) is 
 - **Factory (creational):** A [factory](https://refactoring.guru/design-patterns/factory-method) is code whose job is to construct the right object, often selected by a name or a config value. Centralizing construction in one place replaces conditionals scattered across the codebase and gives callers one thing to call.
 - **Patterns are tools, not goals:** Reach for a pattern when it removes real, present pain, not to make code look sophisticated. Forcing a pattern adds indirection you must read and maintain, which works against KISS and YAGNI from {ref}`Fundamental Design Principles <software_design_principles:fundamental_design_principles>`. In Python, first-class functions often make a plain function the simplest "factory" you need.
 
+```{figure} figures/png/strategy_pattern_uml.png
+---
+width: 90%
+name: strategy-pattern-uml
+---
+The Strategy pattern in UML: a Context delegates to interchangeable Strategy implementations, so the algorithm can vary independently of the code that uses it. (*Credit: [Vanderjoe / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:W3sDesign_Strategy_Design_Pattern_UML.jpg), CC BY-SA 4.0*)
+```
+
 The example below uses a small factory to build a model from a name. Callers ask for a model by string, so the choice can come from a config file or a command-line argument, and adding a model means extending one mapping rather than editing every call site.
 
 ```python
@@ -439,6 +447,14 @@ For depth, see Python's [`argparse`](https://docs.python.org/3/library/argparse.
 ## Layered Architecture in Scientific Computing Software
 
 A [layered architecture](https://en.wikipedia.org/wiki/Multitier_architecture) organizes a larger tool into layers that each have a distinct responsibility, with dependencies that run one way. It applies {ref}`Modularity and Abstraction <software_design_principles:modularity_and_abstraction>` and {ref}`Dependency Management and Isolation <software_design_principles:dependency_management_and_isolation>` at the scale of a whole program, so the scientific core stays independent of how a run is launched and where its data lives.
+
+```{figure} figures/png/layered_architecture.png
+---
+width: 60%
+name: layered-architecture
+---
+The classic three-tier layering separates presentation, logic, and data. Scientific tools apply the same idea, refining it into interface, orchestration, core-science, and infrastructure layers. (*Credit: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Overview_of_a_three-tier_application_vectorVersion.svg), public domain*)
+```
 
 - **Typical layers for scientific software:** A useful split has four roles. An **entry/interface** layer (a CLI, notebook, or API call) takes input and reports results. An **orchestration/workflow** layer ties a run together by sequencing the pipeline steps. A **core science** layer holds the actual work: models, numerical methods, and algorithms. An **infrastructure/data** layer handles file and network I/O, storage, and external services. This mirrors the presentation, domain, and data-source layers Martin Fowler describes in [Presentation Domain Data Layering](https://martinfowler.com/bliki/PresentationDomainDataLayering.html).
 - **Dependencies point one way, toward the stable core:** In a strict layering, each layer depends on the layer below it and can run without the layers above it ([Multitier architecture](https://en.wikipedia.org/wiki/Multitier_architecture)). Equivalently, lower layers should be agnostic of who calls them. To keep the core from depending on infrastructure, apply the Dependency Inversion idea from {ref}`Dependency Management and Isolation <software_design_principles:dependency_management_and_isolation>`: have the core define an interface, and let the I/O layer implement it.
