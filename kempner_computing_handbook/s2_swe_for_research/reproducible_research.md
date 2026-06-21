@@ -12,6 +12,14 @@ Why Reproducibility Matters
 
 Reproducibility means that the same analysis steps run on the same data reliably produce the same result, whether by a collaborator or by your future self. It is worth distinguishing reproducible from replicable: per [The Turing Way](https://book.the-turing-way.org/reproducible-research/overview/overview-definitions), a result is *reproducible* when the same data and the same code give the same answer, while it is *replicable* when the same analysis applied to different data gives a qualitatively similar answer. This chapter focuses on reproducibility, which is the practical foundation everything else builds on.
 
+```{figure} figures/png/reproducibility_matrix.png
+---
+width: 70%
+name: reproducibility-matrix
+---
+Reproducible, replicable, robust, and generalisable results, distinguished by whether the data and the analysis are the same or different. (*Credit: [The Turing Way](https://book.the-turing-way.org/reproducible-research/overview/overview-definitions), illustration by Scriberia, CC BY 4.0*)
+```
+
 A handful of principles make code reproducible. The rest of this chapter expands each one in detail.
 
 - **Version control code and configuration.** Track every script, notebook, and config file in version control so any result can be traced to an exact revision.
@@ -270,6 +278,14 @@ Sharing makes your work reusable by others; archiving makes it permanent and cit
 - **Deposit data in an appropriate repository.** Archive datasets where they get a DOI and persistent landing page, rather than as repository attachments. General-purpose options include [Zenodo](https://help.zenodo.org/), [Figshare](https://figshare.com/), [Dryad](https://datadryad.org/), and [Dataverse](https://dataverse.org/); a domain-specific repository is often preferable when one exists. Use the [re3data](https://www.re3data.org/) registry to find a suitable one. This extends {ref}`Data Versioning and Management <reproducible_research:data_versioning_and_management>` from your working copy to the published record.
 - **Follow the FAIR principles.** Aim to make outputs [Findable, Accessible, Interoperable, and Reusable](https://www.go-fair.org/fair-principles/): a persistent identifier and good metadata make work findable and accessible, open formats keep it interoperable, and a clear license plus documentation make it reusable.
 - **Bundle a research compendium.** Package code, data, and documentation together so the whole project reproduces as a unit. [The Turing Way](https://book.the-turing-way.org/reproducible-research/compendia/) describes such a compendium: a conventional folder layout, a clear separation of data from analysis from outputs, and a specified environment. Archive the compendium for a DOI and cite that DOI in the paper. A `CITATION.cff` file tells others how to cite it; see [Documentation and Readability](documentation_and_readibility.md).
+
+```{figure} figures/png/research_compendium.png
+---
+width: 55%
+name: research-compendium
+---
+A research compendium bundles code, data, and documentation into a single archivable, citable unit. (*Credit: [The Turing Way](https://book.the-turing-way.org/reproducible-research/compendia/), illustration by Scriberia, CC BY 4.0*)
+```
 
 A research compendium gathers the pieces this chapter built, in a conventional layout:
 
