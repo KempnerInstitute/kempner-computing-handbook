@@ -39,3 +39,10 @@ exclude_patterns:
   - s9_workshops_and_trainings/workshops/*
   - s9_workshops_and_trainings/intro_to_hpc/*
   - s5_ai_scaling_and_engineering/scalability/distributed_computing.md
+
+# Disable fuzzy (schemeless) autolinking so text like "coverage.py" is not
+# turned into a link (".py" etc. are real TLDs). Full URLs and explicit
+# [text](url) links are unaffected.
+sphinx:
+  config:
+    myst_linkify_fuzzy_links: false
