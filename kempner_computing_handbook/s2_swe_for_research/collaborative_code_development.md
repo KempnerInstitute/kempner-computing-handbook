@@ -45,7 +45,7 @@ git branch -d feature/new-analysis     # delete the branch once it is merged
 **Working with remotes and pull requests**
 
 - **Repository visibility.** Keep unpublished research in a **private** repository; make it **public** once the work has been disseminated or published.
-- **Clone or fork.** Clone a repository you have write access to and work on an issue branch; *fork* one you do not, then propose your changes back (the fork-and-pull model in {ref}`Branching & Collaboration Models <collaborative_code_development:branching_collaboration_models>`). Follow the original project's licence and credit it.
+- **Clone or fork.** Clone a repository you have write access to and work on an issue branch; *fork* one you do not, then propose your changes back (the fork-and-pull model in {ref}`Branching & Collaboration Models <collaborative_code_development:branching_collaboration_models>`). Follow the original project's license and credit it.
 - **Track work with issues.** Open a GitHub issue before starting a feature, with a descriptive title and labels such as `bug` or `enhancement`, so the plan and progress stay visible to collaborators.
 - **Propose changes with pull requests.** Route every change, even a one-line fix, through a pull request so it is reviewed before reaching `main`. Branch from an up-to-date `main`, push, open the pull request early, and link the issue it closes.
 
@@ -57,9 +57,9 @@ git push -u origin iss23_new_feature_js      # publish, then open a PR that says
 
 **Commit and review conventions**
 
-- **Write clear commit messages.** Use an imperative subject that completes "If applied, this commit will …" (for example, "Fix data loading error with empty CSV files"), capitalised and without a trailing period. Add a body that explains what changed and why, keep one logical change per commit, and reference the issue it addresses.
+- **Write clear commit messages.** Use an imperative subject that completes "If applied, this commit will …" (for example, "Fix data loading error with empty CSV files"), capitalized and without a trailing period. Add a body that explains what changed and why, keep one logical change per commit, and reference the issue it addresses.
 - **Review constructively.** Keep pull requests focused (under about 400 lines where possible) and respond within a day or two. Look for correctness, readability, and maintainability rather than style alone, and suggest improvements instead of only flagging problems.
-- **Organise the repository.** Include a `README` (purpose, setup, usage), a dependency spec (`requirements.txt` or `environment.yml`), a `.gitignore`, a `CONTRIBUTING.md`, and a `LICENSE`.
+- **Organize the repository.** Include a `README` (purpose, setup, usage), a dependency spec (`requirements.txt` or `environment.yml`), a `.gitignore`, a `CONTRIBUTING.md`, and a `LICENSE`.
 
 ```bash
 # Imperative subject, a blank line, then the why
