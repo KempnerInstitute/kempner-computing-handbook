@@ -17,7 +17,7 @@ Reproducibility means that the same analysis steps run on the same data reliably
 width: 70%
 name: reproducibility-matrix
 ---
-Reproducible, replicable, robust, and generalisable results, distinguished by whether the data and the analysis are the same or different. (*Credit: [The Turing Way](https://book.the-turing-way.org/reproducible-research/overview/overview-definitions), illustration by Scriberia, CC BY 4.0*)
+Reproducible, replicable, robust, and generalizable results, distinguished by whether the data and the analysis are the same or different. (*Credit: [The Turing Way](https://book.the-turing-way.org/reproducible-research/overview/overview-definitions), illustration by Scriberia, CC BY 4.0*)
 ```
 
 A handful of principles make code reproducible. The rest of this chapter expands each one in detail.
