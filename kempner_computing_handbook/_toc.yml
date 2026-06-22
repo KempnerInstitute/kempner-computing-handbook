@@ -61,6 +61,8 @@ parts:
     - file: s3_ai_workflows/nemo_workflow
     - file: s3_ai_workflows/scalable_vision_workflows
     - file: s3_ai_workflows/get_hf_model
+    - file: s3_ai_workflows/kempnerpulse
+    - file: s3_ai_workflows/kempnerforge
   - caption: Neuro AI Workflows
     numbered: true
     chapters:
