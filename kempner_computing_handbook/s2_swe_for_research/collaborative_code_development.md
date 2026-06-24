@@ -60,6 +60,7 @@ git push -u origin iss23_new_feature_js      # publish, then open a PR that says
 - **Write clear commit messages.** Use an imperative subject that completes "If applied, this commit will …" (for example, "Fix data loading error with empty CSV files"), capitalized and without a trailing period. Add a body that explains what changed and why, keep one logical change per commit, and reference the issue it addresses.
 - **Review constructively.** Keep pull requests focused (under about 400 lines where possible) and respond within a day or two. Look for correctness, readability, and maintainability rather than style alone, and suggest improvements instead of only flagging problems.
 - **Organize the repository.** Include a `README` (purpose, setup, usage), a dependency spec (`requirements.txt` or `environment.yml`), a `.gitignore`, a `CONTRIBUTING.md`, and a `LICENSE`.
+- **Credit co-authors.** When a commit includes work by collaborators, add a `Co-authored-by: Name <email>` trailer (one line per co-author, after a blank line at the end of the message); GitHub then attributes the commit to everyone listed, which matters when several people share a codebase.
 
 ```bash
 # Imperative subject, a blank line, then the why
@@ -67,13 +68,15 @@ Fix data loading error with empty CSV files
 
 Empty files used to crash the loader; it now returns an empty
 result and logs a warning. Closes #23
+
+Co-authored-by: Alice Smith <alice@example.com>
 ```
 
 ```{tip}
 Commit early and often on a branch, push so others can see your work, and open the pull request before the work feels "finished". Small, frequent, well-described commits are far easier to review, and to roll back, than one large change.
 ```
 
-For more depth, see the [Pro Git book](https://git-scm.com/book/en/v2), Atlassian's [Git tutorials](https://www.atlassian.com/git/tutorials), and GitHub's [documentation](https://docs.github.com/en). Branching strategies and collaboration models are covered in {ref}`Branching & Collaboration Models <collaborative_code_development:branching_collaboration_models>`, and pull-request review and continuous integration in {ref}`Code Review & Continuous Integration <collaborative_code_development:code_review_ci>`.
+For more depth and advanced Git topics, see the [Pro Git book](https://git-scm.com/book/en/v2), Atlassian's [Git tutorials](https://www.atlassian.com/git/tutorials), and GitHub's [documentation](https://docs.github.com/en). Branching strategies and collaboration models are covered in {ref}`Branching & Collaboration Models <collaborative_code_development:branching_collaboration_models>`, and pull-request review and continuous integration in {ref}`Code Review & Continuous Integration <collaborative_code_development:code_review_ci>`.
 
 (collaborative_code_development:branching_collaboration_models)=
 ## Branching & Collaboration Models
