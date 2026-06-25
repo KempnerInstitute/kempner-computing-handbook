@@ -115,3 +115,6 @@ parts:
       - file: s9_workshops_and_trainings/llm_distributed_inference/llm_distributed_inference
       - file: s9_workshops_and_trainings/spike_sorting_on_hpc_cluster/spike_sorting_on_hpc_cluster
       - file: s9_workshops_and_trainings/optimizing_ml_workflows/optimizing_ml_workflows
+  - caption: Add-ons Demo
+    chapters:
+    - file: addons_demo

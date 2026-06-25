@@ -44,5 +44,13 @@ exclude_patterns:
 # turned into a link (".py" etc. are real TLDs). Full URLs and explicit
 # [text](url) links are unaffected.
 sphinx:
+  extra_extensions:
+    - sphinxext.opengraph
+    - sphinx_sitemap
+    - sphinxcontrib.mermaid
+    - sphinx_last_updated_by_git
   config:
     myst_linkify_fuzzy_links: false
+    html_baseurl: https://handbook.eng.kempnerinstitute.harvard.edu/
+    ogp_site_url: https://handbook.eng.kempnerinstitute.harvard.edu/
+    sitemap_url_scheme: "{link}"
