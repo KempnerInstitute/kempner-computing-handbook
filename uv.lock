@@ -558,6 +558,7 @@ version = "0"
 source = { virtual = "." }
 dependencies = [
     { name = "jupyter-book" },
+    { name = "sphinx-last-updated-by-git" },
     { name = "sphinx-sitemap" },
     { name = "sphinxcontrib-mermaid" },
     { name = "sphinxext-opengraph" },
@@ -566,6 +567,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "jupyter-book", specifier = "<2" },
+    { name = "sphinx-last-updated-by-git", specifier = ">=0.3.8" },
     { name = "sphinx-sitemap", specifier = ">=2.9.0" },
     { name = "sphinxcontrib-mermaid", specifier = ">=2.0.2" },
     { name = "sphinxext-opengraph", specifier = ">=0.13.0" },

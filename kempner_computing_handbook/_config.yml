@@ -53,4 +53,6 @@ sphinx:
     myst_linkify_fuzzy_links: false
     html_baseurl: https://handbook.eng.kempnerinstitute.harvard.edu/
     ogp_site_url: https://handbook.eng.kempnerinstitute.harvard.edu/
+    ogp_site_name: Kempner Institute Computing Handbook
     sitemap_url_scheme: "{link}"
+    mermaid_version: "11.12.1"
