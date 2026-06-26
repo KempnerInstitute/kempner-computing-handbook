@@ -2,12 +2,13 @@
 # Data Transfer
 
 
-There are many possible methods for transferring data between local environments (such as your laptop) and the Kempner cluster. We focus on three methods in detail below: [scp](scp_section), [rsync](rsync_section), and [Globus](globus_section). 
+There are many possible methods for transferring data between local environments (such as your laptop) and the Kempner cluster. We focus on four methods in detail below: **scp**, **rsync**, **fpsync**, and **Globus**. Select a tab to see the details for each method. 
 
-Your choice of method will primarily depend on the size and complexity of the data transfer. Of the three methods we cover below, [scp](scp_section) is the simplest and most straight-forward tool. It may be the best choice for transferring a few small files. [rsync](rsync_section) has improved efficiency and additional functionality, including the advantage of preserving progress if a transfer is interrupted. [Globus](globus_section) should be used for large-scale data transfers.
+Your choice of method will primarily depend on the size and complexity of the data transfer. **scp** is the simplest and most straight-forward tool, and may be the best choice for transferring a few small files. **rsync** has improved efficiency and additional functionality, including the advantage of preserving progress if a transfer is interrupted. **fpsync** builds on rsync to synchronize very large directories in parallel. **Globus** should be used for large-scale data transfers through a user-friendly web interface.
 
-(scp_section)=
-## scp
+::::{tab-set}
+
+:::{tab-item} scp
 Scp, which stands for secure copy, is a straight-forward method for copying a few small files. `scp` is a command line tool, which you can use by first specifying the ‘from’ location and then the ‘to’ destination. 
 
 ```bash
@@ -47,8 +48,9 @@ You can use the shortcut ‘~’ to stand in for the path to the home directory.
 In the examples above, `/Users/janesmith/` is the home directory so Jane could have used `~/Downloads/data.npy` instead of `/Users/janesmith/Downloads/data.npy`.
 ```
 
-(rsync_section)=
-## rsync
+:::
+
+:::{tab-item} rsync
 
 Rsync is a versatile, customizable file-copying tool. When you use rsync to transfer files, it only sends differences between the source and destination files, rather than all of the files. This efficient delta-transfer algorithm reduces the amount of data sent over the network and ensures you do not have to start over if the file transfer is disrupted. It also means that rsync is particularly useful in keeping directories synced between two places, including between a local environment and the cluster. 
 
@@ -104,8 +106,9 @@ This behaves differently. Now, the files that were in the results directory on t
 
 ````
 
-(fpsync_section)=
-## fpsync
+:::
+
+:::{tab-item} fpsync
 While `rsync` is appropriate for most synchronization needs, `fpsync` may be more suitable for synchronizing large directories. `fpsync` synchronizes directories in parallel by using `fpart` and `rsync` to launch several jobs simultaneously, and, like `rsync`, the synchronization can be resumed if disrupted. `fpsync` can launch synchronization processes locally or remotely on one or more workers using ssh. Remote workers must be able to access both the source and destination directories. Unlike `rsync`, only the source directory contents are synchronized, not the directory itself.
 
 ```bash
@@ -139,13 +142,14 @@ srun -c $SLURM_CPUS_PER_TASK fpsync -n $SLURM_CPUS_PER_TASK -t /temp/directory /
 
 Refer to the [fpsync documentation](https://manpages.ubuntu.com/manpages/bionic/man1/fpsync.1.html) for further information and additional argument options.
 
-(globus_section)=
-## Globus
+:::
 
+:::{tab-item} Globus
+(globus_section)=
 Globus is a file sharing service designed for the secure and efficient transfer of large datasets. Unlike the methods above, you can transfer data through a user-friendly web interface. While we cover transfer between the cluster and a local machine below, Globus can also be useful for [sharing data with external collaborators](https://docs.globus.org/guides/tutorials/manage-files/share-files/) even if they do not have access to the FAS RC cluster. 
 
 
-### Set-up
+**Set up**
 
 **Set up general globus account**
 1. Click on "Log in" on the [Globus website](https://www.globus.org/)
@@ -162,7 +166,7 @@ Globus is a file sharing service designed for the secure and efficient transfer 
 3. If you run into any problems, Globus has tutorials on installation for each platform [here](https://docs.globus.org/globus-connect-personal/install/). 
 3. If you navigate back to the [Globus File Manager](https://www.globus.org), you should now be able to search for your personal collection in the Collection field.
 
-### Data Transfer Example
+**Data Transfer Example**
 In this example, we will transfer an entire directory called results on the cluster to the Documents folder on Ella Batty's local machine.
 
 1. First, set up the collection you are transferring data from and navigate to the correct directory. In this case, the collection is Harvard FAS RC Holyoke and the path to the results directory is `/n/netscratch/sham_lab/Users/ebatty`.
@@ -201,3 +205,5 @@ name: Globus Data Transfer 4
 ```{warning}
 Note that which "Start" button you press matters. In this scenario, pressing the "Start" button on the right hand side would have resulted in the entire Documents directory from the laptop being transferred to the cluster!
 ```
+:::
+::::
