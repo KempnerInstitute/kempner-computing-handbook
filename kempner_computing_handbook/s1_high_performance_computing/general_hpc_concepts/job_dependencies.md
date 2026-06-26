@@ -31,6 +31,14 @@ The following table lists the common dependency types (`<type>`) for batch jobs,
 | `afterany`  | Job starts after the specified job has finished, regardless of its exit status. |
 | `singleton`  | Job starts after all previously launched jobs with the same name and user have ended. |
 
+The diagram below shows a typical dependency chain, where each job starts only after the previous one finishes successfully (`afterok`):
+
+```{mermaid}
+flowchart LR
+    A[preprocess.sh] -->|afterok| B[train_model.sh]
+    B -->|afterok| C[evaluate_model.sh]
+```
+
 
 ## Examples
 Let's review a few examples showcasing how SLURM job dependencies can be used in ML research scenarios:
