@@ -2,14 +2,14 @@
 
 This section focuses on best practices and tools that improve documentation and code clarity in research software.
 
-Why Does Documentation Matter?
+**Why does documentation matter?**
 - Clear documentation ensures reproducibility, collaboration, and long-term usability.  
-- Readable code is easier to debug, extend, and validate - critical for research integrity.
+- Readable code is easier to debug, extend, and validate, which is critical for research integrity.
 
 (documentation_and_readibility:types_of_documentation)=
 ## Types of Documentation
 
-Documentation is not a single thing: different types serve different reader needs, and matching the type to the need is what keeps docs useful. A widely used way to organize these needs is the [Diataxis](https://diataxis.fr/) framework, which separates documentation into four kinds:
+Documentation is not a single thing: different types serve different reader needs, and matching the type to the need is what keeps docs useful. A widely used way to organize these needs is the [Diátaxis](https://diataxis.fr/) framework, which separates documentation into four kinds:
 
 - **Tutorials (learning-oriented):** lessons that take a newcomer through a hands-on experience to build basic competence.
 - **How-to guides (task-oriented):** practical, step-by-step directions that help an already-competent user accomplish a specific goal.
