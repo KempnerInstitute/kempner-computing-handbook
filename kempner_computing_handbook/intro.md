@@ -19,3 +19,75 @@ Credit: Harvard University.<br><br>
 
  Read more about the Kempner AI cluster’s ranking and performance in the Harvard Gazette article: [Kempner AI cluster named one of world’s fastest ‘green’ supercomputers](https://news.harvard.edu/gazette/story/2024/11/kempner-ai-cluster-named-one-of-worlds-fastest-green-supercomputers/)
 
+## Explore the Handbook
+
+Use the sections below to jump into the handbook, or browse the full table of contents in the sidebar.
+
+::::{grid} 1 2 3 3
+:gutter: 3
+
+:::{grid-item-card} High Performance Computing
+:link: /s1_high_performance_computing/kempner_cluster/README
+:link-type: doc
+
+Get started on the Kempner AI cluster: SLURM scheduling, environments, storage, and data transfer.
+:::
+
+:::{grid-item-card} Software Engineering for Research
+:link: /s2_swe_for_research/collaborative_code_development
+:link-type: doc
+
+Version control, design principles, documentation, testing, packaging, and reproducible research.
+:::
+
+:::{grid-item-card} AI Tools and Workflows
+:link: /s3_ai_workflows/testbed_and_tatm
+:link-type: doc
+
+Reference workflows for training, distributed inference, and working with models on the cluster.
+:::
+
+:::{grid-item-card} Neuro AI Workflows
+:link: /s4_neuro_ai_workflows/spike_sorting
+:link-type: doc
+
+Domain workflows for neuroscience, including spike sorting on HPC.
+:::
+
+:::{grid-item-card} AI Scaling and Engineering
+:link: /s5_ai_scaling_and_engineering/scalability/README
+:link-type: doc
+
+Parallel and GPU computing, efficiency, profiling, and experiment management at scale.
+:::
+
+:::{grid-item-card} Security and Compliance
+:link: /s6_security_and_compliance/README
+:link-type: doc
+
+Guidance for handling data and using computing resources responsibly and securely.
+:::
+
+:::{grid-item-card} Open Source Hub
+:link: /s7_open_source_hub/README
+:link-type: doc
+
+Open-source tools and projects from the Kempner engineering team.
+:::
+
+:::{grid-item-card} Support
+:link: /s8_support/README
+:link-type: doc
+
+Where to get help, plus answers to frequently asked questions.
+:::
+
+:::{grid-item-card} Workshops
+:link: /s9_workshops_and_trainings/README
+:link-type: doc
+
+Hands-on training materials from Kempner workshops and tutorials.
+:::
+
+::::
+
