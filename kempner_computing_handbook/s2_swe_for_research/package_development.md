@@ -2,7 +2,7 @@
 
 Packaging your code turns scripts into reusable, shareable tools that support collaboration and long-term maintenance. This section outlines the essential steps for developing, testing, and distributing research software as a package.
 
-Why Package Your Code?
+**Why package your code?**
 - Encourages modularity, reusability, and distribution.  
 - Makes it easier to share code within your group or publish with a paper.  
 - Enables versioning and reproducibility across projects.
@@ -104,7 +104,7 @@ Running your suite under tox or nox before you publish is the surest way to catc
 For details, see pytest's [Good Integration Practices](https://docs.pytest.org/en/stable/explanation/goodpractices.html), the [tox](https://tox.wiki/en/stable/) and [nox](https://nox.thea.codes/en/stable/) documentation, and the [Python Packaging User Guide](https://packaging.python.org/).
 
 (package_development:installing_and_distributing)=
-## Installing & Distributing
+## Installing and Distributing
 
 Distributing your package means making it installable by others. The usual route is the [Python Package Index (PyPI)](https://pypi.org/), the public repository that `pip install name` reads from, so anyone can install your project with a single command.
 
@@ -194,7 +194,7 @@ Keep the default install minimal and move large or platform-specific dependencie
 For details, see the Python Packaging User Guide's [Writing your pyproject.toml](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/) guide (the `[project.optional-dependencies]` table), the [`importlib.resources` documentation](https://docs.python.org/3/library/importlib.resources.html), and the [Citation File Format](https://citation-file-format.github.io/).
 
 (package_development:versioning_and_releases)=
-## Versioning & Releases
+## Versioning and Releases
 
 A version number communicates what changed between releases; a release is a tagged, published snapshot that people can install and cite. Picking a clear scheme and a repeatable release process makes your software easy to depend on and to reproduce.
 
