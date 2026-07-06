@@ -59,6 +59,10 @@ The RTX6000 is the only GPU here with [RT Cores](https://www.nvidia.com/en-us/da
 The RTX6000 connects to other GPUs over PCIe Gen5 rather than NVLink. For jobs that shard one model across many GPUs, the NVLink-equipped A100, H100, and H200 scale more efficiently.
 ```
 
+```{note}
+Across nodes, the cluster network is non-blocking for the `kempner_h200` and `kempner_rtx` partitions, while `kempner_h100` is currently 2:1 oversubscribed. This matters for multi-node training that spans many GPUs. See [Overview of the Kempner Cluster](overview_of_kempner_cluster.md).
+```
+
 ## GPU Profiles
 
 ### A100 40GB (Ampere)
