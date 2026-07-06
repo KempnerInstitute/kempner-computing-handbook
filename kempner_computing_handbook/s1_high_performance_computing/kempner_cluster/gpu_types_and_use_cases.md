@@ -79,6 +79,14 @@ The [RTX6000](https://www.nvidia.com/en-us/data-center/rtx-pro-6000-blackwell-se
 
 ## Choosing a GPU by Use Case
 
+```{figure} figures/png/gpu_selection_map.png
+---
+width: 95%
+name: gpu-selection-map
+---
+A guide to choosing a GPU on the Kempner cluster. For standard training and inference over NVLink, pick by memory footprint from the A100 to the H200. The RTX6000 is the choice for FP4 low-precision work and for RT-core rendering, robotics, and reinforcement learning.
+```
+
 ### AI and Machine Learning
 
 - Large-model pretraining and fine-tuning: H100 or H200, using FP8 and NVLink for throughput and multi-GPU scaling.
