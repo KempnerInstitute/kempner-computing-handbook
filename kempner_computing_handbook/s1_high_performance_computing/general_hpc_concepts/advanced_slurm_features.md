@@ -57,7 +57,7 @@ kempner intel,holyhdr,icelake,avx,avx2,avx512,gpu,a100,cc8.0
 kempner_requeue amd,holyndr,genoa,avx,avx2,avx512,gpu,h100,cc9.0
 kempner_requeue intel,holyhdr,icelake,avx,avx2,avx512,gpu,a100,cc8.0
 kempner_h100 amd,holyndr,genoa,avx,avx2,avx512,gpu,h100,cc9.0
-kempner_h200 amd,holyndr,genoa,avx,avx2,avx512,gpu,h100,cc9.0
+kempner_h200 amd,holyndr,genoa,avx,avx2,avx512,gpu,h200,cc9.0
 ```
 
 The following table describes each of the features in the Kempner AI cluster:
