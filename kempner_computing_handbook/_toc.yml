@@ -12,6 +12,7 @@ parts:
       - file: s1_high_performance_computing/kempner_cluster/new_user_checklist
       - file: s1_high_performance_computing/kempner_cluster/introduction_and_cluster_basics
       - file: s1_high_performance_computing/kempner_cluster/overview_of_kempner_cluster
+      - file: s1_high_performance_computing/kempner_cluster/gpu_types_and_use_cases
       - file: s1_high_performance_computing/kempner_cluster/kempner_policies_for_responsible_use
       - file: s1_high_performance_computing/kempner_cluster/accessing_and_navigating_the_cluster
       - file: s1_high_performance_computing/kempner_cluster/accessing_gpu_by_fasrc_users
