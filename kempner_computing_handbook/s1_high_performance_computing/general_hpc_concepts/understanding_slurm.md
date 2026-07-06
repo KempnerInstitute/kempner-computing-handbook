@@ -48,14 +48,16 @@ The following partitions are available for Kempner affiliates on the FASRC clust
 
 | Partition | Description |
 |-----------|-------------|
-| `kempner` | This GPU block includes 2304 Intel Ice Lake cores and 144 Nvidia A100 40GB GPUs, with each water-cooled node featuring 64 cores, 1TB RAM, and 4 A100 GPUs, linked via HDR Infiniband, with a 7-day limit.|
-| `kempner_h100` | This GPU block includes 2304 AMD Genoa cores, 96 Nvidia H100 80GB GPUs, water-cooled nodes with 96 cores, 1.5TB RAM, and 4 H100 GPUs, interconnected via NDR Infiniband, with a 3-day limit. |
-| `kempner_requeue` | This partition utilizes `kempner` and `kempner_h100` partitions, designed for tasks that can be interrupted and restarted. This partition has a 7 day time limit.|
+| `kempner` | This GPU block includes 2304 Intel Ice Lake cores and 144 Nvidia A100 40GB GPUs, with each water-cooled node featuring 64 cores, 1TB RAM, and 4 A100 GPUs, linked via HDR Infiniband, with a 2-day limit.|
+| `kempner_h100` | This GPU block includes 2304 AMD Genoa cores, Nvidia H100 80GB GPUs, water-cooled nodes with 96 cores, 1.5TB RAM, and 4 H100 GPUs, interconnected via NDR Infiniband, with a 2-day limit. |
+| `kempner_h200` | This GPU block includes 2304 AMD Genoa cores, Nvidia H200 141GB GPUs, water-cooled nodes with 64 cores, 1.5TB RAM, and 4 H200 GPUs, interconnected via NDR Infiniband, with a 2-day limit. |
+| `kempner_rtx` | This GPU block includes 2304 AMD Genoa cores, Nvidia RTX6000 141GB GPUs, aie-cooled nodes with 64 cores, 1.5TB RAM, and 8 RTX600 GPUs, interconnected via NDR Infiniband, with a 2-day limit. |
+| `kempner_requeue` | This partition utilizes `kempner`, `kempner_h100`, `kempner_h200`, and `kempner_rtx` partitions, designed for tasks that can be interrupted and restarted. This partition has a 7 day time limit.|
 | `kempner_dev` | This partition is dedicated to the engineering team and is not available to all users. |
 | `kempner_interactive` | This partition is dedicated to interactive jobs and lightweight development work. It provides 20GB A100 GPU slices created from full A100 40GB GPUs using NVIDIA Multi-Instance GPU (MIG) technology. |
 
 ```{note}
-The `kempner_interactive` partition is intended for interactive sessions, prototyping, debugging, and other lightweight development tasks, not for full-scale training or production runs. Because the GPUs are partitioned with MIG, each job receives a 20GB slice of an A100 rather than a full GPU. For resource-intensive jobs, use the `kempner` or `kempner_h100` partitions instead.
+The `kempner_interactive` partition is intended for interactive sessions, prototyping, debugging, and other lightweight development tasks, not for full-scale training or production runs. Because the GPUs are partitioned with MIG, each job receives a 20GB slice of an A100 rather than a full GPU. For resource-intensive jobs, use the `kempner`, `kempner_h100`, `kempner_h200`, or `kempner_rtx` partitions instead.
 ```
 
 ````{tip}

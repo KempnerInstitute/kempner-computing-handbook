@@ -15,13 +15,13 @@ In general terms, the cluster is reserved for individuals who are either associa
 
 The following table provides an overview of the Kempner Institute AI cluster:
 
-| Specification             | A100 40GB                                      | H100 80GB                                             |
-|---------------------------|------------------------------------------------|-------------------------------------------------------|
-| **Total GPUs**            | 144                                            | 384                                                   |
-| **Servers (per rack)**    | 36                                             | 24                                                    |
-| **GPUs per Server**       | 4                                              | 4                                                     |
-| **CPU Cores per Server**  | 64                                             | 96                                                    |
-| **RAM per Server**        | 1 TB                                           | 1.5 TB                                                |
+| Specification             | A100 40GB                                      | H100 80GB                                             | H200                                                  | RTX6000                                               |
+|---------------------------|------------------------------------------------|-------------------------------------------------------|-------------------------------------------------------|-------------------------------------------------------|
+| **Total GPUs**            | 144                                            | 384                                                   | 384                                                   | 192                                                   |
+| **Servers (per rack)**    | 36                                             | 24                                                    | 24                                                    | 24                                                    |
+| **GPUs per Server**       | 4                                              | 4                                                     | 4                                                     | 8                                                     |
+| **CPU Cores per Server**  | 64                                             | 96                                                    | 64                                                    | 64                                                    |
+| **RAM per Server**        | 1 TB                                           | 1.5 TB                                                | 1.5 TB                                                | 1.5 TB                                                |
 
 
 ```{figure} figures/svg/cluster_diagram.svg

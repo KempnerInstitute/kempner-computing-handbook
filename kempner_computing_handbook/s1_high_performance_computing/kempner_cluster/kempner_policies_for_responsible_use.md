@@ -12,16 +12,20 @@ We don’t limit jobs on the basis of size and encourage users to use capacity w
 
 Please use the [Kempner requeue](https://docs.rc.fas.harvard.edu/kb/kempner-partitions/) partition if you want to try out something resource intensive but not urgent. This work may be requeued by higher priority work, so you should implement checkpointing in the event that something higher priority interrupts your run.
 
-The cluster should never be used for CPU-only jobs. There are two types of Kempner Institute nodes on the cluster: Nodes with A100 40GB GPUs (`kempner` partition) and nodes with H100 80GB GPUs (`kempner_h100` partition). All nodes have 4 GPUs. Jobs should be submitted with **no more than**:
+The cluster should never be used for CPU-only jobs. There are two types of Kempner Institute nodes on the cluster: Nodes with A100 40GB GPUs (`kempner` partition), nodes with H100 80GB GPUs (`kempner_h100` partition), nodes with H200 141GB GPUs (`kempner_h200` partition), and nodes with RTX6000 196GB GPUs (`kempner_rtx`). The RTX nodes have 8 GPUs and other nodes have 4 GPUs. Jobs should be submitted with **no more than**:
 
 - 16 cores and 240 GB per GPU for `kempner` partition, and 
 - 24 cores and 360 GB per GPU for `kempner_h100` partition.  
+- 16 cores and 360 GB per GPU for `kempner_h200` partition, and 
+- 16 cores and 192 GB per GPU for `kempner_rtx` partition.  
 
 ::::{important}
 Users should not submit jobs that utilize more than 10% of the cluster resources or that run for extended periods (exceeding 4 hours). Given the current resources, 10% of the cluster comprises:
 
-- 12 A100 GPUs (3 nodes) in the `kempner` partition, and
-- 12 H100 GPUs (3 nodes) in the `kempner_h100` partition.
+- 8 A100 GPUs (4 nodes) in the `kempner` partition, and
+- 8 H100 GPUs (4 nodes) in the `kempner_h100` partition.
+- 8 H200 GPUs (4 nodes) in the `kempner_h200` partition, and
+- 8 RTX6000 GPUs (4 nodes) in the `kempner_rtx` partition.
 
 See the following guidelines for jobs that exceed this limit.
 ::::

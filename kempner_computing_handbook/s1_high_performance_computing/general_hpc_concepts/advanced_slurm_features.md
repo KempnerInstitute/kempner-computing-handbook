@@ -46,7 +46,7 @@ salloc -p kempner_requeue --account=kempner_grads -N 1 -n  1 --gres=gpu:1 --cons
 You can find a list of features in Kempner AI cluster by,
 
 ```bash
-echo "PARTITION FEATURES" && sinfo -p kempner,kempner_requeue,kempner_h100 --noheader --format="%P %f" | sort | uniq
+echo "PARTITION FEATURES" && sinfo -p kempner,kempner_requeue,kempner_h100,kempner_h200 --noheader --format="%P %f" | sort | uniq
 ```
 
 and the result will be, 
@@ -57,6 +57,7 @@ kempner intel,holyhdr,icelake,avx,avx2,avx512,gpu,a100,cc8.0
 kempner_requeue amd,holyndr,genoa,avx,avx2,avx512,gpu,h100,cc9.0
 kempner_requeue intel,holyhdr,icelake,avx,avx2,avx512,gpu,a100,cc8.0
 kempner_h100 amd,holyndr,genoa,avx,avx2,avx512,gpu,h100,cc9.0
+kempner_h200 amd,holyndr,genoa,avx,avx2,avx512,gpu,h100,cc9.0
 ```
 
 The following table describes each of the features in the Kempner AI cluster:
@@ -72,6 +73,7 @@ The following table describes each of the features in the Kempner AI cluster:
 | `avx`, `avx2`, `avx512` | Advanced Vector Extensions (AVX) are Intel's and AMD's SIMD (single instruction, multiple data) extensions for parallelism in computing. `avx512` offers more features and wider vector registers than `avx` and `avx2`. |
 | `gpu`      | Indicates the presence of GPU resources in the partition.                                         |
 | `h100`     | NVIDIA H100 GPU, part of NVIDIA's Hopper architecture, designed for deep learning and high-performance computing tasks. |
+| `h200`     | NVIDIA H200 GPU, part of NVIDIA's Hopper architecture, designed for deep learning and high-performance computing tasks. |
 | `a100`     | NVIDIA A100 GPU, part of NVIDIA's Ampere architecture, also aimed at deep learning and high-performance computing. |
 | `cc9.0`, `cc8.0` | CUDA compute capability, indicating the version of the CUDA API and features the GPU supports. `cc9.0` and `cc8.0` refer to specific versions with different levels of support for CUDA features. |
 
