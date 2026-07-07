@@ -2,7 +2,7 @@
 
 Reproducibility ensures that research findings can be independently verified and built upon. This section presents core principles and practical strategies for making research code, data, and workflows reproducible.
 
-Why Reproducibility Matters
+**Why does reproducibility matter?**
 - Essential for scientific integrity and validation.  
 - Enables collaboration and reuse across projects and labs.  
 - Required by many journals, conferences, and funding agencies.
@@ -213,7 +213,7 @@ Reproducibility is a claim, not an assumption: a pipeline is only reproducible o
 
 - **Re-run and compare, first on the same machine.** Run the pipeline twice from the same inputs and seeds and confirm the outputs agree. This catches uncontrolled randomness and accidental dependence on leftover state or cached files.
 - **Then re-run in a clean environment or on a different machine.** Rebuild the {ref}`environment <reproducible_research:environment_reproducibility>` from your lock file in a fresh virtual environment or container, or run on a collaborator's machine. A result that reproduces only on your laptop usually hides an undeclared dependency: an unpinned package, a local data file, or a hard-coded path.
-- **Add a regression test against a saved reference.** Save a known-good output once, then have a test re-run the pipeline and compare against it. Such a test (Michael Feathers' *characterization test*) pins current behavior so an unintended change is flagged on sight.
+- **Add a regression test against a saved reference.** Save a known-good output once, then have a test re-run the pipeline and compare against it. Such a test ([Michael Feathers'](https://michaelfeathers.silvrback.com/) *characterization test*) pins current behavior so an unintended change is flagged on sight.
 - **Compare floating-point results with a tolerance, not exact equality.** Numerical output rarely matches bit-for-bit across runs, platforms, or library versions, so compare within a tolerance using `numpy.testing.assert_allclose` or `pytest.approx`.
 - **Run the pipeline end to end in CI.** Exercise the whole workflow on a small input on every change so reproducibility is checked continuously rather than rediscovered months later. The mechanics of writing tests and configuring CI are covered in [Testing and Continuous Integration](testing_and_continuous_integration.md).
 
