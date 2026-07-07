@@ -14,10 +14,10 @@ Reproducibility means that the same analysis steps run on the same data reliably
 
 ```{figure} figures/png/reproducibility_matrix.png
 ---
-width: 70%
+width: 82%
 name: reproducibility-matrix
 ---
-Reproducible, replicable, robust, and generalizable results, distinguished by whether the data and the analysis are the same or different. (*Credit: [The Turing Way](https://book.the-turing-way.org/reproducible-research/overview/overview-definitions), illustration by Scriberia, CC BY 4.0*)
+Reproducible, replicable, robust, and generalizable results, distinguished by whether the data and the analysis are the same or different. (*Adapted from [The Turing Way](https://book.the-turing-way.org/reproducible-research/overview/overview-definitions).*)
 ```
 
 A handful of principles make code reproducible. The rest of this chapter expands each one in detail.
@@ -281,10 +281,10 @@ Sharing makes your work reusable by others; archiving makes it permanent and cit
 
 ```{figure} figures/png/research_compendium.png
 ---
-width: 55%
+width: 96%
 name: research-compendium
 ---
-A research compendium bundles code, data, and documentation into a single archivable, citable unit. (*Credit: [The Turing Way](https://book.the-turing-way.org/reproducible-research/compendia/), illustration by Scriberia, CC BY 4.0*)
+A research compendium bundles code, data, and documentation into a single archivable, citable unit. (*Adapted from [The Turing Way](https://book.the-turing-way.org/reproducible-research/compendia/).*)
 ```
 
 A research compendium gathers the pieces this chapter built, in a conventional layout:

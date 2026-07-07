@@ -1,0 +1,44 @@
+{
+  "description": "Figure format standard for the Kempner Institute Computing Handbook. Apply these settings when creating original figures so they share a consistent, on-brand look. Prefer original figures over copyrighted images.",
+  "brand_colors": {
+    "navy": "#14154C",
+    "crimson": "#A51C30",
+    "periwinkle": "#C6C8F4",
+    "background": "#F4F5FC"
+  },
+  "brand_color_notes": {
+    "navy": "Primary color, from the Kempner logo. Use for titles, key labels, borders, and dark fills.",
+    "crimson": "Harvard Crimson, the accent color. Use sparingly for highlights, emphasis, and a single focal element.",
+    "periwinkle": "Light tint, matches the handbook caption background. Use for light fills and light text backgrounds.",
+    "background": "Very light lavender canvas applied behind the whole figure."
+  },
+  "sequential_palette": ["#14154C", "#3D3E82", "#6A6CB8", "#A9ABE4"],
+  "sequential_palette_note": "Navy to periwinkle ramp for multi-category figures such as bar charts and matrices. Use white text on the two darker steps and navy text on the two lighter steps.",
+  "typography": {
+    "font_family": "sans-serif (DejaVu Sans, the matplotlib default)",
+    "title_size": 15,
+    "title_weight": "bold",
+    "title_color": "#14154C",
+    "label_size": 11,
+    "annotation_size": 9
+  },
+  "export": {
+    "format": "png",
+    "dpi": 200,
+    "bbox_inches": "tight",
+    "location": "<section>/figures/png/",
+    "naming": "snake_case and descriptive, for example gpu_selection_map.png"
+  },
+  "page_usage": {
+    "directive": "MyST {figure} directive with a width (for example width: 70%) and a name",
+    "caption": "One or two sentences describing the figure. No em dashes, and no inline bold or italic in the body text.",
+    "credit": "For original handbook figures, no external credit is needed. If the concept is adapted from a source, add a short note such as (Adapted from [Source](url).)"
+  },
+  "principles": [
+    "Prefer original, openly shareable figures over copyrighted images.",
+    "Use the brand colors above and reserve crimson for accents and a single focal element.",
+    "Apply the light lavender background (#F4F5FC) for a consistent branded canvas.",
+    "Use a clear, legible sans-serif font and navy (#14154C) for titles and key labels.",
+    "Keep figure text concise and put detail in the page prose rather than the figure."
+  ]
+}
