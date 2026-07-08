@@ -239,7 +239,7 @@ A license sets the terms on which others may use, modify, and redistribute your 
 width: 95%
 name: license-compatibility
 ---
-Compatibility of common open-source licenses, from permissive to strongly protective; code can generally be combined by following the arrows. (*Credit: [David A. Wheeler / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Floss-license-slide-image.svg), CC BY-SA 3.0*)
+Compatibility of common open-source licenses, from permissive to strongly protective; code can generally be combined by following the arrows.
 ```
 
 ```toml
