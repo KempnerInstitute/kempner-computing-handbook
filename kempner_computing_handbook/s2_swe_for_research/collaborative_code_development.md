@@ -28,7 +28,7 @@ git push origin main                 # publish commits to the remote
 width: 75%
 name: git-operations
 ---
-How common Git commands move content between the working files, staging area, local repository, and remote. (*Credit: [Daniel Kinzler / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Git_operations.svg), CC BY 3.0*)
+How common Git commands move content between the working files, staging area, local repository, and remote.
 ```
 
 - **Branching.** A branch is an isolated workspace for a feature or experiment, so `main` stays stable until the work is ready.
