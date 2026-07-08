@@ -450,7 +450,7 @@ A [layered architecture](https://en.wikipedia.org/wiki/Multitier_architecture) o
 
 ```{figure} figures/png/layered_architecture.png
 ---
-width: 60%
+width: 78%
 name: layered-architecture
 ---
 The classic three-tier layering separates presentation, logic, and data. Scientific tools apply the same idea, refining it into interface, orchestration, core-science, and infrastructure layers.
