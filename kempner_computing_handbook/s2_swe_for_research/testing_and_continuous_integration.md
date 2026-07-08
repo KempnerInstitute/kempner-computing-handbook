@@ -20,7 +20,7 @@ Tests differ mainly by their scope: how much of your code each one exercises at 
 
 ```{figure} figures/png/test_pyramid.png
 ---
-width: 55%
+width: 70%
 name: test-pyramid
 ---
 The test pyramid: many fast unit tests at the base, fewer integration tests in the middle, and few end-to-end (E2E) tests at the top.

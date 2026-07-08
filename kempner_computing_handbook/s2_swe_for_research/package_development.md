@@ -200,7 +200,7 @@ A version number communicates what changed between releases; a release is a tagg
 
 ```{figure} figures/png/semantic_versioning.png
 ---
-width: 60%
+width: 76%
 name: semantic-versioning
 ---
 Semantic versioning: the MAJOR version signals breaking changes, MINOR adds backward-compatible features, and PATCH covers backward-compatible bug fixes.
