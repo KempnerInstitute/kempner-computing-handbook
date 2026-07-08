@@ -203,7 +203,7 @@ A version number communicates what changed between releases; a release is a tagg
 width: 60%
 name: semantic-versioning
 ---
-Semantic versioning: the MAJOR version signals breaking changes, MINOR adds backward-compatible features, and PATCH covers backward-compatible bug fixes. (*Credit: [Surjit Bains / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Semantic-versioning.svg), CC BY-SA 4.0*)
+Semantic versioning: the MAJOR version signals breaking changes, MINOR adds backward-compatible features, and PATCH covers backward-compatible bug fixes.
 ```
 
 - **Use semantic versioning.** Number releases `MAJOR.MINOR.PATCH` and, following [Semantic Versioning](https://semver.org/), increment the MAJOR version for incompatible (breaking) API changes, the MINOR version when you add functionality in a backward-compatible way, and the PATCH version for backward-compatible bug fixes. This lets users tell at a glance whether an upgrade is safe.
