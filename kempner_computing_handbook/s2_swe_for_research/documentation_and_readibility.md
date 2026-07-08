@@ -144,7 +144,7 @@ Research code carries documentation needs beyond general software: the documenta
 width: 90%
 name: fair-principles
 ---
-The FAIR guiding principles for research data: Findable, Accessible, Interoperable, and Reusable. (*Credit: [SangyaPundir / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:FAIR_data_principles.svg), CC BY-SA 4.0*)
+The FAIR guiding principles for research data: Findable, Accessible, Interoperable, and Reusable.
 ```
 
 A minimal, valid `CITATION.cff`:
