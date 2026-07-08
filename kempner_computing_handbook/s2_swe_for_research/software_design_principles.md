@@ -166,7 +166,7 @@ A [design pattern](https://refactoring.guru/design-patterns/what-is-pattern) is 
 width: 90%
 name: strategy-pattern-uml
 ---
-The Strategy pattern in UML: a Context delegates to interchangeable Strategy implementations, so the algorithm can vary independently of the code that uses it. (*Credit: [Vanderjoe / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:W3sDesign_Strategy_Design_Pattern_UML.jpg), CC BY-SA 4.0*)
+The Strategy pattern in UML: a Context delegates to interchangeable Strategy implementations, so the algorithm can vary independently of the code that uses it.
 ```
 
 The example below uses a small factory to build a model from a name. Callers ask for a model by string, so the choice can come from a config file or a command-line argument, and adding a model means extending one mapping rather than editing every call site.
