@@ -23,7 +23,7 @@ Tests differ mainly by their scope: how much of your code each one exercises at 
 width: 55%
 name: test-pyramid
 ---
-The test pyramid: many fast unit tests at the base, fewer integration tests in the middle, and few end-to-end (E2E) tests at the top. (*Credit: [Abbe98 / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Testing_Pyramid.svg), CC BY-SA 4.0*)
+The test pyramid: many fast unit tests at the base, fewer integration tests in the middle, and few end-to-end (E2E) tests at the top.
 ```
 
 A minimal unit test pairs a function with a `test_` function that asserts the expected result:
