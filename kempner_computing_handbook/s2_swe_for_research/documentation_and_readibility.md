@@ -21,7 +21,7 @@ Documentation is not a single thing: different types serve different reader need
 width: 85%
 name: diataxis-map
 ---
-The Diátaxis map organizes the four documentation types along two axes: action versus cognition, and acquiring versus applying skill. (*Credit: [Daniele Procida / diataxis.fr](https://diataxis.fr/), CC BY-SA 4.0*)
+The Diátaxis map organizes the four documentation types along two axes: action versus cognition, and acquiring versus applying skill. (*Adapted from [Diátaxis](https://diataxis.fr/).*)
 ```
 
 Most research projects do not need all four as separate manuals, but they usually combine a few concrete artifacts:
