@@ -13,6 +13,8 @@ One common misconception around fairshare is that a given user or lab should hav
 
 A fairshare score is computed for each fairshare group (SLURM account) based on the prior usage of the cluster by that group and their share of the cluster (the fraction of the cluster the account has been granted). Note that for some accounts, such as lab accounts, the share is determined by the lab. Individual users do not have their own subshares of the lab share. This means that if a lab has collectively been overusing the cluster, individual members of that lab may have a low fairshare score even if they were not running jobs. 
 
+Fairshare affects job priority, not hard limits. Separately, the number of GPUs a single user or account can hold at once is capped; see the GPU caps in [Cluster Usage Policies](../kempner_cluster/kempner_policies_for_responsible_use.md).
+
 
 ## Job Priority
 When you submit a job, a priority number will be calculated for that job, which determines the position of the job in the pending queue. This priority number is calculated based on a few factors: your fairshare score and the job age. This secondary factor ensures that jobs that have been waiting for a while to run are increasing in priority over time. This means that jobs from accounts with low fairshare will eventually run. You can see the Pending queue of jobs for a partition (such as `kempner`) by running `showq -o -p <partitionname>`. 
