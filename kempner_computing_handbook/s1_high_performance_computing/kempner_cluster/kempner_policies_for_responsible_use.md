@@ -17,20 +17,19 @@ The cluster should never be used for CPU-only jobs. There are four types of Kemp
 - 16 cores and 240 GB per GPU for `kempner` partition, and 
 - 24 cores and 360 GB per GPU for `kempner_h100` partition.  
 - 16 cores and 360 GB per GPU for `kempner_h200` partition, and 
-- 16 cores and 190 GB per GPU for `kempner_rtx` partition.  
+- 16 cores and 180 GB per GPU for `kempner_rtx` partition.  
 
 ::::{important}
-Users should not submit jobs that utilize more than the following cluster resources or that run for extended periods. Given the current resources, the limits in each partition are:
+Total GPU usage across the `kempner`, `kempner_h100`, `kempner_h200`, and `kempner_rtx` partitions is capped for each user and each Kempner account:
 
-- 8 A100 GPUs across up to 4 nodes in the `kempner` partition, and a 2-day runtime limit.
-- 8 H100 GPUs across up to 4 nodes in the `kempner_h100` partition, and a 2-day runtime limit.
-- 8 H200 GPUs across up to 4 nodes in the `kempner_h200` partition, and a 2-day runtime limit.
-- 8 RTX6000 GPUs across up to 4 nodes in the `kempner_rtx` partition, and a 2-day runtime limit.
+- Each **user** may hold at most **16 GPUs** at once, summed across these four partitions.
+- Each **account** (for example, `kempner_<lab>_lab`) may hold at most **96 GPUs** at once, summed across these four partitions.
+- The `kempner_undergrads` account has a lower cap of **4 GPUs** at once across these four partitions.
 
-See the following guidelines for jobs that exceed this limit.
+Each of these partitions also has a **2-day runtime limit** per job. The GPU caps apply to concurrent usage regardless of how it is split across jobs or partitions. On the [Kempner requeue](https://docs.rc.fas.harvard.edu/kb/kempner-partitions/) partition and on reservation (priority) partitions, the per-account cap can be exceeded by submitting under a non-Kempner account (for example, `sham_lab` instead of `kempner_sham_lab`), since usage on non-Kempner accounts does not count against the Kempner group cap.
 ::::
 
-If your job exceeds this predefined limit, please adhere to the following guidelines:
+If you need more capacity than these caps allow, please adhere to the following guidelines:
 
 - Use the [Kempner requeue](https://docs.rc.fas.harvard.edu/kb/kempner-partitions/) partition. This allows jobs to be preempted by other jobs and then restarted, thus allowing large jobs to run without disrupting access for the rest of the community.
 - If not using the requeue partition, only submit jobs when there is significant excess capacity and actively monitor the cluster (hourly) to ensure that there are still resources available for other users.
