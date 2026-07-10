@@ -26,7 +26,7 @@ Total GPU usage across the `kempner`, `kempner_h100`, `kempner_h200`, and `kempn
 - Each **account** (for example, `kempner_<lab>_lab`) may hold at most **96 GPUs** at once, summed across these four partitions.
 - The `kempner_undergrads` account has a lower cap of **4 GPUs** at once across these four partitions.
 
-Each of these partitions also has a **2-day runtime limit** per job. The GPU caps apply to concurrent usage regardless of how it is split across jobs or partitions. On the [Kempner requeue](https://docs.rc.fas.harvard.edu/kb/kempner-partitions/) partition and on reservation (priority) partitions, the per-account cap can be exceeded by submitting under a non-Kempner account (for example, `sham_lab` instead of `kempner_sham_lab`), since usage on non-Kempner accounts does not count against the Kempner group cap.
+Each of these partitions also has a **2-day runtime limit** per job. The caps cover only these four partitions; the [Kempner requeue](https://docs.rc.fas.harvard.edu/kb/kempner-partitions/) partition is not subject to them, so it can be used for additional capacity.
 ::::
 
 If you need more capacity than these caps allow, please adhere to the following guidelines:
