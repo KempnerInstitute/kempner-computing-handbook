@@ -17,7 +17,7 @@ The cluster should never be used for CPU-only jobs. There are four types of Kemp
 - 16 cores and 240 GB per GPU for `kempner` partition, and 
 - 24 cores and 360 GB per GPU for `kempner_h100` partition.  
 - 16 cores and 360 GB per GPU for `kempner_h200` partition, and 
-- 16 cores and 190 GB per GPU for `kempner_rtx` partition.  
+- 16 cores and 180 GB per GPU for `kempner_rtx` partition.  
 
 ::::{important}
 Total GPU usage across the `kempner`, `kempner_h100`, `kempner_h200`, and `kempner_rtx` partitions is capped for each user and each Kempner account:
