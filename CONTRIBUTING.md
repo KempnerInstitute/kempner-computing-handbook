@@ -123,38 +123,38 @@ Done!
 If you are contributing figures to the handbook, please make sure to follow these guidelines:
 
 - Each chapter, has a folder in the `kempner_computing_handbook` directory. Inside each chapter folder, there is a `figures` folder with subfolder for each figure type (e.g., `ai`, `png`, `svg`, `pdf`, etc.). Please make sure to place your figures in the appropriate folder.
-- We require the use of vector graphics (e.g., SVG, PDF) for figures, as they are scalable without loss of quality and facilitate easy editing. If, due to specific constraints, you must include raster graphics (e.g., PNG, JPG), please provide a detailed explanation in your pull request justifying their necessity. Ensure that any raster images are of high resolution (minimum 300 dpi) to maintain visual clarity in the handbook.
+- Prefer vector graphics (e.g., SVG, PDF) for hand-drawn or annotated diagrams, since they scale without loss of quality and are easy to edit. Programmatically generated figures (e.g., with Matplotlib) may be exported as high-resolution PNG following the style guidelines below. For photographs or scans, justify the raster use in your pull request and use a high resolution (at least 300 dpi).
 - If you are annotating a figure, please include both the original and the annotated figures. If you are using Adobe Illustrator to annotate figures (recommended), please include the `.ai` file. This will facilitate the change of the figure's annotation style to make it uniform in the handbook.  
 - Please avoid using copyrighted images or figures that are not licensed for reuse. If you are using figures from external sources, make sure to provide proper attribution and licensing information in the figure caption or in the text. As a contributor, you are solely responsible for ensuring that your submission does not violate any copyright laws.
 
 ### Style and formatting guidelines for figures
 
-If you are creating new figures, please make sure to follow the style and formatting guidelines of the handbook to ensure consistency across the chapters.
+If you are creating new figures, please follow the style guidelines below so figures stay consistent across chapters. A machine-readable version of these settings, for scripts that generate figures, lives in [`kempner_computing_handbook/figures/figure-format.json`](kempner_computing_handbook/figures/figure-format.json).
 
 **Font**:
 
-- **Font Type**: Use Arial for all text within figures. 
-- **Font Size**: Set the font size to 12 pt for standard text. 
+- **Font Type**: Use a clean sans-serif font. Programmatically generated figures may use the Matplotlib default (DejaVu Sans); Arial is an acceptable equivalent. 
+- **Font Size**: Keep text large enough to read at the figure's displayed size, and avoid very small labels. 
 
 **Color Palette**:
 
-- **Primary Colors**: TBD
-- **Secondary Colors**:TBD
-- **Accent Colors**: TBD
+- **Primary**: Navy `#14154C`, for titles, key labels, borders, and dark fills.
+- **Secondary**: periwinkle `#C6C8F4`. For multi-category figures, use the navy-to-periwinkle ramp `#14154C`, `#3D3E82`, `#6A6CB8`, `#A9ABE4` (white text on the darker steps, navy text on the lighter steps).
+- **Accent**: Harvard Crimson `#A51C30`, used sparingly for highlights and a single focal element.
 
-**Figure Size and Aspect Ratio**:
+**Size, Aspect Ratio, and Resolution**:
 
-- **Size**: Design figures with a width of `800` pixels and a height of `600` pixels. 
-- **Aspect Ratio**: Maintain a `4:3` aspect ratio to ensure uniformity throughout the handbook. 
+- **Size**: Size figures for legibility rather than a fixed dimension; a width of roughly 1600 to 2200 pixels renders crisply on the web. 
+- **Aspect Ratio and Resolution**: Choose an aspect ratio that suits the content. Export programmatically generated raster figures at about 200 dpi (Matplotlib), which yields images around 2000 pixels wide. 
 
 **Figure Caption**:
 
-- **Placement**: DO NOT include figure caption in the figure itself.
+- **Placement**: Keep the descriptive caption in the page text, not baked into the image, so it stays accessible and editable. A short title inside the figure is fine.
 - **Content**: Figure caption should be concise, informative, and self-sufficient. Readers should be able to understand the figure without referring to the text.
 
 **Background Color**: 
 
-- Use transparent background for figures to ensure that they blend seamlessly with the handbook's design. 
+- Use the light lavender canvas `#F4F5FC` for a consistent branded background. A transparent background is also fine when a figure should blend directly into the page. 
 
 
 ## Contributing a Workshop Session

@@ -1,5 +1,5 @@
 {
-  "description": "Figure format standard for the Kempner Institute Computing Handbook. Apply these settings when creating original figures so they share a consistent, on-brand look. Prefer original figures over copyrighted images.",
+  "description": "Machine-readable figure style standard for the Kempner Institute Computing Handbook, and the companion to the figures section of CONTRIBUTING.md. Apply these settings when creating original figures so they share a consistent, on-brand look. Prefer original figures over copyrighted images.",
   "brand_colors": {
     "navy": "#14154C",
     "crimson": "#A51C30",
@@ -7,7 +7,7 @@
     "background": "#F4F5FC"
   },
   "brand_color_notes": {
-    "navy": "Primary color, from the Kempner logo. Use for titles, key labels, borders, and dark fills.",
+    "navy": "Primary color. Use for titles, key labels, borders, and dark fills.",
     "crimson": "Harvard Crimson, the accent color. Use sparingly for highlights, emphasis, and a single focal element.",
     "periwinkle": "Light tint, matches the handbook caption background. Use for light fills and light text backgrounds.",
     "background": "Very light lavender canvas applied behind the whole figure."
@@ -31,7 +31,7 @@
   },
   "page_usage": {
     "directive": "MyST {figure} directive with a width (for example width: 70%) and a name",
-    "caption": "One or two sentences describing the figure. No em dashes, and no inline bold or italic in the body text.",
+    "caption": "One or two sentences describing the figure, placed in the page text rather than baked into the image. Avoid em dashes.",
     "credit": "For original handbook figures, no external credit is needed. If the concept is adapted from a source, add a short note such as (Adapted from [Source](url).)"
   },
   "principles": [
