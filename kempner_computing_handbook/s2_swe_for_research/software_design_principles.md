@@ -166,7 +166,7 @@ A [design pattern](https://refactoring.guru/design-patterns/what-is-pattern) is 
 width: 90%
 name: strategy-pattern-uml
 ---
-The Strategy pattern in UML: a Context delegates to interchangeable Strategy implementations, so the algorithm can vary independently of the code that uses it. (*Credit: [Vanderjoe / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:W3sDesign_Strategy_Design_Pattern_UML.jpg), CC BY-SA 4.0*)
+The Strategy pattern in UML: a Context delegates to interchangeable Strategy implementations, so the algorithm can vary independently of the code that uses it.
 ```
 
 The example below uses a small factory to build a model from a name. Callers ask for a model by string, so the choice can come from a config file or a command-line argument, and adding a model means extending one mapping rather than editing every call site.
@@ -450,10 +450,10 @@ A [layered architecture](https://en.wikipedia.org/wiki/Multitier_architecture) o
 
 ```{figure} figures/png/layered_architecture.png
 ---
-width: 60%
+width: 78%
 name: layered-architecture
 ---
-The classic three-tier layering separates presentation, logic, and data. Scientific tools apply the same idea, refining it into interface, orchestration, core-science, and infrastructure layers. (*Credit: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Overview_of_a_three-tier_application_vectorVersion.svg), public domain*)
+The classic three-tier layering separates presentation, logic, and data. Scientific tools apply the same idea, refining it into interface, orchestration, core-science, and infrastructure layers.
 ```
 
 - **Typical layers for scientific software:** A useful split has four roles. An **entry/interface** layer (a CLI, notebook, or API call) takes input and reports results. An **orchestration/workflow** layer ties a run together by sequencing the pipeline steps. A **core science** layer holds the actual work: models, numerical methods, and algorithms. An **infrastructure/data** layer handles file and network I/O, storage, and external services. This mirrors the presentation, domain, and data-source layers Martin Fowler describes in [Presentation Domain Data Layering](https://martinfowler.com/bliki/PresentationDomainDataLayering.html).

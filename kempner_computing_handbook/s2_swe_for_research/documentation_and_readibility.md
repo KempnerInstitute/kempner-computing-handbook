@@ -21,7 +21,7 @@ Documentation is not a single thing: different types serve different reader need
 width: 85%
 name: diataxis-map
 ---
-The Diátaxis map organizes the four documentation types along two axes: action versus cognition, and acquiring versus applying skill. (*Credit: [Daniele Procida / diataxis.fr](https://diataxis.fr/), CC BY-SA 4.0*)
+The Diátaxis map organizes the four documentation types along two axes: action versus cognition, and acquiring versus applying skill. (*Adapted from [Diátaxis](https://diataxis.fr/).*)
 ```
 
 Most research projects do not need all four as separate manuals, but they usually combine a few concrete artifacts:
@@ -144,7 +144,7 @@ Research code carries documentation needs beyond general software: the documenta
 width: 90%
 name: fair-principles
 ---
-The FAIR guiding principles for research data: Findable, Accessible, Interoperable, and Reusable. (*Credit: [SangyaPundir / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:FAIR_data_principles.svg), CC BY-SA 4.0*)
+The FAIR guiding principles for research data: Findable, Accessible, Interoperable, and Reusable.
 ```
 
 A minimal, valid `CITATION.cff`:

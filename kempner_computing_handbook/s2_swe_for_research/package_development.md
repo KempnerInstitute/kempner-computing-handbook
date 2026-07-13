@@ -200,10 +200,10 @@ A version number communicates what changed between releases; a release is a tagg
 
 ```{figure} figures/png/semantic_versioning.png
 ---
-width: 60%
+width: 76%
 name: semantic-versioning
 ---
-Semantic versioning: the MAJOR version signals breaking changes, MINOR adds backward-compatible features, and PATCH covers backward-compatible bug fixes. (*Credit: [Surjit Bains / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Semantic-versioning.svg), CC BY-SA 4.0*)
+Semantic versioning: the MAJOR version signals breaking changes, MINOR adds backward-compatible features, and PATCH covers backward-compatible bug fixes.
 ```
 
 - **Use semantic versioning.** Number releases `MAJOR.MINOR.PATCH` and, following [Semantic Versioning](https://semver.org/), increment the MAJOR version for incompatible (breaking) API changes, the MINOR version when you add functionality in a backward-compatible way, and the PATCH version for backward-compatible bug fixes. This lets users tell at a glance whether an upgrade is safe.
@@ -239,7 +239,7 @@ A license sets the terms on which others may use, modify, and redistribute your 
 width: 95%
 name: license-compatibility
 ---
-Compatibility of common open-source licenses, from permissive to strongly protective; code can generally be combined by following the arrows. (*Credit: [David A. Wheeler / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Floss-license-slide-image.svg), CC BY-SA 3.0*)
+Compatibility of common open-source licenses, from permissive to strongly protective; code can generally be combined by following the arrows.
 ```
 
 ```toml

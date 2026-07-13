@@ -20,10 +20,10 @@ Tests differ mainly by their scope: how much of your code each one exercises at 
 
 ```{figure} figures/png/test_pyramid.png
 ---
-width: 55%
+width: 70%
 name: test-pyramid
 ---
-The test pyramid: many fast unit tests at the base, fewer integration tests in the middle, and few end-to-end (E2E) tests at the top. (*Credit: [Abbe98 / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Testing_Pyramid.svg), CC BY-SA 4.0*)
+The test pyramid: many fast unit tests at the base, fewer integration tests in the middle, and few end-to-end (E2E) tests at the top.
 ```
 
 A minimal unit test pairs a function with a `test_` function that asserts the expected result:
@@ -146,7 +146,7 @@ Continuous Integration runs your checks automatically on every change, so proble
 width: 85%
 name: ci-flow
 ---
-A continuous integration flow: a developer's check-in triggers the CI server to build and test the change, then reports status back to the team. (*Credit: [Pratik89Roy / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Continuous_Integration.jpg), CC BY-SA 4.0*)
+A continuous integration flow: a developer's check-in triggers the CI server to build and test the change, then reports status back to the team.
 ```
 
 - **What runs.** On each push and pull request, CI checks out the code, installs dependencies, and runs the {ref}`tests <testing_and_continuous_integration:writing_effective_tests>`. You can add a linter or formatter check and report {ref}`coverage <testing_and_continuous_integration:test_coverage>` in the same run.
