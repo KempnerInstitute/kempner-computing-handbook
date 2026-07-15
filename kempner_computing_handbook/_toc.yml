@@ -97,6 +97,11 @@ parts:
     numbered: true
     chapters:
     - file: s7_open_source_hub/README
+  - caption: Technical Blog
+    numbered: false
+    chapters:
+    - file: technical_blog/README
+    - file: technical_blog/choosing_gpu_partition
   - caption: Support
     numbered: true
     chapters:
