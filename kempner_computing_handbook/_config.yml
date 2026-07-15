@@ -50,6 +50,7 @@ sphinx:
     - sphinx_sitemap
     - sphinxcontrib.mermaid
     - sphinx_last_updated_by_git
+    - ablog
   config:
     myst_linkify_fuzzy_links: false
     html_baseurl: https://handbook.eng.kempnerinstitute.harvard.edu/
@@ -57,3 +58,12 @@ sphinx:
     ogp_site_name: Kempner Institute Computing Handbook
     sitemap_url_scheme: "{link}"
     mermaid_version: "11.12.1"
+    blog_path: "technical_blog/README"
+    blog_default_author: max_shad
+    blog_authors:
+      max_shad:
+        - Max Shad
+        - https://kempnerinstitute.harvard.edu/people/our-people/max-shad/
+      yasin_mazloumi:
+        - Yasin Mazloumi
+        - https://kempnerinstitute.harvard.edu/people/our-people/abbas-mazloumi/

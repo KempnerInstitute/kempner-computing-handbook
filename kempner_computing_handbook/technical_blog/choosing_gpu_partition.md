@@ -2,6 +2,13 @@
 
 *A100 vs H100 vs H200 vs RTX6000, with benchmarks.*
 
+```{post} 2026-07-15
+:author: max_shad, yasin_mazloumi
+:tags: GPU, HPC, benchmarks
+```
+
+**Author(s):** <a href="README/author/max-shad.html">Max Shad</a> ([Homepage](https://kempnerinstitute.harvard.edu/people/our-people/max-shad/)) · <a href="README/author/yasin-mazloumi.html">Yasin Mazloumi</a> ([Homepage](https://kempnerinstitute.harvard.edu/people/our-people/abbas-mazloumi/))
+
 The Kempner AI cluster gives you a choice of GPU: A100, H100, H200, or RTX PRO
 6000 (Blackwell). You can run jobs on all four base partitions, so the practical
 question is not *whether* you can get a GPU, but *which one* finishes your work
