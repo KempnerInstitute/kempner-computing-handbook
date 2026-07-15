@@ -60,7 +60,10 @@ full script.
 The A100 has the least compute and memory. The H100 and H200 lead on compute and
 match within run-to-run variation. The H200 pulls ahead on memory bandwidth and, with it,
 end-to-end training throughput. FP8 roughly doubles matrix multiply throughput on
-the GPUs that support it, and the RTX6000 sits in the middle.
+the GPUs that support it, and the RTX6000 sits in the middle. The
+{ref}`matrix multiply figure <blog-compute-tflops>` and the
+{ref}`bandwidth and training figure <blog-bandwidth-throughput>` below break this
+down.
 
 ```{figure} figures/png/compute_tflops.png
 ---
@@ -91,9 +94,9 @@ The measured numbers:
 | GPU | TF32 | FP16 | BF16 | FP8 | FP4 | Bandwidth (GB/s) | Training (tokens/s) |
 |-----|-----:|-----:|-----:|----:|----:|-----------------:|--------------------:|
 | A100 | 124 | 263 | 267 | n/a | n/a | 1,384 | 30,191 |
-| RTX6000 | 201 | 304 | 386 | 697 | 749 | 1,460 | 41,370 |
 | H100 | 355 | 690 | 710 | 1,339 | n/a | 3,042 | 73,899 |
 | H200 | 350 | 668 | 696 | 1,353 | n/a | 4,300 | 77,163 |
+| RTX6000 | 201 | 304 | 386 | 697 | 749 | 1,460 | 41,370 |
 
 Each value is the mean of three runs. The TF32 through FP8 columns are achieved
 matrix multiply throughput in TFLOPS. FP8 runs only on the H100, H200, and RTX6000.
@@ -124,9 +127,9 @@ A few things stand out:
   compute, but the H200 trains this model a few percent faster, because the step
   is partly memory bound. Both Hopper GPUs are roughly 2.5 times the A100, and the
   RTX6000 trains it about 37 percent faster than the A100.
-- **Memory capacity sets the ceiling.** The A100, H100, RTX6000, and H200 provide
-  roughly 40, 80, 96, and 141 GB. That ceiling, not speed, is often what decides
-  whether a model and its batch fit at all.
+- **Memory capacity sets the ceiling.** The A100 has 40 GB, the H100 80 GB, the
+  H200 141 GB, and the RTX6000 96 GB. That ceiling, not speed, is often what
+  decides whether a model and its batch fit at all.
 
 These are single-GPU, achieved numbers for one specific workload, not vendor peak
 values and not multi-GPU scaling. Treat them as a realistic guide to relative
@@ -166,23 +169,26 @@ direct picture of where that capability is available.
 
 The right partition depends on the workload. For large multi-GPU training that
 shards one model, the NVLink Hopper GPUs (H100 and H200) scale best, with the H200
-adding the most memory and bandwidth. For single-GPU work, the RTX6000 is a strong,
-high-memory option: its 96 GB and solid throughput suit inference,
-reinforcement-learning experiments, and other single-GPU pipelines, and it also
-carries FP4 and RT Cores. The A100 fits smaller compute-bound jobs, and the H200 is
-the pick whenever a job is memory-bandwidth bound.
+adding the most memory and bandwidth. For single-GPU work, the RTX6000 is a strong
+general-purpose choice: with 96 GB, more than the H100, and solid throughput, it
+handles single-GPU training, fine-tuning, inference, and reinforcement-learning
+experiments, and it also carries FP4 and RT Cores. The Hopper GPUs pull ahead when
+you need the fastest single-GPU compute or multi-GPU scaling, and the A100 suits
+smaller or exploratory jobs that fit its 40 GB.
 
 ```{mermaid}
 flowchart TD
     A[Start: which partition?] --> B{Multi-GPU training that<br/>shards one model over NVLink?}
     B -->|Yes| C{Needs the most<br/>memory or bandwidth?}
-    C -->|Yes| H200["kempner_h200: H200, 141 GB"]
-    C -->|No| H100["kempner_h100: H100, 80 GB"]
-    B -->|No| D{Compute-bound training<br/>for peak throughput?}
-    D -->|Yes| E{Fits in 40 GB?}
-    E -->|Yes| A100["kempner: A100, 40 GB"]
-    E -->|No| H100
-    D -->|No| RTX["kempner_rtx: RTX6000, 96 GB<br/>inference, RL, up to 96 GB"]
+    C -->|Yes| H200a["kempner_h200: H200, 141 GB"]
+    C -->|No| H100a["kempner_h100: H100, 80 GB"]
+    B -->|No| D{Want peak compute<br/>throughput?}
+    D -->|Yes| E{Over 80 GB or<br/>bandwidth bound?}
+    E -->|Yes| H200b["kempner_h200: H200, 141 GB"]
+    E -->|No| H100b["kempner_h100: H100, 80 GB"]
+    D -->|No| F{Small or exploratory job<br/>that fits in 40 GB?}
+    F -->|Yes| A100["kempner: A100, 40 GB"]
+    F -->|No| RTX["kempner_rtx: RTX6000, 96 GB"]
 ```
 
 The table below maps common workloads to a recommended partition.
@@ -191,7 +197,7 @@ The table below maps common workloads to a recommended partition.
 |----------|----------------------|-----|
 | Largest models, long context, memory-bound inference | `kempner_h200` | Most memory (141 GB) and highest bandwidth |
 | High-throughput large-model training with FP8 | `kempner_h100` or `kempner_h200` | Hopper Tensor Cores and FP8 |
-| Single-GPU inference or reinforcement-learning experiments | `kempner_rtx` | 96 GB on one GPU with good throughput, no NVLink needed |
+| Single-GPU training, fine-tuning, inference, or RL | `kempner_rtx` | 96 GB on one GPU with good throughput, no NVLink needed |
 | Low-precision or quantization research (FP4) | `kempner_rtx` | Only GPU here with FP4 |
 | Rendering, robotics, reinforcement learning with simulation | `kempner_rtx` | RT Cores for ray tracing |
 | Small to mid-size training and prototyping | `kempner` (A100) | Widely available, well understood |
@@ -392,7 +398,8 @@ if __name__ == "__main__":
   and well ahead of the A100 and RTX6000.
 - When a job is memory-bound, or needs the most memory or bandwidth, the H200 is
   the clear pick.
-- The RTX6000 is a strong middle option and the only GPU here with FP4 and RT
-  Cores. The A100 remains a fine choice for small to mid-size and established work.
+- The RTX6000 is a strong general-purpose single-GPU option, with 96 GB and the
+  only FP4 and RT Cores here. The A100 remains a fine choice for small or
+  established work.
 - Check current queue depth and the per-user and per-account GPU caps before
   committing a large job, and use `kempner_requeue` to soak up spare capacity.
