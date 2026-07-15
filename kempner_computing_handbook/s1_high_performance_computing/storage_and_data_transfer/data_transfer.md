@@ -140,7 +140,7 @@ You can also submit a job to run `fpsync` and set the number of concurrent jobs 
 srun -c $SLURM_CPUS_PER_TASK fpsync -n $SLURM_CPUS_PER_TASK -t /temp/directory /source/directory /destination/directory
 ```
 
-Refer to the [fpsync documentation](https://manpages.ubuntu.com/manpages/bionic/man1/fpsync.1.html) for further information and additional argument options.
+Refer to the [fpsync documentation](https://docs.rc.fas.harvard.edu/kb/transferring-data-on-the-cluster/) for further information and additional argument options.
 
 :::
 

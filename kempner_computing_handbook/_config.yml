@@ -58,6 +58,21 @@ sphinx:
     ogp_site_name: Kempner Institute Computing Handbook
     sitemap_url_scheme: "{link}"
     mermaid_version: "11.12.1"
+    # Link checking (run via: jupyter-book build ... --builder linkcheck).
+    linkcheck_anchors: false
+    linkcheck_retries: 2
+    linkcheck_timeout: 30
+    linkcheck_allowed_redirects:
+      '.*': '.*'
+    linkcheck_ignore:
+      # Harvard-internal hosts that do not resolve or negotiate TLS off-network.
+      - 'https?://vdi\.rc\.fas\.harvard\.edu'
+      - 'https?://vpn\.rc\.fas\.harvard\.edu'
+      # Hosts that block automated requests (work fine in a browser).
+      - 'https?://(www\.)?huit\.harvard\.edu'
+      - 'https?://(www\.)?dataverse\.org'
+      - 'https?://(www\.)?acm\.org'
+      - 'https?://wiki\.lustre\.org'
     blog_path: "technical_blog/README"
     blog_default_author: max_shad
     blog_authors:
