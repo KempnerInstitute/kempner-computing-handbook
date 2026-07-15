@@ -3,6 +3,7 @@ name = "kempner-computing-handbook"
 version = "0"
 requires-python = ">=3.12"
 dependencies = [
+    "ablog>=0.11.13",
     "jupyter-book<2",
     "sphinx-last-updated-by-git>=0.3.8",
     "sphinx-sitemap>=2.9.0",
