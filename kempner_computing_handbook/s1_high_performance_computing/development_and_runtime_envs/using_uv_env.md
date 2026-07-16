@@ -3,7 +3,7 @@
 
 [`uv`](https://docs.astral.sh/uv/) is a fast Python package and project manager. It can create a virtual environment, install Python packages, record direct dependencies in a `pyproject.toml` file, and lock exact dependency versions in a `uv.lock` file. This makes it useful for maintaining a separate, reproducible environment for each research project.
 
-`uv` manages Python packages. It does not replace the cluster's software modules when your work needs system software such as CUDA, compilers, MPI, or other non-Python libraries. Load those modules separately before creating the environment and when running the project.
+`uv` manages only Python packages. It does not replace the cluster's software modules for system software such as CUDA, compilers, or MPI. Load those modules separately before you create and run the environment.
 
 ## Installing `uv`
 
@@ -68,7 +68,7 @@ The recommended `uv` workflow keeps the dependency declarations and lockfile in 
   uv python pin 3.12
   ```
 
-  `uv` records this choice in `.python-version`. If a suitable Python installation is not available, `uv` downloads a managed Python build by default. To require a Python installation already provided by the cluster, create the environment with the loaded interpreter instead:
+  `uv` records this choice in `.python-version`. If no suitable Python is found, `uv` downloads its own managed build by default. To use the cluster's Python instead, create the environment with the loaded interpreter:
 
   ```bash
   uv venv --python "$(which python)" --no-managed-python
@@ -165,7 +165,7 @@ After cloning the project, recreate the environment with:
 uv sync --locked
 ```
 
-The `--locked` option fails instead of changing `uv.lock` if the lockfile and project metadata disagree. This is useful in batch jobs and other reproducible workflows.
+With `--locked`, `uv` fails rather than rewriting `uv.lock` when the lockfile and project metadata disagree — useful in batch jobs and other reproducible workflows.
 
 If another tool requires a `requirements.txt` file, export one from the lockfile:
 
@@ -236,7 +236,7 @@ For details on selecting a notebook kernel in VSCode, see {ref}`development_and_
 
 ## Storing Environments and the Cache Outside the Home Directory
 
-By default, the project environment is located at `<project>/.venv`, and the shared cache is located under `~/.cache/uv`. Environments and cached packages can consume substantial storage and many inodes. For large projects, keep the project and its `.venv` in an appropriate lab directory and move the cache to that filesystem as well:
+By default, the project environment lives at `<project>/.venv` and the shared cache under `~/.cache/uv`. Both can consume substantial storage and many inodes. For large projects, keep the project and its `.venv` in an appropriate lab directory and move the cache to that filesystem as well:
 
 ```bash
 mkdir -p /n/holylabs/LABS/<lab_name>/Users/<username>/.cache/uv
@@ -284,7 +284,7 @@ After confirming that the new environment works, delete `.venv.old`.
 
 ### Packages Requiring CUDA, MPI, or Compilers
 
-Load the required cluster modules before running `uv add`, `uv sync`, or the project. Some Python packages do not publish a compatible pre-built wheel and must be compiled locally; their builds may require compiler and system-library modules. If a package depends heavily on non-Python libraries, a Conda environment, a container, or the cluster's software modules may be more appropriate than a `uv`-only environment.
+Load the required cluster modules before running `uv add`, `uv sync`, or the project. Some Python packages have no pre-built wheel and must be compiled locally, which may require compiler and system-library modules. If a package depends heavily on non-Python libraries, a Conda environment, a container, or the cluster's software modules may be more appropriate than a `uv`-only environment.
 
 ````{seealso}
 See the official [`uv` project guide](https://docs.astral.sh/uv/guides/projects/) and [command reference](https://docs.astral.sh/uv/reference/cli/) for additional options.
