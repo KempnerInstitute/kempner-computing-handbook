@@ -206,33 +206,6 @@ uv run --locked --offline python analysis.py
 The offline command succeeds only when the required Python installation, environment, and packages are already available. Run `uv sync --locked` in the project directory before submitting the job.
 ```
 
-(development_and_runtime_envs:using_uv_env:jupyter)=
-## Using a `uv` Environment with Jupyter
-
-Add `ipykernel` as a development dependency:
-
-```bash
-uv add --dev ipykernel
-```
-
-VSCode can use the interpreter at `.venv/bin/python` directly. To register a named kernel for Jupyter, run:
-
-```bash
-uv run ipython kernel install --user \
-  --env VIRTUAL_ENV "$(pwd)/.venv" \
-  --name myproject \
-  --display-name "Python (myproject)"
-```
-
-You can then select **Python (myproject)** as the notebook kernel. To launch JupyterLab without adding it as a project dependency, use:
-
-```bash
-uv run --with jupyter jupyter lab
-```
-
-```{seealso}
-For details on selecting a notebook kernel in VSCode, see {ref}`development_and_runtime_envs:using_vscode_for_remote_development:jupyter` and the official [`uv` Jupyter guide](https://docs.astral.sh/uv/guides/integration/jupyter/).
-```
 
 ## Storing Environments and the Cache Outside the Home Directory
 
