@@ -94,6 +94,7 @@ L = \frac{1}{2} (y' - y)^2
 &b_i = b_i - \alpha . b_i.grad 
 ```
 Corresponding single-GPU pytorch code for the above example would be the following code:
+````{dropdown} Single-GPU MLP example (mlp_single_gpu.py)
 ```{code-block}
 :name: mlp_single_gpu
 :caption: mlp_single_gpu.py - Simple MLP example training loop. Note that it uses a random dataset with size of 1024 and batch size of 32.
@@ -168,7 +169,9 @@ for i in range(max_epochs):
     # Update Model
     optimizer.step()
 ```
+````
 The `RandomTensorDataset` will generate random tensors for the input as well as output label.
+````{dropdown} Random dataset (random_dataset.py)
 ```{code-block}
 :name: random_dataset
 :caption: random_dataset.py - Simple Random Dataset
@@ -187,6 +190,7 @@ class RandomTensorDataset(Dataset):
   def __getitem__(self, idx):
     return self.data[idx]
 ```
+````
 ````{dropdown} Run the above code on the AI cluster
 If you don't have a conda environment already in which PyTorch is installed, you need to create one.
 
