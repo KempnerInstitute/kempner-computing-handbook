@@ -63,6 +63,7 @@ Once you have an active FASRC account, you can request access to the Kempner AI 
 - [ ] Create a project-specific conda environment. See {ref}`development_and_runtime_envs:using_conda_env:creation`.
 - [ ] If you will use Jupyter or JupyterLab, install `ipykernel` in your conda environment. See {ref}`development_and_runtime_envs:using_conda_env:jupyter`.
 - [ ] If you will use VSCode, review the remote development workflow in {ref}`development_and_runtime_envs:using_vscode_for_remote_development`.
+- [ ] If you plan to use AI coding assistants or the Anthropic (Claude) API on the cluster, review FASRC's guidance on [AI extensions such as Jupyter-AI](https://docs.rc.fas.harvard.edu/kb/ai-extensions-on-fasrc-clusters/) and [the Anthropic API](https://docs.rc.fas.harvard.edu/kb/anthropic/).
 
 ## Run a First GPU Job
 
