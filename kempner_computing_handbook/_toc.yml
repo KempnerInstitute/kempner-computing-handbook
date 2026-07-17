@@ -31,6 +31,7 @@ parts:
       - file: s1_high_performance_computing/development_and_runtime_envs/containerization
       - file: s1_high_performance_computing/development_and_runtime_envs/using_vscode_for_remote_development
       - file: s1_high_performance_computing/development_and_runtime_envs/using_conda_env
+      - file: s1_high_performance_computing/development_and_runtime_envs/using_uv_env
       - file: s1_high_performance_computing/development_and_runtime_envs/handling_dependencies_with_spack
       - file: s1_high_performance_computing/development_and_runtime_envs/customizing_bashrc
     - file: s1_high_performance_computing/storage_and_data_transfer/README
