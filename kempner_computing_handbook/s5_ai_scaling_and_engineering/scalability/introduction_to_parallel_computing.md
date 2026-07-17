@@ -36,7 +36,7 @@ MPI Workflow Diagram (*Credit: [hpc.nmsu.edu](https://hpc.nmsu.edu/discovery/mpi
 height: 300px
 name: OpenMP Architecture Diagram
 ---
-OpenMP Architecture Diagram (*Credit: [nersc.gov](https://docs.nersc.gov/development/programming-models/openmp/)*)
+OpenMP Architecture Diagram (*Credit: [nersc.gov](https://docs.nersc.gov/development/openmp/)*)
 ```
 
 **CUDA (Compute Unified Device Architecture)**: A parallel computing platform and application programming interface (API) model created by NVIDIA. It allows software developers to use a CUDA-enabled graphics processing unit (GPU) for general purpose processing.

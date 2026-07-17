@@ -64,5 +64,5 @@ A list of useful Spack environment commands,
 
 
 ```{tip}
-A complete list of over 5,064 packages in Spack can be found on this [page](https://spack.readthedocs.io/en/v0.16.2/package_list.html). Read more about Spack [here](https://spack.readthedocs.io/en/latest/index.html).
+A complete list of Spack packages can be found on this [page](https://packages.spack.io). Read more about Spack [here](https://spack.readthedocs.io/en/latest/index.html).
 ```

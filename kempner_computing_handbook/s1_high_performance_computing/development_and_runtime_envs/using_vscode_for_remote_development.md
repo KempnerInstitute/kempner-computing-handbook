@@ -12,7 +12,7 @@ You must install VSCode on your local machine and also ensure the Remote - SSH e
 - [Remote Explorer extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.remote-explorer)
 
 ```{note}
-Please see [Install Visual Studio Code extensions](https://code.visualstudio.com/learn/get-started/extensions) for installing the extensions.
+Please see [Install Visual Studio Code extensions](https://code.visualstudio.com/docs/configure/extensions/extensions) for installing the extensions.
 ```
 
 ## Connecting to the FASRC cluster (login node)
