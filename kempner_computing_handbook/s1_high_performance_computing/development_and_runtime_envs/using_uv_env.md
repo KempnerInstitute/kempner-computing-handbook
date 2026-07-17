@@ -1,5 +1,5 @@
 (development_and_runtime_envs:using_uv_env)=
-# Python Environments with `uv`
+# uv Environment
 
 [`uv`](https://docs.astral.sh/uv/) is a fast Python package and project manager. It can create a virtual environment, install Python packages, record direct dependencies in a `pyproject.toml` file, and lock exact dependency versions in a `uv.lock` file. This makes it useful for maintaining a separate, reproducible environment for each research project.
 
@@ -165,7 +165,7 @@ After cloning the project, recreate the environment with:
 uv sync --locked
 ```
 
-With `--locked`, `uv` fails rather than rewriting `uv.lock` when the lockfile and project metadata disagree — useful in batch jobs and other reproducible workflows.
+With `--locked`, `uv` fails rather than rewriting `uv.lock` when the lockfile and project metadata disagree, which is useful in batch jobs and other reproducible workflows.
 
 If another tool requires a `requirements.txt` file, export one from the lockfile:
 
@@ -228,6 +228,14 @@ Keeping the cache and virtual environment on the same filesystem gives `uv` the 
 uv cache prune
 ```
 
+To check the cache size, clear it entirely, or clear the entries for a single package:
+
+```bash
+du -sh $(uv cache dir)   # show how much space the cache is using
+uv cache clean           # remove all cache entries
+uv cache clean ruff      # remove cache entries for one package
+```
+
 ```{warning}
 Scratch storage is periodically purged. It can be suitable for a disposable cache, but do not rely on it as the only location for project source code or lockfiles. If `.venv` is purged, recreate it with `uv sync --locked`.
 ```
@@ -257,7 +265,7 @@ After confirming that the new environment works, delete `.venv.old`.
 
 ### Packages Requiring CUDA, MPI, or Compilers
 
-Load the required cluster modules before running `uv add`, `uv sync`, or the project. Some Python packages have no pre-built wheel and must be compiled locally, which may require compiler and system-library modules. If a package depends heavily on non-Python libraries, a Conda environment, a container, or the cluster's software modules may be more appropriate than a `uv`-only environment.
+Load the required cluster modules before running `uv add`, `uv sync`, or the project. Some Python packages have no pre-built wheel and must be compiled locally, which may require compiler and system-library modules. If a package depends heavily on non-Python libraries, a [Conda environment](using_conda_env.md), a container, or the cluster's software modules may be more appropriate than a `uv`-only environment.
 
 ````{seealso}
 See the official [`uv` project guide](https://docs.astral.sh/uv/guides/projects/) and [command reference](https://docs.astral.sh/uv/reference/cli/) for additional options.
