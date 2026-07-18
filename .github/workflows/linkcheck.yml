@@ -20,7 +20,7 @@ jobs:
         fetch-depth: 0
 
     - name: Install uv
-      uses: astral-sh/setup-uv@v8.1.0
+      uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b  # v8.1.0
       with:
         enable-cache: true
 
@@ -52,7 +52,7 @@ jobs:
 
     - name: Open or update link-check issue
       if: steps.collect.outputs.has_broken == 'true'
-      uses: peter-evans/create-issue-from-file@v6.0.0
+      uses: peter-evans/create-issue-from-file@fca9117c27cdc29c6c4db3b86c48e4115a786710  # v6.0.0
       with:
         title: Link Checker Report
         content-filepath: ./linkcheck-report.md
