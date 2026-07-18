@@ -72,6 +72,7 @@ sphinx:
       - 'https?://(www\.)?huit\.harvard\.edu'
       - 'https?://(www\.)?dataverse\.org'
       - 'https?://(www\.)?acm\.org'
+      - 'https?://(www\.)?dvc\.org'
       - 'https?://wiki\.lustre\.org'
     blog_path: "technical_blog/README"
     blog_default_author: max_shad
