@@ -94,6 +94,7 @@ L = \frac{1}{2} (y' - y)^2
 &b_i = b_i - \alpha . b_i.grad 
 ```
 Corresponding single-GPU pytorch code for the above example would be the following code:
+````{dropdown} Single-GPU MLP example (mlp_single_gpu.py)
 ```{code-block}
 :name: mlp_single_gpu
 :caption: mlp_single_gpu.py - Simple MLP example training loop. Note that it uses a random dataset with size of 1024 and batch size of 32.
@@ -168,7 +169,9 @@ for i in range(max_epochs):
     # Update Model
     optimizer.step()
 ```
+````
 The `RandomTensorDataset` will generate random tensors for the input as well as output label.
+````{dropdown} Random dataset (random_dataset.py)
 ```{code-block}
 :name: random_dataset
 :caption: random_dataset.py - Simple Random Dataset
@@ -187,6 +190,7 @@ class RandomTensorDataset(Dataset):
   def __getitem__(self, idx):
     return self.data[idx]
 ```
+````
 ````{dropdown} Run the above code on the AI cluster
 If you don't have a conda environment already in which PyTorch is installed, you need to create one.
 
@@ -300,7 +304,10 @@ print(
 init_process_group(backend="nccl", rank=rank, world_size=world_size)
 if rank == 0: print(f"Group initialized? {is_initialized()}", flush=True)
 
-device = rank - gpus_per_node * (rank // gpus_per_node)
+# The local GPU index within a node is provided by the launcher, so there is no
+# need to derive it from the global rank: srun sets SLURM_LOCALID for each task,
+# and torchrun sets LOCAL_RANK for each process.
+device = int(os.environ["SLURM_LOCALID"])
 torch.cuda.set_device(device)
 
 print(f'Using GPU{device} on Machine {os.uname().nodename.split('.')[0]} (Rank {rank})')
@@ -331,7 +338,11 @@ dataset = RandomTensorDataset(
 
 dataloader = DataLoader(
   dataset,
-  batch_size=batch_size, # Global batch size is equal to batch_size multiply by the number of GPUs (world_size). batch_size=(batch_size//worldsize) to maintain the global batch size as batch_size
+  # Each rank loads `batch_size` samples, so the effective global batch is
+  # batch_size * world_size. To keep the global batch fixed as the number of
+  # GPUs changes, set the per-rank batch to batch_size // world_size (and scale
+  # the learning rate or use gradient accumulation accordingly).
+  batch_size=batch_size,
   pin_memory=True,
   shuffle=False,
   num_workers=int(os.environ["SLURM_CPUS_PER_TASK"]),
@@ -370,9 +381,9 @@ Now use the following slurm script skeleton to run the `mlp_ddp.py` from {numref
 :name: multi_gpu_slurm
 :caption: Slurm script skeleton to run {numref}`mlp_ddp_code` on multiple GPUs. Here, it requests for two nodes, one GPU on each node, a total of two GPUs.
 #! /bin/bash
-#SBATCH --job-name=mlp_tp
-#SBATCH --output=tp.out
-#SBATCH --error=tp.err
+#SBATCH --job-name=mlp_ddp
+#SBATCH --output=ddp.out
+#SBATCH --error=ddp.err
 
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=1
@@ -498,6 +509,89 @@ As you see in {numref}`mlp_mp_figure`, the main drawback of this method is that 
 ### Pipeline Parallelism (PP)
 It is very similar to the naive model parallelism while it combines aspects of data and model parallelism by splitting the model into stages that are processed in a pipeline fashion to mitigate the GPU idle time issue in model parallelism. Each stage of the model is processed on different GPU, allowing for efficient parallel processing of large models and datasets.
 
+Pipeline Parallelism reduces the idle time of naive model parallelism by splitting each batch into smaller *micro-batches* and streaming them through the stages. While one GPU works on the later stage of a micro-batch, the previous GPU can already start the earlier stage of the next one, so the two overlap and the idle "bubble" shrinks.
+
+{numref}`mlp_pp_code` adapts the naive model parallel example, {numref}`mlp_mp_code`, by keeping each layer on a separate GPU and feeding micro-batches through the two stages.
+````{dropdown} Using PP To Run The Simple MLP Example On Two GPUs
+```{code-block}
+:name: mlp_pp_code
+:caption: mlp_pipeline_parallel.py - Modifying the naive model parallel example, {numref}`mlp_mp_code`, to add micro-batching across two GPUs on the same node.
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import DataLoader
+from random_dataset import RandomTensorDataset
+
+# The two layers form two pipeline stages placed on two GPUs (as in naive MP).
+class MLP(nn.Module):
+  def __init__(self, in_feature, hidden_units, out_feature):
+    super().__init__()
+
+    self.hidden_layer = nn.Linear(in_feature, hidden_units).to(0)   # stage 0 -> GPU 0
+    self.output_layer = nn.Linear(hidden_units, out_feature).to(1)  # stage 1 -> GPU 1
+
+  def stage0(self, x):
+    return self.hidden_layer(x.to(0))
+
+  def stage1(self, h):
+    return self.output_layer(h.to(1))
+
+# model construction
+layer_1_units = 6
+layer_2_units = 4
+layer_3_units = 2
+model = MLP(
+  in_feature=layer_1_units,
+  hidden_units=layer_2_units,
+  out_feature=layer_3_units
+)
+
+loss_fn = nn.MSELoss()
+optimizer = optim.SGD(model.parameters(), lr=0.01)
+
+# dataset construction
+num_samples = 1024
+batch_size  = 32
+num_micro_batches = 4   # split each batch to fill the pipeline and shrink the idle bubble
+dataset = RandomTensorDataset(
+  num_samples=num_samples,
+  in_shape=layer_1_units,
+  out_shape=layer_3_units
+  )
+
+dataloader = DataLoader(
+  dataset,
+  batch_size=batch_size,
+  pin_memory=True,
+  shuffle=True
+  )
+
+max_epochs = 1
+for i in range(max_epochs):
+  print(f"Epoch {i} | Batch size: {batch_size} | Micro-batches: {num_micro_batches} | Steps: {len(dataloader)}")
+  for x, y in dataloader:
+    micro_x = x.chunk(num_micro_batches)
+    micro_y = y.chunk(num_micro_batches)
+
+    optimizer.zero_grad(set_to_none=True)
+
+    # Feed the micro-batches through the two stages. Because the stages live on
+    # different GPUs, stage 0 of the next micro-batch (GPU 0) can run while stage
+    # 1 of the current one (GPU 1) is still going, which shrinks the idle "bubble".
+    losses = []
+    for mx, my in zip(micro_x, micro_y):
+      h = model.stage0(mx)              # stage 0 on GPU 0
+      out = model.stage1(h)             # stage 1 on GPU 1
+      losses.append(loss_fn(out, my.to(1)))
+
+    # Accumulate the micro-batch gradients, then take one optimizer step.
+    loss = torch.stack(losses).mean()
+    loss.backward()
+    optimizer.step()
+```
+This example runs as a single process that drives two GPUs on the same node, so you can run it with the same steps as the single-GPU {numref}`mlp_single_gpu`, but request two GPUs (`--gres=gpu:2`). It uses a GPipe-style schedule that runs all of a batch's micro-batches before the optimizer step. Production pipelines use more advanced schedules, such as one-forward-one-backward, available through [`torch.distributed.pipelining`](https://docs.pytorch.org/docs/stable/distributed.pipelining.html).
+````
+
 ### Tensor Parallelism (TP)
 Tensor Parallelism is a form of Model Parallelism in which we divide the parameter tensors of each layer into slices and each GPU will hold one slice instead of putting the entire layer in one GPU. In this way each GPU participates in computation of every layer equally and does not have to be idle and waiting for other GPUs to perform previous layers’ computation.
 
@@ -563,7 +657,8 @@ if rank == 0: print(f"Group initialized? {is_initialized()}", flush=True)
 
 device_mesh = init_device_mesh(device_type="cuda", mesh_shape=(world_size,))
 assert(rank == device_mesh.get_rank())
-device = rank - gpus_per_node * (rank // gpus_per_node)
+# Local GPU index within the node (srun sets SLURM_LOCALID; torchrun sets LOCAL_RANK).
+device = int(os.environ["SLURM_LOCALID"])
 torch.cuda.set_device(device)
 
 print(f'Using GPU{device} on Machine {os.uname().nodename.split('.')[0]} (Rank {rank})')
@@ -651,7 +746,6 @@ Since each GPU is working with different data batches, after the backward pass a
 
 FSDP's sharding method is optimized for collective communication primitives. For each FSDP unit, it flattens all the parameters into a 1D array format and then equally divides them across GPUs. {numref}`mlp_fsdp_figure` shows how fsdp can be applied on our simple mlp example of {numref}`mlp_single_gpu`.
 
-{numref}`mlp_tp_figure` shows the model parallelism of our simple mlp example.
 ```{figure} figures/png/mlp_fsdp.png
 ---
 width: 100%
@@ -659,3 +753,111 @@ name: mlp_fsdp_figure
 ---
 FSDP implementation for the simple MLP example.
 ```
+
+{numref}`mlp_fsdp_code` shows how to wrap the simple MLP with FSDP. Like DDP, FSDP is data parallel, so each GPU processes its own shard of the data using a `DistributedSampler`; the difference is that FSDP also shards the model parameters across the GPUs. The `size_based_auto_wrap_policy` decides which submodules become their own sharded FSDP units.
+````{dropdown} Using FSDP To Run The Simple MLP Example On Two GPUs
+```{code-block}
+:name: mlp_fsdp_code
+:caption: mlp_fsdp.py - Modifying the simple mlp example, {numref}`mlp_single_gpu`, to run on multiple GPUs using FSDP.
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import DataLoader
+
+from torch.utils.data.distributed import DistributedSampler
+from torch.distributed.fsdp import FullyShardedDataParallel as FSDP
+from torch.distributed.fsdp.wrap import size_based_auto_wrap_policy
+from torch.distributed import init_process_group, destroy_process_group, is_initialized
+import os
+import functools
+
+from random_dataset import RandomTensorDataset
+
+class MLP(nn.Module):
+  def __init__(self, in_feature, hidden_units, out_feature):
+    super().__init__()
+
+    self.hidden_layer = nn.Linear(in_feature, hidden_units)
+    self.output_layer = nn.Linear(hidden_units, out_feature)
+
+  def forward(self, x):
+    x = self.hidden_layer(x)
+    x = self.output_layer(x)
+    return x
+
+rank       = int(os.environ["SLURM_PROCID"])
+world_size = int(os.environ["WORLD_SIZE"])
+
+# Using NCCL for inter-GPU communication
+init_process_group(backend="nccl", rank=rank, world_size=world_size)
+if rank == 0: print(f"Group initialized? {is_initialized()}", flush=True)
+
+# Local GPU index within the node (srun sets SLURM_LOCALID; torchrun sets LOCAL_RANK).
+device = int(os.environ["SLURM_LOCALID"])
+torch.cuda.set_device(device)
+
+# model construction
+layer_1_units = 6
+layer_2_units = 4
+layer_3_units = 2
+model = MLP(
+  in_feature=layer_1_units,
+  hidden_units=layer_2_units,
+  out_feature=layer_3_units
+  ).to(device)
+
+# Wrap the model with FSDP. The auto-wrap policy places every submodule with at
+# least `min_num_params` parameters into its own FSDP unit, whose parameters are
+# flattened and sharded across the GPUs. The threshold is tiny here only because
+# the example model is tiny; use a much larger value for real models.
+auto_wrap_policy = functools.partial(size_based_auto_wrap_policy, min_num_params=20)
+model = FSDP(model, auto_wrap_policy=auto_wrap_policy, device_id=device)
+
+loss_fn = nn.MSELoss()
+optimizer = optim.SGD(model.parameters(), lr=0.01)
+
+# dataset construction (each GPU sees its own shard of the data)
+num_samples = 1024
+batch_size  = 32
+dataset = RandomTensorDataset(
+  num_samples=num_samples,
+  in_shape=layer_1_units,
+  out_shape=layer_3_units
+  )
+
+dataloader = DataLoader(
+  dataset,
+  batch_size=batch_size,
+  pin_memory=True,
+  shuffle=False,
+  num_workers=int(os.environ["SLURM_CPUS_PER_TASK"]),
+  sampler=DistributedSampler(dataset, num_replicas=world_size, rank=rank)
+  )
+
+max_epochs = 1
+for i in range(max_epochs):
+  print(f"[GPU{rank}] Epoch {i} | Batchsize: {len(next(iter(dataloader))[0])} | Steps: {len(dataloader)}")
+  dataloader.sampler.set_epoch(i)
+  for x, y in dataloader:
+    x = x.to(device)
+    y = y.to(device)
+
+    # Forward Pass
+    out = model(x)
+
+    # Calculate loss
+    loss = loss_fn(out, y)
+
+    # Zero grad
+    optimizer.zero_grad(set_to_none=True)
+
+    # Backward Pass
+    loss.backward()
+
+    # Update Model
+    optimizer.step()
+
+destroy_process_group()
+```
+To run this code we need the `random_dataset.py` from {numref}`random_dataset` and a conda environment in which PyTorch is installed, refer to {numref}`conda_setup` to create one if you don't have one already. Then use the same slurm script skeleton in {numref}`multi_gpu_slurm` to run `mlp_fsdp.py`.
+````
