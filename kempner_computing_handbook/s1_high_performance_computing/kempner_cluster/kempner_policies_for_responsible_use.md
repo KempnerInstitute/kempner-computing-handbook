@@ -36,7 +36,7 @@ If you need more capacity than these caps allow, please adhere to the following 
 - Use a run-time limit to prevent large jobs from running for a long period of time unexpectedly.
 - Consider running the job with a smaller number of GPUs over a longer time-period.
 
-If none of the above strategies will work, users should submit a reservation request (see [Cluster Governance Guideline](https://kempnerinstitute.harvard.edu/kempner-community/)) so that large projects can be planned and communicated to the community, limiting disruptions for other users.  
+If none of the above strategies will work, users should submit a [reservation request](https://docs.google.com/forms/d/e/1FAIpQLSflr2ksP44isrgqpahRQCUD3mw8AKwUaLM0fU0aMDtVzoACVQ/viewform) (see [Cluster Governance Guideline](https://kempnerinstitute.harvard.edu/kempner-community/)) so that large projects can be planned and communicated to the community, limiting disruptions for other users.  
 
 
 ::::{warning}
