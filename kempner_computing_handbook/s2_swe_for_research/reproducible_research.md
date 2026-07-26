@@ -101,7 +101,7 @@ A result depends on its data as much as its code, so data must be tracked with t
 
 - **Keep raw data immutable and separate from derived data.** Treat source data as read-only and never edit it in place; write cleaned or processed data to a separate location so the original is always recoverable.
 - **Do not commit large data to Git.** Git is built for text and handles large or binary files poorly: it bloats history, slows clones, is hard to purge after the fact, and hosts impose file-size limits (for example, 100 MB on GitHub).
-- **Version large or binary data with a dedicated tool.** [DVC](https://dvc.org/doc/start/data-management/data-versioning) and [Git LFS](https://git-lfs.com) keep large files out of Git history while still versioning them.
+- **Version large or binary data with a dedicated tool.** [DVC](https://doc.dvc.org/example-scenarios/versioning-data-and-models) and [Git LFS](https://git-lfs.com) keep large files out of Git history while still versioning them.
 - **Link each data version to a code commit with DVC.** `dvc add` records the data's content hash in a small `.dvc` pointer file and adds the data itself to `.gitignore`. You commit the pointer to Git, so checking out a commit selects the matching data version, while `dvc push` stores the actual bytes in remote storage (for example, S3 or a shared directory).
 - **Verify data integrity with checksums.** Record a hash (DVC uses MD5 internally) so you can confirm a file has not been altered or corrupted in transit.
 - **Record data provenance.** Note each dataset's source, version, license, and the preprocessing steps that produced any derived files, since the same code on different data gives a different result.
