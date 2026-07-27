@@ -88,6 +88,12 @@ artifact.add_dir("data/processed")
 run.log_artifact(artifact)
 ```
 
+```{warning}
+`add_dir` and `add_file` upload the file contents to W&B, so avoid them for large training datasets. To version data that already lives on the cluster or in cloud storage without copying it, use a reference artifact instead, which records only metadata such as the path and checksum:
+
+    artifact.add_reference("file:///n/netscratch/<lab>/datasets/mydata")
+```
+
 Consume a specific version in a later run, which also records the dependency in the run's lineage:
 
 ```python
