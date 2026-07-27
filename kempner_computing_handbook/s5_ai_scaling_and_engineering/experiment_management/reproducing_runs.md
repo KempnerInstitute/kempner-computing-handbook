@@ -1,4 +1,4 @@
-(experiment_management:reproducing_runs)=
+(reproducing_runs)=
 # Reproducing W&B Runs
 
 Reproducing a run means starting from a recorded experiment and obtaining the same result, or a comparable one, later. This requires capturing everything that determines the outcome: the configuration, the code version, the software environment, the random seeds, and the data. Weights & Biases (W&B) records much of this automatically and gives you tools to version the rest. This page collects the practices that make a W&B run reproducible.
