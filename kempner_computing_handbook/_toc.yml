@@ -90,6 +90,7 @@ parts:
       sections:
       - file: s5_ai_scaling_and_engineering/experiment_management/logging_and_monitoring
       - file: s5_ai_scaling_and_engineering/experiment_management/wandb_sweeps
+      - file: s5_ai_scaling_and_engineering/experiment_management/reproducing_runs
   - caption: Security and Compliance
     numbered: true
     chapters:
