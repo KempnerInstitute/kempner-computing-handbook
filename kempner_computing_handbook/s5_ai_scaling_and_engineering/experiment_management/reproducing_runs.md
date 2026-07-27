@@ -74,6 +74,8 @@ torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
 ```
 
+This global seeding is the common pattern in training scripts. For finer control, an explicit local generator (`numpy.random.default_rng` or a `torch.Generator`) keeps its own state instead of relying on global state; see {ref}`Randomness and Seeds <reproducible_research:randomness_and_seeds>`.
+
 ```{note}
 Even with a fixed seed, some GPU operations remain nondeterministic, and results can differ across GPU models, library versions, and the number of processes. Treat a fixed seed as a way to reduce variation, not a guarantee of bit-for-bit identical results.
 ```
