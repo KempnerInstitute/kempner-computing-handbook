@@ -36,6 +36,7 @@ To also save a snapshot of the code with the run, enable code saving:
 ```python
 run = wandb.init(
     project="my-project",
+    save_code=True,
     settings=wandb.Settings(code_dir="."),
 )
 ```
