@@ -15,9 +15,9 @@ Efficiency techniques act on three levers:
 
 ## Mixed-precision training
 
-Training in full 32-bit precision wastes memory and bandwidth. Mixed precision runs most operations in 16-bit while keeping a 32-bit copy of the weights, which cuts memory use and speeds up matrix math on modern GPUs.
+Mixed precision runs most operations in 16-bit while keeping a 32-bit master copy of the weights, and it uses full precision for the operations that need it. This cuts memory use, and because the cluster's A100, H100, and H200 GPUs have tensor cores built for 16-bit and lower, the speedup is larger than the memory saving alone would suggest.
 
-Prefer **bf16** on the cluster's A100, H100, and H200 GPUs: it has the same exponent range as fp32, so it trains stably without the loss-scaling that fp16 needs.
+Prefer **bf16** on these GPUs: it has the same exponent range as fp32, so it trains stably without the loss-scaling that fp16 needs. Some models and sensitive operations still benefit from full 32-bit precision, which mixed precision keeps where it matters.
 
 ```python
 import torch
@@ -81,6 +81,10 @@ Once a run fits, these techniques increase throughput on the same hardware.
 model = torch.compile(model)
 ```
 
+```{note}
+`torch.compile` specializes on input shapes and recompiles when they change, so variable sequence lengths (common in transformer text training) trigger repeated recompilation. Pad inputs to a fixed maximum length, or bucket them, to keep shapes stable.
+```
+
 **CUDA Graphs** capture a sequence of GPU kernels once and replay it as a single unit, removing the per-kernel CPU launch overhead that bottlenecks workloads with many small kernels (small models or small batches). The simplest way to use them is `torch.compile`'s reduce-overhead mode, which applies CUDA Graphs automatically where it is safe:
 
 ```python
@@ -97,6 +101,8 @@ import torch.nn.functional as F
 # Uses a fused FlashAttention kernel when the inputs qualify
 out = F.scaled_dot_product_attention(q, k, v, is_causal=True)
 ```
+
+For custom attention masks, such as packing several sequences into one batch or sliding-window masking, [FlexAttention](https://pytorch.org/blog/flexattention/) compiles a flexible mask or score modification into a fused kernel.
 
 **TF32** lets fp32 matmuls use faster tensor-core math on A100 and newer, usually with no accuracy impact:
 
