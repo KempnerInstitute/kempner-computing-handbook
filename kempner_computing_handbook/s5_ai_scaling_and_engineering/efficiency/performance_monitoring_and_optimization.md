@@ -63,10 +63,17 @@ FASRC also offers a browser-based Single Job Stats Dashboard, where you enter a 
 
 ## The metrics that matter
 
-Track a few numbers that tell you whether the hardware is well used:
+A few numbers tell you whether the hardware is well used. Some you calculate or log yourself, and some you read directly from a monitoring tool.
 
-- **Model FLOPs Utilization (MFU)**: the fraction of the GPU's peak compute your run actually achieves. This is the headline efficiency metric for large training runs, and it is far more meaningful than the `nvidia-smi` utilization percentage.
-- **Throughput**: the work done per second, in whatever unit fits your model, such as samples, images, or steps per second (or tokens per second for language models). The most direct measure of progress, and easy to log every step.
+You calculate or log these:
+
+- **Model FLOPs Utilization (MFU)**: your model's achieved FLOPs per second divided by the GPU's peak. It is the headline efficiency metric for large training runs and far more meaningful than the `nvidia-smi` utilization percentage, but you compute it yourself, and what counts as a good value depends heavily on the model.
+- **Throughput**: the work done per second, in whatever unit fits your model, such as samples, images, or steps per second (or tokens per second for language models). Log it every step as the most direct measure of progress.
+
+You observe these directly, for example in KempnerPulse (from DCGM counters):
+
+- **SM active and SM occupancy**: how much of the time the streaming multiprocessors (SMs) are engaged, and how fully they are filled with warps. Low values point to a compute pipeline that is starved or poorly parallelized.
+- **Tensor-core and memory activity**: whether the tensor cores and memory system are actually being used, which shows whether mixed precision and the data path are paying off.
 - **Memory footprint**: peak GPU memory versus what the GPU has. Headroom means you can grow the batch; running near the limit risks out-of-memory errors.
 - **Power draw**: a rough proxy for how hard the GPU is working.
 
@@ -104,6 +111,10 @@ torch.cuda.memory._record_memory_history()
 torch.cuda.memory._dump_snapshot("mem_snapshot.pickle")
 ```
 
+```{note}
+PyTorch's caching allocator keeps freed memory to reuse it, so `reserved` memory can stay high and the stats can look surprising, especially when the sequence length varies between batches. Read the peak `allocated` value as your true footprint, and compare runs at the same shapes.
+```
+
 ```{seealso}
 Drag the snapshot file onto the interactive viewer at [pytorch.org/memory_viz](https://pytorch.org/memory_viz) to see exactly what allocated the memory. See the [CUDA memory reference](https://docs.pytorch.org/docs/stable/cuda.html) for the statistics functions and the [memory snapshot docs](https://docs.pytorch.org/docs/stable/torch_cuda_memory.html) for the snapshot workflow.
 ```
@@ -116,6 +127,6 @@ Monitoring only pays off when it changes what you do. Common findings and where 
 |---|---|---|
 | Low MFU, GPUs busy | Small batch, unfused ops, no mixed precision | {doc}`ML Efficiency <ml_scaling_and_efficiency>` |
 | Utilization dips between steps | Data loading cannot keep up | {doc}`Parallel I/O <../scalability/parallel_io>` |
-| Out-of-memory errors | Model or batch too large for the GPU | {doc}`ML Efficiency <ml_scaling_and_efficiency>` (checkpointing, accumulation, sharding) |
+| Out-of-memory errors | Model or batch too large for the GPU | {doc}`ML Efficiency <ml_scaling_and_efficiency>` (checkpointing, accumulation, sharding, lower precision) |
 | Multi-GPU run scales poorly | Communication overhead | {doc}`Distributed GPU Computing <../scalability/distributed_gpu_computing>` |
 | Over-requested memory or cores (`seff`) | Allocation larger than needed | Right-size the job; see {doc}`Cluster Usage Policies <../../s1_high_performance_computing/kempner_cluster/kempner_policies_for_responsible_use>` |
