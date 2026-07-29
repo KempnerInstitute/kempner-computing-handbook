@@ -20,7 +20,7 @@ When you run into difficulties, choose the resource that fits your question:
 
 - **FASRC and general HPC issues** (the cluster, accounts, storage, SLURM): open a ticket with the [FASRC Help Desk](https://portal.rc.fas.harvard.edu/login/?next=/rcrt/tickets/), or simply email [rchelp@rc.fas.harvard.edu](mailto:rchelp@rc.fas.harvard.edu).
 - **Kempner-specific questions** (workflows, community advice): use the `#cluster-users` channel in the Kempner Slack space. To get access, contact [Nikki Shawn](https://kempnerinstitute.harvard.edu/people/our-people/nikki-shawn/).
-- **In-person help**: the Kempner Research Engineering Team holds office hours on Tuesdays and Thursdays from 1 to 2 pm in the Kempner Conference Room. Sessions are listed on the [Kempner community calendar](https://kempnerinstitute.harvard.edu/kempner-community/community-calendar/).
+- **In-person help**: the Kempner Research Engineering Team holds office hours on Tuesdays and Thursdays from 1 to 2 pm in the Kempner Conference Room. Sign up with the [office hours intake form](https://forms.gle/W7HtBzGALSKeYLpD6) so the team can plan for your visit or arrange a Zoom. Sessions are listed on the [Kempner community calendar](https://kempnerinstitute.harvard.edu/kempner-community/community-calendar/).
 - **Still stuck**: if these resources do not resolve your issue, reach out to [Max Shad](https://kempnerinstitute.harvard.edu/people/our-people/max-shad/).
 
 ```{seealso}
