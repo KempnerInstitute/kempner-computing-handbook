@@ -85,7 +85,6 @@ parts:
       - file: s5_ai_scaling_and_engineering/efficiency/ml_scaling_and_efficiency
       - file: s5_ai_scaling_and_engineering/efficiency/performance_monitoring_and_optimization
       - file: s5_ai_scaling_and_engineering/efficiency/efficient_deployment_and_inference
-      - file: s5_ai_scaling_and_engineering/efficiency/experiment_management_and_reproducibility
     - file: s5_ai_scaling_and_engineering/experiment_management/README
       sections:
       - file: s5_ai_scaling_and_engineering/experiment_management/logging_and_monitoring
