@@ -55,6 +55,10 @@ Do not move data out of a PI's lab space, whether to another location on the clu
 Any required data use agreement must be in place **before** the data is stored on the cluster, and the PI is responsible for ensuring approved access stays compliant. For planning your data lifecycle, see {doc}`Data Management Plan <../s1_high_performance_computing/storage_and_data_transfer/data_management_plan>` and {doc}`Storage Options <../s1_high_performance_computing/storage_and_data_transfer/understanding_storage_options>`.
 ```
 
+```{note}
+**Retention and deletion.** Research records must be kept for the retention period Harvard and your sponsor require, generally at least seven years, and you may not independently delete or remove research data. Scratch storage is purged after 90 days, so it is not a retention solution; copy anything you must keep to persistent or archival storage. See the [FASRC Research Data Retention and Deletion Policy](https://docs.rc.fas.harvard.edu/kb/fas-rc-research-data-retention-and-deletion-policy/) and the {doc}`Data Management Plan <../s1_high_performance_computing/storage_and_data_transfer/data_management_plan>`.
+```
+
 ## Responsible use of AI tools
 
 AI coding assistants and other generative AI tools are useful on the cluster, but their use must follow university guidance.
@@ -98,6 +102,7 @@ Respect the license of every dataset, model, and library you use, including non-
 Your work is also bound by the requirements of whoever funds and governs it.
 
 - **Funding agencies.** Follow the data management, sharing, and access requirements of your grants (for example, NIH and NSF data policies). These often flow into your {doc}`Data Management Plan <../s1_high_performance_computing/storage_and_data_transfer/data_management_plan>`.
+- **Retention periods.** Keep research data for the retention period your sponsor and Harvard require. Funding agencies set their own minimums, and Harvard's longer retention period supersedes shorter federal minimums. See the {doc}`Data Management Plan <../s1_high_performance_computing/storage_and_data_transfer/data_management_plan>`.
 - **Data use agreements.** Honor every DUA and contract that applies to data you use, as directed by your PI.
 - **University policy.** You are responsible for knowing and following applicable Harvard Information Security and Research Data Security policies.
 
