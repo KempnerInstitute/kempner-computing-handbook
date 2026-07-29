@@ -85,6 +85,10 @@ Long context is expensive at inference time because the KV cache grows with sequ
 
 When a model does not fit on one GPU, shard it with tensor parallelism (splitting each layer) or pipeline parallelism (splitting layers across devices). In vLLM this is the `tensor_parallel_size` and `pipeline_parallel_size` engine arguments.
 
+```{tip}
+When a job needs several GPUs, pack them onto as few nodes as possible, ideally one. For example, request 4 GPUs on a single node rather than spreading them across nodes, because the intra-node GPU interconnect (NVLink or PCIe) is much faster than the network between nodes, so fewer nodes means less communication overhead.
+```
+
 ```{seealso}
 For tested multi-GPU and multi-node serving recipes on the cluster, including the parallelism settings for very large models, use {doc}`Distributed Inference <../../s3_ai_workflows/distributed_inference>` and the [distributed-inference-vllm](https://github.com/KempnerInstitute/distributed-inference-vllm) repository rather than configuring it from scratch.
 ```
