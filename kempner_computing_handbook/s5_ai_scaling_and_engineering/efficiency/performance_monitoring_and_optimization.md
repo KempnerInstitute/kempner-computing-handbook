@@ -57,6 +57,12 @@ jobstats <jobid>
 
 FASRC also offers a browser-based Single Job Stats Dashboard, where you enter a job ID to see its profile (this requires the FASRC VPN; the link is on the [jobstats page](https://docs.rc.fas.harvard.edu/kb/jobstats/)). Adding `--mail-type=END` to your submission script includes the `jobstats` summary in the completion email.
 
+**JobScope.** The Kempner Institute's [JobScope](https://github.com/KempnerInstitute/jobscope) turns Slurm, NVIDIA DCGM, and NVML data into a clean CPU and GPU efficiency report for your completed jobs over a chosen time window. Install it with `uv tool install jobscope`, then run:
+
+```bash
+jobscope --cgpu -D 3    # CPU and GPU efficiency of your jobs over the last 3 days
+```
+
 ```{note}
 `seff` reports CPU and memory efficiency but not GPU utilization, so a low "CPU Efficiency" is normal for a GPU job. Use it to catch over-requested memory and cores, and use `jobstats`, KempnerPulse, or profiling to judge GPU use. In `sacct`, `MaxRSS` (peak memory) is recorded per step, so it appears on the `.batch` and other step rows rather than the top-level job row. For more on SLURM accounting, see {doc}`Understanding SLURM <../../s1_high_performance_computing/general_hpc_concepts/understanding_slurm>`.
 ```
