@@ -1,3 +1,3 @@
 # Agentic AI Tools and Workflows
 
-Agentic AI tools use large language models to plan and carry out multi-step tasks, such as writing and running code, on your behalf. This section introduces the tools available for research, how to use them responsibly on the Kempner AI Cluster, and how to host your own agentic models on the cluster's GPUs.
+Agentic AI tools use a large language model to plan and carry out multi-step tasks, such as writing and running code, rather than just answer a question. This section covers the current landscape of coding agents, research and science agents, and the frameworks and protocols behind them; how to set up and responsibly run these tools on the Kempner AI Cluster, whether in a terminal or through VS Code; and how to serve open-weight models on the cluster's own GPUs so your prompts and code never leave it. For the data-handling rules that govern all of this, see {doc}`Security and Compliance <../s6_security_and_compliance/README>`.
