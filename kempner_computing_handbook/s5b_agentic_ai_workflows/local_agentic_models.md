@@ -1,13 +1,13 @@
-# Local Agentic Models
+# HPC Agentic Recipes
 
-A local agentic model is an open-weight model, such as GLM-5.2 or Kimi-K2.7-Code, that you serve on the cluster's own GPUs and drive with Claude Code or any OpenAI-compatible client. Because the model runs on the cluster, your prompts and code never leave it for an external provider. This is the on-cluster answer to the cloud-or-local choice in {doc}`Agentic AI Tools <agentic_ai_tools>`, and it sidesteps the external-service data limits described in {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`. The tradeoff is that you spend time on your GPU allocation instead of a subscription or API bill. For what data may be processed where, see {doc}`Security and Compliance <../s6_security_and_compliance/README>`.
+A local agentic model is an open-weight model, such as GLM-5.2, Kimi-K3, or Kimi-K2.7-Code, that you serve on the cluster's own GPUs and drive with Claude Code or any OpenAI-compatible client. Because the model runs on the cluster, your prompts and code never leave it for an external provider. This is the on-cluster answer to the cloud-or-local choice in {doc}`Agentic AI Tools <agentic_ai_tools>`, and it sidesteps the external-service data limits described in {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`. The tradeoff is that you spend time on your GPU allocation instead of a subscription or API bill. For what data may be processed where, see {doc}`Security and Compliance <../s6_security_and_compliance/README>`.
 
 ## Where the recipes live
 
-The Kempner [local-agentic-coding](https://github.com/KempnerInstitute/local-agentic-coding) repository is the maintained source for serving these models on the cluster. Each recipe is self-contained: one directory holds the environment build, the launch scripts, the measured performance, and the known failure modes for one model on one hardware shape. This page orients you; follow the repository for the runnable steps.
+The Kempner [hpc-agentic-recipes](https://github.com/KempnerInstitute/hpc-agentic-recipes) repository is the maintained source for serving these models on the cluster. Each recipe is self-contained: one directory holds the environment build, the launch scripts, the measured performance, and the known limits for one model on one hardware shape. This page orients you; follow the repository for the runnable steps.
 
 ```{note}
-This is a fast-moving area. Treat the model shortlist and figures below as a snapshot, and check the repository's model table and [choosing a model](https://github.com/KempnerInstitute/local-agentic-coding/blob/main/docs/choosing-a-model.md) guide for the current list and benchmarks.
+This is a fast-moving area. Treat the model shortlist and figures below as a snapshot, and check the repository's model table and [choosing a model](https://github.com/KempnerInstitute/hpc-agentic-recipes/blob/main/docs/choosing-a-model.md) guide for the current list and benchmarks.
 ```
 
 ## Two ways to connect
@@ -19,45 +19,50 @@ export ANTHROPIC_BASE_URL=http://<node>:8000
 export ANTHROPIC_AUTH_TOKEN=<the api key>
 export ANTHROPIC_MODEL=<served model name>
 export ANTHROPIC_SMALL_FAST_MODEL=<the same name>
+export CLAUDE_CODE_ATTRIBUTION_HEADER=0
 claude
 ```
 
-See the repository's [quickstart](https://github.com/KempnerInstitute/local-agentic-coding/blob/main/docs/quickstart.md) for the full walkthrough.
+The last variable drops a client attribution line from the front of the prompt so that a shared endpoint's prefix cache is reused across callers. See the repository's [quickstart](https://github.com/KempnerInstitute/hpc-agentic-recipes/blob/main/docs/quickstart.md) for the full walkthrough.
 
 **Serve your own.** Start from a single-GPU recipe: it queues fastest and needs one GPU rather than a whole node. Each recipe follows the same shape: configure once, build the environment, launch, verify, then connect. Larger models need a full RTX or H200 node, or several nodes.
 
 ## Models to consider
 
-A curated starting point, drawn from the repository's validated recipes:
+A snapshot from the repository's recipes; see its model table and choosing-a-model guide for the current set and measured rates. Recall that one RTX node is 8 GPUs and one H200 node is 4 GPUs.
 
 - **Gemma-4-26B-A4B** is a strong default for interactive coding on a single GPU: a mixture-of-experts model with 4B active parameters, so it is fast and queues quickly.
-- **GLM-5.2** offers strong reasoning and is the fastest large model measured in the repository when it fits a single RTX node.
-- **Kimi-K2.7-Code** is the strongest coder available, a 1T-parameter mixture of experts quantized to INT4; use it when quality matters more than latency and you can hold a full RTX node, or two H200 nodes for its validated recipe.
-- **Qwen3-Coder-480B** is the largest coding model that fits a single RTX node.
+- **DeepSeek-V4-Flash** is the fastest large model measured, on a single RTX node, and serves a 1M-token context from that one node.
+- **GLM-5.2** offers strong reasoning and runs fast in NVFP4 on a single RTX node.
+- **Qwen3-Coder-480B** is the largest coding model that fits a single RTX node, at a strong quality per second.
+- **Kimi-K2.7-Code** is the largest coding-specialized model that fits a single RTX node, a 1T-parameter mixture of experts in INT4; use it when quality matters more than latency.
+- **Kimi-K3** posts the highest published coding scores here, a 2.8T-parameter model in MXFP4; it needs four H200 nodes and the SGLang engine.
+- **DeepSeek-V4-Pro** serves the longest context, its full 1M-token window, across two RTX nodes.
 
 ## Engines
 
-The recipes cover two serving engines. vLLM is the default because it exposes an Anthropic-compatible `/v1/messages` endpoint that Claude Code uses directly with no proxy. SGLang serves only an OpenAI-compatible `/v1` API, so drive it with an OpenAI-compatible client instead.
+The recipes use two serving engines, and both expose an Anthropic-compatible `/v1/messages` endpoint that Claude Code uses directly with no proxy, alongside an OpenAI-compatible `/v1`. vLLM runs most recipes. SGLang is used when vLLM cannot load a model, which is the case for Kimi-K3, served from a container. Each recipe sets its own engine, so you do not choose.
 
 ## Using the GPUs well
 
 Serving a model reserves its GPUs for the whole allocation, and they draw power whether or not requests are arriving. A loaded model sitting idle wastes that reservation, so release the allocation when you are not actively using it, and connect to an existing endpoint rather than launching a second copy of a model a colleague already serves. This is the same idle-GPU discipline described in {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`.
 
-Because one served model handles many requests at once, a single endpoint shared across a lab uses the GPUs far better than each person serving their own. vLLM and SGLang batch concurrent requests, so throughput in tokens per second climbs with concurrency until the GPUs saturate. One person in one Claude Code session rarely gets there; several users, or a multi-agent workflow that issues requests in parallel, keep the GPUs busy and raise the tokens you get per GPU-hour.
+Because one served model handles many requests at once, a single endpoint shared across a lab uses the GPUs far better than each person serving their own. Both engines batch concurrent requests, so aggregate throughput climbs with concurrency until compute, memory bandwidth, or KV cache runs out. The gap is large: a recipe's total throughput across many concurrent requests can be more than ten times its single-stream rate. One person in one Claude Code session sees only the single-stream figure; several users, or a multi-agent workflow that issues requests in parallel, are what turn that into throughput.
 
-Measure to see where you stand. The repository's [benchmarking](https://github.com/KempnerInstitute/local-agentic-coding/blob/main/docs/benchmarking.md) tool reports a recipe's sustained decode rate on an otherwise idle endpoint, which gives each model's baseline single-stream speed; the model table records these numbers. To judge whether a shared endpoint still has headroom under real use, watch GPU utilization while it serves; see {doc}`Performance Monitoring and Optimization <../s5_ai_scaling_and_engineering/efficiency/performance_monitoring_and_optimization>`.
+The repository's [benchmarking](https://github.com/KempnerInstitute/hpc-agentic-recipes/blob/main/docs/benchmarking.md) tool reports both the single-stream rate and the aggregate rate, and can sweep concurrency to find where aggregate throughput peaks, which tells you how much headroom an endpoint has. To watch utilization during real use, see {doc}`Performance Monitoring and Optimization <../s5_ai_scaling_and_engineering/efficiency/performance_monitoring_and_optimization>`.
 
 ```{tip}
-If your lab uses local models regularly, stand up one shared endpoint per model rather than one per person. It cuts queue waits, keeps utilization high, and means most people only need the four environment variables above, with no build.
+If your lab uses local models regularly, stand up one shared endpoint per model rather than one per person. It cuts queue waits, keeps utilization high, and means most people only need the environment variables above, with no build.
 ```
 
 ## Things that will bite you
 
-A few issues account for most first-attempt failures; the repository's [troubleshooting](https://github.com/KempnerInstitute/local-agentic-coding/blob/main/docs/troubleshooting.md) guide covers the rest:
+A few issues account for most first-attempt failures; the repository's [quickstart](https://github.com/KempnerInstitute/hpc-agentic-recipes/blob/main/docs/quickstart.md) covers these and more:
 
-- Use `ANTHROPIC_AUTH_TOKEN`, not `ANTHROPIC_API_KEY`. The latter makes the client send an `x-api-key` header, which vLLM ignores, so every request returns 401.
+- Use `ANTHROPIC_AUTH_TOKEN`, not `ANTHROPIC_API_KEY`. The latter makes the client send an `x-api-key` header, which both engines ignore, so every request returns 401.
 - Set `ANTHROPIC_SMALL_FAST_MODEL`. Without it, Claude Code reaches for a hosted model that your local endpoint does not serve.
-- Claude Code's built-in web search fails against vLLM with an HTTP 400, because the tool definition it sends has no input schema. Client-side tools such as file editing and shell commands work normally; the repository documents a keyless replacement for search.
+- Against a small-context endpoint, cap the output with `CLAUDE_CODE_MAX_OUTPUT_TOKENS`. Claude Code requests 32000 output tokens by default, which can exceed a 32K or 40K context and fail every request; recipes that serve a small context set this for you.
+- Claude Code's built-in web search does not work against a local endpoint: vLLM rejects it with an HTTP 400, and SGLang silently drops it so the model answers without searching. Client-side tools such as file editing and shell commands work normally; the repository documents a keyless replacement.
 
 ## Hardware
 
