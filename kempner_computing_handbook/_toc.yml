@@ -94,10 +94,9 @@ parts:
     numbered: true
     chapters:
     - file: s5b_agentic_ai_workflows/README
-      sections:
-      - file: s5b_agentic_ai_workflows/agentic_ai_tools
-      - file: s5b_agentic_ai_workflows/using_agentic_ai_on_the_cluster
-      - file: s5b_agentic_ai_workflows/local_agentic_models
+    - file: s5b_agentic_ai_workflows/agentic_ai_tools
+    - file: s5b_agentic_ai_workflows/using_agentic_ai_on_the_cluster
+    - file: s5b_agentic_ai_workflows/local_agentic_models
   - caption: Security and Compliance
     numbered: true
     chapters:
