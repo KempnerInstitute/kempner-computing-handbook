@@ -61,12 +61,12 @@ The following walks through Claude Code end to end.
 
 ### Permission modes
 
-By default, Claude Code asks before it edits a file or runs a command. Press `Shift+Tab` inside a session to cycle through permission modes, so you can trade oversight for speed as you build trust in a task:
+Claude Code has several permission modes that trade oversight for speed, and you can switch between them at any time with `Shift+Tab`. Which mode a new session starts in depends on your plan: recent versions start Pro, Max, and Team sessions in Auto mode, while Enterprise and API-key sessions start in Manual mode, where the agent asks before each action. The modes:
 
-- **Manual** (the default): approve each edit and command as the agent proposes it. Best while you are learning how the agent behaves on your code.
+- **Manual**: approve each edit and command as the agent proposes it. This is the starting mode for Enterprise and API-key sessions, and the safest while you are learning how the agent behaves on your code.
 - **Auto-accept edits**: file edits and common filesystem commands in the working directory apply without prompting, so the agent can work through a task uninterrupted. This set includes deletions (`rm`, `rmdir`) alongside `mkdir`, `touch`, `mv`, `cp`, and `sed`, so watch what it does on shared storage.
 - **Plan mode**: the agent researches and proposes a plan without changing anything. Use it to review the approach before any edits happen.
-- **Auto mode**: the agent runs without routine prompts, but a separate classifier reviews each action first and blocks anything risky, such as a command that reaches beyond your task or destroys data. This means far fewer interruptions than manual mode while keeping a safety check in place. It is offered when your model, provider, and organization settings support it.
+- **Auto mode**: the agent runs without routine prompts, but a separate classifier reviews each action first and blocks anything risky, such as a command that reaches beyond your task or destroys data. This means far fewer interruptions than manual mode while keeping a safety check in place, and on Pro, Max, and Team plans it is the mode new sessions start in. It requires a supported model, and an organization can turn it off.
 
 ```{warning}
 Avoid the `--dangerously-skip-permissions` flag (bypass mode) on the cluster. It lets the agent run any command without asking, on a shared system that can read your files, write to your storage, and submit jobs under your account. Anthropic recommends this mode only in isolated environments such as containers or VMs without internet access, where the agent cannot cause damage. Cluster compute nodes have outbound access, so that condition does not hold here. Stay in manual, plan, or auto mode, where you or the classifier still vet actions, rather than skipping checks entirely.
@@ -84,7 +84,7 @@ If you connect the agent to external tools through the Model Context Protocol (M
 
 If you work in VS Code, you can use an IDE agent or extension against the cluster over Remote-SSH:
 
-1. Connect VS Code to a compute node with Remote-SSH, as described in {doc}`VSCode for Remote Development <../s1_high_performance_computing/development_and_runtime_envs/using_vscode_for_remote_development>`.
+1. Connect VS Code to a compute node with Remote-SSH, as described in {doc}`VSCode for Remote Dev <../s1_high_performance_computing/development_and_runtime_envs/using_vscode_for_remote_development>`.
 2. Install the agent's extension (for example Claude Code, GitHub Copilot, or a coding assistant) in the remote window so it runs against the cluster-side files.
 3. Provide credentials the same way as above, through the extension's sign-in or an API key.
 
@@ -94,10 +94,10 @@ FASRC documents several editor and notebook AI extensions, including Jupyter-AI 
 
 Agents act on their own, so a few habits keep them from disrupting shared resources or your own account:
 
-- **Stay within your allocation.** Run agents inside an interactive job or batch script, not on login nodes. Do not let an agent submit unbounded {doc}`Slurm <../s1_high_performance_computing/general_hpc_concepts/understanding_slurm>` jobs or launch its own long-running background processes without your review.
+- **Stay within your allocation.** Run agents inside an interactive job or batch script, not on login nodes. Do not let an agent submit unbounded {doc}`SLURM <../s1_high_performance_computing/general_hpc_concepts/understanding_slurm>` jobs or launch its own long-running background processes without your review.
 - **Do not hold GPUs idle.** If the agent is only reading, planning, or editing code, use a CPU allocation. Request a GPU when the work needs one, and release the session when you are done.
 - **Review before it acts.** Read the commands an agent proposes before approving them, especially anything that deletes files, rewrites history, or moves data. Treat an agent's suggestions the same way you would treat a pull request from a stranger.
-- **Watch cost and quota.** API and subscription usage bills to your account, which you can track in the Claude Console; cluster jobs draw on your fairshare allocation. See {doc}`Fair Use and Prioritization Policies <../s1_high_performance_computing/efficient_use_of_resources/fair_use_and_prioritization_policies>`.
+- **Watch cost and quota.** API and subscription usage bills to your account, which you can track in the Claude Console; cluster jobs draw on your fairshare allocation. See {doc}`Fairshare Policy <../s1_high_performance_computing/efficient_use_of_resources/fair_use_and_prioritization_policies>`.
 - **Protect secrets and data.** Keep API keys out of repositories and shared paths, and do not let an agent read directories that hold credentials or sensitive data.
 
 ## Common pitfalls

@@ -1,6 +1,6 @@
 # HPC Agentic Recipes
 
-A local agentic model is an open-weight model, such as GLM-5.2, Kimi-K3, or Kimi-K2.7-Code, that you serve on the cluster's own GPUs and drive with Claude Code or any OpenAI-compatible client. Because the model runs on the cluster, your prompts and code never leave it for an external provider. This is the on-cluster answer to the cloud-or-local choice in {doc}`Agentic AI Tools <agentic_ai_tools>`, and it sidesteps the external-service data limits described in {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`. The tradeoff is that you spend time on your GPU allocation instead of a subscription or API bill. For what data may be processed where, see {doc}`Security and Compliance <../s6_security_and_compliance/README>`.
+A local agentic model is an open-weight model, such as GLM-5.2, Kimi-K3, or Kimi-K2.7-Code, that you serve on the cluster's own GPUs and drive with Claude Code or any OpenAI-compatible client. Because the model runs on the cluster, your prompts and code never leave it for an external provider. This is the on-cluster answer to the cloud-or-local choice in {doc}`Agentic AI Tools <agentic_ai_tools>`, and it sidesteps the external-service data limits described in {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`: because nothing leaves the cluster, a local model can work with data up to the cluster's own rating, not just the Level 1 that public AI services are limited to. The tradeoff is that you spend time on your GPU allocation instead of a subscription or API bill. For the data rules that apply, see {doc}`Security and Compliance <../s6_security_and_compliance/README>`.
 
 ## Where the recipes live
 
@@ -34,7 +34,7 @@ A snapshot from the repository's recipes; see its model table and choosing-a-mod
 - **Gemma-4-26B-A4B** is a strong default for interactive coding on a single GPU: a mixture-of-experts model with 4B active parameters, so it is fast and queues quickly.
 - **DeepSeek-V4-Flash** is the fastest large model measured, on a single RTX node, and serves a 1M-token context from that one node.
 - **GLM-5.2** offers strong reasoning and runs fast in NVFP4 on a single RTX node.
-- **Qwen3-Coder-480B** is the largest coding model that fits a single RTX node, at a strong quality per second.
+- **Qwen3-Coder-480B** is a strong quality-per-second choice on a single RTX node, close to the much smaller Qwen3-235B on the same hardware.
 - **Kimi-K2.7-Code** is the largest coding-specialized model that fits a single RTX node, a 1T-parameter mixture of experts in INT4; use it when quality matters more than latency.
 - **Kimi-K3** posts the highest published coding scores here, a 2.8T-parameter model in MXFP4; it needs four H200 nodes and the SGLang engine.
 - **DeepSeek-V4-Pro** serves the longest context, its full 1M-token window, across two RTX nodes.
@@ -47,9 +47,9 @@ The recipes use two serving engines, and both expose an Anthropic-compatible `/v
 
 Serving a model reserves its GPUs for the whole allocation, and they draw power whether or not requests are arriving. A loaded model sitting idle wastes that reservation, so release the allocation when you are not actively using it, and connect to an existing endpoint rather than launching a second copy of a model a colleague already serves. This is the same idle-GPU discipline described in {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`.
 
-Because one served model handles many requests at once, a single endpoint shared across a lab uses the GPUs far better than each person serving their own. Both engines batch concurrent requests, so aggregate throughput climbs with concurrency until compute, memory bandwidth, or KV cache runs out. The gap is large: a recipe's total throughput across many concurrent requests can be more than ten times its single-stream rate. One person in one Claude Code session sees only the single-stream figure; several users, or a multi-agent workflow that issues requests in parallel, are what turn that into throughput.
+Because one served model handles many requests at once, a single endpoint shared across a lab uses the GPUs far better than each person serving their own. Both engines batch concurrent requests, so aggregate throughput climbs with concurrency until compute, memory bandwidth, or KV cache runs out. The gap is large: a recipe's total throughput across many concurrent requests can be more than ten times its single-stream rate. One person in one Claude Code session sees only the single-stream figure; it takes several users, or a multi-agent workflow that issues requests in parallel, to turn that into real throughput.
 
-The repository's [benchmarking](https://github.com/KempnerInstitute/hpc-agentic-recipes/blob/main/docs/benchmarking.md) tool reports both the single-stream rate and the aggregate rate, and can sweep concurrency to find where aggregate throughput peaks, which tells you how much headroom an endpoint has. To watch utilization during real use, see {doc}`Performance Monitoring and Optimization <../s5_ai_scaling_and_engineering/efficiency/performance_monitoring_and_optimization>`.
+The repository's [benchmarking](https://github.com/KempnerInstitute/hpc-agentic-recipes/blob/main/docs/benchmarking.md) tool reports both the single-stream rate and the aggregate rate, and can sweep concurrency to find where aggregate throughput peaks, which tells you how much headroom an endpoint has. To watch utilization during real use, see {doc}`Performance Monitoring <../s5_ai_scaling_and_engineering/efficiency/performance_monitoring_and_optimization>`.
 
 ```{tip}
 If your lab uses local models regularly, stand up one shared endpoint per model rather than one per person. It cuts queue waits, keeps utilization high, and means most people only need the environment variables above, with no build.
@@ -69,5 +69,5 @@ A few issues account for most first-attempt failures; the repository's [quicksta
 The cluster's serving partitions are `kempner_rtx` (RTX PRO 6000 Blackwell), `kempner_h200`, and `kempner_h100`. Which model fits which shape, and at what parallelism, is set by GPU memory and the interconnect. See {doc}`GPU Types and Use Cases <../s1_high_performance_computing/kempner_cluster/gpu_types_and_use_cases>` and the repository's hardware notes.
 
 ```{seealso}
-For the wider tool landscape, see {doc}`Agentic AI Tools <agentic_ai_tools>`, and for running cloud agents on the cluster, see {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`. For serving models more generally, see {doc}`Efficient Deployment and Inference <../s5_ai_scaling_and_engineering/efficiency/efficient_deployment_and_inference>`.
+For the wider tool landscape, see {doc}`Agentic AI Tools <agentic_ai_tools>`, and for running cloud agents on the cluster, see {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`. For serving models more generally, see {doc}`Deployment and Inference <../s5_ai_scaling_and_engineering/efficiency/efficient_deployment_and_inference>`.
 ```

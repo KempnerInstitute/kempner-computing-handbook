@@ -70,7 +70,7 @@ When you need a custom agent or pipeline rather than an off-the-shelf assistant,
 The [Model Context Protocol (MCP)](https://modelcontextprotocol.io) is an open standard that lets agents connect to external tools, data, and services, for example files, databases, or APIs, through a common interface. Most of the tools above can act as MCP clients, so an MCP server you write or install becomes available to all of them.
 
 ```{seealso}
-For scientific work, [ToolUniverse](https://zitniklab.hms.harvard.edu/ToolUniverse/) from the Zitnik Lab at Harvard Medical School exposes more than 1,000 scientific and biomedical tools, for example for drug discovery, protein design, and literature review, to any MCP-enabled agent.
+For scientific work, [ToolUniverse](https://zitniklab.hms.harvard.edu/ToolUniverse/) from the Zitnik Lab at Harvard Medical School exposes more than 1,000 scientific and biomedical tools, spanning drug discovery, protein design, and literature review, to any MCP-enabled agent.
 ```
 
 ## Choosing a tool
