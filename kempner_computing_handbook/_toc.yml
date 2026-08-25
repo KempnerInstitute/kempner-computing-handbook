@@ -90,6 +90,13 @@ parts:
       - file: s5_ai_scaling_and_engineering/experiment_management/logging_and_monitoring
       - file: s5_ai_scaling_and_engineering/experiment_management/wandb_sweeps
       - file: s5_ai_scaling_and_engineering/experiment_management/reproducing_runs
+  - caption: Agentic AI Tools and Workflows
+    numbered: true
+    chapters:
+    - file: s5b_agentic_ai_workflows/README
+    - file: s5b_agentic_ai_workflows/agentic_ai_tools
+    - file: s5b_agentic_ai_workflows/using_agentic_ai_on_the_cluster
+    - file: s5b_agentic_ai_workflows/hpc_agentic_recipes
   - caption: Security and Compliance
     numbered: true
     chapters:
