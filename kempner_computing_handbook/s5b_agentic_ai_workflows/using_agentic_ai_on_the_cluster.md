@@ -100,6 +100,33 @@ Agents act on their own, so a few habits keep them from disrupting shared resour
 - **Watch cost and quota.** API and subscription usage bills to your account, which you can track in the Claude Console; cluster jobs draw on your fairshare allocation. See {doc}`Fairshare Policy <../s1_high_performance_computing/efficient_use_of_resources/fair_use_and_prioritization_policies>`.
 - **Protect secrets and data.** Keep API keys out of repositories and shared paths, and do not let an agent read directories that hold credentials or sensitive data.
 
+## Agent security
+
+An agent acts on the content it reads, and not all of that content is trustworthy. A web page, PDF, dataset, code comment, or tool result can carry text written to look like an instruction. If the agent follows it, that is prompt injection, the most common way an agent is turned against its user.
+
+```{mermaid}
+flowchart LR
+    U["Untrusted content<br/>web page, PDF,<br/>dataset, code comment"] --> R["Agent reads it"]
+    R --> H{"Hidden<br/>instruction?"}
+    H -->|treated as data| OK["Ignored;<br/>you stay in control"]
+    H -->|followed as a command| BAD["Unintended action:<br/>exfiltration, deletion"]
+    classDef n fill:#14154C,color:#ffffff,stroke:#3D3E82;
+    classDef good fill:#C6C8F4,color:#14154C,stroke:#14154C;
+    classDef bad fill:#A51C30,color:#ffffff,stroke:#A51C30;
+    class U,R,H n;
+    class OK good;
+    class BAD bad;
+```
+
+The core habit is to treat everything the agent reads, including tool output, as data rather than commands. A few controls reduce the risk on shared infrastructure:
+
+- **Keep a human on consequential actions.** Approve anything that deletes data, moves files, pushes code, or spends budget (see **Permission modes** above).
+- **Give the agent only the access it needs.** Scope subagents to read-only tools where you can (see {doc}`Configuring Agents for Your Project <configuring_agents>`), and do not run agents with elevated permissions on shared paths.
+- **Cap autonomous loops.** Bound long or unattended runs so a misdirected agent cannot run away.
+- **Keep secrets out of reach.** A misdirected agent can only leak what it can read, so keep credentials out of the files and directories it works in.
+
+For the risk categories and defenses in depth, see OWASP's [Top 10 for Agentic Applications](https://genai.owasp.org/agentic-security-initiative/) and [Top 10 for LLM Applications](https://genai.owasp.org/llm-top-10/); the latter ranks prompt injection first. For cluster data rules, see {doc}`Security and Compliance <../s6_security_and_compliance/README>`.
+
 ## Common pitfalls
 
 - The agent tries to `sudo`, install system packages, or modify files outside your space. You do not have root on the cluster; keep changes within your own directories and environments.
