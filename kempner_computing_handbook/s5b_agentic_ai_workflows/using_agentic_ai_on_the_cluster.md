@@ -133,5 +133,5 @@ For the risk categories and defenses in depth, see OWASP's [Top 10 for Agentic A
 - The agent cannot reach the provider's API. Compute nodes have outbound access, so check your key, environment, and any typo first; if calls still fail, see {doc}`Support and Troubleshooting <../s8_support/README>`.
 
 ```{seealso}
-For the landscape of available tools, see {doc}`Agentic AI Tools <agentic_ai_tools>`. To keep everything on the cluster with no external provider, see {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`. For data-handling rules, see {doc}`Security and Compliance <../s6_security_and_compliance/README>` and the {doc}`Data Management Plan <../s1_high_performance_computing/storage_and_data_transfer/data_management_plan>`.
+For the landscape of available tools, see {doc}`Agentic AI Tools <agentic_ai_tools>`. For a hands-on walkthrough, see {doc}`Your First Agentic Workflow on the Cluster <first_agentic_workflow>`. To keep everything on the cluster with no external provider, see {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`. For data-handling rules, see {doc}`Security and Compliance <../s6_security_and_compliance/README>` and the {doc}`Data Management Plan <../s1_high_performance_computing/storage_and_data_transfer/data_management_plan>`.
 ```
