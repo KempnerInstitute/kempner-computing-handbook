@@ -98,6 +98,7 @@ parts:
     - file: s5b_agentic_ai_workflows/using_agentic_ai_on_the_cluster
     - file: s5b_agentic_ai_workflows/configuring_agents
     - file: s5b_agentic_ai_workflows/hpc_agentic_recipes
+    - file: s5b_agentic_ai_workflows/evaluating_and_monitoring_agents
     - file: s5b_agentic_ai_workflows/agentic_ai_in_research
   - caption: Security and Compliance
     numbered: true
