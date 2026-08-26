@@ -114,7 +114,7 @@ After completing the above steps, you can connect to the compute nodes. First co
 ```bash
 salloc --partition=kempner_requeue --account=kempner_dev --ntasks=1 --cpus-per-task=16 --mem=16G --gres=gpu:1 --time=00-03:00:00
 ```
-This will allocate an interactive session on the `kempner_requeue` partition with 16 cores, 16GB of memory, and 1 GPU for 3 hours. Then node name is displayed int the terminal. 
+This will allocate an interactive session on the `kempner_requeue` partition with 16 cores, 16GB of memory, and 1 GPU for 3 hours. The node name is displayed in the terminal. 
 
 ```{tip}
 You can also use the `squeue -u <username>` command to see the list of your running jobs and the nodes they are running on.
@@ -175,3 +175,33 @@ You can click on your preferred environment to use it within the jupyter noteboo
 
 
 If you recently created the conda environment, you may need to reload before it shows up. To do this, open the command palette using `Ctrl + Shift + P` (Windows)/`Shift + Command + P` (Mac) and type and select `Reload Window`.
+
+(development_and_runtime_envs:using_vscode_for_remote_development:troubleshooting_connection_drops)=
+## Troubleshooting connection drops
+
+If VSCode stops connecting and its Remote-SSH log shows `dynamic port forwarding failed!` or `Address already in use`, a leftover port from an earlier failed attempt is blocking the shared SSH connection that the `ControlMaster` option above sets up.
+
+Fix it from a terminal on your own computer, not the VSCode terminal on the cluster. These commands act on the existing connection and do not re-authenticate.
+
+Find the connection and the ports it is holding:
+
+```bash
+ssh -O check cannon                 # prints the connection's process ID
+lsof -p <master_pid> | grep LISTEN  # lists the forwarded ports
+```
+
+Release each stuck port, then reconnect in VSCode:
+
+```bash
+ssh -O cancel -D <port> cannon
+```
+
+If that does not help, reset the connection. This closes every session on `cannon`, so afterward reconnect through the VSCode Remote Explorer and re-enter your FASRC password and MFA code:
+
+```bash
+ssh -O exit cannon
+```
+
+```{tip}
+Too many terminal tabs on one connection can hit the server's session limit, showing `Session open refused by peer` or an unexpected password prompt. Keep only a few open.
+```
