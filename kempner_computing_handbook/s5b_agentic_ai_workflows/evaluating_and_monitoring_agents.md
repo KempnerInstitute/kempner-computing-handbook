@@ -25,7 +25,7 @@ flowchart TD
     class T1,L1,S1,T2,L2 span;
 ```
 
-The [OpenTelemetry GenAI semantic conventions](https://github.com/open-telemetry/semantic-conventions-genai) define a vendor-neutral way to record these traces and metrics, so you can use an agent-native tool while you develop and still feed a standard observability stack in production. Purpose-built platforms such as LangSmith, Langfuse, and Arize Phoenix render the same traces; treat them as interchangeable examples, since this layer changes quickly.
+The [OpenTelemetry GenAI semantic conventions](https://github.com/open-telemetry/semantic-conventions-genai) define a vendor-neutral way to record these traces and metrics, so you can use an agent-native tool while you develop and still feed a standard observability stack in production. Purpose-built platforms render the same traces; treat them as interchangeable, since this layer changes quickly.
 
 ## Watch cost and context
 
