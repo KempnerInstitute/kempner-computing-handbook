@@ -81,6 +81,10 @@ An unsupervised agent can delete data or disrupt shared resources far faster tha
 Agentic tools are also exposed to prompt injection: untrusted content the agent reads, such as web pages, files, or datasets, can carry hidden instructions. Treat what an agent reads as data rather than commands, keep a human approving consequential actions, and give the agent least privilege. See OWASP's [Top 10 for Agentic Applications](https://genai.owasp.org/agentic-security-initiative/) and, for running these tools here, {doc}`Using Agentic AI on the Cluster <../s5b_agentic_ai_workflows/using_agentic_ai_on_the_cluster>`.
 ```
 
+```{warning}
+**Prohibited AI under the NDAA.** Harvard's [NDAA 2026 Guidance and Prohibition on use of certain Artificial Intelligence](https://bpb-us-e1.wpmucdn.com/websites.harvard.edu/dist/f/106/files/2026/01/NDAA-2026-Guidance-and-Prohibition-on-use-of-certain-Artificial-Intelligence.pdf) prohibits anyone performing work under a U.S. Department of Defense (DoD) contract from using AI developed by **DeepSeek**, its parent company High Flyer, or affiliated entities, in any activity related to that contract. The prohibition covers faculty, staff, students, and visitors working on the contract, and it applies to self-hosting the open-weight DeepSeek models on the cluster as well as the hosted service. If your work is, or may be, under a DoD contract, do not use these tools, and contact the Office of the Vice Provost for Research if you are unsure whether the policy applies to you.
+```
+
 ## External data and network conduct
 
 Datasets you download or scrape from external providers come with terms of use, and the whole cluster shares a small pool of public IP addresses.
