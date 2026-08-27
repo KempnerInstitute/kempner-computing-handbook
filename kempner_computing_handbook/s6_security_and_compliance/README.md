@@ -19,7 +19,7 @@ To keep your credentials safe:
 
 - Use a password manager. Harvard provides [1Password](https://www.huit.harvard.edu/password-manager) free to the community, and its use is encouraged.
 - Keep your two-factor (OpenAuth) device secure, and never share one-time codes. See the {doc}`New User Checklist <../s1_high_performance_computing/kempner_cluster/new_user_checklist>` for setup.
-- Report a suspected account compromise immediately (see *Reporting a concern* below).
+- Report a suspected account compromise immediately (see **Reporting a concern** below).
 
 ## Data classification and what the cluster can host
 
@@ -75,6 +75,14 @@ Take extra care when running AI tools in automated or agentic mode, where the to
 - Ensure it cannot affect shared paths, other labs' data, or cluster-wide resources.
 
 An unsupervised agent can delete data or disrupt shared resources far faster than a person.
+```
+
+```{note}
+Agentic tools are also exposed to prompt injection: untrusted content the agent reads, such as web pages, files, or datasets, can carry hidden instructions. Treat what an agent reads as data rather than commands, keep a human approving consequential actions, and give the agent least privilege. See OWASP's [Top 10 for Agentic Applications](https://genai.owasp.org/agentic-security-initiative/) and, for running these tools here, {doc}`Using Agentic AI on the Cluster <../s5b_agentic_ai_workflows/using_agentic_ai_on_the_cluster>`.
+```
+
+```{warning}
+**Prohibited AI under the NDAA.** Harvard's [NDAA 2026 Guidance and Prohibition on use of certain Artificial Intelligence](https://bpb-us-e1.wpmucdn.com/websites.harvard.edu/dist/f/106/files/2026/01/NDAA-2026-Guidance-and-Prohibition-on-use-of-certain-Artificial-Intelligence.pdf) prohibits anyone performing work under a U.S. Department of Defense (DoD) contract from using AI developed by **DeepSeek**, its parent company High Flyer, or affiliated entities, in any activity related to that contract. The prohibition covers faculty, staff, students, and visitors working on the contract, and it applies to self-hosting the open-weight DeepSeek models on the cluster as well as the hosted service. If your work is, or may be, under a DoD contract, do not use these tools, and contact the Office of the Vice Provost for Research if you are unsure whether the policy applies to you.
 ```
 
 ## External data and network conduct

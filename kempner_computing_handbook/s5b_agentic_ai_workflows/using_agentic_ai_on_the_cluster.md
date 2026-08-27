@@ -80,6 +80,33 @@ For a task that runs a long time, use a batch job rather than holding an interac
 If you connect the agent to external tools through the Model Context Protocol (MCP), those servers run from your session the same way, and the same rules apply: keep any credentials in their configuration out of shared or world-readable paths. See {doc}`Agentic AI Tools <agentic_ai_tools>` for MCP background.
 ```
 
+## Under the hood: the agentic loop
+
+When you type a prompt, the answer does not come from the model alone. Claude Code runs an agentic loop on your compute node: it calls a model to reason, uses tools to act, and repeats until the task is done.
+
+```{mermaid}
+flowchart LR
+    U(["You"]) -->|prompt| H["Claude Code<br/>on the compute node"]
+    H -->|"model call:<br/>prompt, context,<br/>tool definitions"| M["Model<br/>(API or local endpoint)"]
+    M -->|"reasoning and<br/>tool requests"| H
+    H -->|"approved tool use:<br/>read, edit, run, search"| T["Your files and shell<br/>on the node"]
+    T -->|"results"| H
+    H -->|"final answer"| U
+    classDef harness fill:#A51C30,color:#ffffff,stroke:#A51C30;
+    classDef remote fill:#14154C,color:#ffffff,stroke:#3D3E82;
+    classDef you fill:#C6C8F4,color:#14154C,stroke:#14154C;
+    class H harness;
+    class M,T remote;
+    class U you;
+```
+
+- **Claude Code is the harness, not the brain.** It runs on your compute node, holds the conversation, and orchestrates the work; the reasoning is done by a Claude model. The model runs remotely on the Anthropic API, or on your own endpoint if you self-host, as in {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`.
+- **Each step is a model call.** Claude Code sends your prompt, the conversation and file context so far, and the definitions of the available tools to the model, which replies with text and, when it needs to act, with requests to use a tool.
+- **Tools run on the node.** When the model asks to read a file, edit code, run a shell command, or search, Claude Code runs that tool on the compute node against your own files and shell, then feeds the result back to the model. This is why the agent can work across your whole project.
+- **It loops until the turn is done.** The model gathers context, takes an action, and checks the result, using each result to decide the next step, until it produces a final answer. A single prompt can drive many model calls and tool uses.
+- **You gate the actions.** The approval happens between the model's request and the tool running: in manual mode Claude Code asks you first, and in auto mode a classifier vets the action (see Permission modes above). You can interrupt at any point.
+- **Other terminal agents work the same way.** OpenAI Codex, Gemini CLI, and similar tools follow the same loop of model call, tool use, and iteration; the names differ but the shape is the same.
+
 ## Running an IDE agent
 
 If you work in VS Code, you can use an IDE agent or extension against the cluster over Remote-SSH:
@@ -100,11 +127,38 @@ Agents act on their own, so a few habits keep them from disrupting shared resour
 - **Watch cost and quota.** API and subscription usage bills to your account, which you can track in the Claude Console; cluster jobs draw on your fairshare allocation. See {doc}`Fairshare Policy <../s1_high_performance_computing/efficient_use_of_resources/fair_use_and_prioritization_policies>`.
 - **Protect secrets and data.** Keep API keys out of repositories and shared paths, and do not let an agent read directories that hold credentials or sensitive data.
 
+## Agent security
+
+An agent acts on the content it reads, and not all of that content is trustworthy. A web page, PDF, dataset, code comment, or tool result can carry text written to look like an instruction. If the agent follows it, that is prompt injection, the most common way an agent is turned against its user.
+
+```{mermaid}
+flowchart LR
+    U["Untrusted content<br/>web page, PDF,<br/>dataset, code comment"] --> R["Agent reads it"]
+    R --> H{"Hidden<br/>instruction?"}
+    H -->|treated as data| OK["Ignored;<br/>you stay in control"]
+    H -->|followed as a command| BAD["Unintended action:<br/>exfiltration, deletion"]
+    classDef n fill:#14154C,color:#ffffff,stroke:#3D3E82;
+    classDef good fill:#C6C8F4,color:#14154C,stroke:#14154C;
+    classDef bad fill:#A51C30,color:#ffffff,stroke:#A51C30;
+    class U,R,H n;
+    class OK good;
+    class BAD bad;
+```
+
+The core habit is to treat everything the agent reads, including tool output, as data rather than commands. A few controls reduce the risk on shared infrastructure:
+
+- **Keep a human on consequential actions.** Approve anything that deletes data, moves files, pushes code, or spends budget (see **Permission modes** above).
+- **Give the agent only the access it needs.** Scope subagents to read-only tools where you can (see {doc}`Configuring Agents for Your Project <configuring_agents>`), and do not run agents with elevated permissions on shared paths.
+- **Cap autonomous loops.** Bound long or unattended runs so a misdirected agent cannot run away.
+- **Keep secrets out of reach.** A misdirected agent can only leak what it can read, so keep credentials out of the files and directories it works in.
+
+For the risk categories and defenses in depth, see OWASP's [Top 10 for Agentic Applications](https://genai.owasp.org/agentic-security-initiative/) and [Top 10 for LLM Applications](https://genai.owasp.org/llm-top-10/); the latter ranks prompt injection first. For cluster data rules, see {doc}`Security and Compliance <../s6_security_and_compliance/README>`.
+
 ## Common pitfalls
 
 - The agent tries to `sudo`, install system packages, or modify files outside your space. You do not have root on the cluster; keep changes within your own directories and environments.
 - The agent cannot reach the provider's API. Compute nodes have outbound access, so check your key, environment, and any typo first; if calls still fail, see {doc}`Support and Troubleshooting <../s8_support/README>`.
 
 ```{seealso}
-For the landscape of available tools, see {doc}`Agentic AI Tools <agentic_ai_tools>`. To keep everything on the cluster with no external provider, see {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`. For data-handling rules, see {doc}`Security and Compliance <../s6_security_and_compliance/README>` and the {doc}`Data Management Plan <../s1_high_performance_computing/storage_and_data_transfer/data_management_plan>`.
+For the landscape of available tools, see {doc}`Agentic AI Tools <agentic_ai_tools>`. For a hands-on walkthrough, see {doc}`Your First Agentic Workflow on the Cluster <first_agentic_workflow>`. To keep everything on the cluster with no external provider, see {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`. For data-handling rules, see {doc}`Security and Compliance <../s6_security_and_compliance/README>` and the {doc}`Data Management Plan <../s1_high_performance_computing/storage_and_data_transfer/data_management_plan>`.
 ```

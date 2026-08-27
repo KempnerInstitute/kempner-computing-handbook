@@ -32,7 +32,7 @@ Work flows through the staged tasks, you review and steer between them, and resu
 ## Workflow patterns
 
 - **Single agent or multi-agent pipeline.** A single capable agent handles many tasks. Multi-agent pipelines split work across specialized roles (for example a solver and an independent evaluator), which helps on large or multi-step problems but adds coordination overhead and lets errors propagate across agent boundaries.
-- **Complexity versus benefit.** More agents are not automatically better. Benchmark a multi-agent setup against a simpler single-agent or single-pass approach on your own task before adopting it, and keep whichever is more accurate and cheaper.
+- **Complexity versus benefit.** More agents are not automatically better. Benchmark a multi-agent setup against a simpler single-agent or single-pass approach on your own task before adopting it, and keep whichever is more accurate and cheaper; see {doc}`Evaluating and Monitoring Agents <evaluating_and_monitoring_agents>`.
 - **Iterative loops.** Many research agents work in a design-run-measure-revise loop, refining a solution across cycles. Bound the loop with a stopping criterion and a budget so it does not run indefinitely.
 - **Human-in-the-loop checkpoints.** Treat the agent as a collaborative accelerator, not a black-box replacement. Insert explicit review points where you inspect intermediate outputs, inject domain knowledge, or correct course.
 
