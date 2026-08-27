@@ -90,7 +90,7 @@ parts:
       - file: s5_ai_scaling_and_engineering/experiment_management/logging_and_monitoring
       - file: s5_ai_scaling_and_engineering/experiment_management/wandb_sweeps
       - file: s5_ai_scaling_and_engineering/experiment_management/reproducing_runs
-  - caption: Agentic AI Tools and Workflows
+  - caption: Agentic AI
     numbered: true
     chapters:
     - file: s5b_agentic_ai_workflows/README
