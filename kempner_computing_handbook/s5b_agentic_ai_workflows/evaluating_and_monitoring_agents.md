@@ -32,7 +32,7 @@ The [OpenTelemetry GenAI semantic conventions](https://github.com/open-telemetry
 Agent runs spend money and context, both of which reward a little discipline:
 
 - **Track spend.** API and subscription usage bills to your account through the provider's console; cluster jobs draw on your fairshare allocation. See {doc}`Fairshare Policy <../s1_high_performance_computing/efficient_use_of_resources/fair_use_and_prioritization_policies>`.
-- **Cache repeated context.** Prompt caching reuses a stable prompt prefix to cut cost and latency, and Claude Code applies it automatically to its system prompt, tools, and project instructions. Benefit from it by keeping durable context in `AGENTS.md` or `CLAUDE.md`, leaving that prefix unchanged within a session, and running `/clear` to start fresh between unrelated tasks rather than carrying a stale prefix.
+- **Cache repeated context.** Prompt caching reuses a stable prompt prefix to cut cost and latency, and Claude Code applies it automatically to its system prompt, tools, and project instructions. Benefit from it by keeping durable context in `CLAUDE.md` (or an `AGENTS.md` bridged to it), leaving that prefix unchanged within a session, and running `/clear` to start fresh between unrelated tasks rather than carrying a stale prefix.
 - **Keep the working context small.** Give the agent what the task needs, not the whole repository; a smaller context is cheaper and often more accurate.
 - **Bound long runs.** Cap an unattended run before you start it: set a spend limit in the provider console, run it inside a time-limited interactive or batch job so the Slurm wall clock stops it, and cap per-response output with `CLAUDE_CODE_MAX_OUTPUT_TOKENS`.
 

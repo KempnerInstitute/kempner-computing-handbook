@@ -17,30 +17,33 @@ flowchart LR
 
 ## Start a session and launch the agent
 
-On a compute node, not a login node, start an interactive session and launch the agent. A small CPU allocation is enough for a first run:
+Before your first run, install and authenticate the agent, and read how to size an allocation, in {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`.
+
+On a compute node, not a login node, start an interactive session, move into your project directory, and launch the agent. A small CPU allocation is enough for a first run:
 
 ```bash
 salloc --partition=test --time=0-02:00 --mem=16G --cpus-per-task=4
+cd /path/to/your/project
 claude
 ```
 
-For install, authentication, and how to size an allocation, see {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`.
+For a first run, press `Shift+Tab` until the session shows manual mode, so the agent asks before each action. Pro, Max, and Team sessions start in Auto mode, where a classifier approves routine actions for you.
 
 ## Point the agent at your work
 
-Launch the agent from the directory you want it to work in, so it can read your files. If the project has a `CLAUDE.md`, the agent picks up your conventions from it; if you keep conventions in an `AGENTS.md`, bridge it to `CLAUDE.md` as described in {doc}`Configuring Agents for Your Project <configuring_agents>`.
+The agent works in the directory you launched it from and reads the files there. If the project has a `CLAUDE.md`, it picks up your conventions from it; if you keep conventions in an `AGENTS.md`, bridge it to `CLAUDE.md` as described in {doc}`Configuring Agents for Your Project <configuring_agents>`.
 
 ## Give it one scoped task
 
-Start with a single, checkable task rather than a whole project. For example:
+Start with a single, checkable task rather than a whole project, pointed at a file you actually have. For example, with a CSV in your project:
 
 > Summarize `data/measurements.csv`, then save a histogram of the `temperature` column to `figures/temperature_hist.png`.
 
-A narrow task is easy to review and easy to verify, and it shows you how the agent behaves before you hand it anything larger.
+Make sure the environment the agent runs in has what the task needs, here Python with pandas and matplotlib. A narrow task is easy to review and easy to verify, and it shows you how the agent behaves before you hand it anything larger.
 
 ## Review before it acts
 
-For a first run, put the session in manual mode by pressing `Shift+Tab`, so the agent asks before each action; Pro, Max, and Team sessions otherwise start in Auto mode, where a classifier approves routine actions for you. The agent then proposes edits and commands and waits for your approval. Read them before approving, especially anything that deletes files, moves data, or installs software. This is also your defense against an agent acting on untrusted content; see the permission modes and Agent security guidance in {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`.
+In manual mode the agent proposes edits and commands and waits for your approval. Read them before approving, especially anything that deletes files, moves data, or installs software. This is also your defense against an agent acting on untrusted content; see the permission modes and Agent security guidance in {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`.
 
 ## Verify the result
 
