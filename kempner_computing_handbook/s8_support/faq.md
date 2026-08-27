@@ -51,3 +51,9 @@ git remote set-url origin git@github.com:[Github account]/[Github repository].gi
 
 Replace `[Github account]` with your GitHub account and `[Github repository]` with the repository you are pushing to.
 :::
+
+## VSCode
+
+:::{dropdown} VSCode keeps dropping its connection to the cluster ("dynamic port forwarding failed")
+VSCode Remote-SSH can stop reconnecting when leftover port forwards accumulate on the shared SSH connection, showing `dynamic port forwarding failed!` or `Address already in use` in its Remote-SSH log. Release the stuck port with `ssh -O cancel -D <port> cannon`, or reset the shared connection with `ssh -O exit cannon` and reconnect. For the full steps, see {ref}`Troubleshooting connection drops <development_and_runtime_envs:using_vscode_for_remote_development:troubleshooting_connection_drops>` on the VSCode page.
+:::
