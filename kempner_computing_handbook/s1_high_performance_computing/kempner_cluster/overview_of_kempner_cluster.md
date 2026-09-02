@@ -61,6 +61,18 @@ Priority is set through Fairshare scheduling.   For more information, please see
 
 Generally we hope to have enough GPUs available on the cluster for most use cases.  However, for situations in which you need a large number of GPUs that are dedicated for a period of time, or need a smaller subset for a longer period of time, you can make a reservation request. Please see the full governance guidelines for further details: https://kempnerinstitute.harvard.edu/kempner-community/
 
+## How can I monitor my jobs and cluster usage?
+
+The Kempner Institute provides [KempnerInsight](https://kempnerinsight.eng.kempnerinstitute.harvard.edu/), a web dashboard for monitoring the cluster from a browser. It brings together job-level and cluster-level metrics in one place, so you can see how your jobs and the cluster as a whole are performing without running any commands.
+
+At a glance, it offers:
+
+- A searchable table of jobs, with a per-job detail view that plots CPU utilization, per-GPU compute and memory utilization, and InfiniBand throughput, so you can tell whether a job is really using the GPUs it holds.
+- A cluster view with a live GPU status heatmap, allocation and utilization over time, node health, and a per-node table.
+- Usage reports that summarize GPU hours, equivalent cloud cost, and utilization for a lab or the whole cluster over a date range.
+
+For a full walkthrough with screenshots, see {doc}`KempnerInsight Cluster Monitoring App <kempnerinsight>`. For command-line and GPU-counter tools, see {doc}`Performance Monitoring and Optimization <../../s5_ai_scaling_and_engineering/efficiency/performance_monitoring_and_optimization>`.
+
 ## Where is the Kempner Institute AI Cluster located physically?
 
 The cluster is located at the [Massachusetts Green High-Performance Computing Center](https://mghpcc.org) (MGHPCC) in Holyoke, MA. This is a state-of-the-art datacenter that is shared among the Boston-area universities. It runs off of hydropower, making it one of the “greenest” computing centers in the world. FASRC also provides co-located [storage resources](https://docs.rc.fas.harvard.edu/kb/data-storage-workflow-rdm/) at MGHPCC.
