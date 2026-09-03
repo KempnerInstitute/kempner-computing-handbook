@@ -160,7 +160,7 @@ Your account's authority is not the same as the authority a single task needs. Y
 
 ### Prefer enforceable boundaries over prompt instructions
 
-A prompt such as "do not read files outside this directory" guides the model, but it is not an independent boundary and may not hold under adversarial input. Where the environment allows, prefer limits enforced outside the model: filesystem permissions, {doc}`Slurm resource limits <../s1_high_performance_computing/general_hpc_concepts/job_submission_basics>`, tool permission allowlists (see {doc}`Configuring Agents for Your Project <configuring_agents>`), and read-only subagents. Use both layers together: enforceable controls set the hard limit, and prompt instructions guide behavior within it.
+A prompt such as "do not read files outside this directory" guides the model, but it is not an independent boundary and may not hold under adversarial input. Where the environment allows, prefer limits enforced outside the model: filesystem permissions, SLURM resource limits (see {doc}`Job Submission Basics <../s1_high_performance_computing/general_hpc_concepts/job_submission_basics>`), tool permission allowlists (see {doc}`Configuring Agents for Your Project <configuring_agents>`), and read-only subagents. Use both layers together: enforceable controls set the hard limit, and prompt instructions guide behavior within it.
 
 ### Before an unattended run
 
@@ -176,10 +176,10 @@ Before running an agent unattended, work through this checklist. A "no" or "unkn
 | **Data policy** | Is every dataset the agent may read permitted in this environment under the applicable data-use agreement and data level? See {doc}`Security and Compliance <../s6_security_and_compliance/README>`. |
 | **Untrusted input** | Could it read web pages, papers, repository files, datasets, code comments, or tool output that may carry adversarial instructions? See Agent security above. |
 | **Resource scope** | Are CPU, memory, GPU, wall time, and job concurrency bounded to what the task needs, and are autonomous loops capped? |
-| **Execution evidence** | Will enough metadata exist to reconstruct the run, such as the Slurm job ID, code or image version, timestamps, and input and output locations, without logging secrets? |
+| **Execution evidence** | Will enough metadata exist to reconstruct the run, such as the SLURM job ID, code or image version, timestamps, and input and output locations, without logging secrets? |
 | **Stop condition** | What event should make the agent halt and return control to a person rather than widen its own scope? |
 
-When an unattended agent finds it needs data, credentials, external access, or actions outside its declared task, the safe default is to stop and ask for human review rather than widen its own scope. Set stop conditions and loop limits before submission, and treat unexpected scope expansion as a signal to pause.
+When an unattended agent finds it needs data, credentials, external access, or actions outside its declared task, the safe default is to stop and ask for human review rather than widen its own scope. Set the stop conditions and loop limits before submission, and treat unexpected scope expansion as a signal to pause rather than proceed.
 
 ### Container filesystem visibility
 

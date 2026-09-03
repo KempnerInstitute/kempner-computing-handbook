@@ -82,7 +82,7 @@ Agentic tools are also exposed to prompt injection: untrusted content the agent 
 ```
 
 ```{note}
-Scope an autonomous agent to its task. An agent runs with your account's authority, which usually exceeds what any single task needs. Reduce a task's effective authority to match its purpose using controls that do not depend on the model, such as filesystem permissions, resource limits, and tool allowlists, and prefer stopping for human review over letting an agent widen its own scope. See {doc}`Using Agentic AI on the Cluster <../s5b_agentic_ai_workflows/using_agentic_ai_on_the_cluster>` for how to do this.
+Scope an autonomous agent to its task. An agent runs with your account's authority, which usually exceeds what any single task needs, so reduce its effective authority to match the task's purpose using controls that do not depend on the model. When scope is ambiguous, prefer stopping for human review over letting the agent widen its own scope. See {doc}`Using Agentic AI on the Cluster <../s5b_agentic_ai_workflows/using_agentic_ai_on_the_cluster>` for how to do this.
 ```
 
 ```{warning}
@@ -183,8 +183,8 @@ If you suspect a security incident, a compromised account, or a policy violation
 ```{note}
 **If an autonomous agent behaves unexpectedly**, the reporting guidance above applies, with these agent-specific steps:
 
-1. Stop the agent or job first. Cancel the Slurm job or terminate the process before investigating.
-2. Preserve run metadata. Save the Slurm job ID, logs, and relevant output, without copying secrets into new files.
+1. Stop the agent or job first. Cancel the SLURM job or terminate the process before investigating.
+2. Preserve run metadata. Save the SLURM job ID, logs, and relevant output, without copying secrets into new files.
 3. Rotate exposed credentials. If the agent may have read or transmitted API keys, tokens, or other secrets, revoke and rotate them.
 4. Escalate when appropriate. If shared data, other users' resources, cluster stability, or a data-use agreement may be affected, report it to your PI and to FASRC.
 5. Do not use the same agent to investigate. An agent that may have been misdirected should not assess its own behavior.
