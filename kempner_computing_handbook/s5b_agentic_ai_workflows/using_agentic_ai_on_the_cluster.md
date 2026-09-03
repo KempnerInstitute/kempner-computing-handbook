@@ -154,6 +154,37 @@ The core habit is to treat everything the agent reads, including tool output, as
 
 For the risk categories and defenses in depth, see OWASP's [Top 10 for Agentic Applications](https://genai.owasp.org/agentic-security-initiative/) and [Top 10 for LLM Applications](https://genai.owasp.org/llm-top-10/); the latter ranks prompt injection first. For cluster data rules, see {doc}`Security and Compliance <../s6_security_and_compliance/README>`.
 
+## Scoping an agent to its task
+
+Your account's authority is not the same as the authority a single task needs. Your account may legitimately reach many projects, directories, credentials, and services, but one agent task usually needs only a small part of that. Because an agent runs as your own process, not as a separate user, it can use whatever files, tools, and credentials that process can reach. If a bug, a bad input, or a prompt-injection payload misdirects it, the reach of the damage is everything the process can touch, not just what the task required. The question to ask is not only whether an action is allowed under your account, but whether the task has more effective authority than its purpose requires.
+
+### Prefer enforceable boundaries over prompt instructions
+
+A prompt such as "do not read files outside this directory" guides the model, but it is not an independent boundary and may not hold under adversarial input. Where the environment allows, prefer limits enforced outside the model: filesystem permissions, {doc}`Slurm resource limits <../s1_high_performance_computing/general_hpc_concepts/job_submission_basics>`, tool permission allowlists (see {doc}`Configuring Agents for Your Project <configuring_agents>`), and read-only subagents. Use both layers together: enforceable controls set the hard limit, and prompt instructions guide behavior within it.
+
+### Before an unattended run
+
+Before running an agent unattended, work through this checklist. A "no" or "unknown" answer does not by itself block the job; it flags a boundary to resolve first.
+
+| Question | What to check |
+|---|---|
+| **Task boundary** | Can you state in one or two sentences exactly what the agent is meant to do? |
+| **Read scope** | Which files and directories must it read? What unrelated locations can the process also see? |
+| **Write scope** | Where may it create or change files? Can it reach shared environments, checkpoints, datasets, or repositories the task does not need to change? |
+| **Credentials** | Which API tokens, SSH keys, cloud credentials, or authenticated sessions can the process reach? |
+| **Network** | Which external endpoints does the task actually require? |
+| **Data policy** | Is every dataset the agent may read permitted in this environment under the applicable data-use agreement and data level? See {doc}`Security and Compliance <../s6_security_and_compliance/README>`. |
+| **Untrusted input** | Could it read web pages, papers, repository files, datasets, code comments, or tool output that may carry adversarial instructions? See Agent security above. |
+| **Resource scope** | Are CPU, memory, GPU, wall time, and job concurrency bounded to what the task needs, and are autonomous loops capped? |
+| **Execution evidence** | Will enough metadata exist to reconstruct the run, such as the Slurm job ID, code or image version, timestamps, and input and output locations, without logging secrets? |
+| **Stop condition** | What event should make the agent halt and return control to a person rather than widen its own scope? |
+
+When an unattended agent finds it needs data, credentials, external access, or actions outside its declared task, the safe default is to stop and ask for human review rather than widen its own scope. Set stop conditions and loop limits before submission, and treat unexpected scope expansion as a signal to pause.
+
+### Container filesystem visibility
+
+Running an agent inside a Singularity or Apptainer container does not by itself limit what it can read or write on the host. On the cluster, containers bind-mount `/n` (home, lab, and scratch space), the current working directory, and `/tmp` by default, so a containerized agent sees the same files as a non-containerized one unless you restrict the bind mounts. Check your container's effective filesystem visibility rather than assuming it is isolated. See {doc}`Containerization <../s1_high_performance_computing/development_and_runtime_envs/containerization>` and the [FASRC Singularity documentation](https://docs.rc.fas.harvard.edu/kb/singularity-on-the-cluster/) for bind-mount behavior.
+
 ## Common pitfalls
 
 - The agent tries to `sudo`, install system packages, or modify files outside your space. You do not have root on the cluster; keep changes within your own directories and environments.
