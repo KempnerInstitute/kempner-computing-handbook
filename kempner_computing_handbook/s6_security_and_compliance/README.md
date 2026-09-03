@@ -89,63 +89,6 @@ Scope an autonomous agent to its task. An agent runs with your account's authori
 **Prohibited AI under the NDAA.** Harvard's [NDAA 2026 Guidance and Prohibition on use of certain Artificial Intelligence](https://bpb-us-e1.wpmucdn.com/websites.harvard.edu/dist/f/106/files/2026/01/NDAA-2026-Guidance-and-Prohibition-on-use-of-certain-Artificial-Intelligence.pdf) prohibits anyone performing work under a U.S. Department of Defense (DoD) contract from using AI developed by **DeepSeek**, its parent company High Flyer, or affiliated entities, in any activity related to that contract. The prohibition covers faculty, staff, students, and visitors working on the contract, and it applies to self-hosting the open-weight DeepSeek models on the cluster as well as the hosted service. If your work is, or may be, under a DoD contract, do not use these tools, and contact the Office of the Vice Provost for Research if you are unsure whether the policy applies to you.
 ```
 
-## Task-scoped authority for autonomous agents
-
-The guidance above applies to every AI tool. This section adds a narrower point for jobs that run autonomously or semi-autonomously: your account's authority is not the same as the authority a single task needs.
-
-A researcher's account may legitimately access many projects, directories, credentials, and services. An autonomous agent job typically needs only a subset of that access for one task. Because the agent is not a separate Unix principal — it runs as your process — it can exercise whatever files, tools, and credentials the surrounding process exposes. If the agent is misdirected by a bug, a bad input, or a prompt-injection payload, the blast radius is everything the process can reach, not just what the task required.
-
-The security question is therefore not only *"is this action authorized under my account?"* but also *"does this autonomous task have more effective authority than its stated research purpose requires?"*
-
-### Prefer enforceable boundaries over prompt instructions
-
-A prompt such as "do not access files outside this directory" is behavioral guidance to the model. It is useful as an additional guardrail, but it is not an independent security boundary — the model may not honor it under adversarial input or unexpected context.
-
-Where the environment supports it, prefer restrictions enforced outside the model: file and directory permissions, {doc}`Slurm resource limits <../s1_high_performance_computing/general_hpc_concepts/job_submission_basics>`, tool permission allowlists (see {doc}`Configuring Agents <../s5b_agentic_ai_workflows/configuring_agents>`), and read-only subagent scoping. These controls operate independently of what the model decides to do.
-
-```{note}
-This does not mean prompt-level instructions are worthless. It means they are a layer, not the whole boundary. Use both: enforceable controls to set the hard limit, and model instructions to guide normal behavior within that limit.
-```
-
-### Pre-submission task-boundary review
-
-Before running an autonomous or semi-autonomous job unattended, work through the following checklist. A "no" or "unknown" answer does not necessarily prohibit the job — it means the unresolved boundary should be reviewed before unattended execution.
-
-| Question | What to check |
-|---|---|
-| **Task boundary** | Can you state in one or two sentences exactly what this agent is supposed to do? |
-| **Read scope** | Which files and directories must it read? What unrelated locations can the process also see? |
-| **Write scope** | Where may it create or modify files? Can it reach shared environments, checkpoints, datasets, or repositories that the task does not need to change? |
-| **Credentials** | Which API tokens, SSH keys, cloud credentials, or authenticated sessions are reachable by the process? |
-| **Network and external services** | Which external endpoints does the task actually require? If you need to restrict outbound access beyond what the task requires, check with [FASRC](https://docs.rc.fas.harvard.edu/kb/acceptable-use/) for available options. |
-| **Data policy** | Is every dataset the agent may read permitted in this environment under the applicable data-use agreement and {ref}`data classification <security_and_compliance>`? |
-| **Untrusted input** | Could it consume web pages, papers, repository files, datasets, code comments, tool output, or shared content that may contain adversarial instructions? See {doc}`Agent Security <../s5b_agentic_ai_workflows/using_agentic_ai_on_the_cluster>` for prompt-injection background. |
-| **Resource scope** | Are CPU, memory, GPU, wall time, and job concurrency bounded to what the task needs? Are autonomous loops capped? |
-| **Execution evidence** | Will enough metadata exist to reconstruct the run — Slurm job ID, code or image version, timestamps, input and output locations — without logging secrets? |
-| **Stop condition** | What event should cause the agent to halt and return control to a human rather than expanding its own scope? |
-
-```{tip}
-A useful mental test: *"If this agent were redirected by a bad input, what could it do with the authority it already has?"* The answer should be close to the delegated research task, not the full capability of your account.
-```
-
-### Fail closed on scope ambiguity
-
-When an unattended agent discovers it needs data, credentials, external access, or actions outside its declared task, the safe default is to stop and request human review — not to expand its own scope autonomously. Configure stop conditions and loop limits before submission, and treat unexpected scope expansion as a signal to pause, not to proceed.
-
-### Container filesystem visibility
-
-Running a process inside a Singularity/Apptainer container does not automatically restrict what it can read or write on the host. On the FASRC cluster, containers bind-mount `/n` (home, lab, and scratch space), the current working directory, and `/tmp` by default, so a containerized agent can see and modify the same files as a non-containerized one unless you explicitly restrict the bind mounts. Verify the effective filesystem visibility of your container rather than assuming isolation. See the handbook's {doc}`Containerization <../s1_high_performance_computing/development_and_runtime_envs/containerization>` guide and the [FASRC Singularity documentation](https://docs.rc.fas.harvard.edu/kb/singularity-on-the-cluster/) for details on bind-mount behavior.
-
-### If an agent behaves unexpectedly
-
-The {ref}`Reporting a concern <security_and_compliance>` guidance below applies generally. For an autonomous agent job specifically:
-
-1. **Stop the agent or job first** — cancel the Slurm job or terminate the process before investigating.
-2. **Preserve run metadata** — save the Slurm job ID, logs, and relevant output without copying secrets into new files.
-3. **Rotate exposed credentials** — if the agent may have read or transmitted API keys, tokens, or other secrets, revoke and rotate them.
-4. **Escalate when appropriate** — if shared data, other users' resources, cluster stability, or a data-use agreement may be affected, report it to your PI and to FASRC ([rchelp@rc.fas.harvard.edu](mailto:rchelp@rc.fas.harvard.edu)).
-5. **Do not use the same agent to investigate** — a broadly permissioned agent that may have been misdirected should not be given the job of assessing its own behavior.
-
 ## External data and network conduct
 
 Datasets you download or scrape from external providers come with terms of use, and the whole cluster shares a small pool of public IP addresses.
