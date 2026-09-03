@@ -214,7 +214,7 @@ flowchart LR
 
 ### Container filesystem visibility
 
-Running an agent inside a Singularity or Apptainer container does not by itself limit what it can read or write on the host. On the cluster, containers bind-mount `/n` (home, lab, and scratch space), the current working directory, and `/tmp` by default, so a containerized agent sees the same files as a non-containerized one unless you restrict the bind mounts. Check your container's effective filesystem visibility rather than assuming it is isolated. See {doc}`Containerization <../s1_high_performance_computing/development_and_runtime_envs/containerization>` and the [FASRC Singularity documentation](https://docs.rc.fas.harvard.edu/kb/singularity-on-the-cluster/) for bind-mount behavior.
+Running an agent inside a Singularity or Apptainer container does not by itself isolate it from the host filesystem. On the cluster, the default configuration makes `/n` (home, lab, and scratch space), your current working directory, and `/tmp` available inside the container, so unless you opt into isolation a containerized agent sees the same files as a non-containerized one. You control this: restrict what is mounted with options such as `--contain` or `--no-mount`, and add only the paths the task needs with `--bind`. Verify your container's effective filesystem visibility rather than assuming it is isolated. See {doc}`Containerization <../s1_high_performance_computing/development_and_runtime_envs/containerization>` and the [FASRC Singularity documentation](https://docs.rc.fas.harvard.edu/kb/singularity-on-the-cluster/) for bind-mount behavior.
 
 ```{mermaid}
 flowchart LR
