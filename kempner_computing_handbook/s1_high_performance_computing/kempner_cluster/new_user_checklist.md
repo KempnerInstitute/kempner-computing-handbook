@@ -13,7 +13,7 @@ Use this checklist when onboarding to the Kempner AI cluster for the first time.
 
 ### FASRC Account
 
-If you already have a FASRC account set up, you may jump to the *Kempner AI Cluster Account* section below.
+If you already have a FASRC account set up, you may jump to the **Kempner AI Cluster Account** section below.
 
 - [ ] Request a FASRC account through the [FASRC account request portal](https://portal.rc.fas.harvard.edu/request/account/new).
 - [ ] Select the correct PI and approver for your role. See {doc}`Introduction and Basics <introduction_and_cluster_basics>`.
@@ -48,8 +48,8 @@ Once you have an active FASRC account, you can request access to the Kempner AI 
 
 - [ ] Confirm that you can log in with your FASRC password and OpenAuth code.
 - [ ] **Open OnDemand:** For browser-based access, connect to the FASRC VPN and open [Open OnDemand](https://vdi.rc.fas.harvard.edu/). See {doc}`Open OnDemand <../general_hpc_concepts/open_ondemand>`.
-- [ ] **Visual Studio Code (VS Code):** For a remote IDE, use VS Code with the Remote - SSH extension. See {doc}`VS Code for Remote Development <../development_and_runtime_envs/using_vscode_for_remote_development>`.
-- [ ] Remember that login nodes are for file management, job submission, and lightweight tasks only. Do not run compute-heavy code—or agentic AI tools—on login nodes.
+- [ ] **Visual Studio Code (VSCode):** For a remote IDE, use VSCode with the Remote - SSH extension. See {doc}`VSCode for Remote Dev <../development_and_runtime_envs/using_vscode_for_remote_development>`.
+- [ ] Remember that login nodes are for file management, job submission, and lightweight tasks only. Do not run compute-heavy code, or agentic AI tools, on login nodes.
 
 ## Learn Where Files Should Go
 
@@ -60,7 +60,7 @@ Once you have an active FASRC account, you can request access to the Kempner AI 
 
 ## Set Up a Working Environment
 
-- [ ] Learn how to inspect and load software modules with `module avail`, `module load`, `module list`, and `module purge`. See {doc}`Software Modules and Environment Management <../development_and_runtime_envs/software_module_and_environment_management>`.
+- [ ] Learn how to inspect and load software modules with `module avail`, `module load`, `module list`, and `module purge`. See {doc}`Software Modules <../development_and_runtime_envs/software_module_and_environment_management>`.
 - [ ] Configure conda to use `conda-forge` as the default channel. See {ref}`Configuring conda-forge as the default channel <development_and_runtime_envs:using_conda_env:conda_forge_default>`.
 - [ ] Create a project-specific conda environment. See {ref}`Creating a conda environment <development_and_runtime_envs:using_conda_env:creation>`.
 - [ ] If you will use Jupyter or JupyterLab, install `ipykernel` in your conda environment. See {ref}`Using a conda environment in Jupyter <development_and_runtime_envs:using_conda_env:jupyter>`.
