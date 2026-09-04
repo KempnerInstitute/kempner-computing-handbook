@@ -81,6 +81,10 @@ An unsupervised agent can delete data or disrupt shared resources far faster tha
 Agentic tools are also exposed to prompt injection: untrusted content the agent reads, such as web pages, files, or datasets, can carry hidden instructions. Treat what an agent reads as data rather than commands, keep a human approving consequential actions, and give the agent least privilege. See OWASP's [Top 10 for Agentic Applications](https://genai.owasp.org/agentic-security-initiative/) and, for running these tools here, {doc}`Using Agentic AI on the Cluster <../s5b_agentic_ai_workflows/using_agentic_ai_on_the_cluster>`.
 ```
 
+```{note}
+Scope an autonomous agent to its task. An agent runs with your account's authority, which usually exceeds what any single task needs, so reduce its effective authority to match the task's purpose using controls that do not depend on the model. When scope is ambiguous, prefer stopping for human review over letting the agent widen its own scope. See {doc}`Using Agentic AI on the Cluster <../s5b_agentic_ai_workflows/using_agentic_ai_on_the_cluster>` for how to do this.
+```
+
 ```{warning}
 **Prohibited AI under the NDAA.** Harvard's [NDAA 2026 Guidance and Prohibition on use of certain Artificial Intelligence](https://bpb-us-e1.wpmucdn.com/websites.harvard.edu/dist/f/106/files/2026/01/NDAA-2026-Guidance-and-Prohibition-on-use-of-certain-Artificial-Intelligence.pdf) prohibits anyone performing work under a U.S. Department of Defense (DoD) contract from using AI developed by **DeepSeek**, its parent company High Flyer, or affiliated entities, in any activity related to that contract. The prohibition covers faculty, staff, students, and visitors working on the contract, and it applies to self-hosting the open-weight DeepSeek models on the cluster as well as the hosted service. If your work is, or may be, under a DoD contract, do not use these tools, and contact the Office of the Vice Provost for Research if you are unsure whether the policy applies to you.
 ```
@@ -117,4 +121,14 @@ Your work is also bound by the requirements of whoever funds and governs it.
 ```{admonition} Reporting a concern
 :class: important
 If you suspect a security incident, a compromised account, or a policy violation, report it promptly. Contact FASRC at [rchelp@rc.fas.harvard.edu](mailto:rchelp@rc.fas.harvard.edu) and, for security incidents, Harvard's Information Security office at [ithelp@harvard.edu](mailto:ithelp@harvard.edu). Acting quickly limits the impact on you, your lab, and the wider cluster.
+```
+
+```{note}
+**If an autonomous agent behaves unexpectedly**, the reporting guidance above applies, with these agent-specific steps:
+
+1. Stop the agent or job first. Cancel the SLURM job or terminate the process before investigating.
+2. Preserve run metadata. Save the SLURM job ID, logs, and relevant output, without copying secrets into new files.
+3. Rotate exposed credentials. If the agent may have read or transmitted API keys, tokens, or other secrets, revoke and rotate them.
+4. Escalate when appropriate. If shared data, other users' resources, cluster stability, or a data-use agreement may be affected, report it to your PI and to FASRC.
+5. Do not use the same agent to investigate. An agent that may have been misdirected should not assess its own behavior.
 ```
