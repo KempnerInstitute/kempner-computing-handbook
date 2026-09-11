@@ -22,3 +22,16 @@ h3 {
 ul.nav.bd-sidenav {
     line-height: 1.0; /* Set your desired line height */
 }
+
+/* Gold star for the "Star us on GitHub" item in the source dropdown.
+
+   This is deliberately outside the handbook figure palette in CONTRIBUTING.md.
+   A gold star is the platform convention for starring a repository, and GitHub
+   itself uses this colour, so it reads as the familiar action rather than as
+   decoration. The label text keeps the theme's own colour.
+
+   The rule targets the icon container rather than the link, so the star stays
+   gold when the menu item is hovered. */
+.star-repository-button .btn__icon-container {
+    color: #E3B341;
+}
