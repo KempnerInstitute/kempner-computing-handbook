@@ -1,0 +1,85 @@
+/*
+  Styles for the "Was this page helpful?" widget added by page_feedback.js.
+
+  The widget sits in a subtle, theme-aware card: a thin border and rounded
+  corners over the theme's surface color, centered under the page content. The
+  border, surface, and text colors are all theme tokens, so the card follows
+  the light/dark toggle without needing its own overrides.
+
+  The hover and focus accent is Harvard crimson #A51C30, from the handbook
+  palette in CONTRIBUTING.md.
+*/
+
+.page-feedback {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem 0.9rem;
+  width: fit-content;
+  max-width: 100%;
+  margin: 2.5rem auto;
+  padding: 0.85rem 1.4rem;
+  border: 1px solid var(--pst-color-border);
+  border-radius: 8px;
+  background-color: var(--pst-color-surface);
+  font-size: 0.875rem;
+  color: var(--pst-color-text-muted);
+}
+
+.page-feedback__prompt {
+  color: var(--pst-color-text-base);
+  font-weight: 600;
+}
+
+.page-feedback__response {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.page-feedback__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  line-height: inherit;
+  cursor: pointer;
+}
+
+.page-feedback__button:hover {
+  text-decoration: underline;
+}
+
+/* The solid thumb stands in for the outline one on hover, so the icon reads
+   heavier without changing color. */
+.page-feedback__icon--filled {
+  display: none;
+}
+
+.page-feedback__button:hover .page-feedback__icon--outline,
+.page-feedback__button:focus-visible .page-feedback__icon--outline {
+  display: none;
+}
+
+.page-feedback__button:hover .page-feedback__icon--filled,
+.page-feedback__button:focus-visible .page-feedback__icon--filled {
+  display: inline-block;
+}
+
+.page-feedback__button:focus-visible {
+  outline: 2px solid #A51C30;
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+html[data-theme="dark"] .page-feedback__button:focus-visible {
+  outline-color: #C6C8F4;
+}
