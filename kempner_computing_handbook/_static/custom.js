@@ -31,9 +31,12 @@ function addCustomButton(button_type, url, neighbor_button_identifier) {
     button.setAttribute('title', 'Data Repository');  // tooltip text
   }
 
-  button.classList.add('bd-header-article', 'article-header-buttons', 'header-article-items__end', 
-    'header-article-item', 'btn', 'btn-sm', 'pst-navbar-icon', 'header-article-items', 
-    'header-article__inner');
+  // Only the classes the theme puts on its own header icon buttons, so these
+  // match them in size. Adding the surrounding container classes as well
+  // (header-article-items, header-article__inner and the like) stacked their
+  // padding onto the button and made it twice as wide as the native ones,
+  // which left the row unevenly spaced.
+  button.classList.add('btn', 'btn-sm', 'pst-navbar-icon');
   button.setAttribute('data-bs-toggle', 'tooltip');
   button.setAttribute('data-bs-placement', 'bottom');  // tooltip position 
 
