@@ -91,6 +91,7 @@ function addStarMenuItem() {
   iconContainer.classList.add('btn__icon-container');
   const icon = document.createElement('i');
   icon.classList.add('fas', 'fa-star');
+  icon.setAttribute('aria-hidden', 'true');
   iconContainer.appendChild(icon);
 
   const textContainer = document.createElement('span');
