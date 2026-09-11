@@ -35,3 +35,15 @@ ul.nav.bd-sidenav {
 .star-repository-button .btn__icon-container {
     color: #E3B341;
 }
+
+/* Gold star for the "Star us on GitHub" line in the sidebar.
+
+   The surrounding nav rules already give the link the muted colour used by the
+   chapter links, so only the star itself is coloured, which is what keeps the
+   line from reading as another chapter. Both selectors are needed because
+   FontAwesome replaces the <i> with an <svg> once it loads. */
+.star-repository-sidebar i,
+.star-repository-sidebar svg {
+    color: #E3B341;
+    margin-right: 0.45em;
+}

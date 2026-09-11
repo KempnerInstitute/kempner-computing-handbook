@@ -109,8 +109,46 @@ function addStarMenuItem() {
   }
 }
 
+/*
+  Adds a "Star us on GitHub" line to the left sidebar, directly under the
+  'Kempner Computing Handbook' link.
+
+  The theme keeps that link in its own short list, separate from the chapter
+  tree that follows the first section caption, so a line added here sits above
+  the chapters rather than looking like one of them.
+*/
+function addStarSidebarItem() {
+
+  const homeList = document.querySelector('.bd-sidenav__home-link');
+  if (!homeList) {
+    return;
+  }
+
+  const link = document.createElement('a');
+  link.setAttribute('href', REPOSITORY_URL);
+  link.setAttribute('target', '_blank');
+  link.setAttribute('rel', 'noopener');
+  // Deliberately not 'external': the theme appends an external-link icon to
+  // nav.bd-links a.reference.external, and the line reads better without it.
+  link.classList.add('reference', 'star-repository-sidebar');
+
+  const icon = document.createElement('i');
+  icon.classList.add('fas', 'fa-star');
+  icon.setAttribute('aria-hidden', 'true');
+
+  link.appendChild(icon);
+  link.appendChild(document.createTextNode('Star us on GitHub'));
+
+  const item = document.createElement('li');
+  item.classList.add('toctree-l1');
+  item.appendChild(link);
+
+  homeList.appendChild(item);
+}
+
 window.addEventListener('load', function() {
   addCustomButton('open_source_hub', OPEN_SOURCE_URL, '.dropdown-source-buttons'); 
   addCustomButton('data_repository', DATA_REPOSITORY_URL, '.open-source-hub-button');
   addStarMenuItem();
+  addStarSidebarItem();
 });
