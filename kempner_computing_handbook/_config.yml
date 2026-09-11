@@ -26,8 +26,10 @@ html:
   use_repository_button: true
   extra_css:
     - _static/custom.css
+    - _static/page_feedback.css
   extra_js:
     - _static/custom.js
+    - _static/page_feedback.js
   analytics:
     google_analytics_id: G-QFZEXWFW26
   extra_static_paths: 
