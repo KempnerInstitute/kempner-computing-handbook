@@ -109,10 +109,12 @@ function addFeedbackWidget() {
     return;  // not a content page
   }
 
+  // Match on the file name alone. Testing the whole path with endsWith would
+  // also skip any page whose name merely ends with a skipped name, such as
+  // agentic_ai_in_research.html, which ends with the string search.html.
   const page = window.location.pathname;
-  const isSkipped = FEEDBACK_SKIP_PAGES.some(function (name) {
-    return page.endsWith(name);
-  });
+  const pageName = page.substring(page.lastIndexOf('/') + 1);
+  const isSkipped = FEEDBACK_SKIP_PAGES.indexOf(pageName) !== -1;
   if (isSkipped) {
     return;
   }
