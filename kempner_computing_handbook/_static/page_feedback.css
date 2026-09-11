@@ -1,9 +1,10 @@
 /*
   Styles for the "Was this page helpful?" widget added by page_feedback.js.
 
-  The line uses the theme's own muted text color, the same one behind the
-  "Previous" and "Next" labels (.prev-next-area p), so it stays quiet against
-  the page and follows the light/dark toggle without needing its own overrides.
+  The widget sits in a subtle, theme-aware card: a thin border and rounded
+  corners over the theme's surface color, centered under the page content. The
+  border, surface, and text colors are all theme tokens, so the card follows
+  the light/dark toggle without needing its own overrides.
 
   The hover and focus accent is Harvard crimson #A51C30, from the handbook
   palette in CONTRIBUTING.md.
@@ -15,10 +16,20 @@
   align-items: center;
   justify-content: center;
   gap: 0.4rem 0.9rem;
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
-  font-size: 0.8rem;
+  width: fit-content;
+  max-width: 100%;
+  margin: 2.5rem auto;
+  padding: 0.85rem 1.4rem;
+  border: 1px solid var(--pst-color-border);
+  border-radius: 8px;
+  background-color: var(--pst-color-surface);
+  font-size: 0.875rem;
   color: var(--pst-color-text-muted);
+}
+
+.page-feedback__prompt {
+  color: var(--pst-color-text-base);
+  font-weight: 600;
 }
 
 .page-feedback__response {
