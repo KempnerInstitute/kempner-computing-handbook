@@ -70,6 +70,20 @@ Welcome to the Open Source Hub of Kempner Institute's Research and Engineering T
       <td><a href="https://github.com/KempnerInstitute/kempnerpulse">GitHub</a></td>
     </tr>
     <tr>
+      <td>KempnerInsight</td>
+      <td>Monitoring Tool</td>
+      <td>AI Cluster</td>
+      <td>Web dashboard for monitoring job-level and cluster-level performance metrics</td>
+      <td><a href="https://handbook.eng.kempnerinstitute.harvard.edu/s1_high_performance_computing/kempner_cluster/kempnerinsight.html">Documentation</a></td>
+    </tr>
+    <tr>
+      <td>jobscope</td>
+      <td>Command-Line Tool</td>
+      <td>AI Cluster</td>
+      <td>Reports CPU, memory, and GPU efficiency metrics for completed Slurm jobs</td>
+      <td><a href="https://github.com/KempnerInstitute/jobscope">GitHub</a></td>
+    </tr>
+    <tr>
       <td>TATM</td>
       <td>AI Tool</td>
       <td>AI</td>
@@ -84,11 +98,25 @@ Welcome to the Open Source Hub of Kempner Institute's Research and Engineering T
       <td><a href="https://github.com/KempnerInstitute/ephys-spike-sorting">GitHub</a></td>
     </tr>
     <tr>
+      <td>NVIDIA NeMo Workflow</td>
+      <td>Workflow</td>
+      <td>AI</td>
+      <td>Cluster-ready workflows for pretraining and finetuning large language models with NVIDIA NeMo</td>
+      <td><a href="https://handbook.eng.kempnerinstitute.harvard.edu/s3_ai_workflows/nemo_workflow.html">Documentation</a></td>
+    </tr>
+    <tr>
       <td>vLLM Distributed Inference</td>
       <td>Workflow</td>
       <td>AI</td>
       <td>Distributed inference workflow with vLLM on Kempner AI cluster</td>
       <td><a href="https://github.com/KempnerInstitute/distributed-inference-vllm">GitHub</a></td>
+    </tr>
+    <tr>
+      <td>HPC Agentic Recipes</td>
+      <td>Workflow</td>
+      <td>Agentic AI</td>
+      <td>Recipes for serving open-weight models on the Kempner AI cluster and using them with agentic coding clients</td>
+      <td><a href="https://github.com/KempnerInstitute/hpc-agentic-recipes">GitHub</a></td>
     </tr>
   </tbody>
 </table>
