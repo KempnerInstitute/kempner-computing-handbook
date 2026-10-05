@@ -59,9 +59,9 @@ Using an agent does not change who is accountable for the result, and it adds di
 - **Early-stage autonomy.** Fully autonomous research agents remain largely at the pilot stage, strong at parts of the process and unreliable at others. Treat end-to-end autonomous results as leads to verify, not findings to report.
 - **Cost and compute.** Long agent runs consume API budget or GPU time. Track both, and see {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>` for staying within your allocation.
 
-## Getting started on the cluster
+## Putting it together
 
-Putting it together: choose a tool for the stage you want to accelerate ({doc}`Agentic AI Tools <agentic_ai_tools>`), run it responsibly in an interactive or batch job ({doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`), and if you want to keep everything on the cluster, serve an open-weight model yourself ({doc}`HPC Agentic Recipes <hpc_agentic_recipes>`). Start with one stage, keep a human review point, and verify the output before it leaves your hands.
+Choose a tool for the stage you want to accelerate ({doc}`Agentic AI Tools <agentic_ai_tools>`), run it responsibly in an interactive or batch job ({doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`), and if you want to keep everything on the cluster, serve an open-weight model yourself ({doc}`HPC Agentic Recipes <hpc_agentic_recipes>`). Start with one stage, keep a human review point, and verify the output before it leaves your hands.
 
 ## Further reading
 

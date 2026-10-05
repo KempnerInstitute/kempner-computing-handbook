@@ -38,7 +38,7 @@ The following walks through Claude Code end to end.
    claude --version
    ```
 
-   If you prefer to manage it inside an environment, you can instead install with npm (Node.js 22 or later) in a {doc}`conda <../s1_high_performance_computing/development_and_runtime_envs/using_conda_env>` or {doc}`uv <../s1_high_performance_computing/development_and_runtime_envs/using_uv_env>` environment: `npm install -g @anthropic-ai/claude-code`.
+   If you prefer to manage it inside an environment, you can instead install with npm (Node.js 22 or later) in a conda or uv environment: `npm install -g @anthropic-ai/claude-code`. To set one up, see {doc}`Conda Environment <../s1_high_performance_computing/development_and_runtime_envs/using_conda_env>` or {doc}`uv Environment <../s1_high_performance_computing/development_and_runtime_envs/using_uv_env>`.
 
 3. Authenticate. Claude Code accepts either a Claude.ai subscription or an API key:
 
@@ -121,7 +121,7 @@ FASRC documents several editor and notebook AI extensions, including Jupyter-AI 
 
 Agents act on their own, so a few habits keep them from disrupting shared resources or your own account:
 
-- **Stay within your allocation.** Run agents inside an interactive job or batch script, not on login nodes. Do not let an agent submit unbounded {doc}`SLURM <../s1_high_performance_computing/general_hpc_concepts/understanding_slurm>` jobs or launch its own long-running background processes without your review.
+- **Stay within your allocation.** Run agents inside an interactive job or batch script, not on login nodes. Do not let an agent submit unbounded SLURM jobs (see {doc}`Understanding SLURM <../s1_high_performance_computing/general_hpc_concepts/understanding_slurm>`) or launch its own long-running background processes without your review.
 - **Do not hold GPUs idle.** If the agent is only reading, planning, or editing code, use a CPU allocation. Request a GPU when the work needs one, and release the session when you are done.
 - **Review before it acts.** Read the commands an agent proposes before approving them, especially anything that deletes files, rewrites history, or moves data. Treat an agent's suggestions the same way you would treat a pull request from a stranger.
 - **Watch cost and quota.** API and subscription usage bills to your account, which you can track in the Claude Console; cluster jobs draw on your fairshare allocation. See {doc}`Fairshare Policy <../s1_high_performance_computing/efficient_use_of_resources/fair_use_and_prioritization_policies>`.
