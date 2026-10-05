@@ -6,7 +6,7 @@ An agent's output looks confident whether or not it is correct, and a long run c
 
 Before you trust an agent on real work, and before you reach for a more complex setup, measure it on a small set of tasks whose answers you can check. A handful of representative tasks with known-good outputs is enough to see whether a change helps or hurts.
 
-Use that set to resist unnecessary complexity. A multi-agent pipeline adds coordination overhead and can propagate errors, so compare it against a simpler single-agent or single-pass approach on your own tasks, and keep whichever is more accurate and cheaper. The method here is the practical side of the guidance in {doc}`Agentic AI in Research <agentic_ai_in_research>`.
+Use that set to resist unnecessary complexity. A multi-agent pipeline adds coordination overhead and can propagate errors, so compare it against a simpler single-agent or single-pass approach on your own tasks, and keep whichever is more accurate and cheaper. This is the hands-on side of the research method covered next in {doc}`Agentic AI in Research <agentic_ai_in_research>`.
 
 ## Watch what it did
 
@@ -34,7 +34,7 @@ Agent runs spend money and context, both of which reward a little discipline:
 - **Track spend.** API and subscription usage bills to your account through the provider's console; cluster jobs draw on your fairshare allocation. See {doc}`Fairshare Policy <../s1_high_performance_computing/efficient_use_of_resources/fair_use_and_prioritization_policies>`.
 - **Cache repeated context.** Prompt caching reuses a stable prompt prefix to cut cost and latency, and Claude Code applies it automatically to its system prompt, tools, and project instructions. Benefit from it by keeping durable context in `CLAUDE.md` (or an `AGENTS.md` bridged to it), leaving that prefix unchanged within a session, and running `/clear` to start fresh between unrelated tasks rather than carrying a stale prefix.
 - **Keep the working context small.** Give the agent what the task needs, not the whole repository; a smaller context is cheaper and often more accurate.
-- **Bound long runs.** Cap an unattended run before you start it: set a spend limit in the provider console, run it inside a time-limited interactive or batch job so the Slurm wall clock stops it, and cap per-response output with `CLAUDE_CODE_MAX_OUTPUT_TOKENS`.
+- **Bound long runs.** Cap an unattended run before you start it: set a spend limit in the provider console, run it inside a time-limited interactive or batch job so the SLURM wall clock stops it, and cap per-response output with `CLAUDE_CODE_MAX_OUTPUT_TOKENS`.
 
 ```{seealso}
 For the research method behind evaluation, see {doc}`Agentic AI in Research <agentic_ai_in_research>`. For staying within your allocation on the cluster, see {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`. Subagents, which show up as separate spans in a trace, are covered in {doc}`Configuring Agents for Your Project <configuring_agents>`.
