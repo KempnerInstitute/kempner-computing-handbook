@@ -72,5 +72,5 @@ Putting it together: choose a tool for the stage you want to accelerate ({doc}`A
 - [arXiv moderation and content policy](https://info.arxiv.org/help/moderation/index.html) and [Nature's AI editorial policy](https://www.nature.com/nature-portfolio/editorial-policies/ai), for disclosure and authorship expectations.
 
 ```{seealso}
-For the data, integrity, and compliance rules that govern this work, see {doc}`Security and Compliance <../s6_security_and_compliance/README>`. The rest of this section, linked above, covers the tools, how to run them on the cluster, and how to serve open-weight models locally.
+For the data, integrity, and compliance rules that govern this work, see {doc}`Security and Compliance <../s6_security_and_compliance/README>`. {doc}`Introduction to Agentic AI <README>` and {doc}`Agents on the Cluster <agents_on_the_cluster>` cover the tools, how to run them on the cluster, and how to serve open-weight models locally.
 ```
