@@ -61,6 +61,13 @@ Domain workflows for neuroscience, including spike sorting on HPC.
 Parallel and GPU computing, efficiency, profiling, and experiment management at scale.
 :::
 
+:::{grid-item-card} Agentic AI
+:link: /s5b_agentic_ai_workflows/README
+:link-type: doc
+
+Coding and research agents: tools, running them on the cluster, and trustworthy research.
+:::
+
 :::{grid-item-card} Security and Compliance
 :link: /s6_security_and_compliance/README
 :link-type: doc
