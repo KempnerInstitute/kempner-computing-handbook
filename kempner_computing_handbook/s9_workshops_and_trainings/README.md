@@ -3,7 +3,8 @@
 Welcome to the Workshops @ Kempner section of our Computing Handbook. This section is dedicated to fostering continuous learning and professional development through a variety of interactive sessions.
 Our workshops are designed to equip participants with practical skills and knowledge, encouraging active engagement and collaboration. Whether you are a beginner eager to acquire new competencies or a seasoned professional aiming to enhance your expertise, our training programs offer valuable opportunities to advance your proficiency and contribute effectively to your field.
 
-## List of Workshops
+```{rubric} List of Workshops
+```
 
 
 | Workshop Name                              | Description                                                                 |

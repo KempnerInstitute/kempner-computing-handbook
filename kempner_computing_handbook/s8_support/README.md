@@ -3,7 +3,8 @@
 
 This page points you to the right place for help with the Kempner AI Cluster and the FASRC environment it runs on, from getting-started training to direct support.
 
-## New to the cluster
+```{rubric} New to the cluster
+```
 
 If you are new to the FASRC cluster, start with FASRC's training and documentation:
 
@@ -14,7 +15,8 @@ If you are new to the FASRC cluster, start with FASRC's training and documentati
 
 FASRC also hosts other workshops, and holds [Zoom office hours](https://www.rc.fas.harvard.edu/office-hours/) every Wednesday from 12 to 3 pm.
 
-## Getting help
+```{rubric} Getting help
+```
 
 When you run into difficulties, choose the resource that fits your question:
 
@@ -27,6 +29,7 @@ When you run into difficulties, choose the resource that fits your question:
 Check the {doc}`FAQ <faq>` first for common issues and their fixes.
 ```
 
-## Suggesting updates
+```{rubric} Suggesting updates
+```
 
 Have a correction or an addition for this handbook? Post it in the `#cluster-users` channel in the Kempner Slack space so we can keep the guide current.
