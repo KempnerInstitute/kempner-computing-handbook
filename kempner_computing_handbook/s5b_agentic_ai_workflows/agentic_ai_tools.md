@@ -18,6 +18,9 @@ The most common agentic tools for research or engineering write and edit code ac
 | [GitHub Copilot](https://github.com/features/copilot) | GitHub's assistant with an agent mode, as an editor extension |
 | [Cline](https://cline.bot) | Open-source autonomous coding agent for VS Code |
 | [Aider](https://aider.chat) | Git-aware pair-programming agent in the terminal |
+| [opencode](https://opencode.ai) | Open-source terminal coding agent that works with many model providers, including your own endpoint |
+| [Goose](https://github.com/aaif-goose/goose) | Open-source agent, as a CLI and a desktop app, now part of the Agentic AI Foundation at the Linux Foundation |
+| [Qwen Code](https://github.com/QwenLM/qwen-code) | Open-source terminal agent, originally based on Gemini CLI, for Qwen and other models through OpenAI, Anthropic, and Gemini APIs |
 
 Other tools are self-contained rather than add-ons to your editor:
 
@@ -26,6 +29,21 @@ Other tools are self-contained rather than add-ons to your editor:
 | [Cursor](https://cursor.com) | AI-native code editor with a project-wide agent mode |
 | [Devin Desktop](https://devin.ai/desktop) | AI editor and agent platform from Cognition (formerly Windsurf) |
 | [OpenHands](https://github.com/All-Hands-AI/OpenHands) | Open-source platform for autonomous software-engineering agents |
+
+**Cloud coding agents** run in the provider's cloud rather than on your machine. You give one a task on a GitHub repository; it works in a temporary cloud environment and opens a pull request for you to review.
+
+| Tool | What it is |
+|------|-----------|
+| [Claude Code on the web](https://code.claude.com/docs/en/claude-code-on-the-web) | Claude Code sessions on Anthropic-managed infrastructure, started from claude.ai/code or with `claude --cloud` |
+| [OpenAI Codex cloud](https://learn.chatgpt.com/docs/cloud) | Codex working through coding tasks in the cloud, then committing or opening a pull request |
+| [GitHub Copilot cloud agent](https://docs.github.com/en/copilot/concepts/copilot-surfaces/copilot-on-github) | Copilot researching a repository, planning, and implementing changes in an ephemeral cloud environment |
+| [Jules](https://jules.google/docs/) | Google's experimental coding agent, which works in a cloud virtual machine and opens a pull request |
+
+Claude Code can also run inside [GitHub Actions](https://code.claude.com/docs/en/github-actions), responding when someone mentions `@claude` in an issue or pull request.
+
+```{warning}
+A cloud coding agent copies your repository to the provider's infrastructure, so the code, and any data or secrets committed to it, leave Harvard. Use these agents only on repositories whose contents are cleared for that service, keep data and credentials out of the repository, and review each pull request as you would an outside contribution. See {doc}`Security and Compliance <../s6_security_and_compliance/README>`.
+```
 
 ## Research and science agents
 
@@ -38,6 +56,8 @@ Beyond coding, agentic tools can take on parts of the research process itself: s
 | [Edison Scientific](https://edisonscientific.com) | Web and API platform of science agents for literature search and analysis, spun out of the nonprofit FutureHouse lab; FutureHouse's PaperQA2 library is open source |
 | [Elicit](https://elicit.com) | Research assistant for finding, screening, and summarizing papers |
 | [Consensus](https://consensus.app) | Search engine that synthesizes findings across the research literature |
+| [Ai2 Asta](https://asta.allen.ai) | Research assistant from the Allen Institute for AI for finding papers, summarizing literature, and analyzing data |
+| [Semantic Scholar](https://www.semanticscholar.org) | Free academic search engine from the Allen Institute for AI, covering more than 200 million papers |
 
 **Autonomous and domain-specific:**
 
@@ -48,7 +68,7 @@ Beyond coding, agentic tools can take on parts of the research process itself: s
 | [Biomni](https://biomni.stanford.edu) | Biomedical research agent (Stanford) with a large toolset and connected databases |
 | [Sakana AI Scientist](https://github.com/SakanaAI/AI-Scientist) | Publicly available framework that generates ideas, runs experiments, and drafts papers end to end |
 
-General assistants also offer a **deep research** mode that plans, searches the web, and returns a cited report, for example [OpenAI Deep Research](https://openai.com/index/introducing-deep-research/), [Gemini Deep Research](https://gemini.google/overview/deep-research/), and [Perplexity](https://www.perplexity.ai).
+General assistants also offer a **deep research** mode that plans, searches the web, and returns a cited report, for example [OpenAI Deep Research](https://openai.com/index/introducing-deep-research/), [Gemini Deep Research](https://gemini.google/overview/deep-research/), [Claude Research](https://support.claude.com/en/articles/11088861-use-research-on-claude), and [Perplexity](https://www.perplexity.ai). For a workflow that keeps every citation checkable, see {doc}`Literature Review and Data Exploration <literature_review_and_data_exploration>`.
 
 ## Frameworks for building agents
 
@@ -77,11 +97,11 @@ For scientific work, [ToolUniverse](https://zitniklab.hms.harvard.edu/ToolUniver
 
 Before adopting an external tool, check whether Harvard or FAS already provides a vetted one, and at what data level: see the [HUIT AI Tool Comparison](https://www.huit.harvard.edu/ai/tools), [AI Tools Available to the FAS](https://atg.fas.harvard.edu/ai-at-fas), and the [HUIT AI APIs and developer tools](https://www.huit.harvard.edu/ai-developer-tools) for programmatic access. A few further considerations narrow the field:
 
-- **Cloud or local.** Cloud services (Claude, GPT, Gemini) are often the most capable, but they send your prompts and code to an external provider. If you prefer to keep everything on the cluster, you can run an open-weight model yourself; see {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`.
+- **Cloud or local.** Cloud services (Claude, GPT, Gemini) are often the most capable, but they send your prompts and code to an external provider. If you prefer to keep everything on the cluster, you can run an open-weight model yourself; see {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`. The open-source agents above, such as opencode, Goose, Qwen Code, Cline, and Aider, can connect to any OpenAI-compatible endpoint, including one you serve on the cluster.
 - **Data sensitivity.** Do not enter confidential data (Level 2 and above) into a public AI service. Harvard also provides approved tools with data-protection agreements, each cleared for a specific data level; for example, the [Harvard AI Sandbox](https://www.huit.harvard.edu/ai-sandbox) is approved for up to Level 3. Check a tool's approved data level before using it with the cluster's data, and see {doc}`Security and Compliance <../s6_security_and_compliance/README>` and Harvard's [Generative AI Guidelines](https://www.huit.harvard.edu/ai/guidelines).
 - **Cost.** Cloud tools bill by usage; self-hosting uses your GPU allocation. Track both.
 - **Form factor.** Both terminal and IDE tools work on the cluster: terminal agents run directly in an SSH session, and IDE or extension tools connect through VS Code Remote-SSH (see {doc}`VSCode for Remote Dev <../s1_high_performance_computing/development_and_runtime_envs/using_vscode_for_remote_development>`). Pick whichever fits your workflow.
 
 ```{seealso}
-For setup and responsible use on the cluster, see {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`. The {doc}`New User Checklist <../s1_high_performance_computing/kempner_cluster/new_user_checklist>` links FASRC's guidance on AI extensions and the Anthropic API.
+For setup and responsible use on the cluster, see {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`. FASRC also documents [AI extensions on its clusters](https://docs.rc.fas.harvard.edu/kb/ai-extensions-on-fasrc-clusters/) and [using the Anthropic API](https://docs.rc.fas.harvard.edu/kb/anthropic/).
 ```

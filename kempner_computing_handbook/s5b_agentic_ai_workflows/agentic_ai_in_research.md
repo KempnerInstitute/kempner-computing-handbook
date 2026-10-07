@@ -31,11 +31,12 @@ Work flows through the staged tasks, you review and steer between them, and resu
 
 ## Workflow patterns
 
-- **Single agent or multi-agent pipeline.** A single capable agent handles many tasks. Multi-agent pipelines split work across specialized roles (for example a solver and an independent evaluator), which helps on large or multi-step problems but adds coordination overhead and lets errors propagate across agent boundaries.
+- **Single agent or multi-agent pipeline.** A single capable agent handles many tasks. Multi-agent pipelines split work across specialized roles (for example a solver and an independent evaluator), which helps on large or multi-step problems but adds coordination overhead and lets errors propagate across agent boundaries. {doc}`Multi-Agent Orchestration <multi_agent_orchestration>` shows how to build and control such a pipeline.
 - **Complexity versus benefit.** More agents are not automatically better. Benchmark a multi-agent setup against a simpler single-agent or single-pass approach on your own task before adopting it, and keep whichever is more accurate and cheaper; see {doc}`Evaluating and Monitoring Agents <evaluating_and_monitoring_agents>`.
 - **Iterative loops.** Many research agents work in a design-run-measure-revise loop, refining a solution across cycles. Bound the loop with a stopping criterion and a budget so it does not run indefinitely.
 - **Human-in-the-loop checkpoints.** Treat the agent as a collaborative accelerator, not a black-box replacement. Insert explicit review points where you inspect intermediate outputs, inject domain knowledge, or correct course.
 
+(agentic_ai:trustworthy_practices)=
 ## Best practices for trustworthy agentic research
 
 - **Build verification in, not after.** Design the workflow so that every claim carries its supporting evidence from the moment it is produced, rather than checking a finished draft afterward. Google Research's [Science-One](https://research.google/blog/science-one-framework-a-verifiable-autonomous-research-framework-via-chain-of-evidence/) calls this a chain of evidence: each reported number, method, or conclusion links back to the record that supports it, so a reviewer (or you) can trace and confirm it.
@@ -57,7 +58,7 @@ Using an agent does not change who is accountable for the result, and it adds di
 - **Error propagation.** In a multi-agent pipeline, a mistake early on can be amplified by later stages that treat it as given.
 - **Automation bias.** Fluent output invites over-trust. The more capable and autonomous the agent, the more disciplined your review needs to be.
 - **Early-stage autonomy.** Fully autonomous research agents remain largely at the pilot stage, strong at parts of the process and unreliable at others. Treat end-to-end autonomous results as leads to verify, not findings to report.
-- **Cost and compute.** Long agent runs consume API budget or GPU time. Track both, and see {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>` for staying within your allocation.
+- **Cost, compute, and energy.** Long agent runs consume API budget, GPU time, and the energy behind both, and a model server left idle holds GPUs that draw power and that others could use. Bound unattended runs, release allocations you are not using (see {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`), and see {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>` for staying within your allocation.
 
 ## Putting it together
 
