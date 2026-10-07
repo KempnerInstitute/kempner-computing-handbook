@@ -19,19 +19,24 @@ flowchart LR
 
 Before your first run, install and authenticate the agent, and read how to size an allocation, in {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`.
 
-On a compute node, not a login node, start an interactive session, move into your project directory, and launch the agent. A small CPU allocation is enough for a first run:
+Start a tmux session on the login node, so a dropped connection does not end your work. Inside it, start an interactive session on a compute node, not the login node, move into your project directory, and launch the agent. A small CPU allocation is enough for a first run:
 
 ```bash
+tmux new -s agent
 salloc --partition=test --time=0-02:00 --mem=16G --cpus-per-task=4
 cd /path/to/your/project
 claude
 ```
 
-For a first run, press `Shift+Tab` until the session shows manual mode, so the agent asks before each action. Pro, Max, and Team sessions start in Auto mode, where a classifier approves routine actions for you.
+New sessions usually start in auto mode, where a classifier approves routine actions for you. For a first run, press `Shift+Tab` until the status bar shows `manual mode on`, so the agent asks before each action.
+
+```{tip}
+If your connection drops, SSH back to the same login node and run `tmux attach -t agent`. If the session itself has ended, run `claude --continue` in the same directory to pick the conversation back up; see {ref}`Keeping a session alive <agentic_ai:keeping_a_session_alive>`.
+```
 
 ## Point the agent at your work
 
-The agent works in the directory you launched it from and reads the files there. If the project has a `CLAUDE.md`, it picks up your conventions from it; if you keep conventions in an `AGENTS.md`, bridge it to `CLAUDE.md` as described in {doc}`Configuring Agents for Your Project <configuring_agents>`.
+The agent works in the directory you launched it from and reads the files there. If the project has a `CLAUDE.md`, or an `AGENTS.md` and no `CLAUDE.md`, the agent picks up your conventions from it; see {doc}`Configuring Agents for Your Project <configuring_agents>`.
 
 ## Give it one scoped task
 
@@ -39,17 +44,17 @@ Start with a single, checkable task rather than a whole project, pointed at a fi
 
 > Summarize `data/measurements.csv`, then save a histogram of the `temperature` column to `figures/temperature_hist.png`.
 
-Make sure the environment the agent runs in has what the task needs, here Python with pandas and matplotlib. A narrow task is easy to review and easy to verify, and it shows you how the agent behaves before you hand it anything larger.
+The agent's commands inherit the environment of the shell you start it from, so activate an environment that has what the task needs, here Python with pandas and matplotlib, before you run `claude` (for example `source .venv/bin/activate`). A narrow task is easy to review and easy to verify, and it shows you how the agent behaves before you hand it anything larger.
 
 ## Review before it acts
 
-In manual mode the agent proposes edits and commands and waits for your approval. Read them before approving, especially anything that deletes files, moves data, or installs software. This is also your defense against an agent acting on untrusted content; see the permission modes and Agent security guidance in {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`.
+In manual mode the agent proposes edits and commands and waits for your approval. Read them before approving, especially anything that deletes files, moves data, or installs software. This is also your defense against an agent acting on untrusted content; see {ref}`Permission modes <agentic_ai:permission_modes>` and {ref}`Agent security <agentic_ai:agent_security>`.
 
 ## Verify the result
 
 Check the output yourself: open the figure, read the numbers, and run any tests. An agent's result is a lead to confirm, not a finding to trust. When you want to measure quality more systematically, see {doc}`Evaluating and Monitoring Agents <evaluating_and_monitoring_agents>`.
 
-Once the task is right, refine it or move on to the next one.
+Once the task is right, refine it or move on to the next one. When you are done, type `/exit` to leave Claude Code, then `exit` to end the interactive job and release its resources.
 
 ```{seealso}
 For the tool landscape, see {doc}`Agentic AI Tools <agentic_ai_tools>`; to configure an agent for your project, see {doc}`Configuring Agents for Your Project <configuring_agents>`; to keep everything on the cluster, see {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`; and for using agents across the research process, see {doc}`Agentic AI in Research <agentic_ai_in_research>`.
