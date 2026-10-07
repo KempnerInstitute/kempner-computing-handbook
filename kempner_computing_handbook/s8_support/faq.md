@@ -57,3 +57,40 @@ Replace `[Github account]` with your GitHub account and `[Github repository]` wi
 :::{dropdown} VSCode keeps dropping its connection to the cluster ("dynamic port forwarding failed")
 VSCode Remote-SSH can stop reconnecting when leftover port forwards accumulate on the shared SSH connection, showing `dynamic port forwarding failed!` or `Address already in use` in its Remote-SSH log. Release the stuck port with `ssh -O cancel -D <port> cannon`, or reset the shared connection with `ssh -O exit cannon` and reconnect. For the full steps, see {ref}`Troubleshooting connection drops <development_and_runtime_envs:using_vscode_for_remote_development:troubleshooting_connection_drops>` on the VSCode page.
 :::
+
+## Agentic AI
+
+:::{dropdown} What data can I use with a cloud agent on the cluster?
+A cloud agent sends your prompts, and any code or data it reads, to its provider. FASRC permits generative AI tools on the cluster only for public data (Level 1), unless your school has an agreement with the provider that covers your data. To work with other data the cluster may hold, serve an open-weight model on the cluster instead, as in {doc}`HPC Agentic Recipes <../s5b_agentic_ai_workflows/hpc_agentic_recipes>`. See {ref}`Before you start <agentic_ai:before_you_start>` and {doc}`Security and Compliance <../s6_security_and_compliance/README>`.
+:::
+
+:::{dropdown} Signing in to Claude Code or Codex from a cluster node
+A cluster node cannot open a browser, so both tools use a sign-in flow you finish on your own computer.
+
+- **Claude Code.** Run `claude`, or `/login` inside a session. It prints a URL; open it in your local browser, sign in, and paste the code it shows back into the terminal. The login is saved in your home directory, so it works on every node and in batch jobs. You can use an API key instead by setting `ANTHROPIC_API_KEY`; in print mode (`claude -p`), a key in your environment is always used, even if you have also signed in; see {doc}`Using Agentic AI on the Cluster <../s5b_agentic_ai_workflows/using_agentic_ai_on_the_cluster>`.
+- **Codex.** Run `codex login --device-auth`, open the link it prints, sign in, and enter the one-time code. Device code login is in beta and must first be turned on in your ChatGPT security settings, or by the workspace admin for a workspace account such as ChatGPT Edu. Alternatively, sign in with an API key (`printenv OPENAI_API_KEY | codex login --with-api-key`). See the Codex [authentication documentation](https://learn.chatgpt.com/docs/auth).
+
+Treat saved logins and API keys like passwords: keep them out of shared directories and repositories.
+:::
+
+:::{dropdown} `claude: command not found` after installing
+The native installer puts `claude` in `~/.local/bin`, which may not be on your `PATH`. Add it in `~/.bashrc`:
+
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+Then run `source ~/.bashrc`, or log in again, and check with `claude --version`. `claude doctor` reports problems with the installation. If you installed Claude Code with npm inside a conda environment, it is on your `PATH` only while that environment is active. Batch jobs inherit the `PATH` of the shell you submit them from.
+:::
+
+:::{dropdown} The agent stops with a usage or rate limit message
+Subscription plans limit how much you can use Claude Code in a period of time, and API keys have rate limits. Inside a session, `/usage` shows how much of your plan's limits you have used. Every agent you run counts against the same limits, so several sessions in parallel, or an array of agent jobs, reach them sooner; cap how many run at once (for example `--array=0-49%4`). If you hit a limit regularly, check with your PI about a lab account or API key; see {doc}`Using Agentic AI on the Cluster <../s5b_agentic_ai_workflows/using_agentic_ai_on_the_cluster>`.
+:::
+
+:::{dropdown} An agent extension in VSCode cannot see my cluster files
+An agent extension must run where your files are. In a Remote-SSH window, install it from the Extensions view with its **Install in SSH** button; an extension installed only on your laptop works on your laptop's files. Connect the window to a compute node rather than a login node, as described in {doc}`VSCode for Remote Dev <../s1_high_performance_computing/development_and_runtime_envs/using_vscode_for_remote_development>`, so the agent's commands do not run on a shared login node. If the connection itself keeps dropping, see {ref}`Troubleshooting connection drops <development_and_runtime_envs:using_vscode_for_remote_development:troubleshooting_connection_drops>`.
+:::
+
+:::{dropdown} My agent session ended when my connection dropped
+An interactive session lives inside your SSH connection. Run it inside tmux on the login node so it survives a dropped connection, and pick the conversation back up with `claude --continue`; see {ref}`Keeping a session alive <agentic_ai:keeping_a_session_alive>`.
+:::
