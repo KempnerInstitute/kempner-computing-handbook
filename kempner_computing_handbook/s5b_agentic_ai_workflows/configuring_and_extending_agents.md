@@ -1,0 +1,3 @@
+# Configuring and Extending Agents
+
+This chapter covers making an agent fit your project and your research. {doc}`Configuring Agents for Your Project <configuring_agents>` covers project instructions, skills, MCP servers, and subagents, the mechanisms that teach an agent your conventions and connect it to your tools and data. It also covers the guardrails that hold whatever the model decides: permission rules, hooks, caps on unattended runs, and git as an undo layer. {doc}`Building Custom Tools and MCP Servers <building_custom_tools>` goes further, showing how to package your own workflows as skills and give an agent your own data and cluster tools through a small MCP server.
