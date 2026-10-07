@@ -18,7 +18,7 @@ flowchart LR
 
 A literature search sends your question to the provider. Data exploration sends whatever the agent reads: rows, column names, file names, and the output of the code it runs.
 
-- **Data on the cluster.** FASRC permits generative AI tools on the cluster only for public data (Level 1), unless your school has an agreement with the provider that covers your data; see {ref}`Before you start <agentic_ai:before_you_start>` and {doc}`Security and Compliance <../s6_security_and_compliance/README>`. To keep everything on the cluster, run an open-weight model yourself, as in {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`.
+- **Data on the cluster.** FASRC permits generative AI tools on the cluster only for public data (Level 1), unless your school has an agreement with the provider that covers your data; see {ref}`Before you start <agentic_ai:before_you_start>` and {doc}`Security and Compliance <../s6_security_and_compliance/README>`. An open-weight model served on the cluster, as in {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`, keeps your data from leaving it, but FASRC's guidance limits generative AI models on the cluster, not only external services, to public (Level 1) data unless your school has arranged coverage for more, so check with FASRC before using any model with Level 2 data.
 - **Material you received in confidence.** Manuscripts and proposals you are reviewing belong to their authors. NIH, for example, states that uploading content from a grant application or critique to online generative AI tools violates its peer review confidentiality requirements ([NOT-OD-23-149](https://grants.nih.gov/grants/guide/notice-files/NOT-OD-23-149.html)).
 
 If a dataset is above the level your tool is approved for, an agent can still help without seeing it; see {ref}`Explore data the agent cannot see <agentic_ai:explore_data_agent_cannot_see>`.
@@ -44,7 +44,7 @@ Two checks tell you whether the search and screening can be trusted:
 
 ### Verify every citation
 
-Each reference must pass three checks: it exists, it matches the reference (title, authors, and year), and it supports the claim it is cited for. A short script handles the first two. This one looks up each DOI at doi.org, which covers DOIs registered with Crossref, used by most journals, and with DataCite, used by arXiv and many data repositories, and compares the registered title with the cited one:
+Each reference must pass three checks: it exists, it matches the reference (title, authors, and year), and it supports the claim it is cited for. A short script handles the first check and the title part of the second. This one looks up each DOI at doi.org, which covers DOIs registered with Crossref, used by most journals, and with DataCite, used by arXiv and many data repositories, and compares the registered title with the cited one:
 
 ```python
 """Check each reference in a CSV file against the DOI registry.
@@ -55,6 +55,7 @@ is looked up at doi.org, and the registered title is compared with the cited one
 import csv
 import difflib
 import json
+import re
 import sys
 import urllib.error
 import urllib.parse
@@ -82,7 +83,7 @@ def similar(a, b):
 
 with open(sys.argv[1], newline="") as f:
     for row in csv.DictReader(f):
-        doi = row["doi"].strip().removeprefix("https://doi.org/").removeprefix("doi:")
+        doi = re.sub(r"^(https?://(dx\.)?doi\.org/|doi:)", "", row["doi"].strip(), flags=re.I).strip()
         try:
             title = registered_title(doi)
         except Exception as err:  # a network problem or an unexpected answer
@@ -157,7 +158,7 @@ When a dataset is above the level your tool is approved for, the agent can still
 
 - Give it the schema (column names, types, and units) and a small synthetic sample with the same structure, not the real rows.
 - Have it write the code, then run the code yourself in a separate terminal, outside the agent session, so the output does not go back to the model.
-- Or use an open-weight model served on the cluster, so nothing leaves it; see {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`.
+- Or use an open-weight model served on the cluster, so nothing leaves it, once FASRC has confirmed that your data's level allows it; see {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`.
 
 ## Before you trust a finding
 

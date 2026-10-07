@@ -35,14 +35,14 @@ Keep the files the chain produces in a directory that git ignores, so they never
 
 ```bash
 mkdir -p agent-run
-echo "agent-run/" >> .git/info/exclude    # ignore it in this clone only
+echo "agent-run/" >> "$(git rev-parse --git-path info/exclude)"    # ignore it in this clone only
 claude -p "Plan how to add a --seed option to train.py that seeds every random number generator. List the files to change and the tests to add, and give the whole plan in your final answer." \
   --permission-mode dontAsk --tools "Read,Grep,Glob" \
   --max-turns 15 --max-budget-usd 1.00 --output-format json > agent-run/plan.json
 jq -er '.result' agent-run/plan.json > agent-run/plan.md
 ```
 
-Read `agent-run/plan.md` and edit it until it is right. That is the checkpoint that keeps a bad plan from becoming bad code. The implementation step then works on its own branch, and it may create and edit files in the project and run the tests, but run no other commands:
+Read `agent-run/plan.md` and edit it until it is right. That is the checkpoint that keeps a bad plan from becoming bad code. The implementation step then works on its own branch, and it may create and edit files in the project and run the tests; any other command that would need approval is refused:
 
 ```bash
 git switch -c add-seed
@@ -51,10 +51,15 @@ claude -p "Implement the plan in agent-run/plan.md. Run the tests with uv run py
   --max-turns 40 --max-budget-usd 5.00 --output-format json > agent-run/implement.json
 ```
 
-The review step starts a new session, so it judges the change without the implementer's reasoning, and it can only read. Check `git status` before you stage: `git add -A` picks up every new file, and the diff goes to the model.
+The review step starts a new session, so it judges the change without the implementer's reasoning, and it can only read. First check what the implementation step changed, since `git add -A` stages every new file and the diff goes to the model:
 
 ```bash
 git status --short
+```
+
+Then stage the changes and run the review:
+
+```bash
 git add -A && git diff --cached > agent-run/change.diff    # every change, including new files
 claude -p "Review the diff on standard input against agent-run/plan.md. List any bug, any change the plan did not ask for, and any test that was removed or loosened." \
   --permission-mode dontAsk --tools "Read,Grep,Glob" \
@@ -110,7 +115,7 @@ Agent teams, an experimental Claude Code feature, go a step further: a lead sess
 - Teams are off by default; set `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` in your environment or settings to enable them.
 - They run only in interactive sessions, not in print mode or batch jobs.
 - Enabling them changes ordinary delegation: a subagent that Claude names starts as a teammate instead, in the main working directory, even if its definition sets `isolation: worktree`.
-- Teammates start with the lead's permission mode, and their permission requests come to you in the lead's session.
+- Teammates start with the lead's permission mode (except `dontAsk`), and their permission requests come to you in the lead's session.
 - Keep teams small (the documentation suggests three to five teammates), and give each one its own files, since teammates editing the same file overwrite each other.
 
 See the [agent teams documentation](https://code.claude.com/docs/en/agent-teams), including its list of current limitations.
@@ -144,7 +149,7 @@ claude -p "Array job $SWEEP_JOB_ID has finished. Use sacct to find which tasks f
   --output-format json > logs/report_$SLURM_JOB_ID.json
 ```
 
-`Edit(./reports/**)` lets the agent create and change files only under `reports/`, and `dontAsk` refuses everything not listed. Use `afterany` for a step like this, which should run however the sweep ends. With `afterok`, the step runs only if every task succeeds. In a test on the cluster, where one task of a three-task array failed on purpose, the `afterany` job ran as soon as the array finished, and the `afterok` job was canceled automatically, because the cluster's scheduler removes jobs whose dependencies can no longer be met. See {doc}`Job Dependencies <../s1_high_performance_computing/general_hpc_concepts/job_dependencies>`.
+`Edit(./reports/**)` lets the agent create and change files only under `reports/`, and `dontAsk` refuses anything else that would need approval. Use `afterany` for a step like this, which should run however the sweep ends. With `afterok`, the step runs only if every task succeeds. In a test on the cluster, where one task of a three-task array failed on purpose, the `afterany` job ran as soon as the array finished, and the `afterok` job was canceled automatically, because the cluster's scheduler removes jobs whose dependencies can no longer be met. See {doc}`Job Dependencies <../s1_high_performance_computing/general_hpc_concepts/job_dependencies>`.
 
 To run the same agent task over many inputs, such as summarizing one dataset per task, use an array job with one agent run per task, each with its own budget and log. Cap how many run at once with `%`, for example `--array=0-49%4`, which also limits how fast the runs use up your plan's usage or your API rate limits; see {doc}`Array Jobs <../s1_high_performance_computing/general_hpc_concepts/array_jobs>`.
 

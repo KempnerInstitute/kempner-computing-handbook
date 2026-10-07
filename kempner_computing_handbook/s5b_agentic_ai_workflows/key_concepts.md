@@ -32,7 +32,7 @@ flowchart LR
 
 - **Interactive session.** You give a task and follow along as the agent works, approving or steering its actions, in a terminal or an editor. See {doc}`Your First Agentic Workflow on the Cluster <first_agentic_workflow>`.
 - **Print mode.** A one-shot, non-interactive run (for example `claude -p "your task"` in Claude Code, or `codex exec` in Codex) that prints the result and exits. This is how an agent runs inside a batch job. See {doc}`SLURM Jobs and Cluster Workflows <slurm_jobs_and_cluster_workflows>`.
-- **Permission modes.** Settings for how much an agent may do without asking: asking before every action, accepting file edits, planning without changing anything, or letting a classifier approve routine actions. See {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`.
+- **Permission modes.** Settings for how much an agent may do without asking: asking before every action, accepting file edits, planning without editing files, or letting a classifier approve routine actions. See {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`.
 - **Endpoint.** The network address of a model server. A cloud agent uses its provider's endpoint; {doc}`HPC Agentic Recipes <hpc_agentic_recipes>` shows how to serve a model on the cluster and point an agent at it.
 - **Open-weight model.** A model whose weights you can download and run on your own hardware, so prompts and code stay on the cluster.
 
@@ -49,5 +49,5 @@ flowchart LR
 
 - **Prompt injection.** Instructions hidden in content the agent reads, such as a web page, a file, or a dataset, that try to redirect it. Treat what an agent reads as data, not commands. See {ref}`Agent security <agentic_ai:agent_security>`.
 - **Least privilege.** Giving an agent only the access its task needs. See {ref}`Scoping an agent to its task <agentic_ai:scoping>`.
-- **Sandbox.** Isolation enforced by the operating system or a container that limits which files and network addresses an agent's commands can reach, regardless of what the model intends. See {ref}`Agent sandboxing <agentic_ai:agent_sandboxing>`.
+- **Sandbox.** Isolation enforced by the operating system or a container that limits which files an agent's commands can change and which network addresses they can reach, regardless of what the model intends. See {ref}`Agent sandboxing <agentic_ai:agent_sandboxing>`.
 - **Human in the loop.** A review point where you check the agent's work before it continues or acts. See {doc}`Evaluating and Monitoring Agents <evaluating_and_monitoring_agents>` and {doc}`Agentic AI in Research <agentic_ai_in_research>`.

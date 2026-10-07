@@ -15,9 +15,9 @@ flowchart LR
 
 ## Start read-only
 
-Clone the repository into your lab or scratch space, then start the agent in plan mode (`Shift+Tab`, or `--permission-mode plan`), so it can read and search but not change anything while it explores.
+Clone the repository into your lab or scratch space, then start the agent in plan mode (`Shift+Tab`, or `--permission-mode plan`), so it researches without editing files while it explores. Where auto mode is available, a classifier can still approve shell commands during planning, so watch what it runs, or start it with `--tools "Read,Grep,Glob"` to allow only reading and searching.
 
-Before you start an agent inside a repository you did not write, read its agent configuration. A repository can ship project instructions (`CLAUDE.md` or `AGENTS.md`), hooks in `.claude/settings.json`, and MCP servers in `.mcp.json`. Instructions load into every session, and in print mode Claude Code runs the hooks and starts the servers without asking, unless you add `--setting-sources user`. Treat these files like any other code you are about to execute.
+Before you start an agent inside a repository you did not write, read its agent configuration. A repository can ship project instructions (`CLAUDE.md` or `AGENTS.md`), hooks in `.claude/settings.json`, MCP servers in `.mcp.json`, and skills in `.claude/skills/`. Instructions load into every session, and in print mode Claude Code runs the hooks and starts the servers without asking, unless you add `--setting-sources user`. Treat these files like any other code you are about to execute.
 
 If the repository ships its own agent tooling, use it. KempnerForge includes a Claude Code plugin whose skills drive first-run setup, smoke tests, SLURM launches, and an architecture walkthrough, each gated on a shared preflight check, plus a machine-readable `codebase-map.json` of its source, scripts, and tests. Its `docs/claude-ready.md` explains how to install the plugin. This page does the same steps by hand, so they carry over to repositories without such tooling.
 

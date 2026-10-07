@@ -41,6 +41,8 @@ The following walks through Claude Code end to end.
 
    If you prefer to manage it inside an environment, you can instead install it with npm in a conda environment that provides Node.js 22 or later (`conda install -c conda-forge "nodejs>=22"`): `npm install -g @anthropic-ai/claude-code`. To set one up, see {doc}`Conda Environment <../s1_high_performance_computing/development_and_runtime_envs/using_conda_env>`.
 
+   Your home directory is shared by every node, and an update can delete an older version that a session on another node is still running, which crashes that session. If you run agents in several jobs at once, turn off automatic updates by adding `"env": {"DISABLE_AUTOUPDATER": "1"}` to `~/.claude/settings.json`, and run `claude update` yourself when no agent jobs are running.
+
 3. Authenticate. Claude Code accepts either a Claude.ai subscription or an API key:
 
    - **Subscription.** If you have a paid Claude.ai plan (Pro, Max, Team, or Enterprise), whether a personal or a lab-provided account, run `claude` and follow the login prompt, or use the `/login` command inside a session. Over SSH the login gives you a URL to open in your local browser and a code to paste back. The free Claude.ai plan does not include Claude Code.
@@ -67,7 +69,7 @@ Claude Code has several permission modes that trade oversight for speed. Press `
 
 - **Manual** (`default`): approve each edit and command as the agent proposes it. This is the safest mode while you are learning how the agent behaves on your code.
 - **Auto-accept edits** (`acceptEdits`): file edits and common filesystem commands in the working directory apply without prompting, so the agent can work through a task uninterrupted. This set includes deletions (`rm`, `rmdir`) alongside `mkdir`, `touch`, `mv`, `cp`, and `sed`, so watch what it does on shared storage.
-- **Plan mode** (`plan`): the agent researches and proposes a plan without changing anything. Use it to review the approach before any edits happen.
+- **Plan mode** (`plan`): the agent researches and proposes a plan without editing files. Where auto mode is available, a classifier can still approve shell commands while it plans. Use it to review the approach before any edits happen.
 - **Auto mode** (`auto`): the agent runs without routine prompts, but a separate classifier reviews each action first and blocks anything risky, such as a command that reaches beyond your task or destroys data. This means far fewer interruptions than manual mode while keeping a safety check in place. It requires a supported model, and an organization can turn it off.
 - **Don't ask** (`dontAsk`): anything that would need your approval is refused without a prompt, so the agent can only read files, run read-only commands, and do what your permission rules allow. It is meant for unattended runs and is set only at startup; see {ref}`Caps on unattended runs <agentic_ai:run_caps>`.
 
@@ -158,7 +160,7 @@ Agents act on their own, so a few habits keep them from disrupting shared resour
 - **Do not hold GPUs idle.** If the agent is only reading, planning, or editing code, use a CPU allocation. Request a GPU when the work needs one, and release the session when you are done.
 - **Review before it acts.** Read the commands an agent proposes before approving them, especially anything that deletes files, rewrites history, or moves data. Treat an agent's suggestions the same way you would treat a pull request from a stranger.
 - **Watch cost and quota.** API usage is billed per token and shown in the Claude Console, and a subscription has usage limits, which `/usage` shows inside a session; cluster jobs draw on your fairshare allocation. See {doc}`Fairshare Policy <../s1_high_performance_computing/efficient_use_of_resources/fair_use_and_prioritization_policies>`.
-- **Protect secrets and data.** Keep API keys out of repositories and shared paths, and do not let an agent read directories that hold credentials or sensitive data.
+- **Protect secrets and data.** Keep API keys out of repositories and shared paths, and block the agent from reading credentials and sensitive data, as described under {ref}`Agent security <agentic_ai:agent_security>`.
 
 (agentic_ai:agent_security)=
 ## Agent security
@@ -184,7 +186,7 @@ The core habit is to treat everything the agent reads, including tool output, as
 - **Keep a human on consequential actions.** Approve anything that deletes data, moves files, pushes code, or spends budget (see {ref}`Permission modes <agentic_ai:permission_modes>`).
 - **Give the agent only the access it needs.** Scope subagents to read-only tools where you can (see {doc}`Configuring Agents for Your Project <configuring_agents>`), and do not run agents with elevated permissions on shared paths.
 - **Cap autonomous loops.** Bound long or unattended runs with `--max-turns`, `--max-budget-usd`, and a SLURM `--time`, so a misdirected agent cannot run away; see {ref}`Caps on unattended runs <agentic_ai:run_caps>`.
-- **Keep secrets out of reach.** A misdirected agent can only leak what it can read, so keep credentials out of the files and directories it works in.
+- **Keep secrets out of reach.** A misdirected agent can leak anything your account can read, and read-only commands such as `cat` run without a prompt even outside your project. Keep credentials out of the project, and block reads of credential files with deny rules in `~/.claude/settings.json`, for example `Read(~/.ssh/**)`, or turn on `permissions.blockReadsOutsideWorkingDirectories`.
 
 For the risk categories and defenses in depth, see OWASP's [Top 10 for Agentic Applications](https://genai.owasp.org/agentic-security-initiative/) and [Top 10 for LLM Applications](https://genai.owasp.org/llm-top-10/); the latter ranks prompt injection first. For cluster data rules, see {doc}`Security and Compliance <../s6_security_and_compliance/README>`.
 
@@ -275,7 +277,7 @@ flowchart LR
 (agentic_ai:agent_sandboxing)=
 ### Agent sandboxing
 
-Claude Code and Codex can run an agent's shell commands inside an operating-system sandbox that limits which files they can write and which network hosts they can reach. The operating system enforces these limits on every command inside the sandbox, whatever the model decides, and Claude Code runs sandboxed commands without asking you to approve each one. On Linux, both tools build the sandbox with a system tool called bubblewrap, and Claude Code also needs socat; both are installed on the cluster's compute nodes.
+Claude Code and Codex can run an agent's shell commands inside an operating-system sandbox that limits which files they can write and which network hosts they can reach. The operating system enforces these limits on every command inside the sandbox, whatever the model decides, and by default Claude Code runs sandboxed commands without asking you to approve each one. On Linux, both tools build the sandbox with a system tool called bubblewrap, and Claude Code also needs socat; both are installed on the cluster's compute nodes.
 
 In Claude Code, turn the sandbox on with the `/sandbox` command, or in your settings:
 
@@ -285,15 +287,20 @@ In Claude Code, turn the sandbox on with the `/sandbox` command, or in your sett
     "enabled": true,
     "failIfUnavailable": true,
     "allowUnsandboxedCommands": false,
-    "excludedCommands": ["squeue *", "sacct *", "sinfo *", "sbatch *", "scancel *", "clustertool *"]
+    "autoAllowBashIfSandboxed": false,
+    "excludedCommands": [
+      "squeue *", "sacct *", "sinfo *", "seff *", "sstat *", "scontrol *",
+      "sbatch *", "srun *", "salloc *", "scancel *", "clustertool *"
+    ]
   }
 }
 ```
 
-Four things to know on the cluster:
+Five things to know on the cluster:
 
 - **It covers shell commands only.** The agent's own file-editing tools follow your permission rules instead, and hooks and MCP servers run outside the sandbox with your full access.
 - **Close its two escape hatches.** By default, when a command fails inside the sandbox, Claude can retry it outside, subject to your permission mode, and if the sandbox cannot start at all, Claude Code runs commands without it. `allowUnsandboxedCommands: false` turns off the retry, and `failIfUnavailable: true` makes Claude Code exit at startup instead. With both set, only commands that match `excludedCommands` run outside the sandbox.
+- **Decide whether it replaces your approvals.** By default, commands that run inside the sandbox need no approval in any permission mode except plan mode, manual mode and `dontAsk` included. That speeds up interactive work, but it also means a batch run's `--allowedTools` no longer limits which commands run. The settings above set `autoAllowBashIfSandboxed` to `false`, which keeps your usual approvals; remove that line if you want sandboxed commands to run without asking.
 - **SLURM commands cannot reach the scheduler from inside it.** The sandbox gives commands their own network namespace, which cuts them off from the SLURM controller. In a test on the cluster, `squeue` inside a network-isolated bubblewrap sandbox did not fail; it hung until it was killed. List the SLURM commands the agent needs in `excludedCommands`, as above, so they run outside the sandbox and go through your permission rules and hooks instead; see {ref}`Guardrails <agentic_ai:guardrails>`.
 - **Exclusions match only simple calls.** A call runs outside the sandbox only if every command in it matches an exclusion, and a redirect to a file, a `cd`, or a command substitution such as `$(...)` keeps the whole call inside. A call such as `squeue --me | grep RUNNING` or `jobid=$(sbatch --parsable job.sh)` therefore stays sandboxed and hangs. Add a line to your project instructions such as "Run SLURM and ClusterTool commands on their own, without pipes, redirects, `cd`, or `$(...)`."
 

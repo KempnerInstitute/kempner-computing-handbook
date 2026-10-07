@@ -22,9 +22,11 @@ Before your first run, install and authenticate the agent, and read how to size 
 Start a tmux session on the login node, so a dropped connection does not end your work. Inside it, start an interactive session on a compute node, not the login node, move into your project directory, and launch the agent. A small CPU allocation is enough for a first run:
 
 ```bash
+hostname                       # note the login node, to come back to it
 tmux new -s agent
 salloc --partition=test --time=0-02:00 --mem=16G --cpus-per-task=4
 cd /path/to/your/project
+source .venv/bin/activate      # an environment with what the task needs
 claude
 ```
 
@@ -44,7 +46,7 @@ Start with a single, checkable task rather than a whole project, pointed at a fi
 
 > Summarize `data/measurements.csv`, then save a histogram of the `temperature` column to `figures/temperature_hist.png`.
 
-The agent's commands inherit the environment of the shell you start it from, so activate an environment that has what the task needs, here Python with pandas and matplotlib, before you run `claude` (for example `source .venv/bin/activate`). A narrow task is easy to review and easy to verify, and it shows you how the agent behaves before you hand it anything larger.
+The agent's commands inherit the environment of the shell you start it from, so the environment you activated before running `claude` needs what the task needs, here Python with pandas and matplotlib. A narrow task is easy to review and easy to verify, and it shows you how the agent behaves before you hand it anything larger.
 
 ## Review before it acts
 
@@ -54,7 +56,7 @@ In manual mode the agent proposes edits and commands and waits for your approval
 
 Check the output yourself: open the figure, read the numbers, and run any tests. An agent's result is a lead to confirm, not a finding to trust. When you want to measure quality more systematically, see {doc}`Evaluating and Monitoring Agents <evaluating_and_monitoring_agents>`.
 
-Once the task is right, refine it or move on to the next one. When you are done, type `/exit` to leave Claude Code, then `exit` to end the interactive job and release its resources.
+Once the task is right, refine it or move on to the next one. When you are done, type `/exit` to leave Claude Code, then `exit` to end the interactive job and release its resources, and `exit` once more to close tmux.
 
 ```{seealso}
 For the tool landscape, see {doc}`Agentic AI Tools <agentic_ai_tools>`; to configure an agent for your project, see {doc}`Configuring Agents for Your Project <configuring_agents>`; to keep everything on the cluster, see {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`; and for using agents across the research process, see {doc}`Agentic AI in Research <agentic_ai_in_research>`.

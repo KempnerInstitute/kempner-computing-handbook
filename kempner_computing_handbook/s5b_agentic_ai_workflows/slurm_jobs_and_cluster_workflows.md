@@ -67,7 +67,7 @@ Here, a 4-GPU job on a single node would fit on 2 nodes right away, and the tool
 
 ## Submit and monitor
 
-Approve the `sbatch` when the agent asks. To follow the job, the agent can use `squeue --me`, `clustertool jobs list`, and `clustertool jobs log <job_id>` for the output so far. Ask it to check at intervals of a minute or more rather than polling every few seconds, which spends tokens and adds load on the scheduler that everyone shares. For a short job, the agent can run `sbatch --wait`, which returns only when the job ends, as a background command, so it waits without polling; a foreground command would hit the agent's command timeout, two minutes by default.
+Approve the `sbatch` when the agent asks. To follow the job, the agent can use `squeue --me`, `clustertool jobs list`, and `clustertool jobs log <job_id>` for the output so far. Ask it to check at intervals of a minute or more rather than polling every few seconds, which spends tokens and adds load on the scheduler that everyone shares. For a short job, the agent can run `sbatch --wait`, which returns only when the job ends, as a background command, so it waits without polling.
 
 ## Diagnose a failure
 
@@ -151,15 +151,15 @@ claude -p "Read the job logs in logs/ from the last day. For each failed job, ex
   --output-format json > logs/triage_result.json
 ```
 
-- `--permission-mode dontAsk` refuses anything that is not pre-approved, and `--allowedTools` pre-approves only reading, creating and editing files under `reports/`, and two read-only commands, so the agent cannot submit or cancel jobs or change your scripts. The space before `*` matters: `Bash(sacct *)` matches `sacct` with arguments, while `Bash(sacct*)` would also match other commands that start with those letters.
+- `--permission-mode dontAsk` refuses anything that is not pre-approved, and `--allowedTools` pre-approves only reading, creating and editing files under `reports/`, and two read-only commands, so the agent cannot submit or cancel jobs or change your scripts. If you use the agent sandbox, this holds only with `autoAllowBashIfSandboxed` set to `false`; see {ref}`Agent sandboxing <agentic_ai:agent_sandboxing>`. The space before `*` matters: `Bash(sacct *)` matches `sacct` with arguments, while `Bash(sacct*)` would also match other commands that start with those letters.
 - `--max-turns` and `--max-budget-usd` bound the run, and the job's `--time` is the final stop: at the limit, SLURM signals the job, and Claude Code exits and stops any command it started. See {ref}`Caps on unattended runs <agentic_ai:run_caps>`.
 - The JSON result includes the session ID, so you can continue the conversation interactively with `claude --resume`, and an estimated cost for the run.
-- The job uses the same login as your interactive sessions, which is stored in your home directory. To use an API key instead, read it from a file only you can read rather than writing it into the script, for example `export ANTHROPIC_API_KEY=$(cat ~/.anthropic_key)` after `chmod 600 ~/.anthropic_key`. If `ANTHROPIC_API_KEY` is set in your environment, for example from `~/.bashrc`, print mode always uses it instead of your subscription, and batch jobs inherit it; see {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`.
+- The job uses the same login as your interactive sessions, which is stored in your home directory. To use an API key instead, read it from a file only you can read rather than writing it into the script, for example `export ANTHROPIC_API_KEY=$(cat ~/.anthropic_key)` after `chmod 600 ~/.anthropic_key`, and add a deny rule, `Read(~/.anthropic_key)`, to your user settings so the agent cannot read the file. If `ANTHROPIC_API_KEY` is set in your environment, for example from `~/.bashrc`, print mode always uses it instead of your subscription, and batch jobs inherit it; see {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`.
 
 Read the report before acting on it; the agent's proposals are leads, not fixes.
 
 ```{warning}
-In print mode, Claude Code runs the hooks in a project's `.claude/settings.json` and starts the MCP servers in its `.mcp.json` without asking, even in a folder you have never opened before. Before you run an agent this way in a repository you did not write, read those two files, or add `--setting-sources user`, which makes Claude Code skip the project's settings files and its `.mcp.json`. `--bare` skips them too, but it requires an API key rather than your subscription login. See {doc}`Working with Unfamiliar Research Codebases <unfamiliar_codebases>`.
+In print mode, Claude Code runs the hooks in a project's `.claude/settings.json` and starts the MCP servers in its `.mcp.json` without asking, even in a folder you have never opened before. Before you run an agent this way in a repository you did not write, read those two files and any skills under `.claude/skills/`, or add `--setting-sources user`, which makes Claude Code skip the project's settings files and its `.mcp.json`. See {doc}`Working with Unfamiliar Research Codebases <unfamiliar_codebases>`.
 ```
 
 ## Before you trust the result

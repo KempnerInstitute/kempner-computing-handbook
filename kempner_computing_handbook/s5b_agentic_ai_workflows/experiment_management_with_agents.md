@@ -88,15 +88,16 @@ Long runs hit time limits, and jobs on a partition like `kempner_requeue` can be
 
 In a test on the cluster, a run with a one-minute time limit was stopped at about step 237,000. Resubmitted with a longer `--time`, it logged `resumed from step 236000`, its most recent checkpoint, and carried on; only the steps since that checkpoint had to be repeated. Choose the checkpoint interval by how much repeated work you can tolerate against how long a save takes.
 
-You can also ask SLURM for a warning before the limit, so the run saves on its way out: `#SBATCH --signal=B:SIGTERM@120` sends SIGTERM two minutes early. The `B:` means only the batch script's shell receives it, so the script has to pass it on. In a test on the cluster, a job that ran its training process in the foreground, with no handler, was ended by the warning a minute early without saving. With these lines in the batch script, the training process received the signal, saved, and the job completed cleanly:
+You can also ask SLURM for a warning before the limit, so the run saves on its way out: `#SBATCH --signal=B:SIGTERM@120` sends SIGTERM about two minutes early (SLURM may send it up to a minute earlier than requested). The `B:` means only the batch script's shell receives it, so the script has to pass it on. In a test on the cluster with a one-minute warning, a job that ran its training process in the foreground, with no handler, was ended by the warning without saving. With these lines in the batch script, the training process received the signal, saved, and the job completed cleanly:
 
 ```bash
-python train.py &                 # run training in the background
+python train.py &      # run training in the background
 pid=$!
-trap 'kill -TERM $pid' TERM       # pass SLURM's warning on to it
-wait $pid                         # returns when the warning arrives
-wait $pid                         # then waits for the save to finish
+trap 'kill -TERM $pid; wait $pid; exit $?' TERM   # pass the warning on, wait for the save
+wait $pid              # returns when training ends
 ```
+
+If training finishes before the warning, the script ends with training's own exit status, as it would without the trap. After a warning, SLURM records the job as completed even though training stopped early, so do not chain a job that needs the finished model to it with `afterok`.
 
 The training code must also handle SIGTERM by saving a checkpoint and exiting. Ask the agent to add both pieces, and test them with a short `--time` before you rely on them. For a framework with checkpointing and automatic resume built in, see {doc}`KempnerForge <../s3_ai_workflows/kempnerforge>`.
 
