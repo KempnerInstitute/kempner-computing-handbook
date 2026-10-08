@@ -61,13 +61,13 @@ VSCode Remote-SSH can stop reconnecting when leftover port forwards accumulate o
 ## Agentic AI
 
 :::{dropdown} What data can I use with a cloud agent on the cluster?
-A cloud agent sends your prompts, and any code or data it reads, to its provider. On the cluster, a cloud agent may work only with public data (Level 1) unless your school has an agreement with the provider that covers your data; see {ref}`Before you start <agentic_ai:before_you_start>`. An open-weight model served on the cluster, as in {doc}`HPC Agentic Recipes <../s5b_agentic_ai_workflows/hpc_agentic_recipes>`, keeps your data from leaving it; which data you may use with it is set by the rules under {ref}`Data classification and what the cluster can host <security_and_compliance:data_classification>` and {ref}`Responsible use of AI tools <security_and_compliance:responsible_use_of_ai_tools>` in Security and Compliance.
+A cloud agent sends your prompts, and any code or data it reads, to its provider. On the cluster, it may work only with public data (Level 1), unless your school has an agreement with the provider that covers your data. Most unpublished research code and data are Level 2, so check with your school whether your account is covered; see {ref}`Before you start <agentic_ai:before_you_start>`. A model served on the cluster, as in {doc}`HPC Agentic Recipes <../s5b_agentic_ai_workflows/hpc_agentic_recipes>`, keeps your data on the cluster, but FASRC's rule also covers "other GenAI models", so the same check applies.
 :::
 
 :::{dropdown} Signing in to Claude Code or Codex from a cluster node
 A cluster node cannot open a browser, so both tools use a sign-in flow you finish on your own computer.
 
-- **Claude Code.** Run `claude`, or `/login` inside a session. It prints a URL; open it in your local browser, sign in, and paste the code it shows back into the terminal. The login is saved in your home directory, so it works on every node and in batch jobs. You can use an API key instead by setting `ANTHROPIC_API_KEY`; in print mode (`claude -p`), a key in your environment is always used, even if you have also signed in; see {doc}`Using Agentic AI on the Cluster <../s5b_agentic_ai_workflows/using_agentic_ai_on_the_cluster>`.
+- **Claude Code.** Run `claude`, or `/login` inside a session. It prints a URL; open it in your local browser, sign in, and paste the code it shows back into the terminal. The login is saved in your home directory, so it works on every node and in batch jobs. You can use an API key instead by setting `ANTHROPIC_API_KEY`. In print mode (`claude -p`), a key in your environment is always used, even if you have also signed in; see {ref}`Running a terminal agent <agentic_ai:running_a_terminal_agent>`.
 - **Codex.** Run `codex login --device-auth`, open the link it prints, sign in, and enter the one-time code. Device code login is in beta and must first be turned on in your ChatGPT security settings, or by the workspace admin for a workspace account such as ChatGPT Edu. Alternatively, sign in with an API key (`printenv OPENAI_API_KEY | codex login --with-api-key`). See the Codex [authentication documentation](https://learn.chatgpt.com/docs/auth).
 
 Treat saved logins and API keys like passwords: keep them out of shared directories and repositories.
@@ -92,5 +92,5 @@ An agent extension must run where your files are. In a Remote-SSH window, instal
 :::
 
 :::{dropdown} My agent session ended when my connection dropped
-An interactive session lives inside your SSH connection. Run it inside tmux on the login node so it survives a dropped connection, and pick the conversation back up with `claude --continue`; see {ref}`Keeping a session alive <agentic_ai:keeping_a_session_alive>`.
+An interactive session lives inside your SSH connection. Run it inside tmux on the login node so it survives a dropped connection. If the job has ended, start a new one, `cd` to the same project directory, and run `claude --continue` to pick the conversation back up; see {ref}`Keeping a session alive <agentic_ai:keeping_a_session_alive>`.
 :::

@@ -17,44 +17,52 @@ flowchart LR
 
 ## Start a session and launch the agent
 
-Before your first run, install and authenticate the agent, and read how to size an allocation, in {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`.
+Before your first run, install and sign in to the agent, and read how to size an allocation, in {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`.
 
-Start a tmux session on the login node, so a dropped connection does not end your work. Inside it, start an interactive session on a compute node, not the login node, move into your project directory, and launch the agent. A small CPU allocation is enough for a first run:
+Start a tmux session on the login node, so a dropped connection does not end your work. Inside it, start an interactive job on a compute node, set up a practice folder, and launch the agent. A small CPU allocation is enough. When Claude Code first starts in a folder, it asks whether you trust it. Trust only folders whose agent configuration you know, such as your own projects; see {ref}`Untrusted repositories <agentic_ai:untrusted_repositories>`.
 
 ```bash
-hostname                       # note the login node, to come back to it
+hostname                          # note the login node, to come back to it
 tmux new -s agent
 salloc --partition=test --time=0-02:00 --mem=16G --cpus-per-task=4
-cd /path/to/your/project
-source .venv/bin/activate      # an environment with what the task needs
-claude
+mkdir -p ~/agent_practice && cd ~/agent_practice
+git init                          # git shows what the agent changed
+module load python
+python -m venv .venv && source .venv/bin/activate
+pip install pandas matplotlib     # the packages the practice task needs
+claude --permission-mode default  # manual mode: asks before it changes anything
 ```
 
-New sessions usually start in auto mode, where a classifier approves routine actions for you. For a first run, press `Shift+Tab` until the status bar shows `manual mode on`, so the agent asks before each action.
+Without `--permission-mode default`, new sessions start in auto mode where it is available, and a classifier approves routine actions for you. For a first run, manual mode lets you see each request; see {ref}`Permission modes <agentic_ai:permission_modes>`.
 
 ```{tip}
-If your connection drops, SSH back to the same login node and run `tmux attach -t agent`. If the session itself has ended, run `claude --continue` in the same directory to pick the conversation back up; see {ref}`Keeping a session alive <agentic_ai:keeping_a_session_alive>`.
+If your connection drops, SSH back to the same login node and run `tmux attach -t agent`. If the job has ended, start a new one with `salloc` and `cd` to the same folder. Load the environment again (`module load python`, then `source .venv/bin/activate`), and run `claude --continue --permission-mode default` to pick the conversation back up in manual mode; see {ref}`Keeping a session alive <agentic_ai:keeping_a_session_alive>`.
 ```
 
 ## Point the agent at your work
 
-The agent works in the directory you launched it from and reads the files there. If the project has a `CLAUDE.md`, or an `AGENTS.md` and no `CLAUDE.md`, the agent picks up your conventions from it; see {doc}`Configuring Agents for Your Project <configuring_agents>`.
+The agent works in the folder you start it in. It reads files without asking, and what it reads goes to the provider, so this first run uses a new folder and made-up data. In your own projects, commit your work before you start the agent, so you can undo its changes; see {ref}`Git as the undo layer <agentic_ai:git_undo>`. An instructions file such as `CLAUDE.md` tells the agent your conventions; see {doc}`Configuring Agents for Your Project <configuring_agents>`.
 
 ## Give it one scoped task
 
-Start with a single, checkable task rather than a whole project, pointed at a file you actually have. For example, with a CSV in your project:
+Start with a single, checkable task rather than a whole project:
 
-> Summarize `data/measurements.csv`, then save a histogram of the `temperature` column to `figures/temperature_hist.png`.
+> Create `data/measurements.csv` with 200 rows of made-up hourly temperature readings, print summary statistics, and save a histogram of the `temperature` column to `figures/temperature_hist.png`.
 
-The agent's commands inherit the environment of the shell you start it from, so the environment you activated before running `claude` must include what the task needs, here Python with pandas and matplotlib. A narrow task is easy to review and easy to verify, and it shows you how the agent behaves before you hand it anything larger.
+The agent's commands use the environment you activated before starting it. A narrow task is easy to review and to verify, and it shows you how the agent behaves before you give it anything larger.
 
 ## Review before it acts
 
-In manual mode the agent proposes edits and commands and waits for your approval. Read them before approving, especially anything that deletes files, moves data, or installs software. This is also your defense against an agent acting on untrusted content; see {ref}`Permission modes <agentic_ai:permission_modes>` and {ref}`Agent security <agentic_ai:agent_security>`.
+In manual mode, the agent asks before it edits files or runs commands that change things. Read each request before you approve it, especially anything that deletes files, moves data, or installs software.
+
+- **Stop.** Press Esc to stop the agent at any point.
+- **Approve.** Choose **Yes** to approve one action. For a shell command, **Yes, and don't ask again** saves a rule that allows it from then on in this project, so avoid it while you learn.
+
+This review is also your defense against untrusted content; see {ref}`Agent security <agentic_ai:agent_security>`.
 
 ## Verify the result
 
-Check the output yourself: open the figure, read the numbers, and run any tests. An agent's result is a lead to confirm, not a finding to trust. When you want to measure quality more systematically, see {doc}`Evaluating and Monitoring Agents <evaluating_and_monitoring_agents>`.
+Check the output yourself: open the figure, read the numbers, and run any tests. In a test on the cluster, the agent made the file, the statistics, and a correct histogram, but named the column `temperature_c`, though the prompt asked for `temperature`. Small departures like this are what your check is for. An agent's result is a lead to confirm, not a finding to trust. When you want to measure quality more systematically, see {doc}`Evaluating and Monitoring Agents <evaluating_and_monitoring_agents>`.
 
 Once the task is right, refine it or move on to the next one. When you are done, type `/exit` to leave Claude Code, then `exit` to end the interactive job and release its resources, and `exit` once more to close tmux.
 

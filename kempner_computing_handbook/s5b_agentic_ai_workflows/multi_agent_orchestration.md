@@ -4,7 +4,7 @@ Several agents can split a large task, check each other's work, or run side by s
 
 ## Start with one agent
 
-Try a single agent first, and add more only when a measured gain justifies the cost; see {doc}`Evaluating and Monitoring Agents <evaluating_and_monitoring_agents>`. The cost is real. Anthropic found that its multi-agent research system used about 15 times as many tokens as a chat ([How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)). Claude Code's documentation also notes that agent teams use significantly more tokens than one session.
+Try a single agent first, and add more only when a measured gain justifies the cost; see {doc}`Evaluating and Monitoring Agents <evaluating_and_monitoring_agents>`. The cost is real. Anthropic found that its multi-agent research system used about 15 times as many tokens as a chat ([How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)). [Claude Code's documentation](https://code.claude.com/docs/en/agent-teams) also notes that agent teams use significantly more tokens than one session.
 
 Several agents help when the work splits into independent pieces, when a reviewer should check work it did not produce, or when the task is too large for one context. They hurt on sequential work with many dependencies, on edits to the same files, and on small tasks.
 
@@ -49,7 +49,7 @@ jq -er '.result' agent-run/plan.json > agent-run/plan.md
 Read `agent-run/plan.md` and edit it until it is right. This checkpoint keeps a bad plan from becoming bad code.
 :::
 :::{tab-item} 2. Implement
-The implementation step works on its own branch. It may create and edit files in the project and run the tests; anything else that needs approval is refused.
+The implementation step works on its own branch. It may create and edit files in the project and run the tests; anything else that needs approval is refused. Running tests runs code the agent wrote, so this step can still do anything your account can; for a hard limit, turn on the sandbox with `autoAllowBashIfSandboxed` set to `false` (see {ref}`Agent sandboxing <agentic_ai:agent_sandboxing>`).
 
 ```bash
 git switch -c add-seed
@@ -124,10 +124,8 @@ For helpers that edit files in parallel, add `isolation: worktree` to the frontm
 
 Agent teams, an experimental Claude Code feature, go further: a lead session starts several teammates, each a separate session, which share a task list and message each other. They suit work where independent views help, such as reviewing a change from several angles or testing competing explanations for a failed run.
 
-- They are off by default; set `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` to enable them.
-- They run only in interactive sessions, not in print mode or batch jobs.
-- While enabled, a subagent that Claude names starts as a teammate in the main working directory, even if its definition sets `isolation: worktree`.
-- Teammates start with the lead's permission mode (except `dontAsk`), and their permission requests come to the lead's session.
+- They are off by default (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` turns them on), and they run only in interactive sessions, not in batch jobs.
+- Teammates start with the lead's permission mode (except `dontAsk`), and their permission requests come to the lead's session. While teams are on, a subagent that Claude names starts as a teammate in the main working directory, even if its definition sets `isolation: worktree`.
 - Keep teams small (the documentation suggests three to five) and give each teammate its own files.
 
 See the [agent teams documentation](https://code.claude.com/docs/en/agent-teams) for current limitations.
@@ -146,7 +144,7 @@ The report job waits for every task in the array to finish, then runs the agent:
 ```bash
 #!/bin/bash
 #SBATCH --job-name=sweep-report
-#SBATCH --partition=test
+#SBATCH --partition=shared
 #SBATCH --time=00:30:00
 #SBATCH --mem=8G
 #SBATCH --cpus-per-task=2
@@ -167,7 +165,7 @@ claude -p "Array job $SWEEP_JOB_ID has finished. Use sacct to find which tasks f
 - The `afterok` job was canceled automatically, because the scheduler removes jobs whose dependencies can no longer be met.
 - With the agent step in place, the report ranked the two finished runs and listed the failed task with the cause from its log, and the agent wrote nothing outside `reports/`.
 
-See {doc}`Job Dependencies <../s1_high_performance_computing/general_hpc_concepts/job_dependencies>`. To run the same agent task over many inputs, use an array job with one agent run per task, each with its own budget and log. Cap how many run at once with `%`, for example `--array=0-49%4`, which also slows how fast the runs use up your plan or API limits; see {doc}`Array Jobs <../s1_high_performance_computing/general_hpc_concepts/array_jobs>`.
+See {doc}`Job Dependencies <../s1_high_performance_computing/general_hpc_concepts/job_dependencies>`. To run the same agent task over many inputs, first turn off automatic updates, so an update cannot remove the version running jobs use; see {ref}`Running a terminal agent <agentic_ai:running_a_terminal_agent>`. Then use an array job on a CPU partition such as `shared`, with one agent run per task, each with its own budget and log. Cap how many run at once with `%`, for example `--array=0-49%4`, which also slows how fast the runs use up your plan or API limits; see {doc}`Array Jobs <../s1_high_performance_computing/general_hpc_concepts/array_jobs>`.
 
 ## Before you trust the result
 

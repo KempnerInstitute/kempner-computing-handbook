@@ -26,19 +26,24 @@ Treat everything the agent reads, including tool output, as data, not commands. 
 - **Keep a human on consequential actions.** Approve anything that deletes data, moves files, pushes code, or spends budget; see {ref}`Permission modes <agentic_ai:permission_modes>`.
 - **Give the agent only the access it needs.** Limit subagents to read-only tools where you can; see {doc}`Configuring Agents for Your Project <configuring_agents>`.
 - **Cap autonomous loops.** Bound unattended runs with `--max-turns`, `--max-budget-usd`, and a SLURM `--time`; see {ref}`Caps on unattended runs <agentic_ai:run_caps>`.
-- **Keep secrets out of reach.** A misdirected agent can leak anything your account can read, and read-only commands such as `cat` run without a prompt even outside your project. Keep credentials out of the project, and block reads of credential files with deny rules in `~/.claude/settings.json`, for example `Read(~/.ssh/**)`, or turn on `permissions.blockReadsOutsideWorkingDirectories`.
+- **Keep secrets out of reach.** A misdirected agent can leak anything your account can read, and read-only commands such as `cat` run without a prompt even outside your project. Keep credentials out of the project, and block reads of credential files with deny rules in `~/.claude/settings.json`, for example `Read(~/.ssh/**)`, `Read(~/.netrc)` (where `wandb login` stores its key), `Read(~/.cache/huggingface/**)`, and `Read(~/.config/gh/**)`. Or turn on `permissions.blockReadsOutsideWorkingDirectories`.
 
 For risk categories and defenses, see OWASP's [Top 10 for Agentic Applications](https://genai.owasp.org/agentic-security-initiative/) and [Top 10 for LLM Applications](https://genai.owasp.org/llm-top-10/), which ranks prompt injection first.
+
+(agentic_ai:untrusted_repositories)=
+### Untrusted repositories
+
+A repository you clone can ship project instructions, hooks in `.claude/settings.json`, MCP servers in `.mcp.json`, and skills in `.claude/skills/`, and they run as you. In print mode, Claude Code runs the hooks, starts the servers, and applies the settings' `env` block without asking, even in a folder you have never opened. Before you run an agent in a repository you did not write, read those files. With `claude -p`, add `--setting-sources user` to skip the project's settings and `.mcp.json`.
 
 (agentic_ai:remote_control)=
 ### Remote control
 
-Some agents can be steered from another device. Claude Code's [Remote Control](https://code.claude.com/docs/en/remote-control) connects a session on your machine to claude.ai/code or the Claude phone app. You start it with `/remote-control`, `claude --remote-control`, or `claude remote-control`, or for every session with a setting. Codex offers the same through `codex remote-control` (experimental) and the ChatGPT app's [remote connections](https://learn.chatgpt.com/docs/remote-connections), which can also reach projects over SSH. Any device signed in to the same account can then send the agent instructions and approve its actions, and everything runs on the connected machine.
+Some agents can be steered from another device. Claude Code's [Remote Control](https://code.claude.com/docs/en/remote-control), started with `/remote-control` in a session, `claude --remote-control`, or `claude remote-control` (server mode), or for every session with a setting, connects a session on your machine to claude.ai/code or the Claude phone app. Codex has a similar feature: `codex remote-control` (experimental) and the ChatGPT app's [remote connections](https://learn.chatgpt.com/docs/remote-connections), which can also reach projects over SSH. Any device signed in to the same account can then send the agent instructions and approve its actions, and everything runs on the connected machine.
 
 On the cluster, that machine is your cluster account. With remote control on, any device signed in to your AI account can steer the session, without the FASRC login, two-factor authentication, and VPN that normally protect the cluster. An unlocked phone or a browser left signed in becomes a way into your cluster account. Claude Code also keeps the session's transcript, including tool activity, on Anthropic's servers while it is connected. Until there is specific guidance on these features, be careful:
 
 - **Leave it off unless you need it.** Turn it on only for the session that needs it. Do not turn on "Enable Remote Control for all sessions" (`remoteControlAtStartup`) on the cluster.
-- **Stop it when you are done.** End the Claude Code session, press Ctrl+C in `claude remote-control`, or run `codex remote-control stop`.
+- **Stop it when you are done.** Run `/remote-control` again to disconnect, or end the session; in server mode, press Ctrl+C. For Codex, run `codex remote-control stop`.
 - **Protect the account that controls it.** Sign in only on devices you control and use multi-factor authentication. Consider Claude's Trusted Devices, which requires each device to be verified before it can view or steer a session. Never let anyone else use the account.
 - **Rule it out where you do not want it.** `"disableRemoteControl": true` in `~/.claude/settings.json` turns Claude Code's Remote Control off entirely.
 - **Prefer the usual way in.** To check on a long run, log in to the cluster and reattach tmux, or read the batch job's logs.
@@ -68,8 +73,9 @@ flowchart TB
 
 ### Prefer enforceable boundaries over prompt instructions
 
-An instruction such as "do not read files outside this directory" guides the model, but it can fail under adversarial input. Prefer limits enforced outside the model: filesystem permissions, SLURM resource limits, permission rules (see {doc}`Configuring Agents for Your Project <configuring_agents>`), read-only subagents, and the sandbox below. Use both layers: enforced limits set the hard boundary, and instructions guide behavior inside it.
+An instruction such as "do not read files outside this directory" guides the model, but it can fail under adversarial input. Prefer limits enforced outside the model: filesystem permissions, SLURM resource limits, tool restrictions such as `--tools` and read-only subagents, and the sandbox (see {ref}`Agent sandboxing <agentic_ai:agent_sandboxing>`). {ref}`Permission rules <agentic_ai:permission_rules>` sit in between: Claude Code enforces them, but a command rule matches only the command as written, so it is not a boundary on its own. Use both layers: enforced limits set the hard boundary, and instructions guide behavior inside it.
 
+(agentic_ai:before_an_unattended_run)=
 ### Before an unattended run
 
 Answer these questions before you submit. If you cannot answer one, resolve it first.
@@ -100,7 +106,7 @@ Claude Code and Codex can run an agent's shell commands in an operating-system s
 
 ::::{tab-set}
 :::{tab-item} Claude Code
-Turn the sandbox on with `/sandbox`, or in your settings:
+Turn the sandbox on with `/sandbox`, or in a settings file such as `~/.claude/settings.json`:
 
 ```json
 {
@@ -119,8 +125,9 @@ Turn the sandbox on with `/sandbox`, or in your settings:
 
 - **It covers shell commands only.** File-editing tools follow your permission rules, and hooks and MCP servers run outside the sandbox with your full access.
 - **Close its escape hatches.** By default, Claude can retry a failed command outside the sandbox, and Claude Code runs without the sandbox if it cannot start. `allowUnsandboxedCommands: false` and `failIfUnavailable: true` turn both off, so only `excludedCommands` run outside.
-- **Keep your approvals.** By default, sandboxed commands run without a prompt in every mode except plan, including manual and `dontAsk`, so a batch run's `--allowedTools` no longer limits them. `autoAllowBashIfSandboxed: false` keeps your usual approvals. In a test on the cluster under `dontAsk`, a sandboxed `touch` ran with auto-allow on and was refused with it off.
-- **Run SLURM commands outside it.** The sandbox cuts commands off from the SLURM controller. In a test on the cluster, `sinfo` inside the sandbox waited almost two minutes, then failed with `Unable to contact slurm controller (connect failure)`; excluded, it answered at once. `sbatch`, `srun`, and `salloc` then run what they launch outside the sandbox too, so keep them on the `ask` list in {ref}`Permission rules <agentic_ai:permission_rules>`.
+- **Keep your approvals.** By default, sandboxed commands run without asking in every mode except plan, even manual and `dontAsk`, so a batch run's `--allowedTools` no longer limits them. `autoAllowBashIfSandboxed: false` keeps your usual approvals. In a test on the cluster under `dontAsk`, a sandboxed `touch` ran with auto-allow on and was refused with it off.
+- **Run SLURM commands outside it.** The sandbox cuts commands off from the SLURM controller. In a test on the cluster, `sinfo` inside the sandbox waited almost two minutes, then failed with `Unable to contact slurm controller (connect failure)`; excluded, it answered at once. `sbatch`, `srun`, and `salloc` then run what they launch outside the sandbox too, so keep them on the `ask` list in {ref}`Permission rules <agentic_ai:permission_rules>`. `clustertool` in the list is [ClusterTool](https://github.com/KempnerInstitute/clustertool), the Kempner command-line tool for cluster tasks.
+- **Allow what your work needs.** Sandboxed commands can write only to the working directory and a temporary directory, and reach other hosts only if you allow them, so `uv sync`, `pip install`, model downloads, and W&B online logging fail inside it. Add the paths and hosts they need with `filesystem.allowWrite` and `network.allowedDomains` in the sandbox settings, rather than excluding the tools.
 - **Keep SLURM calls simple.** A call leaves the sandbox only if every command in it is excluded, and a redirect, a `cd`, or a `$(...)` keeps it inside. So `squeue --me | grep RUNNING` stays sandboxed and fails. Add to your project instructions: "Run SLURM and ClusterTool commands on their own, without pipes, redirects, `cd`, or `$(...)`."
 
 See the [Claude Code sandboxing documentation](https://code.claude.com/docs/en/sandboxing).

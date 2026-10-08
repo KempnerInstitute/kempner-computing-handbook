@@ -1,6 +1,6 @@
 # SLURM Jobs and Cluster Workflows
 
-An agent can take on routine cluster work: writing batch scripts, checking on jobs, explaining failures, and adapting code to more GPUs. This page shows each task with examples run on the Kempner AI cluster, starting with the guardrails. The examples use Claude Code and [ClusterTool](https://github.com/KempnerInstitute/clustertool), the Kempner command-line tool that wraps SLURM and FASRC's site tools; install it once with `uv tool install 'clustertool[tui]'`. For SLURM itself, see {doc}`Understanding SLURM <../s1_high_performance_computing/general_hpc_concepts/understanding_slurm>`.
+An agent can take on routine cluster work: writing batch scripts, checking on jobs, explaining failures, and adapting code to more GPUs. This page shows each task with examples run on the Kempner AI cluster, starting with the guardrails. The examples use Claude Code and [ClusterTool](https://github.com/KempnerInstitute/clustertool), the Kempner command-line tool that wraps SLURM and FASRC's site tools; install it once with `uv tool install 'clustertool[tui]'` (see {doc}`uv Environment <../s1_high_performance_computing/development_and_runtime_envs/using_uv_env>`). For SLURM itself, see {doc}`Understanding SLURM <../s1_high_performance_computing/general_hpc_concepts/understanding_slurm>`.
 
 ```{mermaid}
 flowchart LR
@@ -26,7 +26,7 @@ ClusterTool commands fall into three groups. Before you allow a command not list
 | Ask first (change state or start work) | `jobs submit`, `jobs new`, `jobs cancel`, `jobs hold`, `jobs release`, `jobs requeue`, `gpu session`, `diag nccl`, `diag nvlink`, `diag io-probe` |
 | Never (administrator commands) | `account add-user`, `account remove-user`, `account set-fairshare`, `jobs set-priority`, `nodes resume`, the `qos` commands other than `qos holders`, `diag ib`, `gpu monitor-partition` |
 
-Live displays such as the `me` dashboard, `gpu monitor-job`, `gpu nvtop`, `gpu pulse`, and `jobs top` are read-only but not useful to an agent. ClusterTool works on compute nodes, so an agent in an interactive job can use it.
+Administrator commands fail without administrator rights. Live displays such as the `me` dashboard, `gpu monitor-job`, `gpu nvtop`, `gpu pulse`, and `jobs top` are read-only but not useful to an agent. ClusterTool works on compute nodes, so an agent in an interactive job can use it.
 
 ## Write a batch script
 
@@ -132,7 +132,7 @@ Check the conversion against the standard pattern: initialize the process group,
 | Original script | 1 | 36.9 s | (too short to sample; see below) |
 | DistributedDataParallel, same global batch | 4 | 82.9 s | underfed, 13.9% SM activity |
 
-The 4-GPU version took more than twice as long. The model is small, so each GPU finishes its share quickly and then waits for the gradient exchange; JobScope reports the GPUs' compute units (streaming multiprocessors, or SMs) active only about 14% of the time. More GPUs help only when each has enough work to outweigh communication. Ask the agent to measure before and after any scaling change, and keep the faster version; see {doc}`ML Efficiency <../s5_ai_scaling_and_engineering/efficiency/ml_scaling_and_efficiency>`.
+The 4-GPU version took more than twice as long. The model is small, so each GPU finishes its share quickly and then waits for the gradient exchange. JobScope reports the GPUs' compute units (streaming multiprocessors, or SMs) active only about 14% of the time. For a run this short, treat that figure as indicative and rely on the timings. More GPUs help only when each has enough work to outweigh communication. Ask the agent to measure before and after any scaling change, and keep the faster version; see {doc}`ML Efficiency <../s5_ai_scaling_and_engineering/efficiency/ml_scaling_and_efficiency>`.
 
 ```{note}
 JobScope averages periodic samples, so it is unreliable for jobs of a minute or two. Here the single-GPU job trained for 37 seconds while drawing about 400 W, yet JobScope reported zero compute activity, because no sample landed on the busy period. For short jobs, judge by logs and timings. {doc}`KempnerInsight Cluster Monitoring App <../s1_high_performance_computing/kempner_cluster/kempnerinsight>` shows the same data as charts.
@@ -140,37 +140,36 @@ JobScope averages periodic samples, so it is unreliable for jobs of a minute or 
 
 ## Run an agent unattended in a batch job
 
-For work that needs no conversation, such as triaging the night's failed jobs, run the agent in print mode inside a batch job. It only talks to its model and reads files, so a small CPU allocation is enough:
+For work that needs no conversation, such as triaging the night's failed jobs, run the agent in print mode in a batch job. It only talks to its model and reads files, so a small allocation on a CPU partition such as `shared` is enough (`test` is meant for interactive work). Before you submit:
+
+- Work through {ref}`Before an unattended run <agentic_ai:before_an_unattended_run>`.
+- Set `blockReadsOutsideWorkingDirectories` to `true` under `permissions` in `~/.claude/settings.json`, so `dontAsk` refuses reads outside the project. Otherwise read-only commands such as `cat` run on any file your account can read.
+- In a repository you did not write, read its hooks and MCP servers first, because print mode runs them without asking; see {ref}`Untrusted repositories <agentic_ai:untrusted_repositories>`.
 
 ```bash
 #!/bin/bash
 #SBATCH --job-name=agent-triage
-#SBATCH --partition=test
+#SBATCH --partition=shared
 #SBATCH --time=00:30:00
 #SBATCH --mem=8G
 #SBATCH --cpus-per-task=2
-#SBATCH --output=logs/%x_%j.out
+#SBATCH --output=reports/%x_%j.out   # SLURM creates reports/ if it is missing
 
-cd /path/to/your/project
-mkdir -p reports
+cd "$SLURM_SUBMIT_DIR"
 claude -p "Read the job logs in logs/ from the last day. For each failed job, explain the likely cause and propose a fix to its batch script. Write your findings to reports/triage.md. Do not submit, cancel, or edit any job or script." \
   --permission-mode dontAsk \
   --allowedTools "Read,Grep,Glob,Edit(./reports/**),Bash(sacct *),Bash(clustertool jobs debug *)" \
   --max-turns 30 --max-budget-usd 3.00 \
-  --output-format json > logs/triage_result.json
+  --output-format json > reports/triage_result.json
 ```
 
 - **What it may do.** `dontAsk` refuses anything not pre-approved, and `--allowedTools` allows only reading, writing under `reports/`, and two read-only commands. The agent cannot submit or cancel jobs or change your scripts. If you use the agent sandbox, this holds only with `autoAllowBashIfSandboxed` set to `false`; see {ref}`Agent sandboxing <agentic_ai:agent_sandboxing>`.
 - **Rule syntax.** The space before `*` matters: `Bash(sacct *)` matches `sacct` with arguments, but `Bash(sacct*)` also matches other commands that start with those letters.
 - **Limits.** `--max-turns` and `--max-budget-usd` bound the run, and the job's `--time` is the final stop; see {ref}`Caps on unattended runs <agentic_ai:run_caps>`.
 - **Record.** The JSON result has the session ID, for `claude --resume`, and an estimated cost.
-- **Sign-in.** The job uses your saved login. If `ANTHROPIC_API_KEY` is set in your environment, for example in `~/.bashrc`, print mode uses it instead of your subscription. To use a key on purpose, read it from a file only you can read (`export ANTHROPIC_API_KEY=$(cat ~/.anthropic_key)`, after `chmod 600`), and add the deny rule `Read(~/.anthropic_key)` to your user settings so the agent cannot read the file. The key itself is still in the environment of the commands the agent runs.
+- **Sign-in.** The job uses your saved login, unless `ANTHROPIC_API_KEY` is set, for example in `~/.bashrc`; then print mode uses and bills the key. See {ref}`Running a terminal agent <agentic_ai:running_a_terminal_agent>`.
 
 In a test on the cluster with three job logs, the agent wrote its findings to `reports/triage.md` and changed nothing else. Asked in a second run to create a file elsewhere, edit a batch script, and run `touch`, it was refused all three times. Read the report before you act on it; its proposals are leads, not fixes.
-
-```{warning}
-In print mode, Claude Code runs the hooks in a project's `.claude/settings.json` and starts the servers in its `.mcp.json` without asking. Before you run an agent this way in a repository you did not write, read those files and any skills in `.claude/skills/`, or add `--setting-sources user` to skip the project's settings and `.mcp.json`. See {doc}`Working with Unfamiliar Research Codebases <unfamiliar_codebases>`.
-```
 
 ## Before you trust the result
 

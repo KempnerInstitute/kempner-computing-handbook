@@ -30,6 +30,7 @@ To see where an agent went wrong, not just that it did, keep a record of each ru
 
 For tracing many runs in a standard format, see the [OpenTelemetry GenAI semantic conventions](https://github.com/open-telemetry/semantic-conventions-genai).
 
+(agentic_ai:watch_cost)=
 ## Watch cost and context
 
 - **Track spend.** API usage is billed per token in the provider's console; a subscription has usage limits, which Claude Code shows with `/usage`. Cluster jobs draw on your fairshare allocation; see {doc}`Fairshare Policy <../s1_high_performance_computing/efficient_use_of_resources/fair_use_and_prioritization_policies>`.
@@ -42,7 +43,7 @@ For tracing many runs in a standard format, see the [OpenTelemetry GenAI semanti
 Some tasks are better done yourself, or with the agent preparing a command that you review and run:
 
 - **You cannot check the result.** With no tests, no reference, and no expertise to review it, a confident answer is a liability.
-- **The data is above what the tool is approved for.** On the cluster, a cloud agent may work only with public data (Level 1) unless your school has an agreement with the provider; see {ref}`Before you start <agentic_ai:before_you_start>`. A model you serve on the cluster, as in {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`, keeps data from leaving it; which data you may use with it is set by the rules under {ref}`Data classification and what the cluster can host <security_and_compliance:data_classification>` and {ref}`Responsible use of AI tools <security_and_compliance:responsible_use_of_ai_tools>` in Security and Compliance.
+- **The data is above what the tool is approved for.** On the cluster, a cloud agent may work only with public data (Level 1) unless your school has an agreement with the provider; see {ref}`Before you start <agentic_ai:before_you_start>`. For a model served on the cluster, see {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`, including the data rules that apply to it.
 - **The action is hard to undo.** Deleting or moving shared data, overwriting results, submitting or canceling many jobs, changing permissions, and publishing are yours to run.
 - **The judgment is the science.** Choosing a hypothesis, deciding what a result means, and standing behind a claim stay with you; see {doc}`Agentic AI in Research <agentic_ai_in_research>`.
 - **The task is small or one-off.** If reviewing the agent's work takes longer than doing it, do it yourself.

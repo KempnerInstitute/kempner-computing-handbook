@@ -18,7 +18,7 @@ flowchart LR
 
 A literature search sends your question to the provider. Data exploration sends whatever the agent reads: rows, column names, file names, and the output of the code it runs.
 
-- **Data on the cluster.** A cloud agent may work only with public data (Level 1) unless your school has an agreement with the provider; see {ref}`Before you start <agentic_ai:before_you_start>`. An open-weight model served on the cluster, as in {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`, keeps your data from leaving it; which data you may use with it is set by the rules under {ref}`Data classification and what the cluster can host <security_and_compliance:data_classification>` and {ref}`Responsible use of AI tools <security_and_compliance:responsible_use_of_ai_tools>` in Security and Compliance.
+- **Data on the cluster.** A cloud agent may work only with public data (Level 1) unless your school has an agreement with the provider; see {ref}`Before you start <agentic_ai:before_you_start>`. For a model served on the cluster, which keeps your data from leaving it, see {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`, including the data rules that apply to it.
 - **Material you received in confidence.** Manuscripts and proposals you review belong to their authors. NIH, for example, states that uploading content from a grant application or critique to online generative AI tools violates its peer review confidentiality requirements ([NOT-OD-23-149](https://grants.nih.gov/grants/guide/notice-files/NOT-OD-23-149.html)).
 
 If a dataset is above your tool's approved level, the agent can still help without seeing it; see {ref}`Explore data the agent cannot see <agentic_ai:explore_data_agent_cannot_see>`.
@@ -29,7 +29,7 @@ If a dataset is above your tool's approved level, the agent can still help witho
 
 Asking a chat model for references from memory is how fabricated citations happen: in one study, 55% of the references from GPT-3.5 and 18% from GPT-4 were fabricated ([Walters and Wilder, 2023](https://doi.org/10.1038/s41598-023-41032-5)). Use a tool that searches a literature database and cites what it retrieved, such as Elicit, Consensus, Ai2's Asta, or the deep research mode of a general assistant; see {doc}`Agentic AI Tools <agentic_ai_tools>`. A terminal agent can also search, with web access or an MCP server for a literature database; see {doc}`Building Custom Tools and MCP Servers <building_custom_tools>`.
 
-Retrieval makes invented papers much rarer, but it does not prevent a real paper cited for a claim it does not make. That is why the checks below end with reading.
+Retrieval makes invented papers much rarer, but it does not prevent a real paper cited for a claim it does not make. That is why citation checks end with reading.
 
 ### Set the question and criteria first
 
@@ -160,7 +160,6 @@ When a dataset is above your tool's approved level, the agent can still write th
 
 - Give it the schema (column names, types, and units) and a small synthetic sample, not the real rows.
 - Have it write the code, then run the code yourself in a separate terminal, so the output does not go back to the model.
-- Or use an open-weight model served on the cluster, so nothing leaves it, as the rules under {ref}`Data classification and what the cluster can host <security_and_compliance:data_classification>` allow; see {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`.
 
 ## Before you trust a finding
 

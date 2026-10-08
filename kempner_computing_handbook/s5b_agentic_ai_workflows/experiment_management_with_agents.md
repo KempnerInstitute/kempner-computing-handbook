@@ -20,13 +20,13 @@ Decide the size of each round before the agent proposes one: how many runs, how 
 
 ## Add experiment tracking
 
-> Add W&B logging to `train.py`: log the configuration, the training loss, and the validation loss every 1,000 steps, and write each run's final metrics to `runs/results/<run name>.json`. Respect `WANDB_MODE` so the runs can stay offline.
+> Add W&B logging to `train.py`: log the configuration, the training loss, and the validation loss every 1,000 steps, and write each run's final metrics to `runs/results/<run_name>.json`. Respect `WANDB_MODE` so the runs can stay offline.
 
 Ask for a small JSON summary per run as well. It is the easiest output for an agent or a script to read, and it does not depend on any service.
 
 ::::{tab-set}
 :::{tab-item} W&B offline mode
-With `WANDB_MODE=offline`, W&B writes each run to a local directory, and `wandb sync <run directory>` uploads it later. Compute nodes have outbound access, so online mode works too; offline mode keeps jobs independent of the network. See W&B's [offline documentation](https://docs.wandb.ai/support/models/articles/can-i-run-wandb-offline).
+With `WANDB_MODE=offline`, W&B writes each run to a local directory, and `wandb sync <run_dir>` uploads it later. Compute nodes have outbound access, so online mode works too; offline mode keeps jobs independent of the network. See W&B's [offline documentation](https://docs.wandb.ai/support/models/articles/can-i-run-wandb-offline).
 :::
 :::{tab-item} MLflow
 Since MLflow 3.7, a local tracking store is a SQLite file by default (`sqlite:///mlflow.db`), viewed with `mlflow server`. It works for a single run, but in a test on netscratch, setting up the database alone took about 90 seconds, and many array tasks writing to one SQLite file over a network filesystem invite locking problems. For parallel jobs, log to an MLflow tracking server instead; the Kempner [mlflow-on-databricks](https://github.com/KempnerInstitute/mlflow-on-databricks) repository sets up tracking on Databricks from the cluster.

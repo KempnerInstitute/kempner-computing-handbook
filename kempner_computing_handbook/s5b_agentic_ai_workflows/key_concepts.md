@@ -25,10 +25,10 @@ flowchart LR
     class T,C other;
 ```
 
-- **The agent tool is the harness, not the brain.** Claude Code or Codex runs on your compute node, holds the conversation, and runs tools. The reasoning happens in the model, on the provider's servers or on your own endpoint, as in {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`.
+- **The agent tool is the harness, not the brain.** Claude Code, or OpenAI's Codex, runs on your compute node, holds the conversation, and runs tools. The reasoning happens in the model, on the provider's servers or on your own endpoint, as in {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`.
 - **Each step is a model call.** The agent tool sends your prompt, the context so far, and the available tools. The model replies with text and, when it needs to act, with requests to use a tool.
 - **Tools run on the node.** Reading a file, editing code, or running a command happens on the compute node, against your own files and shell, and the result goes back to the model. One prompt can drive many model calls and tool uses.
-- **You gate the actions.** Between the model's request and the tool running, the agent tool asks you, lets a classifier decide, or follows your rules, depending on its permission mode; see {ref}`Permission modes <agentic_ai:permission_modes>`. You can interrupt at any point.
+- **You gate the actions.** Between the model's request and the tool running, the agent tool asks you, lets a classifier decide, or follows your rules, depending on its permission mode; see {ref}`Permission modes <agentic_ai:permission_modes>`. Press Esc to interrupt at any point.
 
 Other terminal agents, such as Gemini CLI, follow the same loop.
 
@@ -45,7 +45,7 @@ Other terminal agents, such as Gemini CLI, follow the same loop.
 
 - **Interactive session.** You give a task and follow along as the agent works, approving or steering its actions, in a terminal or an editor. See {doc}`Your First Agentic Workflow on the Cluster <first_agentic_workflow>`.
 - **Print mode.** A one-shot, non-interactive run (for example `claude -p "your task"` in Claude Code, or `codex exec` in Codex) that prints the result and exits. This is how an agent runs inside a batch job. See {doc}`SLURM Jobs and Cluster Workflows <slurm_jobs_and_cluster_workflows>`.
-- **Permission modes.** Settings for how much an agent may do without asking: asking before every action, accepting file edits, planning without editing files, or letting a classifier approve routine actions. See {ref}`Permission modes <agentic_ai:permission_modes>`.
+- **Permission modes.** Settings for how much an agent may do without asking: asking before edits and commands, accepting file edits, planning without editing files, or auto mode, where a second model, the classifier, reviews actions and blocks risky ones. See {ref}`Permission modes <agentic_ai:permission_modes>`.
 - **Endpoint.** The network address of a model server. A cloud agent uses its provider's endpoint; {doc}`HPC Agentic Recipes <hpc_agentic_recipes>` shows how to serve a model on the cluster and point an agent at it.
 - **Open-weight model.** A model whose weights you can download and run on your own hardware, so prompts and code stay on the cluster.
 

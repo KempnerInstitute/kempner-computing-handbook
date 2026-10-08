@@ -4,9 +4,9 @@ Joining a project, inheriting a collaborator's code, or building on a published 
 
 ```{mermaid}
 flowchart LR
-    R["Read-only map<br/>with citations"] --> T["Trace one<br/>question"]
-    T --> S["Smoke test on a<br/>small allocation"]
-    S --> N["Record what you<br/>learned in AGENTS.md"]
+    R["Read-only map<br/>with citations"] --> S["Smoke test on a<br/>small allocation"]
+    S --> T["Trace one<br/>question"]
+    T --> N["Record what you<br/>learned in AGENTS.md"]
     classDef s fill:#14154C,color:#ffffff,stroke:#3D3E82;
     classDef v fill:#A51C30,color:#ffffff,stroke:#A51C30;
     class R,T,N s;
@@ -15,11 +15,11 @@ flowchart LR
 
 ## Start read-only
 
-Clone the repository into your lab or scratch space, then start the agent in plan mode (`Shift+Tab`, or `--permission-mode plan`), so it explores without editing files. Where auto mode is available, a classifier can still approve shell commands during planning. To rule them out, start the agent with `--tools "Read,Grep,Glob"`, which leaves it only the built-in tools that read and search.
+Clone the repository into your lab or scratch space. Before you start an agent in it, read its agent configuration: project instructions (`CLAUDE.md` or `AGENTS.md`), hooks in `.claude/settings.json`, MCP servers in `.mcp.json`, and skills in `.claude/skills/`. Treat these files like code you are about to run, and accept Claude Code's trust prompt only after you have read them; see {ref}`Untrusted repositories <agentic_ai:untrusted_repositories>`.
 
-Before you start an agent in a repository you did not write, read its agent configuration: project instructions (`CLAUDE.md` or `AGENTS.md`), hooks in `.claude/settings.json`, MCP servers in `.mcp.json`, and skills in `.claude/skills/`. Instructions load into every session, and in print mode Claude Code runs the hooks and starts the servers without asking, unless you add `--setting-sources user`. Treat these files like code you are about to run.
+Then start the agent in plan mode (`--permission-mode plan`, or `Shift+Tab` in a session), so it explores without editing files. Where auto mode is available, a classifier can still approve shell commands during planning. To rule them out, start the agent with `--tools "Read,Grep,Glob"`, which leaves it only the built-in tools that read and search.
 
-If the repository ships its own agent tooling, use it. KempnerForge includes a Claude Code plugin with skills for setup, smoke tests, SLURM launches, and an architecture walkthrough, plus a `codebase-map.json` of its source, scripts, and tests; its `docs/claude-ready.md` explains how to install it. This page does the same steps by hand, so they carry over to repositories without such tooling.
+If the repository ships its own agent tooling, use it. KempnerForge includes a Claude Code plugin with skills for setup, smoke tests, SLURM launches, and an architecture walkthrough, plus a `codebase-map.json` of its source, scripts, and tests; its [docs/claude-ready.md](https://github.com/KempnerInstitute/KempnerForge/blob/main/docs/claude-ready.md) explains how to install it. This page does the same steps by hand, so they carry over to repositories without such tooling.
 
 ## Map the architecture
 
@@ -36,9 +36,37 @@ For KempnerForge, a good map says:
 
 Open two or three cited files and confirm what the agent said. An agent can describe a plausible architecture that is not the one in front of you, and the citations make that checkable.
 
+## Run a smoke test on a small allocation
+
+Once you understand the shape of the code, run its smallest configuration on one GPU. Exit the agent (`/exit`) and the job it ran in, then start a GPU job and resume the conversation in manual mode:
+
+```bash
+salloc --partition=kempner_rtx --account=<your_account> --gres=gpu:1 --cpus-per-task=8 --mem=32G --time=01:00:00
+cd <clone_dir>
+claude --continue --permission-mode default   # same conversation, without plan mode or the --tools limit
+```
+
+The agent can now run commands, and it asks before edits and before commands that change things. Build the environment on this node, not on a login node, and keep package caches out of your home directory, which has a 100 GB quota; see {doc}`uv Environment <../s1_high_performance_computing/development_and_runtime_envs/using_uv_env>`.
+
+```bash
+export UV_CACHE_DIR=<lab_or_scratch_dir>/.uv-cache   # off home, same filesystem as the clone
+uv sync                                                # install the environment
+uv run python scripts/check_env.py                     # the repository's preflight check
+uv run python scripts/train.py configs/train/debug.toml   # 100 steps of a 20M-parameter model
+```
+
+On one RTX6000 GPU, the debug run finished 100 steps in under a minute, at about 395,000 tokens per second, and saved checkpoints at steps 50 and 100. The repository's batch script runs the same configuration on four GPUs. Options on the `sbatch` command line override its placeholder `#SBATCH` lines, so you can run it unedited:
+
+```bash
+sbatch --partition=kempner_rtx --account=<your_account> --time=00:20:00 --mem=128G \
+  scripts/slurm/singlenode.sh configs/train/debug.toml --checkpoint.dir=checkpoints/debug_4gpu
+```
+
+The last argument matters. KempnerForge resumes automatically from checkpoints in its checkpoint directory. The first 4-GPU attempt reused the single-GPU run's directory, found its step-100 checkpoint, and finished at once without training. With its own directory, the second attempt trained all 100 steps on four GPUs. A smoke test that finishes suspiciously fast may have resumed from an earlier run, and an agent reading the code should catch this. Let the agent run these steps with your approval, and compare its account with the logs.
+
 ## Trace one question end to end
 
-Narrow questions get better answers than "explain everything", and the best ones come from what you see when you run the code. The smoke test below raised two:
+Narrow questions get better answers than "explain everything", and the best ones come from what you see when you run the code. The smoke test raised two:
 
 ::::{tab-set}
 :::{tab-item} An unknown GPU warning
@@ -60,26 +88,6 @@ The answer to check: no. With no dataset configured, the training loop feeds ran
 ::::
 
 A flat loss sounds like a bug and is expected here; the opposite also happens, when an agent explains a real bug away as expected behavior. Either way, confirm the explanation in the code before you accept it.
-
-## Run a smoke test on a small allocation
-
-Once you understand the shape of the code, run its smallest configuration in an interactive job with one GPU. Build the environment there, not on a login node, and keep package caches out of your home directory, which has a 100 GB quota; see {doc}`uv Environment <../s1_high_performance_computing/development_and_runtime_envs/using_uv_env>`.
-
-```bash
-export UV_CACHE_DIR=<lab_or_scratch_dir>/.uv-cache   # off home, same filesystem as the clone
-uv sync                                                # install the environment
-uv run python scripts/check_env.py                     # the repository's preflight check
-uv run python scripts/train.py configs/train/debug.toml   # 100 steps of a 20M-parameter model
-```
-
-On one RTX6000 GPU, the debug run finished 100 steps in under a minute, at about 395,000 tokens per second, and saved checkpoints at steps 50 and 100. The repository's batch script runs the same configuration on four GPUs. Options on the `sbatch` command line override its placeholder `#SBATCH` lines, so you can run it unedited:
-
-```bash
-sbatch --partition=kempner --account=<your_account> --time=00:20:00 --mem=128G \
-  scripts/slurm/singlenode.sh configs/train/debug.toml --checkpoint.dir=checkpoints/debug_4gpu
-```
-
-The last argument matters. KempnerForge resumes automatically from checkpoints in its checkpoint directory. The first 4-GPU attempt reused the single-GPU run's directory, found its step-100 checkpoint, and finished at once without training. With its own directory, the second attempt trained all 100 steps on four GPUs. A smoke test that finishes suspiciously fast may have resumed from an earlier run, and an agent reading the code should catch this. Let the agent run these steps with your approval, and compare its account with the logs.
 
 ## Record what you learned
 

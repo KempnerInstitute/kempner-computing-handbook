@@ -38,7 +38,7 @@ Work moves through these stages, you review and steer between them, and results 
 ## Research integrity and compliance
 
 - **Disclose substantial AI use.** Journals and preprint servers require authors to disclose significant use of generative AI and hold them responsible for all content. [arXiv's policy](https://info.arxiv.org/help/moderation/index.html) makes authors fully responsible however the content was generated, and AI tools cannot be authors; see [Nature's AI editorial policy](https://www.nature.com/nature-portfolio/editorial-policies/ai).
-- **Follow the data rules.** An agent inherits the data rules of the service it uses. Do not send confidential data to an external AI service, and keep data on the cluster within its approved level; see {ref}`Before you start <agentic_ai:before_you_start>` and {doc}`Security and Compliance <../s6_security_and_compliance/README>`.
+- **Follow the data rules.** An agent inherits the data rules of the service it uses. Send confidential data (Level 2 and above) only to a service with an agreement that covers its level, and keep data on the cluster within the cluster's approved level; see {ref}`Before you start <agentic_ai:before_you_start>` and {doc}`Security and Compliance <../s6_security_and_compliance/README>`.
 
 ## Pitfalls and limitations
 

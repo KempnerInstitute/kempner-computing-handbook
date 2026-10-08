@@ -31,7 +31,7 @@ Instruction files load every session and use context, so keep them lean. Move lo
 
 ## Skills
 
-A skill packages a repeatable workflow, such as a release checklist or a data-cleaning routine, so you stop pasting the same steps into chat. In Claude Code, a skill is a `SKILL.md` file under `.claude/skills/`. The agent loads it when a task needs it or when you call it by name, so long reference material costs almost nothing until you use it. To write one, see {doc}`Building Custom Tools and MCP Servers <building_custom_tools>`.
+A skill packages a repeatable workflow, such as a release checklist or a data-cleaning routine, so you stop pasting the same steps into chat. In Claude Code, a skill is a `SKILL.md` file in its own folder under `.claude/skills/`. The agent loads it when a task needs it or when you call it by name, so long reference material costs almost nothing until you use it. To write one, see {doc}`Building Custom Tools and MCP Servers <building_custom_tools>`.
 
 ## Connecting tools and data with MCP
 
@@ -55,7 +55,7 @@ Instructions and skills shape what an agent tries to do. Guardrails limit what i
 
 Permission rules sort tool calls into three lists: `allow` runs without asking, `ask` waits for your approval, and `deny` is blocked. Claude Code checks deny, then ask, then allow, and the first match decides. Rules live in `~/.claude/settings.json` (your user settings), `.claude/settings.json` (shared project settings), and `.claude/settings.local.json` (your personal project settings).
 
-A good start for cluster work lets the agent look but not act. Read-only queries to SLURM and to [ClusterTool](https://github.com/KempnerInstitute/clustertool), the Kempner command-line tool for cluster tasks, run freely. Anything that submits, changes, or cancels work waits for you:
+A good start for cluster work lets the agent look but not act. Read-only queries to SLURM and to [ClusterTool](https://github.com/KempnerInstitute/clustertool), the Kempner command-line tool for cluster tasks, run freely. Anything that submits, changes, or cancels work waits for you, and the agent cannot read your SSH keys or stored tokens:
 
 ```json
 {
@@ -71,13 +71,17 @@ A good start for cluster work lets the agent look but not act. Read-only queries
       "Bash(scontrol update *)", "Bash(scrontab *)",
       "Bash(clustertool jobs submit *)", "Bash(clustertool jobs new *)", "Bash(clustertool jobs cancel *)",
       "Bash(clustertool jobs hold *)", "Bash(clustertool jobs release *)", "Bash(clustertool jobs requeue *)",
-      "Bash(clustertool gpu session *)", "Bash(clustertool diag *)"
+      "Bash(clustertool gpu session *)", "Bash(clustertool diag nccl *)",
+      "Bash(clustertool diag nvlink *)", "Bash(clustertool diag io-probe *)"
+    ],
+    "deny": [
+      "Read(~/.ssh/**)", "Read(~/.netrc)", "Read(~/.cache/huggingface/**)", "Read(~/.config/gh/**)"
     ]
   }
 }
 ```
 
-`Bash(squeue *)` matches `squeue` with any arguments, or none. Commands on neither list follow the permission mode, and in auto mode a classifier decides, so put every command that must wait for you on the `ask` list. {doc}`SLURM Jobs and Cluster Workflows <slurm_jobs_and_cluster_workflows>` lists which ClusterTool commands are safe to allow.
+`Bash(squeue *)` matches `squeue` with any arguments, or none. Commands on neither list follow the permission mode, and in auto mode a classifier decides, so put every command that must wait for you on the `ask` list. {doc}`SLURM Jobs and Cluster Workflows <slurm_jobs_and_cluster_workflows>` lists which ClusterTool commands are safe to allow; its administrator commands fail without administrator rights.
 
 ```{warning}
 Rules match the command as written, so they are a convenience, not a security boundary. A deny rule for `rm` does not stop `/bin/rm`, `bash -c "rm ..."`, or a Python script that deletes files. For limits that must hold, use file permissions and the sandbox with its escape hatches closed (see {ref}`Agent sandboxing <agentic_ai:agent_sandboxing>`). A hook catches more variants than a rule, but it also sees only the command line. See the [permissions documentation](https://code.claude.com/docs/en/permissions).
@@ -88,13 +92,13 @@ Rules match the command as written, so they are a convenience, not a security bo
 
 A hook is a script that Claude Code runs before or after a tool call. A `PreToolUse` hook receives the call as JSON and blocks it by exiting with code 2; its message to standard error goes back to the agent. Exit code 1, or a timeout, does not block. A hook's block holds even when permission checks are bypassed, so use hooks for rules that must apply in every mode.
 
-This hook blocks common forms of job cancellation and bulk or recursive deletion, even inside another command. If `jq` is missing, it blocks everything rather than let calls through unchecked. Save the script, make it executable (`chmod +x .claude/hooks/guard.sh`), and register it in `.claude/settings.json`:
+This hook blocks common forms of job cancellation and recursive deletion, and deletion through `find` and `xargs`, even inside another command. If `jq` is missing, it blocks everything rather than let calls through unchecked. Save the script, make it executable (`chmod +x .claude/hooks/guard.sh`), and register it in `.claude/settings.json`:
 
 ::::{tab-set}
 :::{tab-item} .claude/hooks/guard.sh
 ```bash
 #!/bin/bash
-# .claude/hooks/guard.sh: block job cancellation and bulk or recursive deletes.
+# .claude/hooks/guard.sh: block job cancellation and recursive deletes.
 # The tool call arrives as JSON on stdin; exit code 2 blocks it.
 command -v jq >/dev/null || { echo "guard.sh needs jq; blocking." >&2; exit 2; }
 cmd=$(jq -r '.tool_input.command // empty')
@@ -131,7 +135,7 @@ The second hook appends every command the agent tries, including blocked and fai
 
 In a test on a compute node, this hook blocked each of the 16 targeted commands tried, among them `scancel 12345`, `clustertool jobs cancel 12345`, `rm -f -r build`, `bash -c 'rm -R tmp'`, `find . -name '*.tmp' | xargs rm`, and `git -C . clean -fdx`. It allowed 9 ordinary commands such as `squeue --me`, `rm notes.txt`, and `git commit -m "clean up docs"`. In a live Claude Code session, it also blocked `scancel` and `rm -rf` that the permission rules allowed, and the log recorded both attempts.
 
-Know its limits. A hook sees the command line, not what a script does, so it does not stop `python cleanup.py` if that script cancels jobs. It errs toward blocking, so a search for the word `scancel` is blocked too; run such commands yourself. Hooks run with your full permissions, outside any sandbox, so keep them short and review them like code. Codex has hooks too. See the [hooks documentation](https://code.claude.com/docs/en/hooks).
+Know its limits. A hook sees the command line, not what a script does, so it does not stop `python cleanup.py` if that script cancels jobs. It does not catch every form, such as `rm *.pt` or `rsync --delete`. It also errs toward blocking: a search for the word `scancel`, or an option such as `--norm -r` that contains `rm -r`, is blocked too; run such commands yourself. Hooks run with your full permissions, outside any sandbox, so keep them short and review them like code. Codex has hooks too. See the [hooks documentation](https://code.claude.com/docs/en/hooks).
 
 (agentic_ai:run_caps)=
 ### Caps on unattended runs
@@ -143,10 +147,10 @@ claude -p "Read the logs in logs/ and summarize why each failed job failed." \
   --permission-mode dontAsk --tools "Read,Grep,Glob" --max-turns 20 --max-budget-usd 2.00
 ```
 
-- **`--permission-mode`.** Always pass it, because print mode can also start in auto mode. With no one to answer, a request that needs approval is refused, except in auto mode, where the classifier decides. Use `dontAsk` when refusal must be certain. `plan` blocks file edits, but where auto mode is available, a classifier can still approve shell commands.
+- **`--permission-mode`.** Always pass it, because print mode can also start in auto mode. With no one to answer, a request that needs approval is refused, except in auto mode, where the classifier decides. Use `dontAsk` when refusal must be certain; `plan` blocks file edits but not every command.
 - **`--max-turns` and `--max-budget-usd`.** They cap the agentic turns and the estimated spend. Both apply to print mode only, and the budget is an estimate, not a billing limit.
-- **`--tools` and `--allowedTools`.** `--tools` limits which built-in tools exist at all; in the example, the agent can only read and search. `--allowedTools` only pre-approves tools, but with `dontAsk` it works as an allowlist, as in {doc}`SLURM Jobs and Cluster Workflows <slurm_jobs_and_cluster_workflows>`. Neither covers MCP tools, which with a subscription login include your claude.ai connectors; add `--disallowedTools "mcp__*"` to remove them.
-- **Sandbox auto-allow.** If you use the agent sandbox, keep `autoAllowBashIfSandboxed` set to `false`; otherwise sandboxed commands run even with `dontAsk`. See {ref}`Agent sandboxing <agentic_ai:agent_sandboxing>`.
+- **`--tools` and `--allowedTools`.** `--tools` limits which built-in tools exist at all; in the example, the agent can only read and search. `--allowedTools` only pre-approves tools, but with `dontAsk` it works as an allowlist, as in {doc}`SLURM Jobs and Cluster Workflows <slurm_jobs_and_cluster_workflows>`. `--tools` does not cover MCP tools, which with a subscription login include your claude.ai connectors. With `dontAsk`, MCP tools you have not allowed are refused; add `--disallowedTools "mcp__*"` to remove them from the agent's view as well.
+- **Sandbox auto-allow.** With the agent sandbox's default settings, sandboxed commands run even with `dontAsk`; see {ref}`Agent sandboxing <agentic_ai:agent_sandboxing>`.
 - **Rules on the command line.** In print mode, Claude Code ignores a project's allow rules unless you have trusted the folder interactively, and prints a warning saying how many it ignored. It still runs the project's hooks.
 - **The SLURM `--time` limit.** It is the final stop: at the limit, SLURM signals the job, and Claude Code exits and stops the commands it started.
 
