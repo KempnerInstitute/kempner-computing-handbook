@@ -1,13 +1,19 @@
 # Key Concepts
 
-The pages in this section share a small vocabulary. This page defines it in one place and points to where each idea is used in practice. The diagram shows how the pieces fit together: you give the agent tool a task, the model decides what to do next, and the agent tool carries out the actions it is allowed to take.
+The pages in this section share a small vocabulary. This page explains how an agent works, then defines the terms the rest of the section uses, with links to where each one is used in practice.
+
+(agentic_ai:agentic_loop)=
+## How an agent works
+
+When you give an agent a task, the answer does not come from the model alone. The agent tool runs a loop: it calls a model to decide what to do, carries out the actions the model asks for, and repeats until the task is done.
 
 ```{mermaid}
 flowchart LR
-    U(["You"]) -->|task| H["Agent tool<br/>(the harness)"]
-    H -->|context| M["Model"]
-    M -->|text and tool calls| H
+    U(["You"]) -->|task| H["Agent tool<br/>on your compute node"]
+    H -->|"prompt, context,<br/>tool definitions"| M["Model<br/>provider or your endpoint"]
+    M -->|"text and<br/>tool requests"| H
     H -->|runs if permitted| T["Tools<br/>files, shell, MCP servers"]
+    T -->|results| H
     C["Instructions, skills,<br/>permission rules, hooks"] -.->|shape| H
     classDef you fill:#C6C8F4,color:#14154C,stroke:#3D3E82;
     classDef harness fill:#14154C,color:#ffffff,stroke:#3D3E82;
@@ -19,10 +25,17 @@ flowchart LR
     class T,C other;
 ```
 
+- **The agent tool is the harness, not the brain.** Claude Code or Codex runs on your compute node, holds the conversation, and runs tools. The reasoning happens in the model, on the provider's servers or on your own endpoint, as in {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`.
+- **Each step is a model call.** The agent tool sends your prompt, the context so far, and the available tools. The model replies with text and, when it needs to act, with requests to use a tool.
+- **Tools run on the node.** Reading a file, editing code, or running a command happens on the compute node, against your own files and shell, and the result goes back to the model. One prompt can drive many model calls and tool uses.
+- **You gate the actions.** Between the model's request and the tool running, the agent tool asks you, lets a classifier decide, or follows your rules, depending on its permission mode; see {ref}`Permission modes <agentic_ai:permission_modes>`. You can interrupt at any point.
+
+Other terminal agents, such as Gemini CLI, follow the same loop.
+
 ## The agent and the model
 
 - **Model.** The large language model that does the reasoning, such as a Claude, GPT, or Gemini model, or an open-weight model you serve yourself. A model only produces text, including structured requests to use tools; it cannot act on its own.
-- **Agent tool (the harness).** The program you run, such as Claude Code or Codex. It sends your task and the current context to the model, carries out the tool calls the model makes, and repeats until the task is done. On the cluster it runs on your compute node, while the model runs on the provider's servers or on your own endpoint. See {ref}`Under the hood: the agentic loop <agentic_ai:agentic_loop>`.
+- **Agent tool (the harness).** The program you run, such as Claude Code or Codex. It sends your task and the current context to the model and carries out the tool calls the model makes.
 - **Agentic loop.** The cycle of model call, tool use, and observing the result, repeated until the task is finished or the agent stops to ask you.
 - **Tool call.** A request from the model to take an action: read a file, edit code, run a shell command, or query an MCP server. The agent tool decides whether to run it, ask you first, or refuse, based on its permission settings.
 - **Context window.** How much text the model can consider at once: your instructions, the files it has read, command output, and the conversation so far. Long sessions fill it, and older details can be summarized away or dropped. Larger context also costs more.
@@ -32,7 +45,7 @@ flowchart LR
 
 - **Interactive session.** You give a task and follow along as the agent works, approving or steering its actions, in a terminal or an editor. See {doc}`Your First Agentic Workflow on the Cluster <first_agentic_workflow>`.
 - **Print mode.** A one-shot, non-interactive run (for example `claude -p "your task"` in Claude Code, or `codex exec` in Codex) that prints the result and exits. This is how an agent runs inside a batch job. See {doc}`SLURM Jobs and Cluster Workflows <slurm_jobs_and_cluster_workflows>`.
-- **Permission modes.** Settings for how much an agent may do without asking: asking before every action, accepting file edits, planning without editing files, or letting a classifier approve routine actions. See {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`.
+- **Permission modes.** Settings for how much an agent may do without asking: asking before every action, accepting file edits, planning without editing files, or letting a classifier approve routine actions. See {ref}`Permission modes <agentic_ai:permission_modes>`.
 - **Endpoint.** The network address of a model server. A cloud agent uses its provider's endpoint; {doc}`HPC Agentic Recipes <hpc_agentic_recipes>` shows how to serve a model on the cluster and point an agent at it.
 - **Open-weight model.** A model whose weights you can download and run on your own hardware, so prompts and code stay on the cluster.
 

@@ -38,7 +38,7 @@ A skill packages a repeatable workflow (a release checklist, a data-cleaning rou
 The [Model Context Protocol (MCP)](https://modelcontextprotocol.io) is an open standard that lets an agent reach external tools, data, and services through one interface: a database, an internal API, a file store, or a domain toolset. Point the agent at an existing server, or write one for your own tools; {doc}`Building Custom Tools and MCP Servers <building_custom_tools>` covers both. For scientific work, servers such as ToolUniverse expose many biomedical and research tools to any MCP-enabled agent; see {doc}`Agentic AI Tools <agentic_ai_tools>`.
 
 ```{warning}
-An MCP server can hold credentials and reach real systems. Keep its configuration and any keys out of shared or world-readable paths, and give it only the access it needs. See the secrets guidance in {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`.
+An MCP server can hold credentials and reach real systems. Keep its configuration and any keys out of shared or world-readable paths, and give it only the access it needs. See the secrets guidance in {ref}`Agent security <agentic_ai:agent_security>`.
 ```
 
 ## Subagents
@@ -166,5 +166,5 @@ claude -p "Read the logs in logs/ and summarize why each failed job failed." \
 Commit or stash your work and start a branch before you hand an agent a task. Its changes then show up in `git diff`, and `git restore` or `git revert` undoes them. Claude Code's checkpoints can rewind its own file edits, but they do not track files changed by shell commands, such as a script that rewrites outputs or a `sed -i`, so git is the undo you can count on. Results and data outside the repository have no undo at all: have the agent write to a new directory rather than overwrite existing outputs, and keep copies of anything it must not lose.
 
 ```{seealso}
-For the tool landscape and the MCP introduction, see {doc}`Agentic AI Tools <agentic_ai_tools>`. For running agents on the cluster, permission modes, sandboxing, and handling secrets, see {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`. For guardrails applied to real cluster tasks, see {doc}`SLURM Jobs and Cluster Workflows <slurm_jobs_and_cluster_workflows>`.
+For the tool landscape and the MCP introduction, see {doc}`Agentic AI Tools <agentic_ai_tools>`. For running agents on the cluster and permission modes, see {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`; for sandboxing and handling secrets, see {doc}`Agent Security and Scoping <agent_security_and_scoping>`. For guardrails applied to real cluster tasks, see {doc}`SLURM Jobs and Cluster Workflows <slurm_jobs_and_cluster_workflows>`.
 ```

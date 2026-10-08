@@ -80,7 +80,7 @@ Once you have an active FASRC account, you can request access to the Kempner AI 
 
 ## Set Up Agentic AI Tools (Optional)
 
-- [ ] If you plan to use Codex, Claude Code, or another agentic AI tool, review the setup, resource, and security guidance in {doc}`Using Agentic AI on the Cluster <../../s5b_agentic_ai_workflows/using_agentic_ai_on_the_cluster>`.
+- [ ] If you plan to use Codex, Claude Code, or another agentic AI tool, review the setup and resource guidance in {doc}`Using Agentic AI on the Cluster <../../s5b_agentic_ai_workflows/using_agentic_ai_on_the_cluster>` and the security guidance in {doc}`Agent Security and Scoping <../../s5b_agentic_ai_workflows/agent_security_and_scoping>`.
 
 ## Get Help and Stay Connected
 

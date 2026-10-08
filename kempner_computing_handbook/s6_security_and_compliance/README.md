@@ -84,11 +84,11 @@ An unsupervised agent can delete data or disrupt shared resources far faster tha
 ```
 
 ```{note}
-Agentic tools are also exposed to prompt injection: untrusted content the agent reads, such as web pages, files, or datasets, can carry hidden instructions. Treat what an agent reads as data rather than commands, keep a human approving consequential actions, and give the agent least privilege. See OWASP's [Top 10 for Agentic Applications](https://genai.owasp.org/agentic-security-initiative/) and, for running these tools here, {doc}`Using Agentic AI on the Cluster <../s5b_agentic_ai_workflows/using_agentic_ai_on_the_cluster>`.
+Agentic tools are also exposed to prompt injection: untrusted content the agent reads, such as web pages, files, or datasets, can carry hidden instructions. Treat what an agent reads as data rather than commands, keep a human approving consequential actions, and give the agent least privilege. See OWASP's [Top 10 for Agentic Applications](https://genai.owasp.org/agentic-security-initiative/) and, for running these tools here, {doc}`Agent Security and Scoping <../s5b_agentic_ai_workflows/agent_security_and_scoping>`.
 ```
 
 ```{note}
-Scope an autonomous agent to its task. An agent runs with your account's authority, which usually exceeds what any single task needs, so reduce its effective authority to match the task's purpose using controls that do not depend on the model. When scope is ambiguous, prefer stopping for human review over letting the agent widen its own scope. See {doc}`Using Agentic AI on the Cluster <../s5b_agentic_ai_workflows/using_agentic_ai_on_the_cluster>` for how to do this.
+Scope an autonomous agent to its task. An agent runs with your account's authority, which usually exceeds what any single task needs, so reduce its effective authority to match the task's purpose using controls that do not depend on the model. When scope is ambiguous, prefer stopping for human review over letting the agent widen its own scope. See {doc}`Agent Security and Scoping <../s5b_agentic_ai_workflows/agent_security_and_scoping>` for how to do this.
 ```
 
 ```{warning}
