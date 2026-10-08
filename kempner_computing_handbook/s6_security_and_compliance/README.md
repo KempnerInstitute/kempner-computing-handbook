@@ -21,6 +21,7 @@ To keep your credentials safe:
 - Keep your two-factor (OpenAuth) device secure, and never share one-time codes. See the {doc}`New User Checklist <../s1_high_performance_computing/kempner_cluster/new_user_checklist>` for setup.
 - Report a suspected account compromise immediately (see **Reporting a concern** below).
 
+(security_and_compliance:data_classification)=
 ## Data classification and what the cluster can host
 
 Harvard classifies data into five security levels. The level determines where the data may be stored and processed.
@@ -59,6 +60,7 @@ Any required data use agreement must be in place **before** the data is stored o
 **Retention and deletion.** Research records must be kept for the retention period Harvard and your sponsor require, generally at least seven years, and you may not independently delete or remove research data. Scratch storage is purged after 90 days, so it is not a retention solution; copy anything you must keep to persistent or archival storage. See the [FASRC Research Data Retention and Deletion Policy](https://docs.rc.fas.harvard.edu/kb/fas-rc-research-data-retention-and-deletion-policy/) and the {doc}`Data Management Plan <../s1_high_performance_computing/storage_and_data_transfer/data_management_plan>`.
 ```
 
+(security_and_compliance:responsible_use_of_ai_tools)=
 ## Responsible use of AI tools
 
 AI coding assistants and other generative AI tools are useful on the cluster, but their use must follow university guidance.
