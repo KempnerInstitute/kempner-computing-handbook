@@ -61,7 +61,7 @@ VSCode Remote-SSH can stop reconnecting when leftover port forwards accumulate o
 ## Agentic AI
 
 :::{dropdown} What data can I use with a cloud agent on the cluster?
-A cloud agent sends your prompts, and any code or data it reads, to its provider. FASRC permits generative AI tools on the cluster only for public data (Level 1), unless your school has an agreement with the provider that covers your data. An open-weight model served on the cluster, as in {doc}`HPC Agentic Recipes <../s5b_agentic_ai_workflows/hpc_agentic_recipes>`, keeps your data from leaving it, but FASRC's guidance limits generative AI models on the cluster, not only external services, to public (Level 1) data unless your school has arranged coverage for more, so check with FASRC before using any model with Level 2 data. See {ref}`Before you start <agentic_ai:before_you_start>` and {doc}`Security and Compliance <../s6_security_and_compliance/README>`.
+A cloud agent sends your prompts, and any code or data it reads, to its provider. FASRC permits generative AI tools on the cluster only for public data (Level 1), unless your school has an agreement with the provider that covers your data. An open-weight model served on the cluster, as in {doc}`HPC Agentic Recipes <../s5b_agentic_ai_workflows/hpc_agentic_recipes>`, keeps your data from leaving it, but the same Level 1 limit applies to it unless your school has arranged coverage for more. See {ref}`Before you start <agentic_ai:before_you_start>` and {doc}`Security and Compliance <../s6_security_and_compliance/README>`.
 :::
 
 :::{dropdown} Signing in to Claude Code or Codex from a cluster node

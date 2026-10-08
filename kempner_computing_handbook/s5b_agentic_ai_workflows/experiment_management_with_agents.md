@@ -97,9 +97,7 @@ trap 'kill -TERM $pid; wait $pid; exit $?' TERM   # pass the warning on, wait fo
 wait $pid              # returns when training ends
 ```
 
-If training finishes before the warning, the script ends with training's own exit status, as it would without the trap. After a warning, SLURM records the job as completed even though training stopped early, so do not chain a job that needs the finished model to it with `afterok`.
-
-The training code must also handle SIGTERM by saving a checkpoint and exiting. Ask the agent to add both pieces, and test them with a short `--time` before you rely on them. For a framework with checkpointing and automatic resume built in, see {doc}`KempnerForge <../s3_ai_workflows/kempnerforge>`.
+The training code must also handle SIGTERM by saving a checkpoint and exiting. Ask the agent to add both pieces, and test them with a short `--time` before you rely on them. With these lines at the end of the batch script, a run that finishes before the warning ends with training's own exit status, as it would without the trap. After a warning, if the training code exits with status 0 once it has saved, SLURM records the job as completed even though training stopped early, so do not chain a job that needs the finished model to it with `afterok`. For a framework with checkpointing and automatic resume built in, see {doc}`KempnerForge <../s3_ai_workflows/kempnerforge>`.
 
 ## Before you trust the results
 

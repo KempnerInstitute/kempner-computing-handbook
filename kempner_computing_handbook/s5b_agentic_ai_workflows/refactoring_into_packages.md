@@ -22,7 +22,7 @@ flowchart LR
 - **Work on a branch with a clean git tree.** Every agent change then shows up as a diff you can review, and `git restore` or `git revert` undoes it. Commit before each step; see {ref}`Git as the undo layer <agentic_ai:git_undo>`.
 - **Record the environment.** Pin the package versions the current code runs with, so you compare like with like. See {ref}`Environment Reproducibility <reproducible_research:environment_reproducibility>`.
 - **Pick a small, representative input.** Choose data that exercises the main code paths and runs in seconds or minutes. If it needs a GPU, run it in a short interactive job rather than on a login node; see {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`.
-- **Tell the agent the rules.** Put the test command and the constraints in your project instructions, for example "run `pytest` after every change" and "never edit files under `tests/references/`".
+- **Tell the agent the rules.** Put the test command and the constraints in your project instructions, for example "run `pytest` after every change".
 
 ## Step 1: Pin current behavior with tests
 
@@ -37,7 +37,7 @@ Review the tests before trusting them:
 - **Is randomness controlled?** Seed every random number generator the code uses, including PyTorch's; see {ref}`Randomness and Seeds <reproducible_research:randomness_and_seeds>`.
 - **Is the tolerance deliberate?** Exact equality is fragile for floating-point results; a tolerance that is too loose hides real changes. See the regression tests in {ref}`Types of Tests <testing_and_continuous_integration:types_of_tests>`.
 
-Commit the tests and the reference files on their own, before any refactoring, so later diffs make it obvious if anything touches them. Then back the rule about reference files with a deny rule, `Edit(./tests/references/**)`, since an instruction alone does not stop the agent. The rule blocks the agent's own edits, though not a test or script that rewrites the files; see {ref}`Permission rules <agentic_ai:permission_rules>`.
+Commit the tests and the reference files on their own, before any refactoring, so later diffs make it obvious if anything touches them. Then add "never edit files under `tests/references/`" to your project instructions, and back it with a deny rule, `Edit(./tests/references/**)`, since an instruction alone does not stop the agent. The deny rule blocks the agent's own edits, though not a test or script that rewrites the files; see {ref}`Permission rules <agentic_ai:permission_rules>`.
 
 ## Step 2: Restructure in small steps
 

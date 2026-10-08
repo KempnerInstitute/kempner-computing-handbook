@@ -15,7 +15,7 @@ flowchart LR
 
 ## Start read-only
 
-Clone the repository into your lab or scratch space, then start the agent in plan mode (`Shift+Tab`, or `--permission-mode plan`), so it researches without editing files while it explores. Where auto mode is available, a classifier can still approve shell commands during planning, so watch what it runs, or start it with `--tools "Read,Grep,Glob"` to allow only reading and searching.
+Clone the repository into your lab or scratch space, then start the agent in plan mode (`Shift+Tab`, or `--permission-mode plan`), so it researches without editing files while it explores. Where auto mode is available, a classifier can still approve shell commands during planning, so watch what it runs, or start it with `--tools "Read,Grep,Glob"`, which leaves it only the built-in tools that read and search.
 
 Before you start an agent inside a repository you did not write, read its agent configuration. A repository can ship project instructions (`CLAUDE.md` or `AGENTS.md`), hooks in `.claude/settings.json`, MCP servers in `.mcp.json`, and skills in `.claude/skills/`. Instructions load into every session, and in print mode Claude Code runs the hooks and starts the servers without asking, unless you add `--setting-sources user`. Treat these files like any other code you are about to execute.
 

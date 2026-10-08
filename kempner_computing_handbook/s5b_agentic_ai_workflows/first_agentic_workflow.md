@@ -46,7 +46,7 @@ Start with a single, checkable task rather than a whole project, pointed at a fi
 
 > Summarize `data/measurements.csv`, then save a histogram of the `temperature` column to `figures/temperature_hist.png`.
 
-The agent's commands inherit the environment of the shell you start it from, so the environment you activated before running `claude` needs what the task needs, here Python with pandas and matplotlib. A narrow task is easy to review and easy to verify, and it shows you how the agent behaves before you hand it anything larger.
+The agent's commands inherit the environment of the shell you start it from, so the environment you activated before running `claude` must include what the task needs, here Python with pandas and matplotlib. A narrow task is easy to review and easy to verify, and it shows you how the agent behaves before you hand it anything larger.
 
 ## Review before it acts
 

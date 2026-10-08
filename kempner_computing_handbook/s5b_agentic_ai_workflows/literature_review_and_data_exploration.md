@@ -18,7 +18,7 @@ flowchart LR
 
 A literature search sends your question to the provider. Data exploration sends whatever the agent reads: rows, column names, file names, and the output of the code it runs.
 
-- **Data on the cluster.** FASRC permits generative AI tools on the cluster only for public data (Level 1), unless your school has an agreement with the provider that covers your data; see {ref}`Before you start <agentic_ai:before_you_start>` and {doc}`Security and Compliance <../s6_security_and_compliance/README>`. An open-weight model served on the cluster, as in {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`, keeps your data from leaving it, but FASRC's guidance limits generative AI models on the cluster, not only external services, to public (Level 1) data unless your school has arranged coverage for more, so check with FASRC before using any model with Level 2 data.
+- **Data on the cluster.** FASRC permits generative AI tools on the cluster only for public data (Level 1), unless your school has an agreement with the provider that covers your data; see {ref}`Before you start <agentic_ai:before_you_start>` and {doc}`Security and Compliance <../s6_security_and_compliance/README>`. An open-weight model served on the cluster, as in {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`, keeps your data from leaving it, but the same Level 1 limit applies to it unless your school has arranged coverage for more.
 - **Material you received in confidence.** Manuscripts and proposals you are reviewing belong to their authors. NIH, for example, states that uploading content from a grant application or critique to online generative AI tools violates its peer review confidentiality requirements ([NOT-OD-23-149](https://grants.nih.gov/grants/guide/notice-files/NOT-OD-23-149.html)).
 
 If a dataset is above the level your tool is approved for, an agent can still help without seeing it; see {ref}`Explore data the agent cannot see <agentic_ai:explore_data_agent_cannot_see>`.
@@ -158,7 +158,7 @@ When a dataset is above the level your tool is approved for, the agent can still
 
 - Give it the schema (column names, types, and units) and a small synthetic sample with the same structure, not the real rows.
 - Have it write the code, then run the code yourself in a separate terminal, outside the agent session, so the output does not go back to the model.
-- Or use an open-weight model served on the cluster, so nothing leaves it, once FASRC has confirmed that your data's level allows it; see {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`.
+- Or use an open-weight model served on the cluster, so nothing leaves it, once your school has confirmed that your data's level allows it; see {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`.
 
 ## Before you trust a finding
 

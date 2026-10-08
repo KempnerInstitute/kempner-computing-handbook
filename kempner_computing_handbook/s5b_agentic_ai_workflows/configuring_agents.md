@@ -105,17 +105,17 @@ Permission rules match the command as written, so they are a convenience, not a 
 
 A hook is a script that Claude Code runs before or after a tool call. A `PreToolUse` hook receives the call as JSON on standard input and can block it by exiting with code 2; the message it writes to standard error goes back to the agent. Exit code 1, or a hook that times out, does not block. A hook's block holds even when permission checks are bypassed, which makes hooks the place for rules that should apply in every permission mode.
 
-This hook blocks the common forms of job cancellation and recursive deletion, including when they are wrapped in another command. If `jq`, which it uses to read the call, is missing, it blocks everything rather than letting calls through unchecked:
+This hook blocks the common forms of job cancellation and of bulk or recursive deletion, including when they are wrapped in another command. If `jq`, which it uses to read the call, is missing, it blocks everything rather than letting calls through unchecked:
 
 ```bash
 #!/bin/bash
-# .claude/hooks/guard.sh: block job cancellation and recursive deletes.
+# .claude/hooks/guard.sh: block job cancellation and bulk or recursive deletes.
 # The tool call arrives as JSON on stdin; exit code 2 blocks it.
 command -v jq >/dev/null || { echo "guard.sh needs jq; blocking." >&2; exit 2; }
 cmd=$(jq -r '.tool_input.command // empty')
 if [[ "$cmd" =~ scancel|clustertool[[:space:]]+jobs[[:space:]]+cancel ]] ||
    [[ "$cmd" =~ rm[[:space:]](.*[[:space:]])?(-[[:alpha:]]*[rR]|--r) ]] ||
-   [[ "$cmd" =~ find[[:space:]].*(-delete|-exec[[:space:]]+rm) ]] ||
+   [[ "$cmd" =~ find[[:space:]].*(-delete|-exec(dir)?[[:space:]]+rm)|xargs[[:space:]](.*[[:space:]])?rm([[:space:]]|$) ]] ||
    [[ "$cmd" =~ git[[:space:]]+(-C[[:space:]]+[^[:space:]]+[[:space:]]+)?clean ]]; then
   echo "Blocked by project hook: run this yourself if you mean it." >&2
   exit 2
@@ -123,7 +123,7 @@ fi
 exit 0
 ```
 
-Make the script executable (`chmod +x .claude/hooks/guard.sh`) and register it in `.claude/settings.json`. The second hook appends every shell command the agent tries to run, including ones that are then blocked or fail, to a log you can review later; the log holds whole command lines, including any token passed on one, so keep it private. The matcher covers both Bash and Monitor, the tool Claude Code uses to watch a command's output in the background:
+Make the script executable (`chmod +x .claude/hooks/guard.sh`) and register it in `.claude/settings.json`. The second hook appends every shell command the agent tries to run, including ones that are then blocked or fail, to a log you can review later; the log holds whole command lines, including any password or API key typed into one, so keep it private. The matcher covers both Bash and Monitor, the tool Claude Code uses to watch a command's output in the background:
 
 ```json
 {
@@ -141,7 +141,7 @@ Make the script executable (`chmod +x .claude/hooks/guard.sh`) and register it i
 }
 ```
 
-In a test on a compute node, this hook blocked all 14 forms it targets, among them `scancel 12345`, `clustertool jobs cancel 12345`, `rm -f -r build`, `bash -c 'rm -R tmp'`, `find . -type f -exec rm {} +`, and `git -C . clean -fdx`, and allowed 9 ordinary commands such as `squeue --me`, `rm notes.txt`, and `git commit -m "clean up docs"`. A hook sees the command line, not what a script does once it runs, so it does not stop `python cleanup.py` if that script cancels jobs. It also errs toward blocking: a harmless command that mentions `scancel`, such as a search for the word, is blocked too, and you can run it yourself. Hooks also run with your full permissions, outside any sandbox, so keep them short and review them like any other code. Codex supports hooks in a similar form. See the [hooks documentation](https://code.claude.com/docs/en/hooks).
+In a test on a compute node, this hook blocked each of the 16 targeted commands tried, among them `scancel 12345`, `clustertool jobs cancel 12345`, `rm -f -r build`, `bash -c 'rm -R tmp'`, `find . -name '*.tmp' | xargs rm`, and `git -C . clean -fdx`, and allowed 9 ordinary commands such as `squeue --me`, `rm notes.txt`, and `git commit -m "clean up docs"`. A hook sees the command line, not what a script does once it runs, so it does not stop `python cleanup.py` if that script cancels jobs. It also errs toward blocking: a harmless command that mentions `scancel`, such as a search for the word, is blocked too, and you can run it yourself. Hooks also run with your full permissions, outside any sandbox, so keep them short and review them like any other code. Codex supports hooks in a similar form. See the [hooks documentation](https://code.claude.com/docs/en/hooks).
 
 (agentic_ai:run_caps)=
 ### Caps on unattended runs
@@ -155,7 +155,7 @@ claude -p "Read the logs in logs/ and summarize why each failed job failed." \
 
 - `--permission-mode` sets how much the agent may do. Always pass it in print mode, since print mode can also start in auto mode. In print mode no one is there to answer a prompt, so a request that would prompt you is refused, except in auto mode, where the classifier decides instead; use `dontAsk` when refusal must be certain. `plan` blocks file edits, but where auto mode is available, a classifier can still approve shell commands while the agent plans.
 - `--max-turns` caps the number of agentic turns, and `--max-budget-usd` stops the run at an estimated spend. Both apply to print mode only, and the budget is an estimate made on your machine, not a billing limit.
-- `--tools` restricts which built-in tools the agent can use at all (MCP tools are not affected), while `--allowedTools` only pre-approves tools; use `--tools` when you want a hard limit, as in the example above, where the agent can only read and search. With `--permission-mode dontAsk`, which refuses anything that would need approval, `--allowedTools` also works as an allowlist, as in the batch examples in {doc}`SLURM Jobs and Cluster Workflows <slurm_jobs_and_cluster_workflows>`.
+- `--tools` restricts which built-in tools the agent can use at all, while `--allowedTools` only pre-approves tools; use `--tools` when you want a hard limit, as in the example above, where the agent can only read and search. `--tools` does not cover MCP tools; add `--disallowedTools "mcp__*"` to remove them as well. With `--permission-mode dontAsk`, which refuses anything that would need approval, `--allowedTools` also works as an allowlist, as in the batch examples in {doc}`SLURM Jobs and Cluster Workflows <slurm_jobs_and_cluster_workflows>`.
 - If you use the agent sandbox, keep `autoAllowBashIfSandboxed` set to `false`, as in {ref}`Agent sandboxing <agentic_ai:agent_sandboxing>`; otherwise sandboxed commands run without approval even with `dontAsk`.
 - Pass the rules for a print-mode run on the command line. In print mode, Claude Code ignores the allow rules in a project's `.claude/settings.json` unless you have trusted the folder in an interactive session, though it still runs the project's hooks.
 - The SLURM `--time` limit is the final stop. When a job reaches it, SLURM signals the job, and Claude Code exits and stops the commands it started.
