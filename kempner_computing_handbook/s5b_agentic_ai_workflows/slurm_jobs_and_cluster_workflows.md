@@ -156,6 +156,8 @@ claude -p "Read the job logs in logs/ from the last day. For each failed job, ex
 - The JSON result includes the session ID, so you can continue the conversation interactively with `claude --resume`, and an estimated cost for the run.
 - The job uses the same login as your interactive sessions, which is stored in your home directory. To use an API key instead, read it from a file only you can read rather than writing it into the script, for example `export ANTHROPIC_API_KEY=$(cat ~/.anthropic_key)` after `chmod 600 ~/.anthropic_key`, and add a deny rule, `Read(~/.anthropic_key)`, to your user settings so the agent cannot read the file, although the key itself stays in the environment of the commands the agent runs. If `ANTHROPIC_API_KEY` is set in your environment, for example from `~/.bashrc`, print mode always uses it instead of your subscription, and batch jobs inherit it; see {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`.
 
+In a test on the cluster with three job logs, the agent wrote its findings to `reports/triage.md` and changed nothing else. Asked in a second run to create a file elsewhere, edit a batch script, and run `touch`, it was refused all three times.
+
 Read the report before acting on it; the agent's proposals are leads, not fixes.
 
 ```{warning}

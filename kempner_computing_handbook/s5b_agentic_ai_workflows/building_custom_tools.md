@@ -31,7 +31,7 @@ description: Check a finished SLURM job. Use when asked why a job failed or how 
 4. Propose a fix to the batch script. Do not submit or cancel anything.
 ```
 
-The agent loads the skill when a request matches its description, or you can call it by name with `/check-job`. To share skills, subagents, hooks, and MCP servers as one package, bundle them in a plugin; KempnerForge ships one, described in {doc}`Working with Unfamiliar Research Codebases <unfamiliar_codebases>`. See the [skills documentation](https://code.claude.com/docs/en/skills).
+The agent loads the skill when a request matches its description, or you can call it by name with `/check-job`. In a test on the cluster, `claude -p "/check-job 51161725"` followed all four steps and, as the skill says, trusted the job's log over its misleading memory record. To share skills, subagents, hooks, and MCP servers as one package, bundle them in a plugin; KempnerForge ships one, described in {doc}`Working with Unfamiliar Research Codebases <unfamiliar_codebases>`. See the [skills documentation](https://code.claude.com/docs/en/skills).
 
 ## Build a read-only MCP server
 
@@ -117,7 +117,7 @@ claude mcp add --scope project slurm-readonly -- .venv/bin/python tools/slurm_re
 }
 ```
 
-In an interactive session, Claude Code asks each person to approve a project's servers before it first uses them, and `/mcp` shows whether each server is connected and which tools it offers. The tools then go through the same permission checks as any other tool, under names that combine the server and the tool, such as `mcp__slurm-readonly__job_summary`; a rule for `mcp__slurm-readonly` covers every tool from the server. Before you rely on a new server, ask the agent to call each tool once, and compare its answers with running `squeue --me` and `sacct` yourself. See the [Claude Code MCP documentation](https://code.claude.com/docs/en/mcp) and the MCP guide to [building a server](https://modelcontextprotocol.io/docs/develop/build-server).
+In a test on the cluster, `claude mcp add` wrote exactly this file, and an agent in print mode then looked up a job through `job_summary`. In an interactive session, Claude Code asks each person to approve a project's servers before it first uses them, and `/mcp` shows whether each server is connected and which tools it offers. The tools then go through the same permission checks as any other tool, under names that combine the server and the tool, such as `mcp__slurm-readonly__job_summary`; a rule for `mcp__slurm-readonly` covers every tool from the server. Before you rely on a new server, ask the agent to call each tool once, and compare its answers with running `squeue --me` and `sacct` yourself. See the [Claude Code MCP documentation](https://code.claude.com/docs/en/mcp) and the MCP guide to [building a server](https://modelcontextprotocol.io/docs/develop/build-server).
 
 ## Keep custom tools safe
 
