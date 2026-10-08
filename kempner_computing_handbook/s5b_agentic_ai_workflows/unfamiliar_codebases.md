@@ -1,6 +1,6 @@
 # Working with Unfamiliar Research Codebases
 
-Joining a project, inheriting a collaborator's code, and building on a published repository all start the same way: with a lot of code you did not write. An agent is good at the first pass. It can read the whole tree, map how the pieces connect, and point you to the lines that matter, much faster than you can by reading alone. The rule for this stage is to read before you run, and run small before you run big. This page uses KempnerForge, the Kempner Institute's PyTorch-native framework for fault-tolerant distributed training of foundation models, as a worked example; for what KempnerForge does, see {doc}`KempnerForge <../s3_ai_workflows/kempnerforge>`.
+Joining a project, inheriting a collaborator's code, and building on a published repository all start the same way: with a lot of code you did not write. An agent is good at the first pass. It can read the whole tree, map how the pieces connect, and point you to the lines that matter, much faster than you can by reading alone. The rule for this stage is to read before you run, and run small before you run big. This page uses [KempnerForge](https://github.com/KempnerInstitute/KempnerForge), the Kempner Institute's PyTorch-native framework for fault-tolerant distributed training of foundation models, as a worked example; for what KempnerForge does, see {doc}`KempnerForge <../s3_ai_workflows/kempnerforge>`.
 
 ```{mermaid}
 flowchart LR
