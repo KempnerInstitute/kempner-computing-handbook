@@ -1,6 +1,6 @@
 # Refactoring Research Code into Packages
 
-Research code often starts as a few scripts or a notebook that grew. Turning it into a package, with modules, tests, and packaging metadata, makes it reusable and easier to trust, and an agent can do much of the mechanical work. The risk is a refactor that quietly changes a result. The method on this page keeps behavior fixed while the code changes shape: pin what the code does now with tests, restructure in small reviewable steps, then package and automate. For the underlying practices, see {doc}`Software Design Principles <../s2_swe_for_research/software_design_principles>`, {doc}`Testing and Continuous Integration <../s2_swe_for_research/testing_and_continuous_integration>`, and {doc}`Package Development <../s2_swe_for_research/package_development>`.
+Research code often starts as a few scripts or a notebook that grew. A package, with modules, tests, and packaging metadata, is easier to reuse and to trust, and an agent can do much of the mechanical work. The risk is a refactor that quietly changes a result, so this method keeps behavior fixed: pin what the code does now with tests, restructure in small steps you review, then package and automate. For the underlying practices, see {doc}`Software Design Principles <../s2_swe_for_research/software_design_principles>`, {doc}`Testing and Continuous Integration <../s2_swe_for_research/testing_and_continuous_integration>`, and {doc}`Package Development <../s2_swe_for_research/package_development>`.
 
 ```{mermaid}
 flowchart LR
@@ -19,14 +19,14 @@ flowchart LR
 
 ## Before you start
 
-- **Work on a branch with a clean git tree.** Every agent change then shows up as a diff you can review, and `git restore` or `git revert` undoes it. Commit before each step; see {ref}`Git as the undo layer <agentic_ai:git_undo>`.
+- **Work on a branch with a clean git tree.** Every agent change then shows as a diff, and `git restore` or `git revert` undoes it. Commit before each step; see {ref}`Git as the undo layer <agentic_ai:git_undo>`.
 - **Record the environment.** Pin the package versions the current code runs with, so you compare like with like. See {ref}`Environment Reproducibility <reproducible_research:environment_reproducibility>`.
-- **Pick a small, representative input.** Choose data that exercises the main code paths and runs in seconds or minutes. If it needs a GPU, run it in a short interactive job rather than on a login node; see {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`.
+- **Pick a small, representative input.** Choose data that exercises the main code paths and runs in seconds or minutes. If it needs a GPU, use a short interactive job, not a login node; see {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`.
 - **Tell the agent the rules.** Put the test command and the constraints in your project instructions, for example "run `pytest` after every change".
 
 ## Step 1: Pin current behavior with tests
 
-Before anything moves, have the agent write regression tests that record what the code produces today. These tests are the safety net for every later step, so they come first and the code stays untouched while they are written.
+Before anything moves, have the agent write regression tests that record what the code produces now. They are the safety net for every later step, so write them first and leave the code untouched.
 
 > Before changing any code, write pytest regression tests that run `scripts/preprocess.py` and `scripts/train_small.py` on `tests/data/sample.csv` with seed 0, save their outputs as reference files under `tests/references/`, and compare future outputs against those files with a relative tolerance of 1e-6. Do not modify the scripts.
 
@@ -37,7 +37,7 @@ Review the tests before trusting them:
 - **Is randomness controlled?** Seed every random number generator the code uses, including PyTorch's; see {ref}`Randomness and Seeds <reproducible_research:randomness_and_seeds>`.
 - **Is the tolerance deliberate?** Exact equality is fragile for floating-point results; a tolerance that is too loose hides real changes. See the regression tests in {ref}`Types of Tests <testing_and_continuous_integration:types_of_tests>`.
 
-Commit the tests and the reference files on their own, before any refactoring, so later diffs make it obvious if anything touches them. Then add "never edit files under `tests/references/`" to your project instructions, and back it with a deny rule, `Edit(./tests/references/**)`, since an instruction alone does not stop the agent. The deny rule blocks the agent's own edits, though not a test or script that rewrites the files; see {ref}`Permission rules <agentic_ai:permission_rules>`.
+Commit the tests and reference files on their own, before any refactoring, so later diffs show if anything touches them. Then add "never edit files under `tests/references/`" to your project instructions, and back it with a deny rule, `Edit(./tests/references/**)`, since an instruction alone does not stop the agent. The deny rule blocks the agent's own edits, though not a test or script that rewrites the files; see {ref}`Permission rules <agentic_ai:permission_rules>`.
 
 ## Step 2: Restructure in small steps
 
@@ -54,7 +54,7 @@ Typical steps, each its own commit:
 5. Turn the old scripts into thin command-line entry points that call the package.
 
 ```{warning}
-Watch the diff for changes you did not ask for. Agents tend to "improve" code beyond the request: changing a data type, reordering floating-point operations, dropping a code path that looked unused, or switching a random seed. Any of these can shift results. Above all, never accept a refactor that edits the reference files or loosens a tolerance to make tests pass; that hides exactly the change the tests exist to catch. If a test fails, the code goes back, not the test.
+Watch the diff for changes you did not ask for. Agents tend to "improve" code beyond the request: they change a data type, reorder floating-point operations, drop a code path that looked unused, or switch a random seed, and any of these can shift results. Never accept a refactor that edits the reference files or loosens a tolerance to make tests pass. If a test fails, the code goes back, not the test.
 ```
 
 ## Step 3: Package, test, and automate
