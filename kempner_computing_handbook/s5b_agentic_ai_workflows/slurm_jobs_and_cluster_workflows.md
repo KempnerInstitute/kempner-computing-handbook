@@ -1,6 +1,6 @@
 # SLURM Jobs and Cluster Workflows
 
-An agent can take much of the routine cluster work off your hands: writing batch scripts, checking on jobs, explaining why one failed, and adapting code to more GPUs. This page walks through those tasks with examples run on the Kempner AI cluster, and starts with the guardrails that keep an agent from spending your allocation or touching jobs it should not. The examples use Claude Code and ClusterTool, the Kempner command-line tool that wraps SLURM and FASRC's site tools behind one command. Install ClusterTool once with `uv tool install 'clustertool[tui]'`; see the [ClusterTool repository](https://github.com/KempnerInstitute/clustertool) and the {doc}`Open Source Hub <../s7_open_source_hub/README>`. For SLURM itself, see {doc}`Understanding SLURM <../s1_high_performance_computing/general_hpc_concepts/understanding_slurm>` and {doc}`Job Submission Basics <../s1_high_performance_computing/general_hpc_concepts/job_submission_basics>`.
+An agent can take much of the routine cluster work off your hands: writing batch scripts, checking on jobs, explaining why one failed, and adapting code to more GPUs. This page walks through those tasks with examples run on the Kempner AI cluster, and starts with the guardrails that keep an agent from spending your allocation or touching jobs it should not. The examples use Claude Code and [ClusterTool](https://github.com/KempnerInstitute/clustertool), the Kempner command-line tool that wraps SLURM and FASRC's site tools behind one command. Install ClusterTool once with `uv tool install 'clustertool[tui]'`; see also the {doc}`Open Source Hub <../s7_open_source_hub/README>`. For SLURM itself, see {doc}`Understanding SLURM <../s1_high_performance_computing/general_hpc_concepts/understanding_slurm>` and {doc}`Job Submission Basics <../s1_high_performance_computing/general_hpc_concepts/job_submission_basics>`.
 
 ```{mermaid}
 flowchart LR
@@ -18,7 +18,7 @@ flowchart LR
 
 Let the agent look freely, and make it ask before it acts. Read-only queries run without prompts; anything that submits, cancels, or changes a job waits for your approval. Set this up with permission rules, and back it with a hook that blocks job cancellation; both are described, with ready-to-use examples, in {ref}`Guardrails <agentic_ai:guardrails>`. If you also use the agent sandbox, exclude SLURM commands from it, since they cannot reach the scheduler from inside, and have the agent run them as simple calls, without pipes or redirects; see {ref}`Agent sandboxing <agentic_ai:agent_sandboxing>`.
 
-ClusterTool commands sort into three groups. To place a command that is not listed here, check what it does in the ClusterTool documentation before you allow it:
+ClusterTool commands sort into three groups. To place a command that is not listed here, check what it does in the [ClusterTool documentation](https://github.com/KempnerInstitute/clustertool) before you allow it:
 
 | Group | ClusterTool commands |
 |---|---|

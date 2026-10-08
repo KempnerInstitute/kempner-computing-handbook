@@ -55,7 +55,7 @@ Instructions and skills shape what an agent tries to do. Guardrails limit what i
 
 Permission rules sort tool calls into three lists: `allow` runs without asking, `ask` waits for your approval, and `deny` is blocked. Claude Code checks deny first, then ask, then allow, and the first match decides; a deny in any settings file wins. Rules live in `~/.claude/settings.json` (your user settings), `.claude/settings.json` (project settings, shared through version control), and `.claude/settings.local.json` (your personal project settings, kept out of version control).
 
-For cluster work, a useful starting point lets the agent look but not act: read-only queries to SLURM and to ClusterTool, the Kempner command-line tool for cluster tasks, run freely, while anything that submits or cancels work waits for you.
+For cluster work, a useful starting point lets the agent look but not act: read-only queries to SLURM and to [ClusterTool](https://github.com/KempnerInstitute/clustertool), the Kempner command-line tool for cluster tasks, run freely, while anything that submits or cancels work waits for you.
 
 ```json
 {
