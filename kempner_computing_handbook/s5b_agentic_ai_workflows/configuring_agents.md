@@ -21,7 +21,7 @@ The examples below use Claude Code, but the ideas carry to other agents.
 
 ## Project instructions
 
-Put the context you would otherwise re-explain every session into an instructions file at the repository root: build and test commands, coding conventions, and project layout. [AGENTS.md](https://agents.md) is the cross-tool standard for this, a README for agents that many tools read natively. Claude Code reads its own `CLAUDE.md`, and recent versions read `AGENTS.md` instead when a repository has no `CLAUDE.md`. If your repository has both, point `CLAUDE.md` at `AGENTS.md` with a one-line import (`@AGENTS.md`) or a symlink so both stay in sync.
+Put the context you would otherwise re-explain every session into an instructions file at the repository root: build and test commands, coding conventions, and project layout. [AGENTS.md](https://agents.md) is the cross-tool standard for this, a README for agents that many tools read natively; in a test on the cluster, Codex followed an instruction in `AGENTS.md` with no setup. Claude Code reads its own `CLAUDE.md`, and recent versions read `AGENTS.md` instead when a repository has no `CLAUDE.md`. If your repository has both, point `CLAUDE.md` at `AGENTS.md` with a one-line import (`@AGENTS.md`) or a symlink so both stay in sync.
 
 Keep the file short (aim for under 200 lines) and specific: "run `uv run pytest` before committing" works better than "test your changes." Running `/init` generates a starting file from your codebase. Instructions can live at project scope, shared through version control, or at user scope (`~/.claude/`), which applies to all your projects and is not shared.
 
