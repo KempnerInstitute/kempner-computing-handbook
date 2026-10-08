@@ -104,7 +104,7 @@ To pick up the conversation after a session ends, start Claude Code again in the
 - `claude --continue` reopens the most recent conversation in the current directory. It does not pick up sessions started with `claude -p`.
 - `claude --resume` lets you choose an earlier conversation, or takes a session ID.
 
-Conversations are saved under `~/.claude/projects/`, which lives in your home directory and is available on every node. Claude Code can also run a task as a background session (`claude --bg "your task"`, then `claude attach` to reconnect), a research preview at the time of writing. A background session survives closing your terminal, but it runs on the node where it started, so on the cluster it still ends when your job does, and an interactive job ends when the terminal that started it closes. It does not replace tmux.
+Conversations are saved under `~/.claude/projects/`, which lives in your home directory and is available on every node. Claude Code can also run a task as a background session (`claude --bg "your task"`, then `claude attach` to reconnect), a research preview at the time of writing. A background session survives closing your terminal, but it runs on the node where it started, so on the cluster it still ends when your job does, and an interactive job ends when the terminal that started it closes. It does not replace tmux. To check on a session from another device, log in to the cluster and reattach tmux rather than turning on remote control; see {ref}`Remote control <agentic_ai:remote_control>`.
 
 ### Long or unattended runs
 
@@ -189,6 +189,21 @@ The core habit is to treat everything the agent reads, including tool output, as
 - **Keep secrets out of reach.** A misdirected agent can leak anything your account can read, and read-only commands such as `cat` run without a prompt even outside your project. Keep credentials out of the project, and block reads of credential files with deny rules in `~/.claude/settings.json`, for example `Read(~/.ssh/**)`, or turn on `permissions.blockReadsOutsideWorkingDirectories`.
 
 For the risk categories and defenses in depth, see OWASP's [Top 10 for Agentic Applications](https://genai.owasp.org/agentic-security-initiative/) and [Top 10 for LLM Applications](https://genai.owasp.org/llm-top-10/); the latter ranks prompt injection first. For cluster data rules, see {doc}`Security and Compliance <../s6_security_and_compliance/README>`.
+
+(agentic_ai:remote_control)=
+### Remote control
+
+Some agents can be driven from another device. Claude Code's [Remote Control](https://code.claude.com/docs/en/remote-control) connects a session running on your machine to claude.ai/code or the Claude app on a phone. You turn it on with `/remote-control` in a session, `claude --remote-control`, or `claude remote-control`, or for every session with a setting. Codex offers the same kind of access through `codex remote-control`, experimental in the CLI, and through the ChatGPT app's [remote connections](https://learn.chatgpt.com/docs/remote-connections), which can also reach projects over SSH. In both, a device signed in to the same account can send the agent instructions and approve its actions, and everything runs on the connected machine.
+
+On the cluster, that machine is your cluster account. With remote control on, a session there can be steered from any device signed in to your AI account, without the FASRC login, two-factor authentication, and VPN that normally guard the cluster. A phone left unlocked, or a browser still signed in on another computer, becomes a way into your cluster account. Claude Code also keeps the session's transcript, including tool activity, on Anthropic's servers while it is connected. Until there is specific guidance on these features, be careful:
+
+- **Leave it off unless you need it.** Turn it on only for the session that needs it, and do not turn on Claude Code's "Enable Remote Control for all sessions" setting (`remoteControlAtStartup`) on the cluster.
+- **Stop it when you are done.** End the Claude Code session, press Ctrl+C in `claude remote-control`, or run `codex remote-control stop`.
+- **Protect the account that controls it.** Sign in only on devices you control, use multi-factor authentication, and consider Claude's Trusted Devices, which requires each device to be verified before it can view or steer a session. Never let anyone else use that account; sharing access to your cluster account is not allowed.
+- **Rule it out where you do not want it.** Setting `"disableRemoteControl": true` in `~/.claude/settings.json` on the cluster turns Claude Code's Remote Control off entirely.
+- **Prefer the usual way in.** To check on a long run from elsewhere, log in to the cluster and reattach your tmux session, or read the batch job's logs.
+
+If you think someone else may have used a session, stop it and report it as described in {doc}`Security and Compliance <../s6_security_and_compliance/README>`.
 
 (agentic_ai:scoping)=
 ## Scoping an agent to its task

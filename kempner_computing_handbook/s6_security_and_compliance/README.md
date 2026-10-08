@@ -21,6 +21,10 @@ To keep your credentials safe:
 - Keep your two-factor (OpenAuth) device secure, and never share one-time codes. See the {doc}`New User Checklist <../s1_high_performance_computing/kempner_cluster/new_user_checklist>` for setup.
 - Report a suspected account compromise immediately (see **Reporting a concern** below).
 
+```{warning}
+**Remote control of AI agents.** Some AI agents, including Claude Code (Remote Control) and Codex (remote connections), let you drive a running session from a phone or a browser. On the cluster, a session with remote control on can be steered from any device signed in to your AI account, without the FASRC login and two-factor authentication that normally protect your cluster account. Until there is specific guidance on these features, be careful: leave remote control off unless you need it, stop it when you are done, protect the AI account with multi-factor authentication, and never let anyone else use it. See {ref}`Remote control <agentic_ai:remote_control>`.
+```
+
 (security_and_compliance:data_classification)=
 ## Data classification and what the cluster can host
 
