@@ -165,7 +165,7 @@ claude -p "Array job $SWEEP_JOB_ID has finished. Use sacct to find which tasks f
 - The `afterok` job was canceled automatically, because the scheduler removes jobs whose dependencies can no longer be met.
 - With the agent step in place, the report ranked the two finished runs and listed the failed task with the cause from its log, and the agent wrote nothing outside `reports/`.
 
-See {doc}`Job Dependencies <../s1_high_performance_computing/general_hpc_concepts/job_dependencies>`. To run the same agent task over many inputs, first turn off automatic updates, so an update cannot remove the version running jobs use; see {ref}`Running a terminal agent <agentic_ai:running_a_terminal_agent>`. Then use an array job on a CPU partition such as `shared`, with one agent run per task, each with its own budget and log. Cap how many run at once with `%`, for example `--array=0-49%4`, which also slows how fast the runs use up your plan or API limits; see {doc}`Array Jobs <../s1_high_performance_computing/general_hpc_concepts/array_jobs>`.
+See {doc}`Job Dependencies <../s1_high_performance_computing/general_hpc_concepts/job_dependencies>`. To run the same agent task over many inputs, first turn off automatic updates, so an update cannot remove the version running jobs use; see {ref}`Running a terminal agent <agentic_ai:running_a_terminal_agent>`. Then use an array job on a CPU partition such as `shared`, with one agent run per task, each with its own budget and log. Cap how many run at once with `%`, for example `--array=0-49%4`, which also slows how fast the runs use up your account's usage limits; see {doc}`Array Jobs <../s1_high_performance_computing/general_hpc_concepts/array_jobs>`.
 
 ## Before you trust the result
 

@@ -19,7 +19,7 @@ Clone the repository into your lab or scratch space. Before you start an agent i
 
 Then start the agent in plan mode (`--permission-mode plan`, or `Shift+Tab` in a session), so it explores without editing files. Where auto mode is available, a classifier can still approve shell commands during planning. To rule them out, start the agent with `--tools "Read,Grep,Glob"`, which leaves it only the built-in tools that read and search.
 
-If the repository ships its own agent tooling, use it. KempnerForge includes a Claude Code plugin with skills for setup, smoke tests, SLURM launches, and an architecture walkthrough, plus a `codebase-map.json` of its source, scripts, and tests; its [docs/claude-ready.md](https://github.com/KempnerInstitute/KempnerForge/blob/main/docs/claude-ready.md) explains how to install it. This page does the same steps by hand, so they carry over to repositories without such tooling.
+If the repository ships its own agent tooling, read it before you use it. KempnerForge, for example, includes a Claude Code plugin with skills for setup, smoke tests, SLURM launches, and an architecture walkthrough, plus a `codebase-map.json` of its source, scripts, and tests. This page does the same steps by hand, so they carry over to repositories without such tooling.
 
 ## Map the architecture
 

@@ -6,12 +6,12 @@ This page sets up an agent on the Kempner AI cluster and covers how to run it da
 ## Before you start
 
 ```{warning}
-Cloud-based agents send your prompts, and any code or data they can read, to an external provider. FASRC permits generative AI tools on the cluster only for non-sensitive, public data (security Level 1). Do not point a cloud agent at Level 2 or higher data unless your school has arranged a contractual agreement with the provider first. See FASRC's [Anthropic API guidance](https://docs.rc.fas.harvard.edu/kb/anthropic/), {doc}`Agentic AI Tools <agentic_ai_tools>` for approved-tool data levels, and {doc}`Security and Compliance <../s6_security_and_compliance/README>`.
+Cloud-based agents send your prompts, and any code or data they can read, to an external provider. FASRC permits generative AI tools on the cluster only for non-sensitive, public data (security Level 1). Do not point a cloud agent at Level 2 or higher data unless your school has arranged a contractual agreement with the provider first. See FASRC's [AI Agents guidance](https://docs.rc.fas.harvard.edu/kb/ai-agents/) and [Anthropic guidance](https://docs.rc.fas.harvard.edu/kb/anthropic/), {doc}`Agentic AI Tools <agentic_ai_tools>` for approved-tool data levels, and {doc}`Security and Compliance <../s6_security_and_compliance/README>`.
 ```
 
 In practice, Level 1 means public material, such as public repositories and datasets, or made-up data. Most unpublished research code, data, and results are Level 2; see {ref}`Data classification and what the cluster can host <security_and_compliance:data_classification>`. Before you point a cloud agent at them, check with your school whether your account is covered at that level.
 
-You also need an account or API key for your tool, and a compute node. Do not run agents on a login node, where their processes would compete with every other user.
+You also need the Claude or ChatGPT access Harvard provides (see the sign-in step below), and a compute node. Do not run agents on a login node, where their processes would compete with every other user.
 
 (agentic_ai:running_a_terminal_agent)=
 ## Running a terminal agent
@@ -60,23 +60,18 @@ If you run agents in several jobs at once, turn off automatic updates, because y
 
 A settings file holds one JSON object. When later pages add settings, merge them into that object rather than pasting a second one.
 
-**3. Sign in.**
+**3. Sign in with your Harvard account.** FASRC states that using personal accounts or API keys for work on the cluster is not in accordance with Harvard policy; see its [AI Agents guidance](https://docs.rc.fas.harvard.edu/kb/ai-agents/). Use the Claude or ChatGPT access that HUIT provides through Harvard SSO instead.
 
 ::::{tab-set}
-:::{tab-item} Subscription
-With a paid Claude.ai plan (Pro, Max, Team, or Enterprise), run `claude` and follow the login prompt, or use `/login` inside a session. Over SSH, it gives you a URL to open in your local browser and a code to paste back. The free plan does not include Claude Code.
+:::{tab-item} Claude Code
+Run `claude`, or `/login` inside a session, and log in with your Claude account. Over SSH, it prints a URL: open it in your local browser, sign in with Harvard SSO, and paste the code it shows back into the terminal. Run `/status` to check that the organization is Harvard's, not a personal one. The login is saved in your home directory, so it works on every node and in batch jobs.
 :::
-:::{tab-item} API key
-Create a key in the [Claude Console](https://platform.claude.com), save it in a file only you can read, and export it:
-
-```bash
-chmod 600 ~/.anthropic_key                          # the file that holds the key
-export ANTHROPIC_API_KEY=$(cat ~/.anthropic_key)
-```
-
-Keep the key out of repositories and shared files. If a key is set, print mode (`claude -p`) uses and bills it even when you are signed in. PIs can create a lab key billed through a HUIT billing code; see FASRC's [Anthropic API guidance](https://docs.rc.fas.harvard.edu/kb/anthropic/).
+:::{tab-item} Codex
+Run `codex login --device-auth`, open the link it prints in your local browser, sign in to ChatGPT with Harvard SSO, and enter the one-time code. Device code login is in beta, and for a workspace account such as ChatGPT Edu, the workspace admin must turn it on first. See the Codex [authentication documentation](https://learn.chatgpt.com/docs/auth).
 :::
 ::::
+
+Leave `ANTHROPIC_API_KEY` unset. If it is set, for example in `~/.bashrc`, Claude Code can use it instead of your Harvard login, and print mode (`claude -p`) always does.
 
 **4. Start the agent** from your project directory. For your first sessions, use manual mode, which asks before edits and before commands that change things: `claude --permission-mode default`.
 
@@ -130,8 +125,8 @@ For long tasks, run the agent in print mode (`claude -p`) in a batch job, with t
 ## Running an IDE agent
 
 1. Connect VS Code to a compute node with Remote-SSH, as described in {doc}`VSCode for Remote Dev <../s1_high_performance_computing/development_and_runtime_envs/using_vscode_for_remote_development>`.
-2. Install the agent's extension (for example Claude Code, Codex, or GitHub Copilot) with its **Install in SSH** button, so it runs on the cluster side.
-3. Sign in through the extension, or provide an API key.
+2. Install the agent's extension (for example Claude Code or Codex) with its **Install in SSH** button, so it runs on the cluster side.
+3. Sign in through the extension with your Harvard account, as in {ref}`Running a terminal agent <agentic_ai:running_a_terminal_agent>`.
 
 FASRC also documents editor and notebook extensions, including Jupyter AI in JupyterLab through {doc}`Open OnDemand <../s1_high_performance_computing/general_hpc_concepts/open_ondemand>`; see its [AI extensions guidance](https://docs.rc.fas.harvard.edu/kb/ai-extensions-on-fasrc-clusters/).
 
@@ -140,7 +135,7 @@ FASRC also documents editor and notebook extensions, including Jupyter AI in Jup
 - **Stay within your allocation.** Run agents in an interactive or batch job, never on a login node, and do not let an agent submit unbounded jobs or start long-running processes without your review; see {doc}`Understanding SLURM <../s1_high_performance_computing/general_hpc_concepts/understanding_slurm>`.
 - **Do not hold GPUs idle.** Use a CPU allocation for reading, planning, and editing, and release sessions you are done with.
 - **Review before it acts.** Read the commands an agent proposes, especially anything that deletes files, rewrites history, or moves data.
-- **Watch cost and quota.** Track API spend, subscription limits, and your fairshare; see {ref}`Watch cost and context <agentic_ai:watch_cost>`.
+- **Watch cost and quota.** Track your account's usage limits and your fairshare; see {ref}`Watch cost and context <agentic_ai:watch_cost>`.
 - **Protect secrets and data.** Keep keys out of repositories and shared paths, and block the agent from reading credentials; see {ref}`Agent security <agentic_ai:agent_security>`.
 
 ## Common pitfalls

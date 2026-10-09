@@ -102,7 +102,7 @@ A Singularity or Apptainer container does not isolate an agent from the cluster'
 (agentic_ai:agent_sandboxing)=
 ### Agent sandboxing
 
-Claude Code and Codex can run an agent's shell commands in an operating-system sandbox that limits which files they can write and which hosts they can reach. The operating system enforces these limits, whatever the model decides. On Linux, both use a tool called bubblewrap, and Claude Code also needs socat; both are installed on the compute nodes.
+Claude Code and Codex can run an agent's shell commands in an operating-system sandbox that limits which files they can write and which hosts they can reach. The operating system enforces these limits, whatever the model decides. FASRC asks you to run agents in a sandbox or container where possible; see its [AI Agents guidance](https://docs.rc.fas.harvard.edu/kb/ai-agents/). On Linux, both use a tool called bubblewrap, and Claude Code also needs socat; both are installed on the compute nodes.
 
 ::::{tab-set}
 :::{tab-item} Claude Code

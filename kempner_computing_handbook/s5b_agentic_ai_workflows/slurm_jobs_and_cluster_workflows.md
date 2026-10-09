@@ -22,7 +22,7 @@ ClusterTool commands fall into three groups. Before you allow a command not list
 
 | Group | ClusterTool commands |
 |---|---|
-| Safe to allow (read-only) | `jobs list`, `jobs show`, `jobs why`, `jobs log` (without `-f`), `jobs history`, `jobs debug`, `jobs stats`, `jobs scope`, `jobs failures`, `jobs best-partition`, `gpu util`, `gpu avail`, `gpu status`, `nodes partitions`, `nodes frag`, `nodes load`, `account fairshare`, `account limits`, `storage quota`, `storage scratch`, `me --plain` |
+| Safe to allow (read-only) | `jobs list`, `jobs show`, `jobs why`, `jobs log` (without `-f`), `jobs history`, `jobs debug`, `jobs stats`, `jobs scope`, `jobs failures`, `gpu util`, `gpu avail`, `gpu status`, `nodes partitions`, `nodes frag`, `nodes load`, `account fairshare`, `account limits`, `storage quota`, `storage scratch`, `me --plain` |
 | Ask first (change state or start work) | `jobs submit`, `jobs new`, `jobs cancel`, `jobs hold`, `jobs release`, `jobs requeue`, `gpu session`, `diag nccl`, `diag nvlink`, `diag io-probe` |
 | Never (administrator commands) | `account add-user`, `account remove-user`, `account set-fairshare`, `jobs set-priority`, `nodes resume`, the `qos` commands other than `qos holders`, `diag ib`, `gpu monitor-partition` |
 
@@ -50,7 +50,7 @@ cd "$SLURM_SUBMIT_DIR"
 .venv/bin/python train.py
 ```
 
-Before it runs, check the partition and account, the GPU request (the Kempner partitions are GPU-only), CPUs and memory within the per-GPU limits in {doc}`Cluster Usage Policies <../s1_high_performance_computing/kempner_cluster/kempner_policies_for_responsible_use>`, the time limit, and the environment. To find where a job starts soonest, the agent can run `clustertool jobs best-partition job.sbatch`, which asks SLURM without submitting, or `clustertool nodes frag`, which shows how many jobs of a given shape fit now.
+Before it runs, check the partition and account, the GPU request (the Kempner partitions are GPU-only), CPUs and memory within the per-GPU limits in {doc}`Cluster Usage Policies <../s1_high_performance_computing/kempner_cluster/kempner_policies_for_responsible_use>`, the time limit, and the environment. To see where a job can start now, the agent can run `clustertool nodes frag`, which shows how many jobs of a given shape fit on each partition.
 
 :::{dropdown} Example: clustertool nodes frag
 ```text
@@ -167,7 +167,7 @@ claude -p "Read the job logs in logs/ from the last day. For each failed job, ex
 - **Rule syntax.** The space before `*` matters: `Bash(sacct *)` matches `sacct` with arguments, but `Bash(sacct*)` also matches other commands that start with those letters.
 - **Limits.** `--max-turns` and `--max-budget-usd` bound the run, and the job's `--time` is the final stop; see {ref}`Caps on unattended runs <agentic_ai:run_caps>`.
 - **Record.** The JSON result has the session ID, for `claude --resume`, and an estimated cost.
-- **Sign-in.** The job uses your saved login, unless `ANTHROPIC_API_KEY` is set, for example in `~/.bashrc`; then print mode uses and bills the key. See {ref}`Running a terminal agent <agentic_ai:running_a_terminal_agent>`.
+- **Sign-in.** The job uses your saved Harvard login. If `ANTHROPIC_API_KEY` is set, for example in `~/.bashrc`, print mode uses that key instead, so leave it unset; see {ref}`Running a terminal agent <agentic_ai:running_a_terminal_agent>`.
 
 In a test on the cluster with three job logs, the agent wrote its findings to `reports/triage.md` and changed nothing else. Asked in a second run to create a file elsewhere, edit a batch script, and run `touch`, it was refused all three times. Read the report before you act on it; its proposals are leads, not fixes.
 

@@ -33,10 +33,10 @@ For tracing many runs in a standard format, see the [OpenTelemetry GenAI semanti
 (agentic_ai:watch_cost)=
 ## Watch cost and context
 
-- **Track spend.** API usage is billed per token in the provider's console; a subscription has usage limits, which Claude Code shows with `/usage`. Cluster jobs draw on your fairshare allocation; see {doc}`Fairshare Policy <../s1_high_performance_computing/efficient_use_of_resources/fair_use_and_prioritization_policies>`.
+- **Track usage and cost.** Your account has usage limits, which Claude Code shows with `/usage`. FASRC makes you responsible for monitoring your agents' usage and any costs they incur for you, your lab, or the university; see its [AI Agents guidance](https://docs.rc.fas.harvard.edu/kb/ai-agents/). Cluster jobs draw on your fairshare allocation; see {doc}`Fairshare Policy <../s1_high_performance_computing/efficient_use_of_resources/fair_use_and_prioritization_policies>`.
 - **Let caching work.** Claude Code caches the unchanging start of each request, such as its system prompt, tools, and project instructions, automatically. Run `/clear` between unrelated tasks, so the old conversation is not sent again with every request.
 - **Keep the context small.** Give the agent what the task needs, not the whole repository; a smaller context is cheaper and often more accurate.
-- **Bound long runs.** Set `--max-turns`, `--max-budget-usd`, and a SLURM `--time` before an unattended run, and for an API key, a spend limit in the provider console; see {ref}`Caps on unattended runs <agentic_ai:run_caps>`.
+- **Bound long runs.** Set `--max-turns`, `--max-budget-usd`, and a SLURM `--time` before an unattended run; see {ref}`Caps on unattended runs <agentic_ai:run_caps>`.
 
 ## When not to use an agent
 

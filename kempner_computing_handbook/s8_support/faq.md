@@ -65,12 +65,12 @@ A cloud agent sends your prompts, and any code or data it reads, to its provider
 :::
 
 :::{dropdown} Signing in to Claude Code or Codex from a cluster node
-A cluster node cannot open a browser, so both tools use a sign-in flow you finish on your own computer.
+Sign in with the Claude or ChatGPT access that HUIT provides through Harvard SSO. FASRC states that using personal accounts or API keys for work on the cluster is not in accordance with Harvard policy; see its [AI Agents guidance](https://docs.rc.fas.harvard.edu/kb/ai-agents/). A cluster node cannot open a browser, so both tools use a sign-in flow you finish on your own computer.
 
-- **Claude Code.** Run `claude`, or `/login` inside a session. It prints a URL; open it in your local browser, sign in, and paste the code it shows back into the terminal. The login is saved in your home directory, so it works on every node and in batch jobs. You can use an API key instead by setting `ANTHROPIC_API_KEY`. In print mode (`claude -p`), a key in your environment is always used, even if you have also signed in; see {ref}`Running a terminal agent <agentic_ai:running_a_terminal_agent>`.
-- **Codex.** Run `codex login --device-auth`, open the link it prints, sign in, and enter the one-time code. Device code login is in beta and must first be turned on in your ChatGPT security settings, or by the workspace admin for a workspace account such as ChatGPT Edu. Alternatively, sign in with an API key (`printenv OPENAI_API_KEY | codex login --with-api-key`). See the Codex [authentication documentation](https://learn.chatgpt.com/docs/auth).
+- **Claude Code.** Run `claude`, or `/login` inside a session. It prints a URL; open it in your local browser, sign in with Harvard SSO, and paste the code it shows back into the terminal. `/status` shows which organization you are signed in to. The login is saved in your home directory, so it works on every node and in batch jobs. If `ANTHROPIC_API_KEY` is set, print mode (`claude -p`) uses it instead, so leave it unset; see {ref}`Running a terminal agent <agentic_ai:running_a_terminal_agent>`.
+- **Codex.** Run `codex login --device-auth`, open the link it prints, sign in to ChatGPT with Harvard SSO, and enter the one-time code. Device code login is in beta, and for a workspace account such as ChatGPT Edu, the workspace admin must turn it on first. See the Codex [authentication documentation](https://learn.chatgpt.com/docs/auth).
 
-Treat saved logins and API keys like passwords: keep them out of shared directories and repositories.
+Treat saved logins like passwords: keep them out of shared directories and repositories.
 :::
 
 :::{dropdown} `claude: command not found` after installing
@@ -84,7 +84,7 @@ Then run `source ~/.bashrc`, or log in again, and check with `claude --version`.
 :::
 
 :::{dropdown} The agent stops with a usage or rate limit message
-Subscription plans limit how much you can use Claude Code in a period of time, and API keys have rate limits. Inside a session, `/usage` shows how much of your plan's limits you have used. Every agent you run counts against the same limits, so several sessions in parallel, or an array of agent jobs, reach them sooner; cap how many run at once (for example `--array=0-49%4`). If you hit a limit regularly, check with your PI about a lab account or API key; see {doc}`Using Agentic AI on the Cluster <../s5b_agentic_ai_workflows/using_agentic_ai_on_the_cluster>`.
+Your account limits how much you can use Claude Code or Codex in a period of time. Inside a Claude Code session, `/usage` shows how much of your limits you have used. Every agent you run counts against the same limits, so several sessions in parallel, or an array of agent jobs, reach them sooner. Cap how many run at once (for example `--array=0-49%4`); see {ref}`Watch cost and context <agentic_ai:watch_cost>`.
 :::
 
 :::{dropdown} An agent extension in VSCode cannot see my cluster files
