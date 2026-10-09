@@ -50,7 +50,7 @@ cd "$SLURM_SUBMIT_DIR"
 .venv/bin/python train.py
 ```
 
-Before it runs, check the partition and account, the GPU request (the Kempner partitions are GPU-only), CPUs and memory within the per-GPU limits in {doc}`Cluster Usage Policies <../s1_high_performance_computing/kempner_cluster/kempner_policies_for_responsible_use>`, the time limit, and the environment. To see where a job can start now, the agent can run `clustertool nodes frag`, which shows how many jobs of a given shape fit on each partition.
+Before it runs, check the partition and account, the GPU request (the Kempner partitions are GPU-only), CPUs and memory within the per-GPU limits in {doc}`Cluster Usage Policies <../s1_high_performance_computing/kempner_cluster/kempner_policies_for_responsible_use>`, the time limit, and the environment. Create the log folder before you submit, with `mkdir -p logs`. SLURM opens the log file before the script's first line runs, so a missing folder can make the job fail without a log. To see where a job can start now, the agent can run `clustertool nodes frag`, which shows how many jobs of a given shape fit on each partition.
 
 :::{dropdown} Example: clustertool nodes frag
 ```text
@@ -145,6 +145,7 @@ For work that needs no conversation, such as triaging the night's failed jobs, r
 - Work through {ref}`Before an unattended run <agentic_ai:before_an_unattended_run>`.
 - Set `blockReadsOutsideWorkingDirectories` to `true` under `permissions` in `~/.claude/settings.json`, so `dontAsk` refuses reads outside the project. Otherwise read-only commands such as `cat` run on any file your account can read.
 - In a repository you did not write, read its hooks and MCP servers first, because print mode runs them without asking; see {ref}`Untrusted repositories <agentic_ai:untrusted_repositories>`.
+- Create `reports/` with `mkdir -p reports`, because the job writes its log and results there.
 
 ```bash
 #!/bin/bash
@@ -153,7 +154,7 @@ For work that needs no conversation, such as triaging the night's failed jobs, r
 #SBATCH --time=00:30:00
 #SBATCH --mem=8G
 #SBATCH --cpus-per-task=2
-#SBATCH --output=reports/%x_%j.out   # SLURM creates reports/ if it is missing
+#SBATCH --output=reports/%x_%j.out
 
 cd "$SLURM_SUBMIT_DIR"
 claude -p "Read the job logs in logs/ from the last day. For each failed job, explain the likely cause and propose a fix to its batch script. Write your findings to reports/triage.md. Do not submit, cancel, or edit any job or script." \

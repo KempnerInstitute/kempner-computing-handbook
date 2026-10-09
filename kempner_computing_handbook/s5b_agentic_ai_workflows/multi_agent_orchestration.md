@@ -132,9 +132,10 @@ See the [agent teams documentation](https://code.claude.com/docs/en/agent-teams)
 
 ## Chain agent runs with SLURM
 
-SLURM can run an agent after other work finishes, for example a report after a sweep. Submit the sweep, then the report job with a dependency on it:
+SLURM can run an agent after other work finishes, for example a report after a sweep. Create the log folder, submit the sweep, then submit the report job with a dependency on the sweep:
 
 ```bash
+mkdir -p logs
 sweep_job=$(sbatch --parsable sweep.sbatch)
 sbatch --dependency=afterany:$sweep_job --export=ALL,SWEEP_JOB_ID=$sweep_job report.sbatch
 ```

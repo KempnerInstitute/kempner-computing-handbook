@@ -55,7 +55,7 @@ Instructions and skills shape what an agent tries to do. Guardrails limit what i
 
 Permission rules sort tool calls into three lists: `allow` runs without asking, `ask` waits for your approval, and `deny` is blocked. Claude Code checks deny, then ask, then allow, and the first match decides. Rules live in `~/.claude/settings.json` (your user settings), `.claude/settings.json` (shared project settings), and `.claude/settings.local.json` (your personal project settings).
 
-A good start for cluster work lets the agent look but not act. Read-only queries to SLURM and to [ClusterTool](https://github.com/KempnerInstitute/clustertool), the Kempner command-line tool for cluster tasks, run freely. Anything that submits, changes, or cancels work waits for you, and the agent cannot read your SSH keys or stored tokens:
+A good start for cluster work lets the agent look but not act. Read-only queries to SLURM and to [ClusterTool](https://github.com/KempnerInstitute/clustertool), the Kempner command-line tool for cluster tasks, run freely. Anything that submits, changes, or cancels work waits for you. The deny rules stop the agent's file tools, and commands such as `cat`, from reading your SSH keys and stored tokens:
 
 ```json
 {
@@ -84,7 +84,7 @@ A good start for cluster work lets the agent look but not act. Read-only queries
 `Bash(squeue *)` matches `squeue` with any arguments, or none. Commands on neither list follow the permission mode, and in auto mode a classifier decides, so put every command that must wait for you on the `ask` list. {doc}`SLURM Jobs and Cluster Workflows <slurm_jobs_and_cluster_workflows>` lists which ClusterTool commands are safe to allow; its administrator commands fail without administrator rights.
 
 ```{warning}
-Rules match the command as written, so they are a convenience, not a security boundary. A deny rule for `rm` does not stop `/bin/rm`, `bash -c "rm ..."`, or a Python script that deletes files. For limits that must hold, use file permissions and the sandbox with its escape hatches closed (see {ref}`Agent sandboxing <agentic_ai:agent_sandboxing>`). A hook catches more variants than a rule, but it also sees only the command line. See the [permissions documentation](https://code.claude.com/docs/en/permissions).
+Rules match the command as written, so they are a convenience, not a security boundary. A deny rule for `rm` does not stop `/bin/rm`, `bash -c "rm ..."`, or a Python script that deletes files. Likewise, a `Read` deny rule stops `cat`, but not a script that opens the file itself. For limits that must hold, use file permissions and the sandbox with its escape hatches closed (see {ref}`Agent sandboxing <agentic_ai:agent_sandboxing>`). The sandbox enforces `Read` deny rules on every command it runs, including scripts. A hook catches more variants than a rule, but it also sees only the command line. See the [permissions documentation](https://code.claude.com/docs/en/permissions).
 ```
 
 (agentic_ai:hooks)=

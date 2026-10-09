@@ -63,7 +63,7 @@ export WANDB_MODE=offline
 .venv/bin/python train_sweep.py --run-name "lr${LR}_h${HIDDEN}" --lr "$LR" --hidden "$HIDDEN"
 ```
 
-See {doc}`Array Jobs <../s1_high_performance_computing/general_hpc_concepts/array_jobs>`. To use W&B's sweep controller instead, create the sweep with `wandb sweep` and run `wandb agent --count 1 <sweep_id>` in each array task; this needs online mode. See {doc}`Weights & Biases - Sweeps <../s5_ai_scaling_and_engineering/experiment_management/wandb_sweeps>`.
+Create `logs/` before you submit, with `mkdir -p logs`. SLURM writes each task's log there, and a missing folder can make the tasks fail without a log. See {doc}`Array Jobs <../s1_high_performance_computing/general_hpc_concepts/array_jobs>`. To use W&B's sweep controller instead, create the sweep with `wandb sweep` and run `wandb agent --count 1 <sweep_id>` in each array task; this needs online mode. See {doc}`Weights & Biases - Sweeps <../s5_ai_scaling_and_engineering/experiment_management/wandb_sweeps>`.
 
 ## Let the agent read the results and propose the next round
 
