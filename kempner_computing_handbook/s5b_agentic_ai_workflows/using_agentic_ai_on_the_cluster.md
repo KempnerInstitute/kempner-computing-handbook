@@ -1,247 +1,152 @@
 # Using Agentic AI on the Cluster
 
-Once you have chosen a tool (see {doc}`Agentic AI Tools <agentic_ai_tools>`), this page covers how to run it on the Kempner AI cluster. Agentic tools come in two forms, and both work on the cluster: a terminal agent that runs in an SSH session, and an IDE agent that runs through a VS Code Remote-SSH connection. The setup below uses [Claude Code](https://www.anthropic.com/claude-code) as a concrete example, but the same steps apply to other terminal agents.
+This page sets up an agent on the Kempner AI cluster and covers how to run it day to day. The steps use [Claude Code](https://www.anthropic.com/claude-code) as the example; other terminal agents work the same way, and IDE agents connect through VS Code.
 
+(agentic_ai:before_you_start)=
 ## Before you start
 
 ```{warning}
-Cloud-based agents send your prompts, and any code or data they can read, to an external provider. FASRC permits generative AI tools on the cluster only for non-sensitive, public data (security Level 1). Do not point a cloud agent at Level 2 or higher data unless your school has arranged a contractual agreement with the provider first. See FASRC's [Anthropic API guidance](https://docs.rc.fas.harvard.edu/kb/anthropic/), {doc}`Agentic AI Tools <agentic_ai_tools>` for approved-tool data levels, and {doc}`Security and Compliance <../s6_security_and_compliance/README>`.
+Cloud-based agents send your prompts, and any code or data they can read, to an external provider. FASRC permits generative AI tools on the cluster only for non-sensitive, public data (security Level 1). Do not point a cloud agent at Level 2 or higher data unless your school has arranged a contractual agreement with the provider first. See FASRC's [AI Agents guidance](https://docs.rc.fas.harvard.edu/kb/ai-agents/) and [Anthropic guidance](https://docs.rc.fas.harvard.edu/kb/anthropic/), {doc}`Agentic AI Tools <agentic_ai_tools>` for approved-tool data levels, and {doc}`Security and Compliance <../s6_security_and_compliance/README>`.
 ```
 
-A few things to have ready:
+In practice, Level 1 means public material, such as public repositories and datasets, or made-up data. Most unpublished research code, data, and results are Level 2; see {ref}`Data classification and what the cluster can host <security_and_compliance:data_classification>`. Before you point a cloud agent at them, check with your school whether your account is covered at that level.
 
-- An API key or account for your tool (see the auth step below).
-- Awareness of your data's security level, and whether the tool is cleared for it.
-- A compute node. Do not run agents on a login node: they can spawn long-running processes and consume CPU and memory that login nodes share across all users. Start an interactive session first, as shown below.
+You also need the Claude or ChatGPT access Harvard provides (see the sign-in step below), and a compute node. Do not run agents on a login node, where their processes would compete with every other user.
 
+(agentic_ai:running_a_terminal_agent)=
 ## Running a terminal agent
 
-The following walks through Claude Code end to end.
+**1. Start tmux and an interactive job.** Start tmux on the login node, so a dropped connection does not end your session (see {ref}`Keeping a session alive <agentic_ai:keeping_a_session_alive>`). Inside it, request a job. The agent only needs CPU and memory to talk to its model, so a small CPU allocation is enough:
 
-1. Start an interactive session on a compute node. A terminal agent itself only needs CPU and memory to talk to the cloud API, so a modest CPU allocation is enough unless the agent will run GPU code on your behalf:
+```bash
+tmux new -s agent
+salloc --partition=test --time=0-02:00 --mem=16G --cpus-per-task=4
+```
 
-   ```bash
-   salloc --partition=test --time=0-02:00 --mem=16G --cpus-per-task=4
-   ```
+Request a GPU only when the agent will run GPU code for you. For short GPU checks, the `kempner_interactive` partition offers small GPU slices; see {doc}`Understanding SLURM <../s1_high_performance_computing/general_hpc_concepts/understanding_slurm>`.
 
-   Request a GPU (for example `--partition=kempner --account=<your_account> --gres=gpu:1`) only when the agent needs one to run your workload, so you do not hold a GPU idle while you work. See {doc}`Job Submission Basics <../s1_high_performance_computing/general_hpc_concepts/job_submission_basics>`.
+**2. Install Claude Code.**
 
-2. Install Claude Code. The native installer needs no other dependencies and keeps itself up to date:
+::::{tab-set}
+:::{tab-item} Native installer
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+claude --version
+```
 
-   ```bash
-   curl -fsSL https://claude.ai/install.sh | bash
-   ```
+This installs to `~/.local/bin`, which must be on your `PATH`, and updates itself. If `claude` is not found, see the {doc}`FAQ <../s8_support/faq>`.
+:::
+:::{tab-item} npm in a conda environment
+```bash
+module load python
+mamba create -n claude -c conda-forge "nodejs>=22"
+source activate claude
+npm install -g @anthropic-ai/claude-code
+```
 
-   This installs to `~/.local/bin`; make sure that directory is on your `PATH`. Confirm the install:
+Claude Code is then on your `PATH` only while that environment is active. See {doc}`Conda Environment <../s1_high_performance_computing/development_and_runtime_envs/using_conda_env>`.
+:::
+::::
 
-   ```bash
-   claude --version
-   ```
+If you run agents in several jobs at once, turn off automatic updates, because your home directory is shared and an update in one job can delete the version another job is running. Add this to `~/.claude/settings.json`, and run `claude update` yourself when no agent jobs are running:
 
-   If you prefer to manage it inside an environment, you can instead install with npm (Node.js 22 or later) in a conda or uv environment: `npm install -g @anthropic-ai/claude-code`. To set one up, see {doc}`Conda Environment <../s1_high_performance_computing/development_and_runtime_envs/using_conda_env>` or {doc}`uv Environment <../s1_high_performance_computing/development_and_runtime_envs/using_uv_env>`.
+```json
+{
+  "env": {
+    "DISABLE_AUTOUPDATER": "1"
+  }
+}
+```
 
-3. Authenticate. Claude Code accepts either a Claude.ai subscription or an API key:
+A settings file holds one JSON object. When later pages add settings, merge them into that object rather than pasting a second one.
 
-   - **Subscription.** If you have a paid Claude.ai plan (Pro, Max, Team, or Enterprise), whether a personal or a lab-provided account, run `claude` and follow the login prompt, or use the `/login` command inside a session. Over SSH the login gives you a URL to open in your local browser and a code to paste back. The free Claude.ai plan does not include Claude Code.
-   - **API key.** Create a key in the [Claude Console](https://platform.claude.com) and make it available to the tool:
+**3. Sign in with your Harvard account.** FASRC states that using personal accounts or API keys for work on the cluster is not in accordance with Harvard policy; see its [AI Agents guidance](https://docs.rc.fas.harvard.edu/kb/ai-agents/). Use the Claude or ChatGPT access that HUIT provides through Harvard SSO instead.
 
-     ```bash
-     export ANTHROPIC_API_KEY="your-key-here"
-     ```
+::::{tab-set}
+:::{tab-item} Claude Code
+Run `claude`, or `/login` inside a session, and log in with your Claude account. Over SSH, it prints a URL: open it in your local browser, sign in with Harvard SSO, and paste the code it shows back into the terminal. Run `/status` to check that the organization is Harvard's, not a personal one. The login is saved in your home directory, so it works on every node and in batch jobs.
+:::
+:::{tab-item} Codex
+Run `codex login --device-auth`, open the link it prints in your local browser, sign in to ChatGPT with Harvard SSO, and enter the one-time code. Device code login is in beta, and for a workspace account such as ChatGPT Edu, the workspace admin must turn it on first. See the Codex [authentication documentation](https://learn.chatgpt.com/docs/auth).
+:::
+::::
 
-     Keep the key out of anything shared or version-controlled: do not commit it to a repository, and do not leave it in a world-readable file on shared storage. If you store it in a file, restrict access with `chmod 600`. PIs can create a lab key billed through a HUIT billing code rather than a personal card; see FASRC's [Anthropic API guidance](https://docs.rc.fas.harvard.edu/kb/anthropic/).
+Leave `ANTHROPIC_API_KEY` unset. If it is set, for example in `~/.bashrc`, Claude Code can use it instead of your Harvard login, and print mode (`claude -p`) always does.
 
-4. Start the agent from your project directory:
+**4. Start the agent** from your project directory. For your first sessions, use manual mode, which asks before edits and before commands that change things: `claude --permission-mode default`.
 
-   ```bash
-   claude
-   ```
-
-   With a subscription, this launches the login flow on first use; with `ANTHROPIC_API_KEY` set, Claude Code asks you to approve using the key. Either way it then opens an interactive session.
-
+(agentic_ai:permission_modes)=
 ### Permission modes
 
-Claude Code has several permission modes that trade oversight for speed, and you can switch between them at any time with `Shift+Tab`. Which mode a new session starts in depends on your plan: recent versions start Pro, Max, and Team sessions in Auto mode, while Enterprise and API-key sessions start in Manual mode, where the agent asks before each action. The modes:
+Permission modes trade oversight for speed. Press `Shift+Tab` in a session to cycle through them, or choose one at startup with `--permission-mode`. New interactive sessions start in auto mode where it is available, and otherwise in manual mode.
 
-- **Manual**: approve each edit and command as the agent proposes it. This is the starting mode for Enterprise and API-key sessions, and the safest while you are learning how the agent behaves on your code.
-- **Auto-accept edits**: file edits and common filesystem commands in the working directory apply without prompting, so the agent can work through a task uninterrupted. This set includes deletions (`rm`, `rmdir`) alongside `mkdir`, `touch`, `mv`, `cp`, and `sed`, so watch what it does on shared storage.
-- **Plan mode**: the agent researches and proposes a plan without changing anything. Use it to review the approach before any edits happen.
-- **Auto mode**: the agent runs without routine prompts, but a separate classifier reviews each action first and blocks anything risky, such as a command that reaches beyond your task or destroys data. This means far fewer interruptions than manual mode while keeping a safety check in place, and on Pro, Max, and Team plans it is the mode new sessions start in. It requires a supported model, and an organization can turn it off.
+| Mode | Value | What it does |
+|---|---|---|
+| Manual | `default` | Asks before file edits and commands that change things; reads and read-only commands such as `ls`, `cat`, and `grep` run without asking. The safest mode while you learn. |
+| Auto-accept edits | `acceptEdits` | Applies file edits and common filesystem commands, including `rm`, inside the project without asking. |
+| Plan | `plan` | Researches and proposes a plan without editing files. Where auto mode is available, a classifier can still approve shell commands. |
+| Auto | `auto` | Runs without routine prompts while a classifier blocks risky actions. Needs a supported model, and an organization can turn it off. |
+| Don't ask | `dontAsk` | Refuses anything that would need approval, so the agent only reads, runs read-only commands, and does what your rules allow. For unattended runs; see {ref}`Caps on unattended runs <agentic_ai:run_caps>`. |
 
 ```{warning}
-Avoid the `--dangerously-skip-permissions` flag (bypass mode) on the cluster. It lets the agent run any command without asking, on a shared system that can read your files, write to your storage, and submit jobs under your account. Anthropic recommends this mode only in isolated environments such as containers or VMs without internet access, where the agent cannot cause damage. Cluster compute nodes have outbound access, so that condition does not hold here. Stay in manual, plan, or auto mode, where you or the classifier still vet actions, rather than skipping checks entirely.
+Do not use `--dangerously-skip-permissions` (bypass mode) on the cluster. It runs any command without asking, and Anthropic recommends it only in isolated environments without internet access, which compute nodes are not.
 ```
+
+(agentic_ai:keeping_a_session_alive)=
+### Keeping a session alive
+
+A session lives inside your SSH connection, so it ends when your laptop sleeps or the VPN drops. Run it inside `tmux` on the login node:
+
+```bash
+hostname                 # note the login node, for example boslogin07.rc.fas.harvard.edu
+tmux new -s agent        # then run salloc and claude inside tmux
+```
+
+If the connection drops, SSH back to that same login node and reattach:
+
+```bash
+ssh <username>@boslogin07.rc.fas.harvard.edu
+tmux attach -t agent
+```
+
+A tmux session exists only on the node where you started it, and monthly maintenance reboots login nodes; see FASRC's [terminal access guide](https://docs.rc.fas.harvard.edu/kb/terminal-access/) for the login nodes and their limits. tmux does not extend your job: the session still ends at the job's `--time` limit. FASRC also ends a command-line interactive session after an hour without input. For long work you will not watch, run the agent in a batch job instead; for long interactive work, use {doc}`Open OnDemand <../s1_high_performance_computing/general_hpc_concepts/open_ondemand>`.
+
+To pick up a conversation after your job ends, start a new job, `cd` to the same project directory, and start Claude Code there:
+
+- `claude --continue` reopens the most recent conversation in that directory, but not one started with `claude -p`.
+- `claude --resume` lets you choose an earlier conversation, or takes a session ID.
+
+Conversations are saved under `~/.claude/projects/`, so you can resume them from any node. Background sessions (`claude --bg`) run without a terminal, but they still end when your job does, so they do not replace tmux. To check on a session from another device, reattach tmux rather than turn on remote control; see {ref}`Remote control <agentic_ai:remote_control>`.
 
 ### Long or unattended runs
 
-For a task that runs a long time, use a batch job rather than holding an interactive session open. Claude Code runs non-interactively in print mode (`claude -p "your task"`), which you can call from inside an `sbatch` script; see {doc}`Job Submission Basics <../s1_high_performance_computing/general_hpc_concepts/job_submission_basics>`. A batch job has no one to answer prompts, so scope what the agent may do ahead of time with permission rules or a mode you trust. Do not reach for bypass mode just to get past the prompts.
-
-```{note}
-If you connect the agent to external tools through the Model Context Protocol (MCP), those servers run from your session the same way, and the same rules apply: keep any credentials in their configuration out of shared or world-readable paths. See {doc}`Agentic AI Tools <agentic_ai_tools>` for MCP background.
-```
-
-## Under the hood: the agentic loop
-
-When you type a prompt, the answer does not come from the model alone. Claude Code runs an agentic loop on your compute node: it calls a model to reason, uses tools to act, and repeats until the task is done.
-
-```{mermaid}
-flowchart LR
-    U(["You"]) -->|prompt| H["Claude Code<br/>on the compute node"]
-    H -->|"model call:<br/>prompt, context,<br/>tool definitions"| M["Model<br/>(API or local endpoint)"]
-    M -->|"reasoning and<br/>tool requests"| H
-    H -->|"approved tool use:<br/>read, edit, run, search"| T["Your files and shell<br/>on the node"]
-    T -->|"results"| H
-    H -->|"final answer"| U
-    classDef harness fill:#A51C30,color:#ffffff,stroke:#A51C30;
-    classDef remote fill:#14154C,color:#ffffff,stroke:#3D3E82;
-    classDef you fill:#C6C8F4,color:#14154C,stroke:#14154C;
-    class H harness;
-    class M,T remote;
-    class U you;
-```
-
-- **Claude Code is the harness, not the brain.** It runs on your compute node, holds the conversation, and orchestrates the work; the reasoning is done by a Claude model. The model runs remotely on the Anthropic API, or on your own endpoint if you self-host, as in {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`.
-- **Each step is a model call.** Claude Code sends your prompt, the conversation and file context so far, and the definitions of the available tools to the model, which replies with text and, when it needs to act, with requests to use a tool.
-- **Tools run on the node.** When the model asks to read a file, edit code, run a shell command, or search, Claude Code runs that tool on the compute node against your own files and shell, then feeds the result back to the model. This is why the agent can work across your whole project.
-- **It loops until the turn is done.** The model gathers context, takes an action, and checks the result, using each result to decide the next step, until it produces a final answer. A single prompt can drive many model calls and tool uses.
-- **You gate the actions.** The approval happens between the model's request and the tool running: in manual mode Claude Code asks you first, and in auto mode a classifier vets the action (see Permission modes above). You can interrupt at any point.
-- **Other terminal agents work the same way.** OpenAI Codex, Gemini CLI, and similar tools follow the same loop of model call, tool use, and iteration; the names differ but the shape is the same.
+For long tasks, run the agent in print mode (`claude -p`) in a batch job, with the limits in {ref}`Caps on unattended runs <agentic_ai:run_caps>`; for a complete example, see {doc}`SLURM Jobs and Cluster Workflows <slurm_jobs_and_cluster_workflows>`.
 
 ## Running an IDE agent
 
-If you work in VS Code, you can use an IDE agent or extension against the cluster over Remote-SSH:
-
 1. Connect VS Code to a compute node with Remote-SSH, as described in {doc}`VSCode for Remote Dev <../s1_high_performance_computing/development_and_runtime_envs/using_vscode_for_remote_development>`.
-2. Install the agent's extension (for example Claude Code, GitHub Copilot, or a coding assistant) in the remote window so it runs against the cluster-side files.
-3. Provide credentials the same way as above, through the extension's sign-in or an API key.
+2. Install the agent's extension (for example Claude Code or Codex) with its **Install in SSH** button, so it runs on the cluster side.
+3. Sign in through the extension with your Harvard account, as in {ref}`Running a terminal agent <agentic_ai:running_a_terminal_agent>`.
 
-FASRC documents several editor and notebook AI extensions, including Jupyter-AI for JupyterLab through Open OnDemand. See FASRC's [AI extensions guidance](https://docs.rc.fas.harvard.edu/kb/ai-extensions-on-fasrc-clusters/) and the {doc}`New User Checklist <../s1_high_performance_computing/kempner_cluster/new_user_checklist>`.
+FASRC also documents editor and notebook extensions, including Jupyter AI in JupyterLab through {doc}`Open OnDemand <../s1_high_performance_computing/general_hpc_concepts/open_ondemand>`; see its [AI extensions guidance](https://docs.rc.fas.harvard.edu/kb/ai-extensions-on-fasrc-clusters/).
 
 ## Responsible use on shared infrastructure
 
-Agents act on their own, so a few habits keep them from disrupting shared resources or your own account:
-
-- **Stay within your allocation.** Run agents inside an interactive job or batch script, not on login nodes. Do not let an agent submit unbounded SLURM jobs (see {doc}`Understanding SLURM <../s1_high_performance_computing/general_hpc_concepts/understanding_slurm>`) or launch its own long-running background processes without your review.
-- **Do not hold GPUs idle.** If the agent is only reading, planning, or editing code, use a CPU allocation. Request a GPU when the work needs one, and release the session when you are done.
-- **Review before it acts.** Read the commands an agent proposes before approving them, especially anything that deletes files, rewrites history, or moves data. Treat an agent's suggestions the same way you would treat a pull request from a stranger.
-- **Watch cost and quota.** API and subscription usage bills to your account, which you can track in the Claude Console; cluster jobs draw on your fairshare allocation. See {doc}`Fairshare Policy <../s1_high_performance_computing/efficient_use_of_resources/fair_use_and_prioritization_policies>`.
-- **Protect secrets and data.** Keep API keys out of repositories and shared paths, and do not let an agent read directories that hold credentials or sensitive data.
-
-## Agent security
-
-An agent acts on the content it reads, and not all of that content is trustworthy. A web page, PDF, dataset, code comment, or tool result can carry text written to look like an instruction. If the agent follows it, that is prompt injection, the most common way an agent is turned against its user.
-
-```{mermaid}
-flowchart LR
-    U["Untrusted content<br/>web page, PDF,<br/>dataset, code comment"] --> R["Agent reads it"]
-    R --> H{"Hidden<br/>instruction?"}
-    H -->|treated as data| OK["Ignored;<br/>you stay in control"]
-    H -->|followed as a command| BAD["Unintended action:<br/>exfiltration, deletion"]
-    classDef n fill:#14154C,color:#ffffff,stroke:#3D3E82;
-    classDef good fill:#C6C8F4,color:#14154C,stroke:#14154C;
-    classDef bad fill:#A51C30,color:#ffffff,stroke:#A51C30;
-    class U,R,H n;
-    class OK good;
-    class BAD bad;
-```
-
-The core habit is to treat everything the agent reads, including tool output, as data rather than commands. A few controls reduce the risk on shared infrastructure:
-
-- **Keep a human on consequential actions.** Approve anything that deletes data, moves files, pushes code, or spends budget (see **Permission modes** above).
-- **Give the agent only the access it needs.** Scope subagents to read-only tools where you can (see {doc}`Configuring Agents for Your Project <configuring_agents>`), and do not run agents with elevated permissions on shared paths.
-- **Cap autonomous loops.** Bound long or unattended runs so a misdirected agent cannot run away.
-- **Keep secrets out of reach.** A misdirected agent can only leak what it can read, so keep credentials out of the files and directories it works in.
-
-For the risk categories and defenses in depth, see OWASP's [Top 10 for Agentic Applications](https://genai.owasp.org/agentic-security-initiative/) and [Top 10 for LLM Applications](https://genai.owasp.org/llm-top-10/); the latter ranks prompt injection first. For cluster data rules, see {doc}`Security and Compliance <../s6_security_and_compliance/README>`.
-
-## Scoping an agent to its task
-
-Your account's authority is not the same as the authority a single task needs. Your account may legitimately reach many projects, directories, credentials, and services, but one agent task usually needs only a small part of that. Because an agent runs as your own process, not as a separate user, it can use whatever files, tools, and credentials that process can reach. If a bug, a bad input, or a prompt-injection payload misdirects it, the reach of the damage is everything the process can touch, not just what the task required. The question to ask is not only whether an action is allowed under your account, but whether the task has more effective authority than its purpose requires.
-
-```{mermaid}
-flowchart TB
-    subgraph ACCT["Account authority"]
-        subgraph NEED["What the task needs"]
-            AG(["Agent"])
-        end
-        EXCESS["Everything else the account can reach:<br/>the blast radius if the agent is misdirected"]
-    end
-    style ACCT fill:#C6C8F4,color:#14154C,stroke:#14154C
-    style NEED fill:#14154C,color:#ffffff,stroke:#3D3E82
-    classDef excess fill:#A51C30,color:#ffffff,stroke:#A51C30;
-    classDef agent fill:#ffffff,color:#14154C,stroke:#14154C;
-    class EXCESS excess;
-    class AG agent;
-```
-
-The goal is to shrink the agent's effective authority toward the inner box, so a misdirected agent can reach little more than the task required.
-
-### Prefer enforceable boundaries over prompt instructions
-
-A prompt such as "do not read files outside this directory" guides the model, but it is not an independent boundary and may not hold under adversarial input. Where the environment allows, prefer limits enforced outside the model: filesystem permissions, SLURM resource limits (see {doc}`Job Submission Basics <../s1_high_performance_computing/general_hpc_concepts/job_submission_basics>`), tool permission allowlists (see {doc}`Configuring Agents for Your Project <configuring_agents>`), and read-only subagents. Use both layers together: enforceable controls set the hard limit, and prompt instructions guide behavior within it.
-
-### Before an unattended run
-
-Before running an agent unattended, work through this checklist. A "no" or "unknown" answer does not by itself block the job; it flags a boundary to resolve first.
-
-| Question | What to check |
-|---|---|
-| **Task boundary** | Can you state in one or two sentences exactly what the agent is meant to do? |
-| **Read scope** | Which files and directories must it read? What unrelated locations can the process also see? |
-| **Write scope** | Where may it create or change files? Can it reach shared environments, checkpoints, datasets, or repositories the task does not need to change? |
-| **Credentials** | Which API tokens, SSH keys, cloud credentials, or authenticated sessions can the process reach? |
-| **Network** | Which external endpoints does the task actually require? |
-| **Data policy** | Is every dataset the agent may read permitted in this environment under the applicable data-use agreement and data level? See {doc}`Security and Compliance <../s6_security_and_compliance/README>`. |
-| **Untrusted input** | Could it read web pages, papers, repository files, datasets, code comments, or tool output that may carry adversarial instructions? See Agent security above. |
-| **Resource scope** | Are CPU, memory, GPU, wall time, and job concurrency bounded to what the task needs, and are autonomous loops capped? |
-| **Execution evidence** | Will enough metadata exist to reconstruct the run, such as the SLURM job ID, code or image version, timestamps, and input and output locations, without logging secrets? |
-| **Stop condition** | What event should make the agent halt and return control to a person rather than widen its own scope? |
-
-When an unattended agent finds it needs data, credentials, external access, or actions outside its declared task, the safe default is to stop and ask for human review rather than widen its own scope. Set the stop conditions and loop limits before submission, and treat unexpected scope expansion as a signal to pause rather than proceed.
-
-```{mermaid}
-flowchart LR
-    A["Agent needs something<br/>outside its declared task"] --> B{"Response"}
-    B -->|fail closed| STOP["Stop and request<br/>human review"]
-    B -->|avoid| EXPAND["Widen its own scope<br/>and continue"]
-    classDef n fill:#14154C,color:#ffffff,stroke:#3D3E82;
-    classDef good fill:#C6C8F4,color:#14154C,stroke:#14154C;
-    classDef bad fill:#A51C30,color:#ffffff,stroke:#A51C30;
-    class A,B n;
-    class STOP good;
-    class EXPAND bad;
-```
-
-### Container filesystem visibility
-
-Running an agent inside a Singularity or Apptainer container does not by itself isolate it from the host filesystem. On the cluster, the default configuration makes `/n` (home, lab, and scratch space), your current working directory, and `/tmp` available inside the container, so unless you opt into isolation a containerized agent sees the same files as a non-containerized one. You control this: restrict what is mounted with options such as `--contain` or `--no-mount`, and add only the paths the task needs with `--bind`. Verify your container's effective filesystem visibility rather than assuming it is isolated. See {doc}`Containerization <../s1_high_performance_computing/development_and_runtime_envs/containerization>` and the [FASRC Singularity documentation](https://docs.rc.fas.harvard.edu/kb/singularity-on-the-cluster/) for bind-mount behavior.
-
-```{mermaid}
-flowchart LR
-    subgraph HOST["Cluster host filesystem"]
-        N["/n<br/>home, lab, scratch"]
-        PWD["current working<br/>directory"]
-        TMP["/tmp"]
-    end
-    subgraph CONT["Singularity / Apptainer container"]
-        AG(["Agent process"])
-    end
-    N -.->|bound by default| AG
-    PWD -.->|bound by default| AG
-    TMP -.->|bound by default| AG
-    style HOST fill:#C6C8F4,color:#14154C,stroke:#14154C
-    style CONT fill:#14154C,color:#ffffff,stroke:#3D3E82
-    classDef path fill:#ffffff,color:#14154C,stroke:#3D3E82;
-    classDef agent fill:#A51C30,color:#ffffff,stroke:#A51C30;
-    class N,PWD,TMP path;
-    class AG agent;
-```
+- **Stay within your allocation.** Run agents in an interactive or batch job, never on a login node, and do not let an agent submit unbounded jobs or start long-running processes without your review; see {doc}`Understanding SLURM <../s1_high_performance_computing/general_hpc_concepts/understanding_slurm>`.
+- **Do not hold GPUs idle.** Use a CPU allocation for reading, planning, and editing, and release sessions you are done with.
+- **Review before it acts.** Read the commands an agent proposes, especially anything that deletes files, rewrites history, or moves data.
+- **Watch cost and quota.** Track your account's usage limits and your fairshare; see {ref}`Watch cost and context <agentic_ai:watch_cost>`.
+- **Protect secrets and data.** Keep keys out of repositories and shared paths, and block the agent from reading credentials; see {ref}`Agent security <agentic_ai:agent_security>`.
 
 ## Common pitfalls
 
-- The agent tries to `sudo`, install system packages, or modify files outside your space. You do not have root on the cluster; keep changes within your own directories and environments.
-- The agent cannot reach the provider's API. Compute nodes have outbound access, so check your key, environment, and any typo first; if calls still fail, see {doc}`Support and Troubleshooting <../s8_support/README>`.
+- **The agent tries `sudo` or system installs.** You do not have root on the cluster; keep changes in your own directories and environments.
+- **The agent cannot reach the provider's API.** Compute nodes have outbound access, so check your key and environment first; then see {doc}`Support and Troubleshooting <../s8_support/README>`.
+- **The session ends with your connection or job.** Run it in tmux and resume the conversation; see {ref}`Keeping a session alive <agentic_ai:keeping_a_session_alive>`.
+- **SLURM commands stall inside the agent sandbox.** Exclude them from it and run them as simple calls; see {ref}`Agent sandboxing <agentic_ai:agent_sandboxing>`.
+
+For sign-in problems and `claude: command not found`, see the agentic AI entries in the {doc}`FAQ <../s8_support/faq>`.
 
 ```{seealso}
-For the landscape of available tools, see {doc}`Agentic AI Tools <agentic_ai_tools>`. For a hands-on walkthrough, see {doc}`Your First Agentic Workflow on the Cluster <first_agentic_workflow>`. To keep everything on the cluster with no external provider, see {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`. For data-handling rules, see {doc}`Security and Compliance <../s6_security_and_compliance/README>` and the {doc}`Data Management Plan <../s1_high_performance_computing/storage_and_data_transfer/data_management_plan>`.
+For a hands-on walkthrough, see {doc}`Your First Agentic Workflow on the Cluster <first_agentic_workflow>`. For prompt injection, remote control, scoping, and the agent sandbox, see {doc}`Agent Security and Scoping <agent_security_and_scoping>`. To keep everything on the cluster, see {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`.
 ```

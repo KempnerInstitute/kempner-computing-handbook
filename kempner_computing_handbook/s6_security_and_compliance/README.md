@@ -21,6 +21,11 @@ To keep your credentials safe:
 - Keep your two-factor (OpenAuth) device secure, and never share one-time codes. See the {doc}`New User Checklist <../s1_high_performance_computing/kempner_cluster/new_user_checklist>` for setup.
 - Report a suspected account compromise immediately (see **Reporting a concern** below).
 
+```{warning}
+**Remote control of AI agents.** Some AI agents, including Claude Code (Remote Control) and Codex (remote connections), let you drive a running session from a phone or a browser. On the cluster, a session with remote control on can be steered from any device signed in to your AI account, without the FASRC login and two-factor authentication that normally protect your cluster account. Until there is specific guidance on these features, be careful: leave remote control off unless you need it, stop it when you are done, protect the AI account with multi-factor authentication, and never let anyone else use it. See {ref}`Remote control <agentic_ai:remote_control>`.
+```
+
+(security_and_compliance:data_classification)=
 ## Data classification and what the cluster can host
 
 Harvard classifies data into five security levels. The level determines where the data may be stored and processed.
@@ -59,6 +64,7 @@ Any required data use agreement must be in place **before** the data is stored o
 **Retention and deletion.** Research records must be kept for the retention period Harvard and your sponsor require, generally at least seven years, and you may not independently delete or remove research data. Scratch storage is purged after 90 days, so it is not a retention solution; copy anything you must keep to persistent or archival storage. See the [FASRC Research Data Retention and Deletion Policy](https://docs.rc.fas.harvard.edu/kb/fas-rc-research-data-retention-and-deletion-policy/) and the {doc}`Data Management Plan <../s1_high_performance_computing/storage_and_data_transfer/data_management_plan>`.
 ```
 
+(security_and_compliance:responsible_use_of_ai_tools)=
 ## Responsible use of AI tools
 
 AI coding assistants and other generative AI tools are useful on the cluster, but their use must follow university guidance.
@@ -78,11 +84,11 @@ An unsupervised agent can delete data or disrupt shared resources far faster tha
 ```
 
 ```{note}
-Agentic tools are also exposed to prompt injection: untrusted content the agent reads, such as web pages, files, or datasets, can carry hidden instructions. Treat what an agent reads as data rather than commands, keep a human approving consequential actions, and give the agent least privilege. See OWASP's [Top 10 for Agentic Applications](https://genai.owasp.org/agentic-security-initiative/) and, for running these tools here, {doc}`Using Agentic AI on the Cluster <../s5b_agentic_ai_workflows/using_agentic_ai_on_the_cluster>`.
+Agentic tools are also exposed to prompt injection: untrusted content the agent reads, such as web pages, files, or datasets, can carry hidden instructions. Treat what an agent reads as data rather than commands, keep a human approving consequential actions, and give the agent least privilege. See OWASP's [Top 10 for Agentic Applications](https://genai.owasp.org/agentic-security-initiative/) and, for running these tools here, {doc}`Agent Security and Scoping <../s5b_agentic_ai_workflows/agent_security_and_scoping>`.
 ```
 
 ```{note}
-Scope an autonomous agent to its task. An agent runs with your account's authority, which usually exceeds what any single task needs, so reduce its effective authority to match the task's purpose using controls that do not depend on the model. When scope is ambiguous, prefer stopping for human review over letting the agent widen its own scope. See {doc}`Using Agentic AI on the Cluster <../s5b_agentic_ai_workflows/using_agentic_ai_on_the_cluster>` for how to do this.
+Scope an autonomous agent to its task. An agent runs with your account's authority, which usually exceeds what any single task needs, so reduce its effective authority to match the task's purpose using controls that do not depend on the model. When scope is ambiguous, prefer stopping for human review over letting the agent widen its own scope. See {doc}`Agent Security and Scoping <../s5b_agentic_ai_workflows/agent_security_and_scoping>` for how to do this.
 ```
 
 ```{warning}

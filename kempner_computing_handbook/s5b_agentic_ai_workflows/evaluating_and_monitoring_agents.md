@@ -1,41 +1,54 @@
 # Evaluating and Monitoring Agents
 
-An agent's output looks confident whether or not it is correct, and a long run can quietly burn through budget. Three questions keep an agentic workflow honest: is it right (evaluation), what did it actually do (observability), and what did it cost.
+An agent's output looks confident whether or not it is correct, and a long run can quietly use up a budget. Ask three questions of any agentic workflow: is it right, what did it do, and what did it cost. The last section asks a fourth: whether the task suits an agent at all.
 
+(agentic_ai:evaluate_against_baseline)=
 ## Evaluate against a baseline
 
-Before you trust an agent on real work, and before you reach for a more complex setup, measure it on a small set of tasks whose answers you can check. A handful of representative tasks with known-good outputs is enough to see whether a change helps or hurts.
+Before you trust an agent with real work, measure it on tasks whose answers you know. Pick five to ten tasks you have already solved, give each to the agent with the same prompt, and score its output against your answer. Rerun the set whenever you change the model, the prompt, or the setup, so you can see whether a change helps or hurts.
 
-Use that set to resist unnecessary complexity. A multi-agent pipeline adds coordination overhead and can propagate errors, so compare it against a simpler single-agent or single-pass approach on your own tasks, and keep whichever is more accurate and cheaper. This is the hands-on side of the research method covered next in {doc}`Agentic AI in Research <agentic_ai_in_research>`.
+Use the same set to resist needless complexity. A multi-agent pipeline adds coordination overhead and can pass errors along, so compare it with a single agent on your own tasks, and keep whichever is more accurate and cheaper; see {doc}`Multi-Agent Orchestration <multi_agent_orchestration>`.
+
+## Check the output
+
+A baseline shows how an agent does on average; each result still needs its own check:
+
+- **Run the tests yourself.** Keep or write tests before the agent changes code, and read the test output, not the agent's summary of it.
+- **Check that the tests were not weakened.** Agents under pressure to finish sometimes skip a failing test, loosen a tolerance, edit a reference file, or hard-code an expected value. Read the diff of your test files as carefully as the code.
+- **Compare against known-good outputs.** Compare new output with a reference result, within a tolerance you chose on purpose; see {doc}`Refactoring Research Code into Packages <refactoring_into_packages>`.
+- **Reproduce the key numbers.** Recompute a headline number another way, rerun with a different seed, or plot the data and look. Two independent paths agreeing is far stronger evidence than one confident run.
+- **Read the full diff.** An agent's summary of its changes can leave things out; the diff cannot.
+- **Check every source.** Open each citation, link, and quoted figure the agent relies on; see {doc}`Literature Review and Data Exploration <literature_review_and_data_exploration>`.
 
 ## Watch what it did
 
-A single agent run expands into a tree of steps: the main agent calls tools, delegates to subagents, and makes model calls, each of which you can record as a span. Reading that trace is how you see where an agent went wrong, not just that it did.
+To see where an agent went wrong, not just that it did, keep a record of each run. Three records cover most needs:
 
-```{mermaid}
-flowchart TD
-    A(["Agent run"]) --> T1["Tool call"]
-    A --> L1["Model call"]
-    A --> S1["Subagent"]
-    S1 --> T2["Tool call"]
-    S1 --> L2["Model call"]
-    classDef root fill:#A51C30,color:#ffffff,stroke:#A51C30;
-    classDef span fill:#14154C,color:#ffffff,stroke:#3D3E82;
-    class A root;
-    class T1,L1,S1,T2,L2 span;
-```
+- **The session transcript.** `claude --resume` reopens any conversation, with every tool call and result.
+- **The print-mode result.** `--output-format json` records the final answer, session ID, and estimated cost of a batch run; `--output-format stream-json --verbose` records every step.
+- **A command log.** A hook can append every shell command the agent tries to a file; see {ref}`Hooks <agentic_ai:hooks>`.
 
-The [OpenTelemetry GenAI semantic conventions](https://github.com/open-telemetry/semantic-conventions-genai) define a vendor-neutral way to record these traces and metrics, so you can use an agent-native tool while you develop and still feed a standard observability stack in production. Purpose-built platforms render the same traces; treat them as interchangeable, since this layer changes quickly.
+For tracing many runs in a standard format, see the [OpenTelemetry GenAI semantic conventions](https://github.com/open-telemetry/semantic-conventions-genai).
 
+(agentic_ai:watch_cost)=
 ## Watch cost and context
 
-Agent runs spend money and context, both of which reward a little discipline:
+- **Track usage and cost.** Your account has usage limits, which Claude Code shows with `/usage`. FASRC makes you responsible for monitoring your agents' usage and any costs they incur for you, your lab, or the university; see its [AI Agents guidance](https://docs.rc.fas.harvard.edu/kb/ai-agents/). Cluster jobs draw on your fairshare allocation; see {doc}`Fairshare Policy <../s1_high_performance_computing/efficient_use_of_resources/fair_use_and_prioritization_policies>`.
+- **Let caching work.** Claude Code caches the unchanging start of each request, such as its system prompt, tools, and project instructions, automatically. Run `/clear` between unrelated tasks, so the old conversation is not sent again with every request.
+- **Keep the context small.** Give the agent what the task needs, not the whole repository; a smaller context is cheaper and often more accurate.
+- **Bound long runs.** Set `--max-turns`, `--max-budget-usd`, and a SLURM `--time` before an unattended run; see {ref}`Caps on unattended runs <agentic_ai:run_caps>`.
 
-- **Track spend.** API and subscription usage bills to your account through the provider's console; cluster jobs draw on your fairshare allocation. See {doc}`Fairshare Policy <../s1_high_performance_computing/efficient_use_of_resources/fair_use_and_prioritization_policies>`.
-- **Cache repeated context.** Prompt caching reuses a stable prompt prefix to cut cost and latency, and Claude Code applies it automatically to its system prompt, tools, and project instructions. Benefit from it by keeping durable context in `CLAUDE.md` (or an `AGENTS.md` bridged to it), leaving that prefix unchanged within a session, and running `/clear` to start fresh between unrelated tasks rather than carrying a stale prefix.
-- **Keep the working context small.** Give the agent what the task needs, not the whole repository; a smaller context is cheaper and often more accurate.
-- **Bound long runs.** Cap an unattended run before you start it: set a spend limit in the provider console, run it inside a time-limited interactive or batch job so the SLURM wall clock stops it, and cap per-response output with `CLAUDE_CODE_MAX_OUTPUT_TOKENS`.
+## When not to use an agent
+
+Some tasks are better done yourself, or with the agent preparing a command that you review and run:
+
+- **You cannot check the result.** With no tests, no reference, and no expertise to review it, a confident answer is a liability.
+- **The data is above what the tool is approved for.** On the cluster, a cloud agent may work only with public data (Level 1) unless your school has an agreement with the provider; see {ref}`Before you start <agentic_ai:before_you_start>`. For a model served on the cluster, see {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`, including the data rules that apply to it.
+- **The action is hard to undo.** Deleting or moving shared data, overwriting results, submitting or canceling many jobs, changing permissions, and publishing are yours to run.
+- **The judgment is the science.** Choosing a hypothesis, deciding what a result means, and standing behind a claim stay with you; see {doc}`Agentic AI in Research <agentic_ai_in_research>`.
+- **The task is small or one-off.** If reviewing the agent's work takes longer than doing it, do it yourself.
+- **It would cost more than it saves.** Open-ended runs over a large context can spend more than the task is worth.
 
 ```{seealso}
-For the research method behind evaluation, see {doc}`Agentic AI in Research <agentic_ai_in_research>`. For staying within your allocation on the cluster, see {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`. Subagents, which show up as separate spans in a trace, are covered in {doc}`Configuring Agents for Your Project <configuring_agents>`.
+For the research method behind evaluation, see {doc}`Agentic AI in Research <agentic_ai_in_research>`. For the guardrails that bound a run, see {doc}`Configuring Agents for Your Project <configuring_agents>`.
 ```
