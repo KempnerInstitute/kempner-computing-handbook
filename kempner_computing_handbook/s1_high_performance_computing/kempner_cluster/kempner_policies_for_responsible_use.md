@@ -50,5 +50,5 @@ Please be mindful of how you use this resource to ensure everyone gets to use it
 
 ## Communication
 
-Please ensure you are in the `#cluster-users` slack channel in the Kempner slack space. Make use of this channel if you run into any issues. 
+Please ensure you are in the `#cluster-users` Slack channel in the Kempner Slack space. Make use of this channel if you run into any issues. 
 

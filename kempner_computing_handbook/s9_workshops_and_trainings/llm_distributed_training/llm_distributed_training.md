@@ -9,7 +9,7 @@ This workshop highlights parallelization techniques for training large language 
 ### Prerequisites
 - Familiarity with PyTorch framework and Python programming
 - Familiarity with LLMs
-- Familiarity with High Performance Computing (HPC) cluster
+- Familiarity with High-Performance Computing (HPC) cluster
 
 ## Workshop Slides 
 

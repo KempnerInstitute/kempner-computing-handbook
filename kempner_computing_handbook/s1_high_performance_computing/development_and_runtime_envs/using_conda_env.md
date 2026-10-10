@@ -8,7 +8,7 @@ In order to use a conda environment on the cluster, you will need to create a co
 ### What is a conda environment and why should you use it?
 
 
-A conda environment is a directory that contains a self-contained instance of Python along with a specific set of packages. For instance, you can create a conda environment called `myenv` with numpy version 1.26.4 installed. When executing Python code within that environment, numpy version 1.26.4 will be used. If you need to run code from a different project requiring an older version of numpy, you can use a different conda environment with that older version of numpy installed.
+A conda environment is a directory that contains a self-contained instance of Python along with a specific set of packages. For instance, you can create a conda environment called `myenv` with NumPy version 1.26.4 installed. When executing Python code within that environment, NumPy version 1.26.4 will be used. If you need to run code from a different project requiring an older version of NumPy, you can use a different conda environment with that older version of NumPy installed.
 
 
 Overall, conda environments allow you to isolate package versions for different projects or repositories, which reduces conflicts and dependency issues. The use of conda environments also ensures reproducibility; you can export your conda environment, allowing others to run your code in precisely the same environment.
@@ -64,7 +64,7 @@ Do **not** mix `defaults` and `conda-forge` in the same environment. The two bui
 
 - Step 2: Purge the loaded modules using the `module purge` command if you have any loaded modules and you want to start fresh.
 - Step 3: Load `python` module using the `module load python` command. This will load the default version of Python.
-- Step 5: Create a conda environment using the `mamba create` command. For example, to create a conda environment named `myenv` with Python 3.12 and installing pip and numpy, you can use the following command:
+- Step 5: Create a conda environment using the `mamba create` command. For example, to create a conda environment named `myenv` with Python 3.12 and installing pip and NumPy, you can use the following command:
 
     ```bash
     mamba create --name myenv python=3.12 pip numpy
@@ -133,7 +133,7 @@ pip install ipykernel
 You should now be able to change the kernel of the notebook to your conda environment. 
 
 ```{seealso}
-For details on how select a kernel when running a jupyter notebook in VSCode,  please see the section {ref}`development_and_runtime_envs:using_vscode_for_remote_development:jupyter`.
+For details on how select a kernel when running a Jupyter notebook in VS Code,  please see the section {ref}`development_and_runtime_envs:using_vscode_for_remote_development:jupyter`.
 ```
 
 ### Exporting a Conda Environment
@@ -149,7 +149,7 @@ mamba env export > environment.yml
 ```
 
 
-With this command, the `environment.yml` file will contain information about every single package in your environment, including low-level ones you did not explicitly install. Since some of these may be operating system-specific, this could mean that the conda environment is not reproducible across operating systems (Mac OS, Windows, Linux). 
+With this command, the `environment.yml` file will contain information about every single package in your environment, including low-level ones you did not explicitly install. Since some of these may be operating system-specific, this could mean that the conda environment is not reproducible across operating systems (macOS, Windows, Linux). 
 
 
 To help ensure your environment is reproducible across operating systems, you can instead run:
@@ -190,23 +190,23 @@ They will need both the `environment.yml` file and the `requirements.txt` file.
 
 
 ````{seealso}
-The [Conda documentation](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html) may be useful for further information.
+The [conda documentation](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html) may be useful for further information.
 ````
 
 
 ## Building a Conda environment in a user-defined directory
 
-The Conda environment and cache directory for installed packages can easily exceed tens of gigabytes. It is recommended to create the Conda environment in the lab directory instead of the home directory. In this section, we assume you prefer not to have a Conda environment in the default home directory, and that your default Conda environment is located in the lab directory. The lab directory (under your username) does not have the 100 GB space limitation, providing you with more room to create Conda environments.
+The conda environment and cache directory for installed packages can easily exceed tens of gigabytes. It is recommended to create the conda environment in the lab directory instead of the home directory. In this section, we assume you prefer not to have a conda environment in the default home directory, and that your default conda environment is located in the lab directory. The lab directory (under your username) does not have the 100 GB space limitation, providing you with more room to create conda environments.
 
 ```{warning}
-- Please note that this is a major change to the default behavior of Conda. If you are unsure about this change, please consult with the FAS Research Computing.
+- Please note that this is a major change to the default behavior of conda. If you are unsure about this change, please consult with the FAS Research Computing.
 
-- Also be aware that creating numerous Conda environments can exhaust the file system's inodes, as Conda generates a large number of files. To avoid this, use the `$SCRATCH` space for your Conda environments. You can learn more about the Scratch space policy on the [FASRC website](https://docs.rc.fas.harvard.edu/kb/policy-scratch/).
+- Also be aware that creating numerous conda environments can exhaust the filesystem's inodes, as conda generates a large number of files. To avoid this, use the `$SCRATCH` space for your conda environments. You can learn more about the Scratch space policy on the [FASRC website](https://docs.rc.fas.harvard.edu/kb/policy-scratch/).
 ```
 
 
 
-Here are the steps to create a Conda environment in the lab directory:
+Here are the steps to create a conda environment in the lab directory:
 
 - Step 1: Locate your lab directory
 
@@ -215,7 +215,7 @@ The labs are located at the following path: `/n/holylabs/LABS` (or other filesys
 
 - Step 2: Create the following directories in your lab directory:
 
-    - `.conda`: This directory will be your default Conda directory.
+    - `.conda`: This directory will be your default conda directory.
     - `.conda/envs`: This directory will store the conda environments.
     - `.conda/pkgs`: This directory will store the cached packages.
 
@@ -228,7 +228,7 @@ The labs are located at the following path: `/n/holylabs/LABS` (or other filesys
     ```
 
 
-    Replace `<lab_name>` with the name of your lab and `<username>` with your username. The `CONDA_ENVS` environment variable specifies the directory where the Conda environments will be stored, and the `CONDA_PKGS_DIRS` environment variable specifies the directory where the cached packages will be stored.
+    Replace `<lab_name>` with the name of your lab and `<username>` with your username. The `CONDA_ENVS` environment variable specifies the directory where the conda environments will be stored, and the `CONDA_PKGS_DIRS` environment variable specifies the directory where the cached packages will be stored.
 
     Run the following command to apply the changes:
 
@@ -249,22 +249,22 @@ The labs are located at the following path: `/n/holylabs/LABS` (or other filesys
     Replace `<lab_name>` with the name of your lab and `<username>` with your username.
 
 
-- Step 5: Create a Conda environment in the lab directory using the `conda create` command. For example, to create a Conda environment named `myenv` with Python 3.12 and installing pip and numpy, you can use the following command:
+- Step 5: Create a conda environment in the lab directory using the `conda create` command. For example, to create a conda environment named `myenv` with Python 3.12 and installing pip and NumPy, you can use the following command:
 
     ```bash
     module load python/3.10.12-fasrc01
     conda create --name myenv python=3.12 pip numpy
     ```
 
-- Step 6: Check if the Conda environment is created successfully in the lab directory using the following command:
+- Step 6: Check if the conda environment is created successfully in the lab directory using the following command:
 
     ```bash
     conda env list
     ```
 
-    This command will list all the Conda environments, including the one you just created.
+    This command will list all the conda environments, including the one you just created.
 
-- Done! You have successfully created a Conda environment in the lab directory.
+- Done! You have successfully created a conda environment in the lab directory.
 
 ## Troubleshooting: Unable to Install Packages
 

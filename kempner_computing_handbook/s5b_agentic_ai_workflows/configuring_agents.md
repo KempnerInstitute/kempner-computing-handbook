@@ -43,7 +43,7 @@ An MCP server can hold credentials and reach real systems. Keep its configuratio
 
 ## Subagents
 
-A subagent is a helper the main agent hands a task to. It works in its own context and returns a summary, which keeps noisy exploration out of your main session. In Claude Code, a subagent is a markdown file under `.claude/agents/`, and its `tools` field is an allowlist. A review subagent can get read-only tools and nothing else, a limit the model cannot override.
+A subagent is a helper the main agent hands a task to. It works in its own context and returns a summary, which keeps noisy exploration out of your main session. In Claude Code, a subagent is a Markdown file under `.claude/agents/`, and its `tools` field is an allowlist. A review subagent can get read-only tools and nothing else, a limit the model cannot override.
 
 (agentic_ai:guardrails)=
 ## Guardrails
@@ -157,7 +157,7 @@ claude -p "Read the logs in logs/ and summarize why each failed job failed." \
 (agentic_ai:git_undo)=
 ### Git as the undo layer
 
-Commit or stash your work and start a branch before you give an agent a task. Its changes then show in `git diff`, and `git restore` or `git revert` undoes them. Claude Code's checkpoints rewind its own edits but not files changed by shell commands, such as a `sed -i`, so git is the undo you can count on. Files outside the repository have no undo: have the agent write to a new directory, and keep copies of anything it must not lose.
+Commit or stash your work and start a branch before you give an agent a task. Its changes then show in `git diff`, and `git restore` or `git revert` undoes them. Claude Code's checkpoints rewind its own edits but not files changed by shell commands, such as a `sed -i`, so Git is the undo you can count on. Files outside the repository have no undo: have the agent write to a new directory, and keep copies of anything it must not lose.
 
 ```{seealso}
 For the tool landscape, see {doc}`Agentic AI Tools <agentic_ai_tools>`. For permission modes, see {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`; for sandboxing and secrets, see {doc}`Agent Security and Scoping <agent_security_and_scoping>`. For these guardrails on real cluster tasks, see {doc}`SLURM Jobs and Cluster Workflows <slurm_jobs_and_cluster_workflows>`.

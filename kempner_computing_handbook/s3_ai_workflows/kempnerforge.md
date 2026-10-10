@@ -16,7 +16,7 @@ Multimodal / vision‑language research — train VLMs across multiple fusion ar
 - Architecture — decoder‑only Transformer (RoPE, GQA, SwiGLU, RMSNorm, optional QK‑Norm, torch.compile); Mixture‑of‑Experts with softmax top‑k and DeepSeek‑V3‑style sigmoid routing.
 - Multimodal / Vision‑Language Models — registry‑driven VLM stack with four fusion architectures, SigLIP2/CLIP vision encoders, and staged freeze/unfreeze training.
 - Parallelism — FSDP2, tensor, expert, and pipeline parallelism, plus FP8 mixed precision (via torchao).
-- Training — multiple optimizers and LR schedulers; distributed (DCP) checkpointing with async save and auto‑resume; stateful data pipeline with multi‑dataset mixing, annealing, and HuggingFace (eager + streaming) integration.
+- Training — multiple optimizers and LR schedulers; distributed (DCP) checkpointing with async save and auto‑resume; stateful data pipeline with multi‑dataset mixing, annealing, and Hugging Face (eager + streaming) integration.
 - Resilience — SLURM preemption recovery, NaN detection, and GPU/NCCL health monitoring.
-- Observability — MFU tracking, peak‑memory monitoring, and WandB/TensorBoard logging.
+- Observability — MFU tracking, peak‑memory monitoring, and W&B/TensorBoard logging.
 - Configuration — typed dataclass configs layered as defaults → TOML → CLI, with fail‑fast validation and a registry for swappable components.

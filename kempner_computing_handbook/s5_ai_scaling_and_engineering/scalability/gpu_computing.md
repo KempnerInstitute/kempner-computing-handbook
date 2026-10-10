@@ -126,5 +126,5 @@ Total script execution time: 2.112846 seconds
 In addition to the aforementioned CuPy and PyTorch, there are many more Frameworks and Libraries that enable applications to run computation on GPUs.
 ### NVIDIA RAPIDS
 TBD
-### Pytorch Lightning
+### PyTorch Lightning
 TBD

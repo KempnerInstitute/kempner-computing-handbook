@@ -86,7 +86,7 @@ Assume this job gets the ID `11111`. Submit the second model's training job (`tr
 sbatch --dependency=afterok:11111 train_model2.sh
 ```
 
-You can continue chaining models as required. As you can see through these examples, using job dependencies in SLURM is a powerful way to automate and streamline the workflow of ML research projects on the Kempner AI Cluster. 
+You can continue chaining models as required. As you can see through these examples, using job dependencies in SLURM is a powerful way to automate and streamline the workflow of ML research projects on the Kempner AI cluster. 
 
 
 ```{note}

@@ -26,7 +26,7 @@ Use the sections below to jump into the handbook, or browse the full table of co
 ::::{grid} 1 2 3 3
 :gutter: 3
 
-:::{grid-item-card} High Performance Computing
+:::{grid-item-card} High-Performance Computing
 :link: /s1_high_performance_computing/kempner_cluster/README
 :link-type: doc
 
@@ -47,7 +47,7 @@ Version control, design principles, documentation, testing, packaging, and repro
 Reference workflows for training, distributed inference, and working with models on the cluster.
 :::
 
-:::{grid-item-card} Neuro AI Workflows
+:::{grid-item-card} NeuroAI Workflows
 :link: /s4_neuro_ai_workflows/spike_sorting
 :link-type: doc
 

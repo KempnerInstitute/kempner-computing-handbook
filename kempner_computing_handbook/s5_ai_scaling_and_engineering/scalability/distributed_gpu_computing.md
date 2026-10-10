@@ -93,7 +93,7 @@ L = \frac{1}{2} (y' - y)^2
 &W_i = W_i - \alpha . W_i.grad \\
 &b_i = b_i - \alpha . b_i.grad 
 ```
-Corresponding single-GPU pytorch code for the above example would be the following code:
+Corresponding single-GPU PyTorch code for the above example would be the following code:
 ````{dropdown} Single-GPU MLP example (mlp_single_gpu.py)
 ```{code-block}
 :name: mlp_single_gpu
@@ -204,9 +204,9 @@ conda create -n dist_computing python=3.10
 conda activate dist_computing
 pip3 install torch
 ```
-The conda environment activation needs also be added to the slurm scripts.
+The conda environment activation needs also be added to the SLURM scripts.
 
-Now create `mlp_single_gpu.py` and `random_dataset.py` from {numref}`mlp_single_gpu` and {numref}`random_dataset` respectively and use the following slurm script to run it on the AI cluster.
+Now create `mlp_single_gpu.py` and `random_dataset.py` from {numref}`mlp_single_gpu` and {numref}`random_dataset` respectively and use the following SLURM script to run it on the AI cluster.
 ```{code-block} bash
 :name: single_gpu_slurm
 :caption: SLURM script skeleton to run the single-GPU mlp example.
@@ -376,7 +376,7 @@ destroy_process_group()
 ```
 To run this code we need the `random_dataset.py` from {numref}`random_dataset` and a conda environment in which PyTorch is installed, refer to {numref}`conda_setup` to create one if you don't have one already.
 
-Now use the following slurm script skeleton to run the `mlp_ddp.py` from {numref}`mlp_ddp_code`. Note that we need to add environment variables to specify the Master node info, rank, local rank, etc.
+Now use the following SLURM script skeleton to run the `mlp_ddp.py` from {numref}`mlp_ddp_code`. Note that we need to add environment variables to specify the Master node info, rank, local rank, etc.
 ```{code-block} bash
 :name: multi_gpu_slurm
 :caption: SLURM script skeleton to run {numref}`mlp_ddp_code` on multiple GPUs. Here, it requests for two nodes, one GPU on each node, a total of two GPUs.
@@ -727,7 +727,7 @@ destroy_process_group()
 ```
 To run this code we need the `random_dataset.py` from {numref}`random_dataset` and a conda environment in which PyTorch is installed, refer to {numref}`conda_setup` to create one if you don't have one already.
 
-Now use the same slurm script skeleton in {numref}`multi_gpu_slurm` to run the `mlp_tensor_parallel.py` from {numref}`mlp_tp_code`.
+Now use the same SLURM script skeleton in {numref}`multi_gpu_slurm` to run the `mlp_tensor_parallel.py` from {numref}`mlp_tp_code`.
 ````
 
 ### Fully Sharded Data Parallelism (FSDP)
@@ -744,7 +744,7 @@ As {numref}`fsdp` shows - Before performing each Forward or Backward pass for a 
 
 Since each GPU is working with different data batches, after the backward pass and before updating the model parameters, FSDP synchronizes the gradients across GPUs for consistency using `Reduce-Scatter` collective primitive.
 
-FSDP's sharding method is optimized for collective communication primitives. For each FSDP unit, it flattens all the parameters into a 1D array format and then equally divides them across GPUs. {numref}`mlp_fsdp_figure` shows how fsdp can be applied on our simple mlp example of {numref}`mlp_single_gpu`.
+FSDP's sharding method is optimized for collective communication primitives. For each FSDP unit, it flattens all the parameters into a 1D array format and then equally divides them across GPUs. {numref}`mlp_fsdp_figure` shows how FSDP can be applied on our simple mlp example of {numref}`mlp_single_gpu`.
 
 ```{figure} figures/png/mlp_fsdp.png
 ---
@@ -859,5 +859,5 @@ for i in range(max_epochs):
 
 destroy_process_group()
 ```
-To run this code we need the `random_dataset.py` from {numref}`random_dataset` and a conda environment in which PyTorch is installed, refer to {numref}`conda_setup` to create one if you don't have one already. Then use the same slurm script skeleton in {numref}`multi_gpu_slurm` to run `mlp_fsdp.py`.
+To run this code we need the `random_dataset.py` from {numref}`random_dataset` and a conda environment in which PyTorch is installed, refer to {numref}`conda_setup` to create one if you don't have one already. Then use the same SLURM script skeleton in {numref}`multi_gpu_slurm` to run `mlp_fsdp.py`.
 ````

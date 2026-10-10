@@ -48,7 +48,7 @@ Once you have an active FASRC account, you can request access to the Kempner AI 
 
 - [ ] Confirm that you can log in with your FASRC password and OpenAuth code.
 - [ ] **Open OnDemand:** For browser-based access, connect to the FASRC VPN and open [Open OnDemand](https://vdi.rc.fas.harvard.edu/). See {doc}`Open OnDemand <../general_hpc_concepts/open_ondemand>`.
-- [ ] **Visual Studio Code (VSCode):** For a remote IDE, use VSCode with the Remote - SSH extension. See {doc}`VSCode for Remote Dev <../development_and_runtime_envs/using_vscode_for_remote_development>`.
+- [ ] **Visual Studio Code (VS Code):** For a remote IDE, use VS Code with the Remote - SSH extension. See {doc}`VS Code for Remote Dev <../development_and_runtime_envs/using_vscode_for_remote_development>`.
 - [ ] Remember that login nodes are for file management, job submission, and lightweight tasks only. Do not run compute-heavy code, or agentic AI tools, on login nodes.
 
 ## Learn Where Files Should Go

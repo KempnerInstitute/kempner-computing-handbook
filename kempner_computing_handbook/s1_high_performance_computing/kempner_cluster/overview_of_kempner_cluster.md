@@ -1,6 +1,6 @@
 # Overview of Cluster
 
-The Kempner institute has dedicated compute resources for its mission toward advanced research on intelligence from biological, cognitive, and computational perspectives. 
+The Kempner Institute has dedicated compute resources for its mission toward advanced research on intelligence from biological, cognitive, and computational perspectives. 
 
 ## What is the Kempner Institute AI Cluster?
 
@@ -75,4 +75,4 @@ For a full walkthrough with screenshots, see {doc}`KempnerInsight Cluster Monito
 
 ## Where is the Kempner Institute AI Cluster located physically?
 
-The cluster is located at the [Massachusetts Green High-Performance Computing Center](https://mghpcc.org) (MGHPCC) in Holyoke, MA. This is a state-of-the-art datacenter that is shared among the Boston-area universities. It runs off of hydropower, making it one of the “greenest” computing centers in the world. FASRC also provides co-located [storage resources](https://docs.rc.fas.harvard.edu/kb/data-storage-workflow-rdm/) at MGHPCC.
+The cluster is located at the [Massachusetts Green High Performance Computing Center](https://mghpcc.org) (MGHPCC) in Holyoke, MA. This is a state-of-the-art data center that is shared among the Boston-area universities. It runs off of hydropower, making it one of the “greenest” computing centers in the world. FASRC also provides co-located [storage resources](https://docs.rc.fas.harvard.edu/kb/data-storage-workflow-rdm/) at MGHPCC.

@@ -19,7 +19,7 @@ flowchart LR
 
 ## Before you start
 
-- **Work on a branch with a clean git tree.** Every agent change then shows as a diff, and `git restore` or `git revert` undoes it. Commit before each step; see {ref}`Git as the undo layer <agentic_ai:git_undo>`.
+- **Work on a branch with a clean Git tree.** Every agent change then shows as a diff, and `git restore` or `git revert` undoes it. Commit before each step; see {ref}`Git as the undo layer <agentic_ai:git_undo>`.
 - **Record the environment.** Pin the package versions the current code runs with, so you compare like with like. See {ref}`Environment Reproducibility <reproducible_research:environment_reproducibility>`.
 - **Pick a small, representative input.** Choose data that exercises the main code paths and runs in seconds or minutes. If it needs a GPU, use a short interactive job, not a login node; see {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`.
 - **Tell the agent the rules.** Put the test command and the constraints in your project instructions, for example "run `pytest` after every change".

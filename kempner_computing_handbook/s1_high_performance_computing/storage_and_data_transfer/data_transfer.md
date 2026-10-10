@@ -109,7 +109,7 @@ This behaves differently. Now, the files that were in the results directory on t
 :::
 
 :::{tab-item} fpsync
-While `rsync` is appropriate for most synchronization needs, `fpsync` may be more suitable for synchronizing large directories. `fpsync` synchronizes directories in parallel by using `fpart` and `rsync` to launch several jobs simultaneously, and, like `rsync`, the synchronization can be resumed if disrupted. `fpsync` can launch synchronization processes locally or remotely on one or more workers using ssh. Remote workers must be able to access both the source and destination directories. Unlike `rsync`, only the source directory contents are synchronized, not the directory itself.
+While `rsync` is appropriate for most synchronization needs, `fpsync` may be more suitable for synchronizing large directories. `fpsync` synchronizes directories in parallel by using `fpart` and `rsync` to launch several jobs simultaneously, and, like `rsync`, the synchronization can be resumed if disrupted. `fpsync` can launch synchronization processes locally or remotely on one or more workers using SSH. Remote workers must be able to access both the source and destination directories. Unlike `rsync`, only the source directory contents are synchronized, not the directory itself.
 
 ```bash
 fpsync [arguments] [absolute path to source directory] [absolute path to destination directory]
@@ -126,15 +126,15 @@ You can customize the `fpsync` command by adding any of the arguments below dire
 | `-o` | Arguments for rsync (if you do not want to use default options). See above for rsync arguments. Do not use --delete. Default: -av --numeric-ids |
 | `-O` | Arguments for fpart. Default: -x .zfs -x .snapshot* -x .ckpt |
 
-In most cases on the FAS RC cluster, your `fpsync` command might look like:
+In most cases on the FASRC cluster, your `fpsync` command might look like:
 
 ```bash
 fpsync -n [NUMBER OF CONCURRENT JOBS] -t /temp/directory /source/directory /destination/directory
 ```
 
-As noted above, `fpsync` logs are found in /tmp by default. When running on the FAS RC cluster, you must specify a temp directory that you can access. 
+As noted above, `fpsync` logs are found in /tmp by default. When running on the FASRC cluster, you must specify a temp directory that you can access. 
 
-You can also submit a job to run `fpsync` and set the number of concurrent jobs to the number of cpus requested:
+You can also submit a job to run `fpsync` and set the number of concurrent jobs to the number of CPUs requested:
 
 ```bash
 srun -c $SLURM_CPUS_PER_TASK fpsync -n $SLURM_CPUS_PER_TASK -t /temp/directory /source/directory /destination/directory
@@ -146,12 +146,12 @@ Refer to the [fpsync documentation](https://docs.rc.fas.harvard.edu/kb/transferr
 
 :::{tab-item} Globus
 (globus_section)=
-Globus is a file sharing service designed for the secure and efficient transfer of large datasets. Unlike the methods above, you can transfer data through a user-friendly web interface. While we cover transfer between the cluster and a local machine below, Globus can also be useful for [sharing data with external collaborators](https://docs.globus.org/guides/tutorials/manage-files/share-files/) even if they do not have access to the FAS RC cluster. 
+Globus is a file sharing service designed for the secure and efficient transfer of large datasets. Unlike the methods above, you can transfer data through a user-friendly web interface. While we cover transfer between the cluster and a local machine below, Globus can also be useful for [sharing data with external collaborators](https://docs.globus.org/guides/tutorials/manage-files/share-files/) even if they do not have access to the FASRC cluster. 
 
 
 **Set up**
 
-**Set up general globus account**
+**Set up general Globus account**
 1. Click on "Log in" on the [Globus website](https://www.globus.org/)
 2. Select Harvard University as your organization and log in using Harvard Key.
 
@@ -162,7 +162,7 @@ Globus is a file sharing service designed for the secure and efficient transfer 
 
 **Set up your local machine as an endpoint**
 1. Download and install [Globus Connect Personal](https://www.globus.org/globus-connect-personal) for your operating machine 
-2. Open Globus Connect Personal (on a mac, find it in the Applications folder). Log in, consent to the terms, and enter the details for your Globus Connect Personal Collection. 
+2. Open Globus Connect Personal (on a Mac, find it in the Applications folder). Log in, consent to the terms, and enter the details for your Globus Connect Personal Collection. 
 3. If you run into any problems, Globus has tutorials on installation for each platform [here](https://docs.globus.org/globus-connect-personal/install/). 
 3. If you navigate back to the [Globus File Manager](https://www.globus.org), you should now be able to search for your personal collection in the Collection field.
 

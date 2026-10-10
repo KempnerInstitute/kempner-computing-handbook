@@ -61,7 +61,7 @@ See {ref}`kempner_cluster:accessing_and_navigating_the_cluster` for full details
      FASRC uses `mamba`,  a drop-in replacement for `conda` that is generally much faster. 
 
     ```{admonition} Try it yourself
-    Try creating a conda environment called `myenv` in your home directory by following [these steps](development_and_runtime_envs:using_conda_env:creation). Make it usable in jupyter notebooks with [one additional step](development_and_runtime_envs:using_conda_env:jupyter). 
+    Try creating a conda environment called `myenv` in your home directory by following [these steps](development_and_runtime_envs:using_conda_env:creation). Make it usable in Jupyter notebooks with [one additional step](development_and_runtime_envs:using_conda_env:jupyter). 
     ```
 
 3. **Spack**
@@ -82,9 +82,9 @@ See {ref}`development_and_runtime_envs:handling_dependencies_with_spack` for ful
    git clone https://github.com/KempnerInstitute/intro-compute-march-2024.git
    ```
 
-   **VSCode**
+   **VS Code**
    ```{admonition} Try it yourself
-    Set up remote development using VSCode by following [these steps](development_and_runtime_envs:using_vscode_for_remote_development). 
+    Set up remote development using VS Code by following [these steps](development_and_runtime_envs:using_vscode_for_remote_development). 
    ```
 
 
@@ -170,12 +170,12 @@ lsload | head -n 1 & lsload | grep "8a17"
 ```
 ````
 
-````{dropdown} SLURM Interactive Jobs via Open OnDemand and VSCode
+````{dropdown} SLURM Interactive Jobs via Open OnDemand and VS Code
 
 **Open OnDemand**: See {ref}`general_hpc_concepts:open_ondemand`.
 
 
-**VSCode**: See {ref}`development_and_runtime_envs:using_vscode_for_remote_development:compute_node`.
+**VS Code**: See {ref}`development_and_runtime_envs:using_vscode_for_remote_development:compute_node`.
 
 ````
 
@@ -187,7 +187,7 @@ See {ref}`resource_management:job_submission_basics:batch_jobs`.
 
 1. Navigate to the `SLURM_example_1` directory.
 
-Here we have a python script that is simply occupying the CPU and Memory for a certain amount of time. Take a look at the job submission script `run.sh` and the python script `cpu_mem_occupy.py`.
+Here we have a Python script that is simply occupying the CPU and Memory for a certain amount of time. Take a look at the job submission script `run.sh` and the Python script `cpu_mem_occupy.py`.
 
 2. **Test the job submission script**: 
 
@@ -231,7 +231,7 @@ Note that the wrapper squeue command has some delay in updating the status of th
 
 Resubmit the job and try to cancel the job using the following commands.
 
-- Cancel the job using the job id:
+- Cancel the job using the job ID:
 
     ```bash
     scancel <job_id>
@@ -262,7 +262,7 @@ See {ref}`resource_management:array_jobs`.
 1. Navigate to the `SLURM_example_2` directory.
 
 
-2. Take a look at the job submission script `run_array_job.sh`, the python script `hyperparameter_tuning.py`, and the csv file `hyperparameters.csv`. Can you figure out what would happen if you run this job?
+2. Take a look at the job submission script `run_array_job.sh`, the Python script `hyperparameter_tuning.py`, and the CSV file `hyperparameters.csv`. Can you figure out what would happen if you run this job?
 
 
 3. Submit the array job
