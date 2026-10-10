@@ -1,6 +1,6 @@
 # Shell Configuration
 
-Including useful aliases and shortcuts into your shell configuration file (`~/.bashrc` in your home directory) can significantly streamline your workflow on the Kempner AI Cluster, especially when working with GPU-accelerated machine learning (ML) tasks. These aliases can save you time by **reducing the need to type long commands** and **help avoid potential mistakes in repetitive tasks**. 
+Including useful aliases and shortcuts into your shell configuration file (`~/.bashrc` in your home directory) can significantly streamline your workflow on the Kempner AI cluster, especially when working with GPU-accelerated machine learning (ML) tasks. These aliases can save you time by **reducing the need to type long commands** and **help avoid potential mistakes in repetitive tasks**. 
 
 This section provides examples of aliases and shortcuts that can be particularly useful in such environments.
 

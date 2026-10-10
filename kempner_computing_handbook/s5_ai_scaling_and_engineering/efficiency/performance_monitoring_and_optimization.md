@@ -57,7 +57,7 @@ jobstats <jobid>
 
 FASRC also offers a browser-based Single Job Stats Dashboard, where you enter a job ID to see its profile (this requires the FASRC VPN; the link is on the [jobstats page](https://docs.rc.fas.harvard.edu/kb/jobstats/)). Adding `--mail-type=END` to your submission script includes the `jobstats` summary in the completion email.
 
-**JobScope.** The Kempner Institute's [JobScope](https://github.com/KempnerInstitute/jobscope) turns Slurm, NVIDIA DCGM, and NVML data into a clean CPU and GPU efficiency report for your completed jobs over a chosen time window. Install it with `uv tool install jobscope`, then run:
+**JobScope.** The Kempner Institute's [JobScope](https://github.com/KempnerInstitute/jobscope) turns SLURM, NVIDIA DCGM, and NVML data into a clean CPU and GPU efficiency report for your completed jobs over a chosen time window. Install it with `uv tool install jobscope`, then run:
 
 ```bash
 jobscope --cgpu -D 3    # CPU and GPU efficiency of your jobs over the last 3 days

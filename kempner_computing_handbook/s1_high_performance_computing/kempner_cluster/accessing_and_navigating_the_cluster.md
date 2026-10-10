@@ -79,7 +79,7 @@ Please do not use the login node for computationally intensive tasks, as these o
 (ondemand_access)=
 ## Open OnDemand
 
-Open OnDemand is a web-based interface that allows users to access the cluster through a web browser. You can use Open onDemand to start a Remote Desktop session, launch Jupyter notebooks / JupyterLab, RStudio, or other available interactive applications and submit jobs to the cluster.
+Open OnDemand is a web-based interface that allows users to access the cluster through a web browser. You can use Open OnDemand to start a Remote Desktop session, launch Jupyter notebooks / JupyterLab, RStudio, or other available interactive applications and submit jobs to the cluster.
 
 To access the cluster using Open OnDemand, follow these steps:
 

@@ -1,6 +1,6 @@
 # Overview of Cluster
 
-The Kempner institute has dedicated compute resources for its mission toward advanced research on intelligence from biological, cognitive, and computational perspectives. 
+The Kempner Institute has dedicated compute resources for its mission toward advanced research on intelligence from biological, cognitive, and computational perspectives. 
 
 ## What is the Kempner Institute AI Cluster?
 
@@ -32,7 +32,7 @@ name: Diagram of AI Cluster
 This is a diagram of the Kempner AI cluster within the FASRC infrastructure showing the arrangement of nodes, networking, and storage systems.
 ```
 
-Currently, there are 16 GPU racks in production at the Massachusetts Green High Performance Computing Center (MGHPCC): one A100 GPU rack, four H100 GPU racks, five H200 GPU racks (one is a spare with 10 nodes and 40 H200 GPUs), four RTX 6000 PRO Blackwell GPU racks, one network core rack, and one storage rack. In the following diagram, these racks are shown along with a network core designed for non-blocking communication between GPUs.
+Currently, there are 16 GPU racks in production at the Massachusetts Green High Performance Computing Center (MGHPCC): one A100 GPU rack, four H100 GPU racks, five H200 GPU racks (one is a spare with 10 nodes and 40 H200 GPUs), four RTX6000 GPU racks, one network core rack, and one storage rack. In the following diagram, these racks are shown along with a network core designed for non-blocking communication between GPUs.
 
 
 ```{figure} figures/jpg/2026_kempner-cluster_cloudbg_XL.jpg
@@ -44,7 +44,7 @@ This is a diagram of the GPU racks and network core.
 ```
 
 ```{note}
-The GPU network is non-blocking for the H200 and RTX 6000 PRO partitions. The H100 partition is currently 2:1 oversubscribed.
+The GPU network is non-blocking for the H200 and RTX6000 partitions. The H100 partition is currently 2:1 oversubscribed.
 ```
 
 
@@ -75,4 +75,4 @@ For a full walkthrough with screenshots, see {doc}`KempnerInsight Cluster Monito
 
 ## Where is the Kempner Institute AI Cluster located physically?
 
-The cluster is located at the [Massachusetts Green High-Performance Computing Center](https://mghpcc.org) (MGHPCC) in Holyoke, MA. This is a state-of-the-art datacenter that is shared among the Boston-area universities. It runs off of hydropower, making it one of the “greenest” computing centers in the world. FASRC also provides co-located [storage resources](https://docs.rc.fas.harvard.edu/kb/data-storage-workflow-rdm/) at MGHPCC.
+The cluster is located at the [Massachusetts Green High Performance Computing Center](https://mghpcc.org) (MGHPCC) in Holyoke, MA. This is a state-of-the-art data center that is shared among the Boston-area universities. It runs off of hydropower, making it one of the “greenest” computing centers in the world. FASRC also provides co-located [storage resources](https://docs.rc.fas.harvard.edu/kb/data-storage-workflow-rdm/) at MGHPCC.

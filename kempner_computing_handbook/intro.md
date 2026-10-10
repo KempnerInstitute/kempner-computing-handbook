@@ -2,7 +2,7 @@
 
 Welcome to the Kempner Institute Computing Handbook, a comprehensive resource designed to empower researchers and students with the knowledge and tools necessary to leverage High-Performance Computing (HPC) for advanced computational research. This guide covers everything from the basics of getting started on the Kempner AI cluster, understanding its architecture, and navigating its environment, to more advanced topics such as job scheduling with SLURM, optimizing computational workflows, and harnessing the power of GPU computing. Through detailed sections on development and runtime environments, scalability, data management, and performance monitoring, users are equipped to efficiently manage resources, develop and run sophisticated applications, and analyze performance to ensure optimal outcomes. Whether you are new to HPC or looking to enhance your computational research projects, this guide provides the foundational knowledge and practical insights to effectively utilize the HPC resources available at the Kempner Institute.
 
-Harvard’s Kempner AI cluster ranks **32nd** on the [Green500](https://top500.org/lists/green500/list/2024/11/) and **85th** on the [TOP500](https://top500.org/lists/top500/list/2024/11/) in November 2024 listing, making it one of the fastest and most energy-efficient supercomputers for advancing AI and neuroscience research.
+Harvard’s Kempner AI cluster is one of the fastest and most energy-efficient supercomputers for advancing AI and neuroscience research. On the [June 2026 TOP500](https://top500.org/lists/top500/list/2026/06/) list, its [H200 system](https://top500.org/system/180447/) ranks **3rd** among U.S. academic supercomputers and **112th** in the world. It also ranks **55th** on the [June 2026 Green500](https://top500.org/lists/green500/list/2026/06/) list. In the November 2024 listing, the cluster ranked **32nd** on the [Green500](https://top500.org/lists/green500/list/2024/11/) and **85th** on the [TOP500](https://top500.org/lists/top500/list/2024/11/).
 
 ```{figure} figures/jpg/Main-Art.AI-Clustering.jpg
 ---
@@ -26,7 +26,7 @@ Use the sections below to jump into the handbook, or browse the full table of co
 ::::{grid} 1 2 3 3
 :gutter: 3
 
-:::{grid-item-card} High Performance Computing
+:::{grid-item-card} High-Performance Computing
 :link: /s1_high_performance_computing/kempner_cluster/README
 :link-type: doc
 
@@ -47,7 +47,7 @@ Version control, design principles, documentation, testing, packaging, and repro
 Reference workflows for training, distributed inference, and working with models on the cluster.
 :::
 
-:::{grid-item-card} Neuro AI Workflows
+:::{grid-item-card} NeuroAI Workflows
 :link: /s4_neuro_ai_workflows/spike_sorting
 :link-type: doc
 

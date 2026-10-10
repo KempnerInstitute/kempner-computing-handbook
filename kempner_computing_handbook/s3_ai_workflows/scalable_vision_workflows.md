@@ -1,6 +1,6 @@
 # Scalable Vision Workflows 
 
-This section covers efficient and scalable vision model training, an effort focused on enabling fast and effective training of deep learning vision models at scale. Built with PyTorch's Distributed Data-Parallel (DDP) and optimized for SLURM-managed compute environments, this section provides ready-to-use training workflows for commonly used vision architectures like [ResNet](https://arxiv.org/abs/1512.03385) and [AlexNet](https://papers.nips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf).
+This section covers efficient and scalable vision model training, an effort focused on enabling fast and effective training of deep learning vision models at scale. Built with PyTorch's Distributed Data Parallel (DDP) and optimized for SLURM-managed compute environments, this section provides ready-to-use training workflows for commonly used vision architectures like [ResNet](https://arxiv.org/abs/1512.03385) and [AlexNet](https://papers.nips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf).
 
 Rather than locking users into a single dataset or model, this project is designed to be flexible and modular. You can easily plug in your own models or datasets, making it an ideal foundation for experimentation, benchmarking, or production-scale training.
 

@@ -1,6 +1,6 @@
 # NVIDIA NeMo Workflow
 
-This section documents NVIDIA NeMo Workflows, designed for training and finetuning large language models (LLMs) on the Kempner AI Cluster using NVIDIA data center GPUs (e.g., A100, H100, and H200).
+This section documents NVIDIA NeMo Workflows, designed for training and finetuning large language models (LLMs) on the Kempner AI cluster using NVIDIA data center GPUs (e.g., A100, H100, and H200).
 
 ## Overview
 

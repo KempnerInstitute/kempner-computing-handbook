@@ -4,19 +4,19 @@
 
 **Best for**
 
-- Scaling‑law experiments — train one architecture across model sizes by changing config alone.
-Multimodal / vision‑language research — train VLMs across multiple fusion architectures (joint‑decoder, cross‑attention, mixture‑of‑transformers, modality‑aware experts).
-- Sparse‑architecture (MoE) research — toggle dense ↔ Mixture‑of‑Experts and vary routing, shared/fine‑grained experts, and MoE frequency.
-- Mechanistic interpretability & NeuroAI — layer‑wise activation extraction and raw QK^T attention capture for probing, CKA/SVCCA, and comparison against neural recordings.
-- Optimizer / scheduler studies — mix and match optimizers, LR schedules, and curriculum (data‑annealing) phases via config.
-- Long‑running jobs on shared clusters — SLURM preemption handling, async checkpointing with auto‑resume, and live health monitoring for multi‑day runs.
+- **Scaling-law experiments.** Train one architecture across model sizes by changing only the config.
+- **Multimodal and vision-language research.** Train vision-language models (VLMs) with several fusion architectures: joint-decoder, cross-attention, mixture-of-transformers, and modality-aware experts.
+- **Sparse-architecture (MoE) research.** Switch between dense and Mixture-of-Experts models, and vary the routing, shared and fine-grained experts, and how often layers use MoE.
+- **Mechanistic interpretability and NeuroAI.** Extract activations at any layer and capture raw QK^T attention matrices for probing, CKA and SVCCA analyses, and comparison with neural recordings.
+- **Optimizer and scheduler studies.** Mix and match optimizers, learning-rate schedules, and curriculum (data-annealing) phases through the config.
+- **Long-running jobs on shared clusters.** Handle SLURM preemption, save checkpoints asynchronously and resume automatically, and monitor run health live during multi-day jobs.
 
 **Core capabilities**
 
-- Architecture — decoder‑only Transformer (RoPE, GQA, SwiGLU, RMSNorm, optional QK‑Norm, torch.compile); Mixture‑of‑Experts with softmax top‑k and DeepSeek‑V3‑style sigmoid routing.
-- Multimodal / Vision‑Language Models — registry‑driven VLM stack with four fusion architectures, SigLIP2/CLIP vision encoders, and staged freeze/unfreeze training.
-- Parallelism — FSDP2, tensor, expert, and pipeline parallelism, plus FP8 mixed precision (via torchao).
-- Training — multiple optimizers and LR schedulers; distributed (DCP) checkpointing with async save and auto‑resume; stateful data pipeline with multi‑dataset mixing, annealing, and HuggingFace (eager + streaming) integration.
-- Resilience — SLURM preemption recovery, NaN detection, and GPU/NCCL health monitoring.
-- Observability — MFU tracking, peak‑memory monitoring, and WandB/TensorBoard logging.
-- Configuration — typed dataclass configs layered as defaults → TOML → CLI, with fail‑fast validation and a registry for swappable components.
+- **Architecture.** A decoder-only Transformer with RoPE, GQA, SwiGLU, RMSNorm, optional QK-Norm, and `torch.compile`, plus Mixture-of-Experts layers with softmax top-k or DeepSeek-V3-style sigmoid routing.
+- **Multimodal and vision-language models.** A registry-driven VLM stack with four fusion architectures, SigLIP2 and CLIP vision encoders, and staged training that freezes and unfreezes parts of the model.
+- **Parallelism.** FSDP2, tensor, expert, and pipeline parallelism, plus FP8 mixed precision through torchao.
+- **Training.** Multiple optimizers and learning-rate schedulers, distributed checkpointing (DCP) with asynchronous saves and automatic resume, and a stateful data pipeline with multi-dataset mixing, annealing, and Hugging Face integration in eager and streaming modes.
+- **Resilience.** SLURM preemption recovery, NaN detection, and GPU and NCCL health monitoring.
+- **Observability.** MFU tracking, peak-memory monitoring, and logging to W&B or TensorBoard.
+- **Configuration.** Typed dataclass configs layered as defaults, then TOML, then command-line overrides, with fail-fast validation and a registry for swappable components.

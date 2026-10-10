@@ -124,7 +124,7 @@ For long tasks, run the agent in print mode (`claude -p`) in a batch job, with t
 
 ## Running an IDE agent
 
-1. Connect VS Code to a compute node with Remote-SSH, as described in {doc}`VSCode for Remote Dev <../s1_high_performance_computing/development_and_runtime_envs/using_vscode_for_remote_development>`.
+1. Connect VS Code to a compute node with Remote-SSH, as described in {doc}`VS Code for Remote Dev <../s1_high_performance_computing/development_and_runtime_envs/using_vscode_for_remote_development>`.
 2. Install the agent's extension (for example Claude Code or Codex) with its **Install in SSH** button, so it runs on the cluster side.
 3. Sign in through the extension with your Harvard account, as in {ref}`Running a terminal agent <agentic_ai:running_a_terminal_agent>`.
 

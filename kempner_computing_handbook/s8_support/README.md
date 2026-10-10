@@ -1,7 +1,7 @@
 (support_and_troubleshooting)=
 # Support and Troubleshooting
 
-This page points you to the right place for help with the Kempner AI Cluster and the FASRC environment it runs on, from getting-started training to direct support.
+This page points you to the right place for help with the Kempner AI cluster and the FASRC environment it runs on, from getting-started training to direct support.
 
 ```{rubric} New to the cluster
 ```

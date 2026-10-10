@@ -8,7 +8,7 @@ This leads us to Singularity, a containerization solution specifically designed 
 
 PyTorch, one of the most popular deep learning frameworks, provides official Docker images in their [Docker Hub](https://hub.docker.com/r/pytorch/pytorch). These images can be converted to Singularity format and used on the FASRC cluster. This is a powerful feature that allows researchers to develop and test their models on local machines using Docker and then deploy them on the cluster using Singularity.
 
-Here is a simple step by step guideline to convert pytorch's official Docker image to Singularity format and use it on the cluster:
+Here is a simple step by step guideline to convert PyTorch's official Docker image to Singularity format and use it on the cluster:
 
 
 1. Log in to the FASRC cluster (on VPN):
@@ -40,9 +40,9 @@ Double-check that you have the image file in your current directory. If you have
 exit
 ```
 
-5. Run the Singularity image on the Kempner AI Cluster:
+5. Run the Singularity image on the Kempner AI cluster:
 
-You can run the Singularity image using batch or interactive jobs. Here is an example of running the image on the Kempner AI Cluster using an interactive job:
+You can run the Singularity image using batch or interactive jobs. Here is an example of running the image on the Kempner AI cluster using an interactive job:
 
 - First allocate an interactive session with a GPU:
 

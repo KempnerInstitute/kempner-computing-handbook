@@ -1,11 +1,11 @@
 (development_and_runtime_envs:using_vscode_for_remote_development)=
-# VSCode for Remote Dev
+# VS Code for Remote Dev
 
-For remote development, we recommend using Visual Studio Code (VSCode) with the Remote - SSH extension. This extension allows you to open any folder and file on the FASRC cluster and take full advantage of VSCode's feature set. 
+For remote development, we recommend using Visual Studio Code (VS Code) with the Remote - SSH extension. This extension allows you to open any folder and file on the FASRC cluster and take full advantage of VS Code's feature set. 
 
 ## Prerequisites
 
-You must install VSCode on your local machine and also ensure the Remote - SSH extension is installed.
+You must install VS Code on your local machine and also ensure the Remote - SSH extension is installed.
 
 - [Visual Studio Code](https://code.visualstudio.com/) 
 - [Remote - SSH extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)
@@ -17,9 +17,9 @@ Please see [Install Visual Studio Code extensions](https://code.visualstudio.com
 
 ## Connecting to the FASRC cluster (login node)
 
-- Step 1: The ssh configuration file on your local machine should have an entry for the FASRC cluster. 
+- Step 1: The SSH configuration file on your local machine should have an entry for the FASRC cluster. 
 
-For mac and linux users, the file is located at `~/.ssh/config`. For Windows users, the file is located at `C:\Users\<username>\.ssh\config`. Add the following entry to the `config` file:
+For macOS and Linux users, the file is located at `~/.ssh/config`. For Windows users, the file is located at `C:\Users\<username>\.ssh\config`. Add the following entry to the `config` file:
 
 ```bash
 Host cannon
@@ -35,7 +35,7 @@ Host cannon02
 
 Please make sure that you use your FASRC username in place of `<username>`.
 
-- Step 2: Open the VSCode and click on the Remote Explorer icon on the left-hand (or the right-hand) side of the window.
+- Step 2: Open the VS Code and click on the Remote Explorer icon on the left-hand (or the right-hand) side of the window.
 
 ```{figure} figures/png/vscode_ssh_login_1.png
 ---
@@ -59,13 +59,13 @@ height: 500 px
 name: VSCode SSH Login 3
 ```
 
-Once connected, you will see the file explorer on the left-hand side of the window. You can now open any folder or file on the FASRC cluster and take full advantage of VSCode's feature set. 
+Once connected, you will see the file explorer on the left-hand side of the window. You can now open any folder or file on the FASRC cluster and take full advantage of VS Code's feature set. 
 
 ```{note}
 Please do not run any computationally intensive tasks on the login node. Use the login node only for editing files and submitting jobs to the compute nodes.
 ```
 
-You can use the terminal in VSCode to run SLURM commands and submit jobs to the compute nodes. Open the terminal by clicking on `Terminal` -> `New Terminal` in the top menu. 
+You can use the terminal in VS Code to run SLURM commands and submit jobs to the compute nodes. Open the terminal by clicking on `Terminal` -> `New Terminal` in the top menu. 
 
 ```{figure} figures/png/vscode_ssh_login_4.png
 ---
@@ -78,7 +78,7 @@ name: VSCode SSH Login 4
 
 Connecting to the compute nodes requires two additional configurations:
 
-1. Add the compute node configuration to the ssh configuration file on your local machine.
+1. Add the compute node configuration to the SSH configuration file on your local machine.
 
 ```bash
 Host cannon
@@ -126,7 +126,7 @@ height: 500 px
 name: VSCode SSH Login 5
 ```
 
-Once you have the node name, go to the search bar of the VScode and type `>Remote-SSH: Connect to Host...` and then in the prompt, put `<username>@<node_name>` and press enter. 
+Once you have the node name, go to the search bar of the VS Code and type `>Remote-SSH: Connect to Host...` and then in the prompt, put `<username>@<node_name>` and press enter. 
 
 ```{figure} figures/png/vscode_ssh_login_6.png
 ---
@@ -142,16 +142,16 @@ name: VSCode SSH Login 7
 ```
 
 (development_and_runtime_envs:using_vscode_for_remote_development:jupyter)=
-## Using Jupyter notebooks within VSCode
+## Using Jupyter notebooks within VS Code
 
 
-You can open, edit, and run Jupyter notebooks within VSCode. To do so, you need to first install the [Jupyter extension](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter).
+You can open, edit, and run Jupyter notebooks within VS Code. To do so, you need to first install the [Jupyter extension](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter).
 
 
-The interface for notebooks within VSCode is similar to other methods of accessing them - there are tools for running individual cells, all cells, clearing all outputs, etc. See the [VSCode jupyter notebook documentation](https://code.visualstudio.com/docs/datascience/jupyter-notebooks) for a detailed overview of these options.
+The interface for notebooks within VS Code is similar to other methods of accessing them - there are tools for running individual cells, all cells, clearing all outputs, etc. See the [VS Code Jupyter notebook documentation](https://code.visualstudio.com/docs/datascience/jupyter-notebooks) for a detailed overview of these options.
 
 
-If you follow the instructions above, you will be able to open and run jupyter notebooks within an interactive session on the cluster. Open the notebook within VSCode and click on `Select Kernel` (in the top right corner):
+If you follow the instructions above, you will be able to open and run Jupyter notebooks within an interactive session on the cluster. Open the notebook within VS Code and click on `Select Kernel` (in the top right corner):
 
 
 ```{figure} figures/png/vscode_jupyter_notebook_1.png
@@ -171,7 +171,7 @@ name: VSCode Jupyter Notebook 2
 ```
 
 
-You can click on your preferred environment to use it within the jupyter notebook.
+You can click on your preferred environment to use it within the Jupyter notebook.
 
 
 If you recently created the conda environment, you may need to reload before it shows up. To do this, open the command palette using `Ctrl + Shift + P` (Windows)/`Shift + Command + P` (Mac) and type and select `Reload Window`.
@@ -179,9 +179,9 @@ If you recently created the conda environment, you may need to reload before it 
 (development_and_runtime_envs:using_vscode_for_remote_development:troubleshooting_connection_drops)=
 ## Troubleshooting connection drops
 
-If VSCode stops connecting and its Remote-SSH log shows `dynamic port forwarding failed!` or `Address already in use`, a leftover port from an earlier failed attempt is blocking the shared SSH connection that the `ControlMaster` option above sets up.
+If VS Code stops connecting and its Remote-SSH log shows `dynamic port forwarding failed!` or `Address already in use`, a leftover port from an earlier failed attempt is blocking the shared SSH connection that the `ControlMaster` option above sets up.
 
-Fix it from a terminal on your own computer, not the VSCode terminal on the cluster. These commands act on the existing connection and do not re-authenticate.
+Fix it from a terminal on your own computer, not the VS Code terminal on the cluster. These commands act on the existing connection and do not re-authenticate.
 
 Find the connection and the ports it is holding:
 
@@ -190,13 +190,13 @@ ssh -O check cannon                 # prints the connection's process ID
 lsof -p <master_pid> | grep LISTEN  # lists the forwarded ports
 ```
 
-Release each stuck port, then reconnect in VSCode:
+Release each stuck port, then reconnect in VS Code:
 
 ```bash
 ssh -O cancel -D <port> cannon
 ```
 
-If that does not help, reset the connection. This closes every session on `cannon`, so afterward reconnect through the VSCode Remote Explorer and re-enter your FASRC password and MFA code:
+If that does not help, reset the connection. This closes every session on `cannon`, so afterward reconnect through the VS Code Remote Explorer and re-enter your FASRC password and MFA code:
 
 ```bash
 ssh -O exit cannon

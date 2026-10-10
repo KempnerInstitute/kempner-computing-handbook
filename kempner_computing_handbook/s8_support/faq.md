@@ -52,10 +52,10 @@ git remote set-url origin git@github.com:[Github account]/[Github repository].gi
 Replace `[Github account]` with your GitHub account and `[Github repository]` with the repository you are pushing to.
 :::
 
-## VSCode
+## VS Code
 
-:::{dropdown} VSCode keeps dropping its connection to the cluster ("dynamic port forwarding failed")
-VSCode Remote-SSH can stop reconnecting when leftover port forwards accumulate on the shared SSH connection, showing `dynamic port forwarding failed!` or `Address already in use` in its Remote-SSH log. Release the stuck port with `ssh -O cancel -D <port> cannon`, or reset the shared connection with `ssh -O exit cannon` and reconnect. For the full steps, see {ref}`Troubleshooting connection drops <development_and_runtime_envs:using_vscode_for_remote_development:troubleshooting_connection_drops>` on the VSCode page.
+:::{dropdown} VS Code keeps dropping its connection to the cluster ("dynamic port forwarding failed")
+VS Code Remote-SSH can stop reconnecting when leftover port forwards accumulate on the shared SSH connection, showing `dynamic port forwarding failed!` or `Address already in use` in its Remote-SSH log. Release the stuck port with `ssh -O cancel -D <port> cannon`, or reset the shared connection with `ssh -O exit cannon` and reconnect. For the full steps, see {ref}`Troubleshooting connection drops <development_and_runtime_envs:using_vscode_for_remote_development:troubleshooting_connection_drops>` on the VS Code page.
 :::
 
 ## Agentic AI
@@ -87,8 +87,8 @@ Then run `source ~/.bashrc`, or log in again, and check with `claude --version`.
 Your account limits how much you can use Claude Code or Codex in a period of time. Inside a Claude Code session, `/usage` shows how much of your limits you have used. Every agent you run counts against the same limits, so several sessions in parallel, or an array of agent jobs, reach them sooner. Cap how many run at once (for example `--array=0-49%4`); see {ref}`Watch cost and context <agentic_ai:watch_cost>`.
 :::
 
-:::{dropdown} An agent extension in VSCode cannot see my cluster files
-An agent extension must run where your files are. In a Remote-SSH window, install it from the Extensions view with its **Install in SSH** button; an extension installed only on your laptop works on your laptop's files. Connect the window to a compute node rather than a login node, as described in {doc}`VSCode for Remote Dev <../s1_high_performance_computing/development_and_runtime_envs/using_vscode_for_remote_development>`, so the agent's commands do not run on a shared login node. If the connection itself keeps dropping, see {ref}`Troubleshooting connection drops <development_and_runtime_envs:using_vscode_for_remote_development:troubleshooting_connection_drops>`.
+:::{dropdown} An agent extension in VS Code cannot see my cluster files
+An agent extension must run where your files are. In a Remote-SSH window, install it from the Extensions view with its **Install in SSH** button; an extension installed only on your laptop works on your laptop's files. Connect the window to a compute node rather than a login node, as described in {doc}`VS Code for Remote Dev <../s1_high_performance_computing/development_and_runtime_envs/using_vscode_for_remote_development>`, so the agent's commands do not run on a shared login node. If the connection itself keeps dropping, see {ref}`Troubleshooting connection drops <development_and_runtime_envs:using_vscode_for_remote_development:troubleshooting_connection_drops>`.
 :::
 
 :::{dropdown} My agent session ended when my connection dropped

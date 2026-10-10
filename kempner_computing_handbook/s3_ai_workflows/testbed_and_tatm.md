@@ -1,7 +1,7 @@
 # Data Discovery and Tokenization
 
 The Research and Engineering team at the Kempner Institute is actively developing a testbed to support AI/ML research and development. The testbed is a collection of hardware and software resources that are used to test and validate new AI/ML models, algorithms, and tools. Currently
-the primary focus of the testbed is easing access and exploration of data, through the `tatm` python library. Specific details on using `tatm` can be found in the [tatm documentation](https://kempnerinstitute.github.io/tatm/), but key points regarding Kempner specific usage are detailed below.
+the primary focus of the testbed is easing access and exploration of data, through the `tatm` Python library. Specific details on using `tatm` can be found in the [tatm documentation](https://kempnerinstitute.github.io/tatm/), but key points regarding Kempner specific usage are detailed below.
 
 ## Using `tatm` on the Kempner AI Cluster
 
@@ -46,7 +46,7 @@ data:
 ```
 
 
-The `custom_dataset` provides OLMo the necessary information to load the dataset. The `name` section provides the name of the python object or function that will return a Pytorch dataset object (in this case the `tatm.data.get_dataset` function). The `args` section specifies the keyword arguments to the function or class constructor in `name`. For these specific arguments, the `metadata` field specifies the semantic name of the dataset to load and can also be used to point to a metadata file on disk or a directory containing a metadata file, and the `context_length` field specifies the length of the input sequences. The `collate_config` section specifies how to collate the data into batches. In this case, we are using the custom collator in OLMo which maps output fields in a custom class to expected fields in the OLMo model. The `input_id_field` specifies the name of the field in the dataset that contains the input IDs. This maps the `token_ids` field in the dataset to the `input_ids` field in the OLMo dataset.
+The `custom_dataset` provides OLMo the necessary information to load the dataset. The `name` section provides the name of the Python object or function that will return a PyTorch dataset object (in this case the `tatm.data.get_dataset` function). The `args` section specifies the keyword arguments to the function or class constructor in `name`. For these specific arguments, the `metadata` field specifies the semantic name of the dataset to load and can also be used to point to a metadata file on disk or a directory containing a metadata file, and the `context_length` field specifies the length of the input sequences. The `collate_config` section specifies how to collate the data into batches. In this case, we are using the custom collator in OLMo which maps output fields in a custom class to expected fields in the OLMo model. The `input_id_field` specifies the name of the field in the dataset that contains the input IDs. This maps the `token_ids` field in the dataset to the `input_ids` field in the OLMo dataset.
 
 Using this config in an environment with OLMo and `tatm` installed and running OLMo as normal should allow you to load the dataset and train a model using the data.
 
