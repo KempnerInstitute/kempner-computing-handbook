@@ -11,7 +11,7 @@ In majority of use-cases of multi-GPU computation there is the need for differen
 
 (sec-nccl)=
 ### NVIDIA Collective Communication Library (NCCL)
-For multi-GPU and multi-node communication, NVIDIA Collective Communication Library (NCCL, pronounced “Nickel”) is being used as backend in distributed strategies for Nvidia GPUs such as Distributed Data Parallel (DDP) and Fully Sharded Data Parallel (FSDP). Following are some of the most related NCCL collective communication primitives :
+For multi-GPU and multi-node communication, NVIDIA Collective Communication Library (NCCL, pronounced “Nickel”) is being used as backend in distributed strategies for NVIDIA GPUs such as Distributed Data Parallel (DDP) and Fully Sharded Data Parallel (FSDP). Following are some of the most related NCCL collective communication primitives :
 * Scatter: From one rank, data will be distributed across all rank, with each rank receiving a subpart of the data.
 * Gather: One rank will receive the aggregation of data from all ranks.
 * AllGather: Each rank receives the aggregation of data from all ranks in the order of the ranks.
@@ -209,7 +209,7 @@ The conda environment activation needs also be added to the slurm scripts.
 Now create `mlp_single_gpu.py` and `random_dataset.py` from {numref}`mlp_single_gpu` and {numref}`random_dataset` respectively and use the following slurm script to run it on the AI cluster.
 ```{code-block} bash
 :name: single_gpu_slurm
-:caption: Slurm script skeleton to run the single-GPU mlp example.
+:caption: SLURM script skeleton to run the single-GPU mlp example.
 #! /bin/bash
 #SBATCH --job-name=mlp-single-gpu
 #SBATCH --output=mlp.out
@@ -232,7 +232,7 @@ python mlp_single_gpu.py
 ### Distributed Data Parallelism (DDP)
 Distributed Data Parallelism facilitates training a model on high-volume datasets by distributing the computation across multiple devices. It involves splitting the dataset into smaller batches that are processed in parallel across different GPUs. Each GPU trains a copy of the model on its subset of the data, and the results are aggregated to update the model.
 
-Particularly, in each training step, GPUs perform forward and backward passes locally and compute the parameter gradients corresponding to their current data batch. Then before updating the model weights, GPUs communicate to sum the parameter gradients across GPUs. This guarantees the model replicas being kept consistent across GPUs before starting the next training step. This inter-GPU communication are optimized by All-Reduce collective communication primitive from NCCL library for Nvidia GPUs, see {numref}`sec-nccl`.
+Particularly, in each training step, GPUs perform forward and backward passes locally and compute the parameter gradients corresponding to their current data batch. Then before updating the model weights, GPUs communicate to sum the parameter gradients across GPUs. This guarantees the model replicas being kept consistent across GPUs before starting the next training step. This inter-GPU communication are optimized by All-Reduce collective communication primitive from NCCL library for NVIDIA GPUs, see {numref}`sec-nccl`.
 
 {numref}`ddp` shows a high-level overview of how DDP works. 
 ```{figure} figures/png/DDP.png
@@ -379,7 +379,7 @@ To run this code we need the `random_dataset.py` from {numref}`random_dataset` a
 Now use the following slurm script skeleton to run the `mlp_ddp.py` from {numref}`mlp_ddp_code`. Note that we need to add environment variables to specify the Master node info, rank, local rank, etc.
 ```{code-block} bash
 :name: multi_gpu_slurm
-:caption: Slurm script skeleton to run {numref}`mlp_ddp_code` on multiple GPUs. Here, it requests for two nodes, one GPU on each node, a total of two GPUs.
+:caption: SLURM script skeleton to run {numref}`mlp_ddp_code` on multiple GPUs. Here, it requests for two nodes, one GPU on each node, a total of two GPUs.
 #! /bin/bash
 #SBATCH --job-name=mlp_ddp
 #SBATCH --output=ddp.out

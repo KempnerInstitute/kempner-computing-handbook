@@ -178,7 +178,7 @@ The `uv.lock` file is the authoritative lockfile for a `uv` project. An exported
 ```
 
 (development_and_runtime_envs:using_uv_env:slurm)=
-## Using the Environment in a Slurm Job
+## Using the Environment in a SLURM Job
 
 Create and test the environment before submitting a long-running job. In the job script, load the same non-Python modules used when the environment was created, enter the project directory, and use `uv run`:
 

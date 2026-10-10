@@ -279,7 +279,7 @@ sbatch run_array_job.sh
 
 
 `````
-- Useful Slurm commands ([Click Here](https://github.com/KempnerInstitute/intro-compute-march-2024))
+- Useful SLURM commands ([Click Here](https://github.com/KempnerInstitute/intro-compute-march-2024))
 - Monitoring Job Status and Utilization
 
 
