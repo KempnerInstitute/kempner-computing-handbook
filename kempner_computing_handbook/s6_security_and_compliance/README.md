@@ -22,6 +22,8 @@ The following activities are not allowed on the cluster.
 - **Evading security controls.** Do not disable, interfere with, or try to evade security monitoring, logging, access controls, or other security mechanisms.
 - **Unauthorized or malicious activity.** Do not use cluster resources for unauthorized or malicious activity. This includes attempts to compromise other systems, disrupt services, or exfiltrate data, and using resources for purposes that Harvard, Kempner Institute, or FASRC policies prohibit.
 
+These rules do not restrict normal cluster work, such as running jobs with `sbatch`, `salloc`, or `srun`, connecting with SSH or VS Code Remote-SSH to a node where your job runs, serving a model on a compute node for your lab, or checking the queue with `squeue`.
+
 If you are not sure whether an activity is allowed, or you need authorization for one, ask FASRC at [rchelp@rc.fas.harvard.edu](mailto:rchelp@rc.fas.harvard.edu) before you start.
 
 (security_and_compliance:account_and_access_security)=
