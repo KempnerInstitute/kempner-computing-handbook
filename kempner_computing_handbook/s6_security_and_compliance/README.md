@@ -40,7 +40,7 @@ To keep your credentials safe:
 - Report a suspected account compromise immediately; see {ref}`Reporting a concern <security_and_compliance:reporting_a_concern>`.
 
 ```{warning}
-**Remote control of AI agents.** Some AI agents, including Claude Code (Remote Control) and Codex (remote connections), let you drive a running session from a phone or a browser. On the cluster, a session with remote control on can be steered from any device signed in to your AI account, without the FASRC login and two-factor authentication that normally protect your cluster account. Until there is specific guidance on these features, be careful: leave remote control off unless you need it, stop it when you are done, protect the AI account with multi-factor authentication, and never let anyone else use it. See {ref}`Remote control <agentic_ai:remote_control>`.
+**Remote control of AI agents.** Some AI agents let you drive a running session from a phone or a browser, including Claude Code's Remote Control, `codex remote-control`, and the ChatGPT app's remote connections. On the cluster, a session with remote control on can be steered from any device signed in to your AI account, without the FASRC login and two-factor authentication that normally protect your cluster account. Remote control bypasses normal cluster authentication, so do not turn it on for sessions on the cluster; see {ref}`Prohibited activities <security_and_compliance:prohibited_activities>` and {ref}`Remote control <agentic_ai:remote_control>`.
 ```
 
 (security_and_compliance:data_classification)=
