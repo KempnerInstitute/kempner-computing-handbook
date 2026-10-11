@@ -14,7 +14,7 @@ This workshop provides a practical, interactive way to learn about transformers 
 
 To download the "Building a Transformer from Scratch" workshop slides, click the link below.
 
-{download}`KempnerLLM Distributed Training Workshop </_static/workshop/Kempner_Building_a_Transformer_from_Scratch_Workshop.pdf>`
+{download}`Kempner LLM Distributed Training Workshop </_static/workshop/Kempner_Building_a_Transformer_from_Scratch_Workshop.pdf>`
 
 <div style="text-align: center;">
  <iframe src="/_static/workshop/Kempner_Building_a_Transformer_from_Scratch_Workshop.pdf" width="90%" height="460px" style="border: none;"></iframe>

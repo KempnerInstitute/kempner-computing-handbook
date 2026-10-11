@@ -11,10 +11,10 @@ name: Profiling Loop
 ---
 Profiling Loop to Optimize Code
 ```
-## Profiling using Pytorch Profiler
+## Profiling using PyTorch Profiler
 PyTorch profiler is a tool that facilitates collecting different performance metrics at runtime to better understand what happens behind the scene. For example, during training of a ML model, torch profiler can be used for understanding the most expensive model operators, their impact and studying device kernel activity. More particularly to answer the following questions:
 * How much GPU run time contributes to Computation, Communication or Memory related kernels.
-* How much these different categories overlap one another (non-blocking kernel calls or multiple parallel cuda streams can be used to provide overlapping).
+* How much these different categories overlap one another (non-blocking kernel calls or multiple parallel CUDA streams can be used to provide overlapping).
 * What kernels are the most expensive ones within the above categories (breakdown).
 
 Following shows how we can wrap the training loop to be performed in the context of the torch profiler using `with` statement.
@@ -95,8 +95,8 @@ To explore more about the features HTA provides refer to:
 https://hta.readthedocs.io/en/latest/source/intro/using_hta.html
 ```
 
-## Nvidia Nsight Tools 
-Alternatively, Nvidia Nsight Systems and Nsight Compute combination can be used to analyze and visualize the insight of application’s algorithms. Nsight Systems (High-Level Profiling) checks our code overall to see if there are any problems (e.g., with host and device communication or GPU kernels) identifying non-performant/top kernel(s) and then Nsight Compute (Kernel-Specific Profiling) dives into the details of the identified kernel(s) to help with optimizing, debugging and fixing the issue.
+## NVIDIA Nsight Tools 
+Alternatively, NVIDIA Nsight Systems and Nsight Compute combination can be used to analyze and visualize the insight of application’s algorithms. Nsight Systems (High-Level Profiling) checks our code overall to see if there are any problems (e.g., with host and device communication or GPU kernels) identifying non-performant/top kernel(s) and then Nsight Compute (Kernel-Specific Profiling) dives into the details of the identified kernel(s) to help with optimizing, debugging and fixing the issue.
 ```{figure} figures/png/nsight_systems_compute.png
 ---
 height: 250px
@@ -105,11 +105,11 @@ name: NVIDIA Nsight System and Compute
 NVIDIA Nsight System and Compute
 ```
 
-### Alexnet Toy Example
-The Following code is a toy example of training an Alexnet model. This example is used here to show how Nvidia Nsight Tools work. The `torch.cuda.nvtx` is used to specify what regions of the code to be profiled and when:
+### AlexNet Toy Example
+The Following code is a toy example of training an AlexNet model. This example is used here to show how NVIDIA Nsight Tools work. The `torch.cuda.nvtx` is used to specify what regions of the code to be profiled and when:
 ```{code-block} python
 :name: Nsight-alexnet-example
-:caption: Annotating an Alexnet toy example using `torch.cuda.nvtx` to specify what region in the code and when to profile using Nsight System and Compute.
+:caption: Annotating an AlexNet toy example using `torch.cuda.nvtx` to specify what region in the code and when to profile using Nsight System and Compute.
 
 import torch
 import torchvision.models as models
@@ -165,7 +165,7 @@ torch.cuda.cudart().cudaProfilerStop()
 ```
 
 ### Prepare The Experimental Environment on the Cluster
-* Following modules needs to be loaded on the cluster using the following command line. These command line is added to the slurm scripts for running Nsight System and Nsight Compute on {numref}`Nsight-System-Slurm` and {numref}`Nsight-Compute-Slurm` respectively.
+* Following modules needs to be loaded on the cluster using the following command line. These command line is added to the SLURM scripts for running Nsight System and Nsight Compute on {numref}`Nsight-System-Slurm` and {numref}`Nsight-Compute-Slurm` respectively.
 ```{code-block} bash
 module load python nvhpc cudnn cuda
 ```
@@ -178,13 +178,13 @@ conda create -n profiling python=3.10
 conda activate profiling
 pip3 install torch torchvision torchaudio
 ```
-The conda environment activation needs also be added to the slurm scripts.
+The conda environment activation needs also be added to the SLURM scripts.
 
 ### System-Level Profiling Using Nsight System
-To use Nsight Systems one can profile the training process for 3 epochs after a 5-epoch warmup. Usually it is a good practice to skip a few iterations since it might add overhead training due to memory allocations, `cudnn` benchmarking etc. A slurm script to run it on the cluster could be as follows:
+To use Nsight Systems one can profile the training process for 3 epochs after a 5-epoch warmup. Usually it is a good practice to skip a few iterations since it might add overhead training due to memory allocations, `cudnn` benchmarking etc. A SLURM script to run it on the cluster could be as follows:
 ```{code-block} bash
 :name: Nsight-System-Slurm
-:caption: Slurm script to run Alexnet example of {numref}`Nsight-alexnet-example` and Using Nsight System for Profiling.
+:caption: SLURM script to run AlexNet example of {numref}`Nsight-alexnet-example` and Using Nsight System for Profiling.
 #! /bin/bash
 #SBATCH --job-name=profiling_nsys_alexnet
 #SBATCH --time=1:00:00
@@ -207,7 +207,7 @@ After profiling using the above command line (`nsys profile`), it will generate 
 ```{code} bash
 nsys stats --report cuda_gpu_kern_sum report_file.nsys-rep
 ```
-The following report is the output of the above command when profiling Alexnet example in {numref}`Nsight-alexnet-example`:
+The following report is the output of the above command when profiling AlexNet example in {numref}`Nsight-alexnet-example`:
 ````{dropdown} GPU Kernels Breakdown Report
 ```{code} bash
 ** CUDA GPU Kernel Summary (cuda_gpu_kern_sum):
@@ -273,10 +273,10 @@ Nsight System GUI for Visualizing the Profiling of 3 Steps of Above Example.
 sqlite3 report_file.sqlite "SELECT AVG(value) FROM GPU_Metrics WHERE metricId = (SELECT metricId from TARGET_INFO_GPU_METRICS where metricName LIKE '%SM Active%')"
 ```
 ### Kernel-Specific Profiling Using Nsight Compute  
-Now for example one can pick the `ampere_gcgemm_64x64_nt` kernel and get more detail about this specific kernel (it takes 13.6% of the gpu time) using Nsight Compute. We can use the following slurm script.
+Now for example one can pick the `ampere_gcgemm_64x64_nt` kernel and get more detail about this specific kernel (it takes 13.6% of the GPU time) using Nsight Compute. We can use the following SLURM script.
 ```{code-block} bash
 :name: Nsight-Compute-Slurm
-:caption: Slurm script to run Alexnet example of {numref}`Nsight-alexnet-example` and Using Nsight Compute to profile the `ampere_gcgemm_64x64_nt` kernel.
+:caption: SLURM script to run AlexNet example of {numref}`Nsight-alexnet-example` and Using Nsight Compute to profile the `ampere_gcgemm_64x64_nt` kernel.
 #! /bin/bash
 #SBATCH --job-name=profiling_ncu_alexnet
 #SBATCH --time=1:00:00

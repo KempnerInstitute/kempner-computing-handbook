@@ -4,7 +4,7 @@ title: Kempner Institute Computing Handbook
 options:
   numbered: true
 parts:
-  - caption: High Performance Computing
+  - caption: High-Performance Computing
     numbered: true
     chapters:
     - file: s1_high_performance_computing/kempner_cluster/README
@@ -66,7 +66,7 @@ parts:
     - file: s3_ai_workflows/get_hf_model
     - file: s3_ai_workflows/kempnerpulse
     - file: s3_ai_workflows/kempnerforge
-  - caption: Neuro AI Workflows
+  - caption: NeuroAI Workflows
     numbered: true
     chapters:
     - file: s4_neuro_ai_workflows/spike_sorting

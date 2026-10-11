@@ -31,7 +31,7 @@ flowchart LR
     class A,M you;
 ```
 
-Keep the chain's files in a directory that git ignores, so they never reach your commits.
+Keep the chain's files in a directory that Git ignores, so they never reach your commits.
 
 ::::{tab-set}
 :::{tab-item} 1. Plan
@@ -86,7 +86,7 @@ In a test on the cluster with a toy repository, the chain produced a plan, an im
 
 ## Run independent agents in parallel
 
-Two agents editing the same checkout overwrite each other's work, so give each one its own git worktree, a separate checkout on its own branch:
+Two agents editing the same checkout overwrite each other's work, so give each one its own Git worktree, a separate checkout on its own branch:
 
 ```bash
 claude --worktree fix-loader      # in one terminal
@@ -95,7 +95,7 @@ claude --worktree add-metrics     # in another
 
 - **Where it goes.** Each command creates `.claude/worktrees/<name>/` on a new branch `worktree-<name>`, from the default branch, and starts a session there. Add `.claude/worktrees/` to your `.gitignore`.
 - **Its own environment.** A worktree is a fresh checkout, so set up its environment there, for example with `uv sync`.
-- **Cleanup.** When an interactive session exits, Claude Code removes a worktree with no changes and asks about one with work in it. Print-mode runs leave theirs; remove them with `git worktree remove <path>` after their branches are merged, and run `git worktree unlock <path>` first if git reports a lock.
+- **Cleanup.** When an interactive session exits, Claude Code removes a worktree with no changes and asks about one with work in it. Print-mode runs leave theirs; remove them with `git worktree remove <path>` after their branches are merged, and run `git worktree unlock <path>` first if Git reports a lock.
 
 On the cluster, run the sessions in separate tmux windows that share one job. Start the job with `salloc` in the first window, and in each other window run `srun --jobid=<job_id> --overlap --pty bash`. Review and merge each branch on its own. See the Claude Code [worktrees documentation](https://code.claude.com/docs/en/worktrees).
 

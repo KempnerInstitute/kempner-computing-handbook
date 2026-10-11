@@ -17,7 +17,7 @@ Efficiency techniques act on three levers:
 
 Mixed precision runs most operations in 16-bit while keeping a 32-bit master copy of the weights, and it uses full precision for the operations that need it. This cuts memory use, and because the cluster's A100, H100, and H200 GPUs have tensor cores built for 16-bit and lower, the speedup is larger than the memory saving alone would suggest.
 
-Prefer **bf16** on these GPUs: it has the same exponent range as fp32, so it trains stably without the loss-scaling that fp16 needs. Some models and sensitive operations still benefit from full 32-bit precision, which mixed precision keeps where it matters.
+Prefer **BF16** on these GPUs: it has the same exponent range as FP32, so it trains stably without the loss-scaling that FP16 needs. Some models and sensitive operations still benefit from full 32-bit precision, which mixed precision keeps where it matters.
 
 ```python
 import torch
@@ -32,7 +32,7 @@ for x, y in dataloader:
 ```
 
 ```{note}
-If you use **fp16** instead (for example on older GPUs), wrap the step with a [`torch.amp.GradScaler`](https://docs.pytorch.org/docs/stable/amp.html) to avoid underflow. bf16 does not need it. For how the precisions compare in raw throughput on each GPU, see the {doc}`GPU partition benchmarks <../../technical_blog/choosing_gpu_partition>`.
+If you use **FP16** instead (for example on older GPUs), wrap the step with a [`torch.amp.GradScaler`](https://docs.pytorch.org/docs/stable/amp.html) to avoid underflow. BF16 does not need it. For how the precisions compare in raw throughput on each GPU, see the {doc}`GPU partition benchmarks <../../technical_blog/choosing_gpu_partition>`.
 ```
 
 ## Fit more in memory
@@ -104,7 +104,7 @@ out = F.scaled_dot_product_attention(q, k, v, is_causal=True)
 
 For custom attention masks, such as packing several sequences into one batch or sliding-window masking, [FlexAttention](https://pytorch.org/blog/flexattention/) compiles a flexible mask or score modification into a fused kernel.
 
-**TF32** lets fp32 matmuls use faster tensor-core math on A100 and newer, usually with no accuracy impact:
+**TF32** lets FP32 matmuls use faster tensor-core math on A100 and newer, usually with no accuracy impact:
 
 ```python
 torch.set_float32_matmul_precision("high")

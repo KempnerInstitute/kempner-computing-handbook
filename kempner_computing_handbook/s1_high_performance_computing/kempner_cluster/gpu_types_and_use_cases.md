@@ -14,7 +14,7 @@ Each GPU type is served by its own SLURM partition, and the RTX6000 nodes hold t
 | RTX6000 96GB | Blackwell | `kempner_rtx` | 8 |
 
 ```{seealso}
-For node counts and the physical hardware layout, see [Overview of the Kempner Cluster](overview_of_kempner_cluster.md). For partition time limits and job submission syntax, see [Understanding SLURM](../general_hpc_concepts/understanding_slurm.md) and [Job Submission Basics](../general_hpc_concepts/job_submission_basics.md).
+For node counts and the physical hardware layout, see [Overview of Cluster](overview_of_kempner_cluster.md). For partition time limits and job submission syntax, see [Understanding SLURM](../general_hpc_concepts/understanding_slurm.md) and [Job Submission Basics](../general_hpc_concepts/job_submission_basics.md).
 ```
 
 ## Specifications at a Glance
@@ -60,7 +60,7 @@ The RTX6000 connects to other GPUs over PCIe Gen5 rather than NVLink. For jobs t
 ```
 
 ```{note}
-Across nodes, the cluster network is non-blocking for the `kempner_h200` and `kempner_rtx` partitions, while `kempner_h100` is currently 2:1 oversubscribed. This matters for multi-node training that spans many GPUs. See [Overview of the Kempner Cluster](overview_of_kempner_cluster.md).
+Across nodes, the cluster network is non-blocking for the `kempner_h200` and `kempner_rtx` partitions, while `kempner_h100` is currently 2:1 oversubscribed. This matters for multi-node training that spans many GPUs. See [Overview of Cluster](overview_of_kempner_cluster.md).
 ```
 
 ## GPU Profiles

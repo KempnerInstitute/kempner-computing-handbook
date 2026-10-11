@@ -1,7 +1,7 @@
 (security_and_compliance)=
 # Security and Compliance
 
-Working on the Kempner AI Cluster is a shared responsibility. The cluster is part of Harvard's [FASRC](https://docs.rc.fas.harvard.edu/) environment, so your account, your data, and the jobs you run are all subject to university and FASRC policy. This page summarizes the practices and rules that keep the cluster secure and your research compliant. It points to the authoritative Harvard and FASRC pages for the details, which take precedence over anything summarized here.
+Working on the Kempner AI cluster is a shared responsibility. The cluster is part of Harvard's [FASRC](https://docs.rc.fas.harvard.edu/) environment, so your account, your data, and the jobs you run are all subject to university and FASRC policy. This page summarizes the practices and rules that keep the cluster secure and your research compliant. It points to the authoritative Harvard and FASRC pages for the details, which take precedence over anything summarized here.
 
 ```{seealso}
 The overarching policies live in the [FASRC Acceptable Use Policy](https://docs.rc.fas.harvard.edu/kb/acceptable-use/) and [Harvard Research Data Management and Policy Compliance](https://research.harvard.edu/research-policies-compliance/research-data-management/). For cluster-specific expectations, see {doc}`Cluster Usage Policies <../s1_high_performance_computing/kempner_cluster/kempner_policies_for_responsible_use>`.
@@ -41,7 +41,7 @@ Harvard classifies data into five security levels. The level determines where th
 See the [Harvard Data Classification Table](https://security.harvard.edu/data-classification-table) for the authoritative definitions.
 
 ```{warning}
-The Kempner AI Cluster is rated for data up to **Level 2 (L2)** only. Do **not** place L3 or higher data on the cluster. Level 3 data must be handled in Harvard's dedicated [FASSE secure environment](https://docs.rc.fas.harvard.edu/kb/fasse/), which is rated for L3 only; Level 4 and above are not permitted on any FASRC system. For regulated (Level 4) data, use Harvard University Research Computing's [Regulated Data Services](https://rc.harvard.edu/services/regulated-data-services-user-guide/).
+The Kempner AI cluster is rated for data up to **Level 2 (L2)** only. Do **not** place L3 or higher data on the cluster. Level 3 data must be handled in Harvard's dedicated [FASSE secure environment](https://docs.rc.fas.harvard.edu/kb/fasse/), which is rated for L3 only; Level 4 and above are not permitted on any FASRC system. For regulated (Level 4) data, use Harvard University Research Computing's [Regulated Data Services](https://rc.harvard.edu/services/regulated-data-services-user-guide/).
 ```
 
 ```{warning}

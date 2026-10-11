@@ -32,13 +32,13 @@ export PATH="$HOME/.local/bin:$PATH"
 ```
 
 ```{note}
-The standalone installation of `uv` does not require Conda or an existing Python installation. See the [`uv` installation documentation](https://docs.astral.sh/uv/getting-started/installation/) for alternative installation and upgrade methods.
+The standalone installation of `uv` does not require conda or an existing Python installation. See the [`uv` installation documentation](https://docs.astral.sh/uv/getting-started/installation/) for alternative installation and upgrade methods.
 ```
 
 (development_and_runtime_envs:using_uv_env:project)=
 ## Creating an Environment for a Project
 
-The recommended `uv` workflow keeps the dependency declarations and lockfile in the project directory. The virtual environment is stored in a `.venv` directory by default.
+The recommended `uv` workflow keeps the dependency declarations and lock file in the project directory. The virtual environment is stored in a `.venv` directory by default.
 
 - Step 1: Enter an interactive compute session if required by cluster policy, then inspect the currently loaded modules:
 
@@ -165,20 +165,20 @@ After cloning the project, recreate the environment with:
 uv sync --locked
 ```
 
-With `--locked`, `uv` fails rather than rewriting `uv.lock` when the lockfile and project metadata disagree, which is useful in batch jobs and other reproducible workflows.
+With `--locked`, `uv` fails rather than rewriting `uv.lock` when the lock file and project metadata disagree, which is useful in batch jobs and other reproducible workflows.
 
-If another tool requires a `requirements.txt` file, export one from the lockfile:
+If another tool requires a `requirements.txt` file, export one from the lock file:
 
 ```bash
 uv export --format requirements.txt --output-file requirements.txt
 ```
 
 ```{note}
-The `uv.lock` file is the authoritative lockfile for a `uv` project. An exported `requirements.txt` file is mainly intended for interoperability with tools that do not understand `uv.lock`.
+The `uv.lock` file is the authoritative lock file for a `uv` project. An exported `requirements.txt` file is mainly intended for interoperability with tools that do not understand `uv.lock`.
 ```
 
 (development_and_runtime_envs:using_uv_env:slurm)=
-## Using the Environment in a Slurm Job
+## Using the Environment in a SLURM Job
 
 Create and test the environment before submitting a long-running job. In the job script, load the same non-Python modules used when the environment was created, enter the project directory, and use `uv run`:
 
@@ -237,7 +237,7 @@ uv cache clean ruff      # remove cache entries for one package
 ```
 
 ```{warning}
-Scratch storage is periodically purged. It can be suitable for a disposable cache, but do not rely on it as the only location for project source code or lockfiles. If `.venv` is purged, recreate it with `uv sync --locked`.
+Scratch storage is periodically purged. It can be suitable for a disposable cache, but do not rely on it as the only location for project source code or lock files. If `.venv` is purged, recreate it with `uv sync --locked`.
 ```
 
 ## Troubleshooting

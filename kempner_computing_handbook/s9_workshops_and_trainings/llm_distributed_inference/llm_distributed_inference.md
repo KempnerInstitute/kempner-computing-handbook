@@ -9,7 +9,7 @@ This workshop provides hands-on training on hosting and running inference for la
 ### Prerequisites
 - Familiarity with Python programming
 - Familiarity with LLMs
-- Familiarity with high performance computing (HPC) 
+- Familiarity with High-Performance Computing (HPC) 
 - Access to the FASRC cluster
 
 ## Workshop Slides 
