@@ -220,6 +220,10 @@ pip install jupyter-collaboration
 jupyter lab   # collaborative editing is now enabled
 ```
 
+```{warning}
+Do not host a Live Share or JupyterLab collaboration session on the cluster. Guests would work in your files and could run code under your cluster account without logging in themselves. That lets another person use your account, which is not allowed; see {ref}`Prohibited activities <security_and_compliance:prohibited_activities>`. Host the session on your own computer, or share the code through Git.
+```
+
 ```{note}
 Real-time editing does not replace version control. Treat a live session like a shared scratchpad: once the work settles, still commit it and integrate it through the normal review workflow described under {ref}`Version Control Systems <collaborative_code_development:version_control_systems>` and {ref}`Branching & Collaboration Models <collaborative_code_development:branching_collaboration_models>`.
 ```

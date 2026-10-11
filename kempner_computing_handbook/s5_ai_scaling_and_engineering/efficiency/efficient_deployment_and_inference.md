@@ -34,7 +34,7 @@ vllm serve meta-llama/Llama-3.1-8B-Instruct
 The OpenAI-compatible endpoint lets existing client tools connect to your model without code changes.
 
 ```{warning}
-A served endpoint is reachable over the network, so secure it. Gate requests with an API key by passing `--api-key` (or setting `VLLM_API_KEY`); vLLM then rejects requests without it. Per vLLM's [security guidance](https://docs.vllm.ai/en/stable/usage/security/), do not expose an inference server on an untrusted network, and treat the key as a shared secret. See {doc}`Cluster Usage Policies <../../s1_high_performance_computing/kempner_cluster/kempner_policies_for_responsible_use>` for network conduct.
+A served endpoint is reachable over the network, so secure it. Gate requests with an API key: keep the key in a file only you can read (`chmod 600`) and load it into `VLLM_API_KEY`, for example `export VLLM_API_KEY=$(cat ~/.vllm_key)`, rather than writing it in a job script or passing it with `--api-key`. vLLM then rejects requests without the key. Per vLLM's [security guidance](https://docs.vllm.ai/en/stable/usage/security/), do not expose an inference server on an untrusted network, and treat the key as a shared secret. Exposing cluster services directly to external networks without authorization is not allowed; see {ref}`Prohibited activities <security_and_compliance:prohibited_activities>`.
 ```
 
 ```{seealso}

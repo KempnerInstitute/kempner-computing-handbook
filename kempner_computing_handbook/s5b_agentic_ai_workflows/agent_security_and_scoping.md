@@ -1,6 +1,6 @@
 # Agent Security and Scoping
 
-An agent runs as you, so it can reach whatever your account can reach on a shared cluster. This page covers how an agent can be turned against you, who can steer it when remote control is on, and how to limit what a misdirected agent can touch. For the guardrails you set in Claude Code itself, such as permission rules and hooks, see {ref}`Guardrails <agentic_ai:guardrails>`.
+An agent runs as you, so it can reach whatever your account can reach on a shared cluster. This page covers how an agent can be turned against you, why remote control is not allowed on the cluster, and how to limit what a misdirected agent can touch. For the guardrails you set in Claude Code itself, such as permission rules and hooks, see {ref}`Guardrails <agentic_ai:guardrails>`.
 
 (agentic_ai:agent_security)=
 ## Agent security
@@ -40,15 +40,14 @@ A repository you clone can ship project instructions, hooks in `.claude/settings
 
 Some agents can be steered from another device. Claude Code's [Remote Control](https://code.claude.com/docs/en/remote-control), started with `/remote-control` in a session, `claude --remote-control`, or `claude remote-control` (server mode), or for every session with a setting, connects a session on your machine to claude.ai/code or the Claude phone app. Codex has a similar feature: `codex remote-control` (experimental) and the ChatGPT app's [remote connections](https://learn.chatgpt.com/docs/remote-connections), which can also reach projects over SSH. Any device signed in to the same account can then send the agent instructions and approve its actions, and everything runs on the connected machine.
 
-On the cluster, that machine is your cluster account. With remote control on, any device signed in to your AI account can steer the session, without the FASRC login, two-factor authentication, and VPN that normally protect the cluster. An unlocked phone or a browser left signed in becomes a way into your cluster account. Claude Code also keeps the session's transcript, including tool activity, on Anthropic's servers while it is connected. Until there is specific guidance on these features, be careful:
+On the cluster, that machine is your cluster account. With remote control on, any device signed in to your AI account can steer the session, without the FASRC login, two-factor authentication, and VPN that normally protect the cluster. An unlocked phone or a browser left signed in becomes a way into your cluster account. Claude Code also keeps the session's transcript, including tool activity, on Anthropic's servers while it is connected. Remote control bypasses normal cluster authentication, so do not turn it on for sessions on the cluster; see {ref}`Prohibited activities <security_and_compliance:prohibited_activities>`.
 
-- **Leave it off unless you need it.** Turn it on only for the session that needs it. Do not turn on "Enable Remote Control for all sessions" (`remoteControlAtStartup`) on the cluster.
-- **Stop it when you are done.** Run `/remote-control` again to disconnect, or end the session; in server mode, press Ctrl+C. For Codex, run `codex remote-control stop`.
-- **Protect the account that controls it.** Sign in only on devices you control and use multi-factor authentication. Consider Claude's Trusted Devices, which requires each device to be verified before it can view or steer a session. Never let anyone else use the account.
-- **Rule it out where you do not want it.** `"disableRemoteControl": true` in `~/.claude/settings.json` turns Claude Code's Remote Control off entirely.
-- **Prefer the usual way in.** To check on a long run, log in to the cluster and reattach tmux, or read the batch job's logs.
+- **Keep it off.** Do not use Claude Code's Remote Control, `codex remote-control`, or the ChatGPT app's remote connections with cluster sessions. Do not turn on "Enable Remote Control for all sessions" (`remoteControlAtStartup`) on the cluster.
+- **Turn it off for good.** `"disableRemoteControl": true` in `~/.claude/settings.json` turns Claude Code's Remote Control off entirely.
+- **Stop it if it is on.** Run `/remote-control` again to disconnect, or end the session; in server mode, press Ctrl+C. For Codex, run `codex remote-control stop`.
+- **Use the usual way in.** To check on a long run, log in to the cluster and reattach tmux, or read the batch job's logs.
 
-If you think someone else used a session, stop it and report it as described in {doc}`Security and Compliance <../s6_security_and_compliance/README>`.
+If remote control was on and you think someone else used the session, stop it and report it as described in {ref}`Reporting a concern <security_and_compliance:reporting_a_concern>`.
 
 (agentic_ai:scoping)=
 ## Scoping an agent to its task

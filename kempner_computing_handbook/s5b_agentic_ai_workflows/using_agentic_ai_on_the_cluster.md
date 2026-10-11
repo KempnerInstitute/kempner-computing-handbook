@@ -116,7 +116,7 @@ To pick up a conversation after your job ends, start a new job, `cd` to the same
 - `claude --continue` reopens the most recent conversation in that directory, but not one started with `claude -p`.
 - `claude --resume` lets you choose an earlier conversation, or takes a session ID.
 
-Conversations are saved under `~/.claude/projects/`, so you can resume them from any node. Background sessions (`claude --bg`) run without a terminal, but they still end when your job does, so they do not replace tmux. To check on a session from another device, reattach tmux rather than turn on remote control; see {ref}`Remote control <agentic_ai:remote_control>`.
+Conversations are saved under `~/.claude/projects/`, so you can resume them from any node. Background sessions (`claude --bg`) run without a terminal, but they still end when your job does, so they do not replace tmux. To check on a session from another device, log in to the cluster and reattach tmux. Do not turn on remote control; see {ref}`Remote control <agentic_ai:remote_control>`.
 
 ### Long or unattended runs
 
