@@ -7,19 +7,37 @@ Working on the Kempner AI cluster is a shared responsibility. The cluster is par
 The overarching policies live in the [FASRC Acceptable Use Policy](https://docs.rc.fas.harvard.edu/kb/acceptable-use/) and [Harvard Research Data Management and Policy Compliance](https://research.harvard.edu/research-policies-compliance/research-data-management/). For cluster-specific expectations, see {doc}`Cluster Usage Policies <../s1_high_performance_computing/kempner_cluster/kempner_policies_for_responsible_use>`.
 ```
 
+(security_and_compliance:prohibited_activities)=
+## Prohibited activities
+
+The following activities are not allowed on the cluster.
+
+- **Sharing credentials or accounts.** Do not share your cluster credentials or let another person use your account. Cluster access is tied to an individual user and must not be shared; see {ref}`Account and access security <security_and_compliance:account_and_access_security>`.
+- **Bypassing SLURM.** Do not bypass, or try to bypass, SLURM scheduling and resource-allocation policies. Access and allocate compute resources only through approved mechanisms.
+- **Unauthorized remote access.** Do not set up unauthorized remote-access mechanisms that bypass normal cluster authentication, obscure user identity, or circumvent SLURM resource allocation on compute nodes. This includes tunnels, proxies, remote-access services, and similar mechanisms set up to bypass cluster controls.
+- **Scanning or probing.** Do not scan or probe cluster systems, users, processes, directories, services, or networks without explicit authorization. This includes vulnerability scanning, port scanning, process enumeration, unauthorized access attempts, and exploring resources that you are not authorized to access.
+- **Uncontrolled agentic workflows.** Do not run unsupervised or insufficiently controlled agentic workflows at scale if they could interact with cluster infrastructure, networks, user data, credentials, or external systems in ways that create security risk. You remain responsible for the actions of automated and agentic workloads that run under your account; see {ref}`Responsible use of AI tools <security_and_compliance:responsible_use_of_ai_tools>` and {ref}`Before an unattended run <agentic_ai:before_an_unattended_run>`.
+- **Exposing the cluster to external networks.** Do not expose cluster services or compute nodes directly to external networks without authorization. This includes opening ports, running public-facing servers, and creating network tunnels that circumvent approved access controls.
+- **Storing or exposing secrets.** Do not store or expose sensitive credentials in source code, shared directories, notebooks, logs, job scripts, or other locations that unauthorized users can access. Sensitive credentials include passwords, API keys, access tokens, SSH private keys, and other secrets.
+- **Evading security controls.** Do not disable, interfere with, or try to evade security monitoring, logging, access controls, or other security mechanisms.
+- **Unauthorized or malicious activity.** Do not use cluster resources for unauthorized or malicious activity. This includes attempts to compromise other systems, disrupt services, or exfiltrate data, and using resources for purposes that Harvard, Kempner Institute, or FASRC policies prohibit.
+
+If you are not sure whether an activity is allowed, or you need authorization for one, ask FASRC at [rchelp@rc.fas.harvard.edu](mailto:rchelp@rc.fas.harvard.edu) before you start.
+
+(security_and_compliance:account_and_access_security)=
 ## Account and access security
 
 Your cluster account is tied to you personally, and you are accountable for everything done under it.
 
 ```{warning}
-Never share your account or credentials with anyone, including labmates. Account sharing violates university policy: accounts found sharing credentials may be **disabled or banned**, access can be **revoked**, and further university action may follow. If someone needs access, they must request their own account. See [Can I share my account?](https://docs.rc.fas.harvard.edu/kb/can-i-share-my-account/).
+Never share your account or credentials with anyone, including labmates. Account sharing violates university policy: accounts found sharing credentials may be **disabled or banned**, access can be **revoked**, and further university action may follow. Authentication and access logs are actively monitored for suspicious activity and unusual login patterns, and user accounts have already been disabled in response to credential sharing. If someone needs access, they must request their own account. See [Can I share my account?](https://docs.rc.fas.harvard.edu/kb/can-i-share-my-account/).
 ```
 
 To keep your credentials safe:
 
 - Use a password manager. Harvard provides [1Password](https://www.huit.harvard.edu/password-manager) free to the community, and its use is encouraged.
 - Keep your two-factor (OpenAuth) device secure, and never share one-time codes. See the {doc}`New User Checklist <../s1_high_performance_computing/kempner_cluster/new_user_checklist>` for setup.
-- Report a suspected account compromise immediately (see **Reporting a concern** below).
+- Report a suspected account compromise immediately; see {ref}`Reporting a concern <security_and_compliance:reporting_a_concern>`.
 
 ```{warning}
 **Remote control of AI agents.** Some AI agents, including Claude Code (Remote Control) and Codex (remote connections), let you drive a running session from a phone or a browser. On the cluster, a session with remote control on can be steered from any device signed in to your AI account, without the FASRC login and two-factor authentication that normally protect your cluster account. Until there is specific guidance on these features, be careful: leave remote control off unless you need it, stop it when you are done, protect the AI account with multi-factor authentication, and never let anyone else use it. See {ref}`Remote control <agentic_ai:remote_control>`.
@@ -124,6 +142,7 @@ Your work is also bound by the requirements of whoever funds and governs it.
 - **Data use agreements.** Honor every DUA and contract that applies to data you use, as directed by your PI.
 - **University policy.** You are responsible for knowing and following applicable Harvard Information Security and Research Data Security policies.
 
+(security_and_compliance:reporting_a_concern)=
 ```{admonition} Reporting a concern
 :class: important
 If you suspect a security incident, a compromised account, or a policy violation, report it promptly. Contact FASRC at [rchelp@rc.fas.harvard.edu](mailto:rchelp@rc.fas.harvard.edu) and, for security incidents, Harvard's Information Security office at [ithelp@harvard.edu](mailto:ithelp@harvard.edu). Acting quickly limits the impact on you, your lab, and the wider cluster.
