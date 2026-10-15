@@ -37,7 +37,7 @@ Get started on the Kempner AI cluster: SLURM scheduling, environments, storage, 
 :link: /s2_swe_for_research/collaborative_code_development
 :link-type: doc
 
-Version control, design principles, documentation, testing, packaging, and reproducible research.
+Version control, design principles, documentation, testing, packaging, reproducible research, and coding agent skills.
 :::
 
 :::{grid-item-card} AI Tools and Workflows

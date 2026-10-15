@@ -60,6 +60,9 @@ sphinx:
     ogp_site_name: Kempner Institute Computing Handbook
     sitemap_url_scheme: "{link}"
     mermaid_version: "11.12.1"
+    # Serve the coding agent skills at /skills/<name>/SKILL.md.
+    html_extra_path:
+      - _extra
     # Link checking (run via: jupyter-book build ... --builder linkcheck).
     linkcheck_anchors: false
     linkcheck_retries: 2
