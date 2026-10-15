@@ -140,7 +140,7 @@ Stochastic steps such as random sampling, weight initialization, data shuffling,
 
 - **Seed every RNG you actually use.** A single library's seed does not cover the others. If your code uses Python's `random`, NumPy, and a framework such as PyTorch, seed each one.
 - **Prefer explicit local generators over global state.** A local generator (NumPy `default_rng(seed)` or a `torch.Generator`) carries its own state, so its stream is not perturbed by unrelated library calls and is easy to pass around and reason about.
-- **Watch non-obvious sources of nondeterminism.** The `PYTHONHASHSEED` environment variable randomizes `str`/`bytes` hashing and therefore the iteration order of sets and dicts; set it to a fixed integer for stable ordering. Multi-threading and multi-processing reorder work, and some GPU operations (certain CUDA and cuDNN kernels, for example) are not deterministic by default.
+- **Watch non-obvious sources of nondeterminism.** Python randomizes `str`/`bytes` hashing by default, which changes the iteration order of sets between runs; set the `PYTHONHASHSEED` environment variable to a fixed integer before Python starts for stable ordering. Multi-threading and multi-processing reorder work, and some GPU operations (certain CUDA and cuDNN kernels, for example) are not deterministic by default.
 - **Enable deterministic algorithms when exact reproducibility matters.** In PyTorch, `torch.use_deterministic_algorithms(True)` (with `torch.backends.cudnn.deterministic = True` and `torch.backends.cudnn.benchmark = False`) opts into deterministic kernels. This can be slower, and even then PyTorch notes that results are not guaranteed to match across releases, platforms, or between CPU and GPU.
 - **Record the seed with the results.** Log the seed alongside outputs (see {ref}`record what produced each result <reproducible_research:key_principles>`) so a run can be reproduced later.
 
@@ -187,14 +187,16 @@ data_version: v3
 
 ```python
 import subprocess, shutil, json, yaml
+from datetime import datetime
 from pathlib import Path
 
 cfg = yaml.safe_load(open("config.yaml"))           # all parameters come from the config
 commit = subprocess.check_output(                   # the exact code revision
     ["git", "rev-parse", "HEAD"], text=True).strip()
 
-out = Path("runs") / commit[:8]                      # one folder per run
-out.mkdir(parents=True, exist_ok=True)
+stamp = datetime.now().strftime("%Y-%m-%d_%H%M%S")
+out = Path("runs") / f"{stamp}_{commit[:8]}"         # one folder per run
+out.mkdir(parents=True)
 shutil.copy("config.yaml", out / "config.yaml")      # save the resolved config
 (out / "run_meta.json").write_text(                  # plus commit and seed
     json.dumps({"commit": commit, "seed": cfg["seed"]}, indent=2))
