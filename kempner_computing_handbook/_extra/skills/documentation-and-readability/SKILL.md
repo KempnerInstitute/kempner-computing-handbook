@@ -1,6 +1,6 @@
 ---
 name: documentation-and-readability
-description: Documentation and readability practices for research code from the Kempner Institute Computing Handbook. Covers READMEs, PEP 257 docstrings in Google or NumPy style, comments that explain why, PEP 8 naming, small functions and guard clauses, type hints, doctest, Sphinx and MkDocs, data dictionaries, and CITATION.cff files. Use when writing or reviewing docstrings, comments, a README, or project documentation, or when making research code easier to read.
+description: Use when writing or reviewing docstrings, comments, a README, or project documentation, or when making research code easier to read. Covers READMEs, PEP 257 docstrings in Google or NumPy style, comments that explain why, PEP 8 naming, small functions and guard clauses, type hints, doctest, Sphinx and MkDocs, data dictionaries, and CITATION.cff files. From the Kempner Institute Computing Handbook.
 ---
 
 # Documentation and Readability
@@ -39,7 +39,7 @@ If the project has its own conventions, for example in its README, a CONTRIBUTIN
 
 - Record the method, parameter values and ranges, random seeds, software versions, and assumptions behind each result.
 - Document each dataset with a README or data dictionary that lists every variable with its meaning, units, allowed values, and provenance. Aim for FAIR data: Findable, Accessible, Interoperable, and Reusable.
-- Add a `CITATION.cff` file at the repository root, and update its `version` and `doi` for each archived release.
+- Add a `CITATION.cff` file at the repository root, and update its `version` and `doi` for each archived release. Add a `doi` only after Zenodo or another archive mints one. Never invent a DOI.
 
 ```yaml
 cff-version: 1.2.0
@@ -49,12 +49,12 @@ authors:
   - family-names: Smith
     given-names: Jane
 version: 1.0.0
-doi: 10.5281/zenodo.1234567
+doi: 10.5281/zenodo.1234567   # the DOI the archive minted for this release
 ```
 
 ## Before you finish
 
-- Public functions and classes have docstrings.
-- The README explains the purpose, setup, and usage.
-- Notebook outputs are cleared before commit.
-- All dependencies are documented.
+- New and changed public functions and classes have docstrings.
+- The README still matches any setup or usage you changed.
+- New dependencies are documented.
+- Suggest clearing notebook outputs before a commit, but do not clear them without asking.

@@ -1,6 +1,6 @@
 ---
 name: software-design-principles
-description: Design guidance for research code from the Kempner Institute Computing Handbook. Covers KISS, DRY, YAGNI, separation of concerns, modules with small interfaces, pure functions, dependency injection, the strategy and factory patterns, adapters for external libraries, deterministic design, APIs and CLIs, and layered architecture. Use when designing, writing, refactoring, or reviewing the structure of research code, or when turning a script into reusable modules.
+description: Use when designing, writing, refactoring, or reviewing the structure of research code, or when turning a script into reusable modules. Covers KISS, DRY, YAGNI, separation of concerns, modules with small interfaces, pure functions, dependency injection, the strategy and factory patterns, adapters for external libraries, deterministic design, APIs and CLIs, and layered architecture. From the Kempner Institute Computing Handbook.
 ---
 
 # Software Design Principles

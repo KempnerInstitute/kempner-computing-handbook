@@ -1,6 +1,6 @@
 ---
 name: testing-and-continuous-integration
-description: Testing and continuous integration practices for research code from the Kempner Institute Computing Handbook. Covers pytest tests, fixtures, parametrize, mocking and monkeypatch, Hypothesis, coverage with pytest-cov, GitHub Actions workflows, and research checks such as float tolerances, seeded randomness, and regression tests against saved references. Use when writing, running, or reviewing tests, measuring coverage, or setting up CI for a research repository.
+description: Use when writing, running, or reviewing tests, measuring coverage, or setting up CI for a research repository. Covers pytest tests, fixtures, parametrize, mocking and monkeypatch, Hypothesis, coverage with pytest-cov, GitHub Actions workflows, and research checks such as float tolerances, seeded randomness, and regression tests against saved references. From the Kempner Institute Computing Handbook.
 ---
 
 # Testing and Continuous Integration
@@ -82,8 +82,11 @@ jobs:
       - run: pytest
 ```
 
+The workflow installs a `test` extra. Declare it in `pyproject.toml`, for example `test = ["pytest", "pytest-cov"]` under `[project.optional-dependencies]`, or change the install step to match the project.
+
 ## Before you finish
 
-- Run the full test suite and report the result.
+- Run the test suite and report the result.
+- On the Kempner AI cluster, run tests on a compute node in a SLURM job, never on a login node. Ask before you start a long or GPU test run.
 - New or changed behavior has tests, including edge cases.
 - Tests are deterministic and pass when run alone or in any order.

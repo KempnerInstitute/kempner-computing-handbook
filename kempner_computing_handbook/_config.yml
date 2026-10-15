@@ -37,6 +37,7 @@ html:
 
 exclude_patterns:
   - _build
+  - _extra
   - .DS_Store
   - scalability/distributed_computing.md
   - s9_workshops_and_trainings/workshops/*
