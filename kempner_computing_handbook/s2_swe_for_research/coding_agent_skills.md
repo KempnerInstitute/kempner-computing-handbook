@@ -24,7 +24,7 @@ An agent follows a skill's instructions, so read a skill before you install it, 
 
 ### Ask your agent
 
-Point the agent at this page, and name the skills you want or ask for all of them. Ask it to download each file with curl. A web-fetch tool can return a summary instead of the file.
+Point the agent at this page. Name the skills you want, or ask for all of them. Ask the agent to download each file with curl. A web-fetch tool can return a summary instead of the file.
 
 ```text
 Install the testing-and-continuous-integration and reproducible-research skills
@@ -32,44 +32,56 @@ for all my projects. Download each SKILL.md with curl, using the links on this p
 https://handbook.eng.kempnerinstitute.harvard.edu/s2_swe_for_research/coding_agent_skills.html
 ```
 
-To install the skills for one project only, write "for this project" instead of "for all my projects". The agent asks you to approve the downloads. When it finishes, load the skills as described in {ref}`Use a skill <coding_agent_skills:use>`.
+To install the skills for one project only, write "for this project" instead of "for all my projects". The agent may ask you to approve the downloads. When it finishes, load the skills as described in {ref}`Use a skill <coding_agent_skills:use>`.
 
-If your agent runs in the sandbox from {ref}`Agent sandboxing <agentic_ai:agent_sandboxing>`, it cannot write to its skills folder, so install the skills by hand.
+If your agent runs in a sandbox, such as the one in {ref}`Agent sandboxing <agentic_ai:agent_sandboxing>`, it may not be able to download the files or write to its skills folder. In that case, install the skills by hand.
 
 ### Install by hand
 
-Set `dest` to a folder from the table. The loop installs all six skills; delete the names you do not want. For one project, run the loop from the repository's top folder.
+Set `dest` to a folder from the table. The list holds all six skills; delete the lines for skills you do not want. For one project, run the commands from the repository's top folder.
 
 ::::{tab-set}
 :::{tab-item} Claude Code
 ```bash
 dest=~/.claude/skills    # for one project: dest=.claude/skills
 base=https://handbook.eng.kempnerinstitute.harvard.edu/skills
-for skill in collaborative-code-development software-design-principles \
-    documentation-and-readability testing-and-continuous-integration \
-    package-development reproducible-research; do
+skills=(
+  collaborative-code-development
+  software-design-principles
+  documentation-and-readability
+  testing-and-continuous-integration
+  package-development
+  reproducible-research
+)
+for skill in "${skills[@]}"; do
   mkdir -p $dest/$skill
   curl -fsSL $base/$skill/SKILL.md -o $dest/$skill/SKILL.md || echo "Failed: $skill"
 done
-ls $dest
+ls $dest/*/SKILL.md
 ```
 :::
 :::{tab-item} Codex
 ```bash
 dest=~/.agents/skills    # for one project: dest=.agents/skills
 base=https://handbook.eng.kempnerinstitute.harvard.edu/skills
-for skill in collaborative-code-development software-design-principles \
-    documentation-and-readability testing-and-continuous-integration \
-    package-development reproducible-research; do
+skills=(
+  collaborative-code-development
+  software-design-principles
+  documentation-and-readability
+  testing-and-continuous-integration
+  package-development
+  reproducible-research
+)
+for skill in "${skills[@]}"; do
   mkdir -p $dest/$skill
   curl -fsSL $base/$skill/SKILL.md -o $dest/$skill/SKILL.md || echo "Failed: $skill"
 done
-ls $dest
+ls $dest/*/SKILL.md
 ```
 :::
 ::::
 
-The loop prints nothing for a skill that installs, and `ls` then lists the skill folders. If a line says `Failed`, check the spelling of that name, delete its empty folder, and run the loop again. To update the skills when the chapters change, run the loop again. It replaces the files, including any edits you made. To remove a skill, delete its folder.
+The loop prints nothing for a skill that installs, and `ls` then lists each installed `SKILL.md` file. If every skill fails, check your connection. If one skill fails, check the spelling of its name. Then run the commands again. A failed first install leaves an empty folder, which you can delete. To update the skills when the chapters change, run the loop again. It replaces the files, including any edits you made. To remove a skill, delete its folder.
 
 (coding_agent_skills:use)=
 ## Use a skill
@@ -83,7 +95,7 @@ The loop prints nothing for a skill that installs, and `ls` then lists the skill
 
 In a test on the cluster, Claude Code 2.1.300 and Codex CLI 0.160.0 each loaded all six skills from a repository's skills folder.
 
-Each skill tells the agent to follow your project's own conventions first, such as a CONTRIBUTING file or agent instructions. The skills for Git, packaging, and reproducibility also list actions that the agent takes only when you ask, such as pushing, publishing, deleting, or starting long runs. Project conventions do not override that list.
+Each skill tells the agent to follow your project's own conventions first, such as a CONTRIBUTING file or agent instructions. The skills for Git, packaging, and reproducibility also list actions that the agent takes only when you ask, such as pushing, publishing, deleting, or starting long runs. Project conventions do not override that list, but your own requests count as asking, whether you type them or write them in your agent instructions.
 
 (coding_agent_skills:skills_by_chapter)=
 ## Skills by chapter

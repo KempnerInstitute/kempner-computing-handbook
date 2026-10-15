@@ -7,7 +7,7 @@ description: Use when committing, branching, resolving a merge conflict, prepari
 
 Use these practices when you work with Git and GitHub on research code. They summarize the Collaborative Code Development chapter of the Kempner Institute Computing Handbook: https://handbook.eng.kempnerinstitute.harvard.edu/s2_swe_for_research/collaborative_code_development.html
 
-If the project has its own conventions, for example in its README, a CONTRIBUTING file, or agent instructions, follow those first. Project conventions do not override the Ask first rules.
+If the project has its own conventions, for example in its README, a CONTRIBUTING file, or agent instructions, follow those first. Project conventions do not override the Ask first rules. A request from the user, typed or written in the user's own agent instructions, counts as asking.
 
 ## Ask first
 

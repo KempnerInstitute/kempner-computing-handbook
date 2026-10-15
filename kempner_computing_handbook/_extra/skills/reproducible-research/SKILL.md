@@ -7,13 +7,13 @@ description: Use when setting up an analysis or experiment, adding randomness, s
 
 Use these practices when you set up, run, or share a research analysis, so the same code and data give the same result. They summarize the Reproducible Research chapter of the Kempner Institute Computing Handbook: https://handbook.eng.kempnerinstitute.harvard.edu/s2_swe_for_research/reproducible_research.html
 
-If the project has its own conventions, for example in its README, a CONTRIBUTING file, or agent instructions, follow those first. Project conventions do not override the Ask first rules.
+If the project has its own conventions, for example in its README, a CONTRIBUTING file, or agent instructions, follow those first. Project conventions do not override the Ask first rules. A request from the user, typed or written in the user's own agent instructions, counts as asking.
 
 ## Ask first
 
 - Never edit or delete raw data. Ask before you delete outputs or run commands that remove files.
 - Ask before you start a long or GPU run or submit a SLURM job. Check the pipeline on a small input first.
-- Make a repository public, upload or deposit data, or archive a release only when the user asks. Data may leave the PI's lab space only with the PI's approval and within its grant terms and data use agreements.
+- Commit, make a repository public, upload or deposit data, or archive a release only when the user asks. Data may leave the PI's lab space only with the PI's approval and within its grant terms and data use agreements.
 
 ## Principles
 
@@ -81,12 +81,12 @@ shutil.copy("config.yaml", out / "config.yaml")      # save the resolved config
 
 - Run the pipeline twice on a small input on the same machine, and compare the outputs. Then run it again in a clean environment rebuilt from the lock file.
 - Add a regression test that runs the pipeline on a small input and compares the result with a saved reference, using `numpy.testing.assert_allclose` or `pytest.approx` rather than exact equality.
-- When you change behavior on purpose, inspect the difference, confirm the new output is correct, then regenerate the reference and commit it as a deliberate update.
+- When you change behavior on purpose, inspect the difference and confirm the new output is correct. Then regenerate the reference, and commit it as a deliberate update when the user asks.
 - Run the pipeline end to end on a small input in CI.
 
 ## Share and archive
 
-- Publish the code in a public repository with a `LICENSE` file once the work is ready to share.
+- Publish the code in a public repository, with a `LICENSE` file for the license the user chose, once the work is ready to share.
 - Archive a tagged GitHub release on Zenodo to get a DOI, and cite that release's DOI in the paper.
 - Deposit data in a repository that gives it a DOI, such as Zenodo, Figshare, Dryad, Dataverse, or a domain repository found through re3data. Follow the FAIR principles.
 - Bundle a research compendium: `README.md`, `LICENSE`, `CITATION.cff`, `environment.yml`, `data/`, `analysis/`, and `outputs/`.

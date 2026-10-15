@@ -7,7 +7,7 @@ description: Use when turning research code into an installable Python package, 
 
 Use these practices when you turn research code into an installable Python package, change its packaging, or prepare a release. They summarize the Package Development chapter of the Kempner Institute Computing Handbook: https://handbook.eng.kempnerinstitute.harvard.edu/s2_swe_for_research/package_development.html
 
-If the project has its own conventions, for example in its README, a CONTRIBUTING file, or agent instructions, follow those first. Project conventions do not override the Ask first rules. Keep the project's build backend and layout unless the user asks you to change them.
+If the project has its own conventions, for example in its README, a CONTRIBUTING file, or agent instructions, follow those first. Project conventions do not override the Ask first rules. A request from the user, typed or written in the user's own agent instructions, counts as asking. Keep the project's build backend and layout unless the user asks you to change them.
 
 ## Ask first
 
@@ -66,7 +66,7 @@ When the user asks you to publish:
 
 1. Build the sdist and wheel with `python -m build`.
 2. Ask the user to upload to TestPyPI first: `python -m twine upload --repository testpypi dist/*`.
-3. Check that the package installs from TestPyPI: `pip install --index-url https://test.pypi.org/simple/ --no-deps my-package`.
+3. In a fresh virtual environment, check that the package installs from TestPyPI and imports: `pip install --index-url https://test.pypi.org/simple/ --no-deps my-package`, then `python -c "import my_package"`. An environment with the editable install already has the package, so it proves nothing.
 4. Ask the user to upload to PyPI: `python -m twine upload dist/*`.
 
 - Uploads use an API token, not a password: the username is `__token__`, and the password is the token, including its `pypi-` prefix. TestPyPI needs its own account and token.
