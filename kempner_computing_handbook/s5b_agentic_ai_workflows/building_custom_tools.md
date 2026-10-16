@@ -31,7 +31,7 @@ description: Check a finished SLURM job. Use when asked why a job failed or how 
 4. Propose a fix to the batch script. Do not submit or cancel anything.
 ```
 
-The agent loads the skill when a request matches its description, or when you type `/check-job`. In a test on the cluster, `claude -p "/check-job 51161725"` followed all four steps and, as the skill says, trusted the job's log over its misleading memory record. To share skills, subagents, hooks, and MCP servers as one package, use a plugin; [KempnerForge](https://github.com/KempnerInstitute/KempnerForge) ships one, described in {doc}`Working with Unfamiliar Research Codebases <unfamiliar_codebases>`. See the [skills documentation](https://code.claude.com/docs/en/skills).
+The agent loads the skill when a request matches its description, or when you type `/check-job`. In a test on the cluster, `claude -p "/check-job 51161725"` followed all four steps and, as the skill says, trusted the job's log over its misleading memory record. To share skills, subagents, hooks, and MCP servers as one package, use a plugin; [KempnerForge](https://github.com/KempnerInstitute/KempnerForge) ships one, described in {doc}`Working with Unfamiliar Research Codebases <unfamiliar_codebases>`. See the [skills documentation](https://code.claude.com/docs/en/skills). For ready-made skills, one per Software Engineering for Research chapter, see {doc}`Coding Agent Skills <../s2_swe_for_research/coding_agent_skills>`.
 
 ## Build a read-only MCP server
 

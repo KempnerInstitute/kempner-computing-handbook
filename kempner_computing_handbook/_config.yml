@@ -37,6 +37,7 @@ html:
 
 exclude_patterns:
   - _build
+  - _extra
   - .DS_Store
   - scalability/distributed_computing.md
   - s9_workshops_and_trainings/workshops/*
@@ -60,6 +61,9 @@ sphinx:
     ogp_site_name: Kempner Institute Computing Handbook
     sitemap_url_scheme: "{link}"
     mermaid_version: "11.12.1"
+    # Serve the coding agent skills at /skills/<name>/SKILL.md.
+    html_extra_path:
+      - _extra
     # Link checking (run via: jupyter-book build ... --builder linkcheck).
     linkcheck_anchors: false
     linkcheck_retries: 2

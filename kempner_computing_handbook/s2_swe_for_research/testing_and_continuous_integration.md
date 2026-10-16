@@ -171,7 +171,7 @@ jobs:
         python-version: ["3.11", "3.12", "3.13"]
     steps:
       - uses: actions/checkout@v7        # get the repository contents
-      - uses: actions/setup-python@v6     # install the chosen Python
+      - uses: actions/setup-python@v7     # install the chosen Python
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip                      # cache pip downloads between runs

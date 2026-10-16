@@ -31,7 +31,7 @@ Instruction files load every session and use context, so keep them lean. Move lo
 
 ## Skills
 
-A skill packages a repeatable workflow, such as a release checklist or a data-cleaning routine, so you stop pasting the same steps into chat. In Claude Code, a skill is a `SKILL.md` file in its own folder under `.claude/skills/`. The agent loads it when a task needs it or when you call it by name, so long reference material costs almost nothing until you use it. To write one, see {doc}`Building Custom Tools and MCP Servers <building_custom_tools>`.
+A skill packages a repeatable workflow, such as a release checklist or a data-cleaning routine, so you stop pasting the same steps into chat. In Claude Code, a skill is a `SKILL.md` file in its own folder under `.claude/skills/`. The agent loads it when a task needs it or when you call it by name, so long reference material costs almost nothing until you use it. To write one, see {doc}`Building Custom Tools and MCP Servers <building_custom_tools>`. For ready-made skills that apply this handbook's software engineering practices, see {doc}`Coding Agent Skills <../s2_swe_for_research/coding_agent_skills>`.
 
 ## Connecting tools and data with MCP
 

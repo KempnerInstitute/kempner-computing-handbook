@@ -15,7 +15,7 @@ flowchart LR
 
 ## Start read-only
 
-Clone the repository into your lab or scratch space. Before you start an agent in it, read its agent configuration: project instructions (`CLAUDE.md` or `AGENTS.md`), hooks in `.claude/settings.json`, MCP servers in `.mcp.json`, and skills in `.claude/skills/`. Treat these files like code you are about to run, and accept Claude Code's trust prompt only after you have read them; see {ref}`Untrusted repositories <agentic_ai:untrusted_repositories>`.
+Clone the repository into your lab or scratch space. Before you start an agent in it, read its agent configuration: project instructions (`CLAUDE.md` or `AGENTS.md`), hooks in `.claude/settings.json`, MCP servers in `.mcp.json`, and skills in `.claude/skills/` or `.agents/skills/`. Treat these files like code you are about to run, and accept Claude Code's trust prompt only after you have read them; see {ref}`Untrusted repositories <agentic_ai:untrusted_repositories>`.
 
 Then start the agent in plan mode (`--permission-mode plan`, or `Shift+Tab` in a session), so it explores without editing files. Where auto mode is available, a classifier can still approve shell commands during planning. To rule them out, start the agent with `--tools "Read,Grep,Glob"`, which leaves it only the built-in tools that read and search.
 

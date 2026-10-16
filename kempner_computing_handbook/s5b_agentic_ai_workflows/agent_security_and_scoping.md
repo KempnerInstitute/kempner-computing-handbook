@@ -33,7 +33,7 @@ For risk categories and defenses, see OWASP's [Top 10 for Agentic Applications](
 (agentic_ai:untrusted_repositories)=
 ### Untrusted repositories
 
-A repository you clone can ship project instructions, hooks in `.claude/settings.json`, MCP servers in `.mcp.json`, and skills in `.claude/skills/`, and they run as you. In print mode, Claude Code runs the hooks, starts the servers, and applies the settings' `env` block without asking, even in a folder you have never opened. Before you run an agent in a repository you did not write, read those files. With `claude -p`, add `--setting-sources user` to skip the project's settings and `.mcp.json`.
+A repository you clone can ship project instructions, hooks in `.claude/settings.json`, MCP servers in `.mcp.json`, and skills in `.claude/skills/` or `.agents/skills/`, and they run as you. In print mode, Claude Code runs the hooks, starts the servers, and applies the settings' `env` block without asking, even in a folder you have never opened. Before you run an agent in a repository you did not write, read those files. With `claude -p`, add `--setting-sources user` to skip the project's settings and `.mcp.json`.
 
 (agentic_ai:remote_control)=
 ### Remote control
