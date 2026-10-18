@@ -67,5 +67,5 @@ Check the output yourself: open the figure, read the numbers, and run any tests.
 Once the task is right, refine it or move on to the next one. When you are done, type `/exit` to leave Claude Code, then `exit` to end the interactive job and release its resources, and `exit` once more to close tmux.
 
 ```{seealso}
-For the tool landscape, see {doc}`Agentic AI Tools <agentic_ai_tools>`; to configure an agent for your project, see {doc}`Configuring Agents for Your Project <configuring_agents>`; to keep everything on the cluster, see {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`; and for using agents across the research process, see {doc}`Agentic AI in Research <agentic_ai_in_research>`.
+For the tool landscape, see {doc}`Agentic AI Tools <agentic_ai_tools>`; to configure an agent for your project, see {doc}`Configuring Agents for Your Project <configuring_agents>`; to keep everything on the cluster, see {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`; and for using agents across the research process, see {doc}`Agentic AI in Research <agentic_ai_in_research>`. For a complete workflow with an unattended loop, see {doc}`End-to-End Agentic Workflow Example <end_to_end_example>`.
 ```

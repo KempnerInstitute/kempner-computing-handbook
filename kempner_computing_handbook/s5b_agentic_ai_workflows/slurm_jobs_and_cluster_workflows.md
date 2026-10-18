@@ -28,6 +28,7 @@ ClusterTool commands fall into three groups. Before you allow a command not list
 
 Administrator commands fail without administrator rights. Live displays such as the `me` dashboard, `gpu monitor-job`, `gpu nvtop`, `gpu pulse`, and `jobs top` are read-only but not useful to an agent. ClusterTool works on compute nodes, so an agent in an interactive job can use it.
 
+(agentic_ai:write_a_batch_script)=
 ## Write a batch script
 
 > Write a batch script that runs `train.py` on one GPU on the `kempner` partition with my account `<your_account>`: 8 CPUs, 32 GB of memory, 15 minutes, and output in `logs/`. Show me the script before saving it.
@@ -67,6 +68,7 @@ Free GPU shards and N-GPU-job fit  (job shape: 8 CPU + 32768 MiB per GPU)
 A 4-GPU job on one node would fit on 2 nodes right away, and the tool flags a node that is down.
 :::
 
+(agentic_ai:submit_and_monitor)=
 ## Submit and monitor
 
 Approve the `sbatch` when the agent asks. To follow the job, the agent can use `squeue --me`, `clustertool jobs list`, and `clustertool jobs log <job_id>`. Ask it to check once a minute or less often, because frequent polling spends tokens and loads the shared scheduler. For a short job, it can run `sbatch --wait` as a background command, which returns when the job ends.
@@ -138,6 +140,7 @@ The 4-GPU version took more than twice as long. The model is small, so each GPU 
 JobScope averages periodic samples, so it is unreliable for jobs of a minute or two. Here the single-GPU job trained for 37 seconds while drawing about 400 W, yet JobScope reported zero compute activity, because no sample landed on the busy period. For short jobs, judge by logs and timings. {doc}`KempnerInsight Cluster Monitoring App <../s1_high_performance_computing/kempner_cluster/kempnerinsight>` shows the same data as charts.
 ```
 
+(agentic_ai:unattended_batch_job)=
 ## Run an agent unattended in a batch job
 
 For work that needs no conversation, such as triaging the night's failed jobs, run the agent in print mode in a batch job. It only talks to its model and reads files, so a small allocation on a CPU partition such as `shared` is enough (`test` is meant for interactive work). Before you submit:
@@ -171,6 +174,8 @@ claude -p "Read the job logs in logs/ from the last day. For each failed job, ex
 - **Sign-in.** The job uses your saved Harvard login. If `ANTHROPIC_API_KEY` is set, for example in `~/.bashrc`, print mode uses that key instead, so leave it unset; see {ref}`Running a terminal agent <agentic_ai:running_a_terminal_agent>`.
 
 In a test on the cluster with three job logs, the agent wrote its findings to `reports/triage.md` and changed nothing else. Asked in a second run to create a file elsewhere, edit a batch script, and run `touch`, it was refused all three times. Read the report before you act on it; its proposals are leads, not fixes.
+
+For a loop in which an agent chooses each round of an experiment within limits, see {doc}`End-to-End Agentic Workflow Example <end_to_end_example>`.
 
 ## Before you trust the result
 

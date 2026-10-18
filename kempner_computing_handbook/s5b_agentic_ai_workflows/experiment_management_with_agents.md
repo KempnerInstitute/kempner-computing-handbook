@@ -84,6 +84,7 @@ The eight runs above, each about a minute or less on one GPU, produced:
 
 A good proposal reads the table as you would. A learning rate of 3e-4 is best at both widths, 1e-3 and above hurt, and the two widths nearly tie at 3e-4, so the smaller model may be enough. It also notes what the table cannot show: with one run per configuration, the 0.0004 gap at the top may be noise. A sensible next round narrows the learning rate around 3e-4 and repeats the top configurations with a few seeds. Approve or edit the proposal before anything runs, and check each number the agent quotes against the files.
 
+(agentic_ai:checkpoint_and_resume)=
 ## Checkpoint and resume
 
 Long runs hit time limits, and jobs on a partition like `kempner_requeue` can be preempted. A run that saves checkpoints loses only the work since its last save. Ask the agent to:
@@ -113,5 +114,5 @@ The training code must also save a checkpoint and exit when it receives SIGTERM.
 - You can rerun the winning configuration from its logged settings; see {doc}`Reproducing W&B Runs <../s5_ai_scaling_and_engineering/experiment_management/reproducing_runs>`.
 
 ```{seealso}
-For W&B setup, see {doc}`Weights & Biases - Intro <../s5_ai_scaling_and_engineering/experiment_management/logging_and_monitoring>`. For chaining a sweep with follow-up jobs, see {doc}`Job Dependencies <../s1_high_performance_computing/general_hpc_concepts/job_dependencies>` and {doc}`Multi-Agent Orchestration <multi_agent_orchestration>`.
+For W&B setup, see {doc}`Weights & Biases - Intro <../s5_ai_scaling_and_engineering/experiment_management/logging_and_monitoring>`. For chaining a sweep with follow-up jobs, see {doc}`Job Dependencies <../s1_high_performance_computing/general_hpc_concepts/job_dependencies>` and {doc}`Multi-Agent Orchestration <multi_agent_orchestration>`. For a loop in which the agent chooses each round within limits, see {doc}`End-to-End Agentic Workflow Example <end_to_end_example>`.
 ```
