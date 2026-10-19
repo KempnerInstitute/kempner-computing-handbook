@@ -9,6 +9,7 @@ Before you trust an agent with real work, measure it on tasks whose answers you 
 
 Use the same set to resist needless complexity. A multi-agent pipeline adds coordination overhead and can pass errors along, so compare it with a single agent on your own tasks, and keep whichever is more accurate and cheaper; see {doc}`Multi-Agent Orchestration <multi_agent_orchestration>`.
 
+(agentic_ai:check_the_output)=
 ## Check the output
 
 A baseline shows how an agent does on average; each result still needs its own check:
@@ -20,6 +21,7 @@ A baseline shows how an agent does on average; each result still needs its own c
 - **Read the full diff.** An agent's summary of its changes can leave things out; the diff cannot.
 - **Check every source.** Open each citation, link, and quoted figure the agent relies on; see {doc}`Literature Review and Data Exploration <literature_review_and_data_exploration>`.
 
+(agentic_ai:watch_what_it_did)=
 ## Watch what it did
 
 To see where an agent went wrong, not just that it did, keep a record of each run. Three records cover most needs:

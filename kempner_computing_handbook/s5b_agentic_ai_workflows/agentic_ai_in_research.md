@@ -20,10 +20,11 @@ flowchart LR
 
 Work moves through these stages, you review and steer between them, and results can loop back to an earlier stage. You do not have to hand the whole pipeline to an agent. Today the most valuable uses are often a single stage with you steering, such as a literature agent that returns a cited brief, or an analysis agent working on one dataset. Keep fuller autonomy for well-scoped, low-stakes tasks.
 
+(agentic_ai:workflow_patterns)=
 ## Workflow patterns
 
 - **One agent or several.** A single capable agent handles many tasks. Several agents with separate roles, such as a solver and an independent evaluator, can help on large problems but add overhead and pass errors along. Compare both on your own task before you adopt the more complex one; see {doc}`Multi-Agent Orchestration <multi_agent_orchestration>`.
-- **Bounded loops.** Many research agents work in a design, run, measure, and revise loop. Give the loop a stopping criterion and a budget.
+- **Bounded loops.** Many research agents work in a design, run, measure, and revise loop. Give the loop a stopping criterion and a budget. For a complete example, see {doc}`End-to-End Agentic Workflow Example <end_to_end_example>`.
 - **Review points.** Add explicit points where you check intermediate output, add domain knowledge, or change course. Treat the agent's output as a draft to check.
 
 (agentic_ai:trustworthy_practices)=

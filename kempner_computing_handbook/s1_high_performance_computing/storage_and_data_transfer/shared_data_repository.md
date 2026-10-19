@@ -65,3 +65,10 @@ We will develop a web interface later for data and model discovery.
       - Subfolders:
         - `` (1.3 T)
       - Description: An updated version of the ImageNet dataset, containing a wide variety of annotated images for visual object recognition.
+
+---
+
+- **cifar10**
+  - Path: `$DATA_PATH/vision/cifar10`
+    - Files: `cifar-10-batches-py/`, `cifar-10-python.tar.gz`, and `metadata.yaml` (341 M in all)
+    - Description: CIFAR-10, 60,000 32x32 color images in 10 classes. For `torchvision.datasets.CIFAR10`, pass the `cifar10` directory as `root`, with `download=False`.

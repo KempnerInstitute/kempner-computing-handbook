@@ -15,6 +15,7 @@ Several agents help when the work splits into independent pieces, when a reviewe
 | Parallel workers | Agents work on independent pieces, each in its own copy of the repository | Separate modules or analyses |
 | Lead and helpers | A lead agent splits the task, hands parts to helpers, and combines the results | Broad research and exploration |
 
+(agentic_ai:chain_steps_print_mode)=
 ## Chain steps with print mode
 
 Run each step as its own `claude -p` call. Each step then has its own permissions, budget, and log, and leaves a file you can read before the next step.
@@ -130,6 +131,7 @@ Agent teams, an experimental Claude Code feature, go further: a lead session sta
 
 See the [agent teams documentation](https://code.claude.com/docs/en/agent-teams) for current limitations.
 
+(agentic_ai:chain_runs_slurm)=
 ## Chain agent runs with SLURM
 
 SLURM can run an agent after other work finishes, for example a report after a sweep. Create the log folder, submit the sweep, then submit the report job with a dependency on the sweep:

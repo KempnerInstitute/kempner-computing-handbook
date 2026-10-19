@@ -19,6 +19,7 @@ flowchart LR
 
 The examples use Claude Code, but the ideas carry to other agents.
 
+(agentic_ai:project_instructions)=
 ## Project instructions
 
 Put what you would otherwise explain every session into an instructions file at the repository root: build and test commands, conventions, and layout. [AGENTS.md](https://agents.md) is the cross-tool standard; in a test on the cluster, Codex followed an instruction in `AGENTS.md` with no setup. Claude Code reads `CLAUDE.md`, and recent versions read `AGENTS.md` when a repository has no `CLAUDE.md`. If your repository has both, add the line `@AGENTS.md` to `CLAUDE.md`, or make `CLAUDE.md` a symlink, so both stay in sync.
