@@ -36,7 +36,7 @@ You supervise round 1. Then a loop job runs more rounds without a person, within
 - **Agent.** Install Claude Code with the native installer, because the loop job looks for `claude` in `~/.local/bin`. Sign in with the Claude access that HUIT provides through Harvard SSO, and leave `ANTHROPIC_API_KEY` unset; see {ref}`Running a terminal agent <agentic_ai:running_a_terminal_agent>`.
 - **uv.** Install uv; see {doc}`uv Environment <../s1_high_performance_computing/development_and_runtime_envs/using_uv_env>`.
 - **Partitions.** You need a SLURM account that can use `kempner_requeue` for the GPU jobs and `shared` for the loop job; see {ref}`SLURM Accounts <resource_management:understanding_slurm:slurm_accounts>`. `kempner_requeue` can preempt a job with no warning. The GPU jobs save a checkpoint after each epoch, and they continue after a requeue; see {ref}`Checkpoint and resume <agentic_ai:checkpoint_and_resume>`.
-- **Cost.** In a test run, the loop job used about 320,000 tokens and 17 GPU minutes in 66 minutes. The baseline and round 1 added about 2 GPU minutes and one interactive session.
+- **Cost.** The loop job uses about 320,000 tokens and 17 GPU minutes, and it runs for about 66 minutes. The baseline and round 1 add about 2 GPU minutes and one interactive session.
 
 ## Set up the project
 
@@ -88,7 +88,7 @@ source cluster.env
 sbatch slurm/baseline.sbatch
 ```
 
-The job trains the dense model for 40 epochs on one GPU, in about 2 minutes. SLURM writes the log to `logs/`, which you created in the setup; see {ref}`Write a batch script <agentic_ai:write_a_batch_script>`. The job is complete when `squeue -j <job_id>` shows nothing and the log ends with `val_accuracy=`. In a test run, `state/baseline/metrics.json` showed a validation accuracy of 0.937.
+The job trains the dense model for 40 epochs on one GPU, in about 2 minutes. SLURM writes the log to `logs/`, which you created in the setup; see {ref}`Write a batch script <agentic_ai:write_a_batch_script>`. The job is complete when `squeue -j <job_id>` shows nothing and the log ends with `val_accuracy=`. Then `state/baseline/metrics.json` shows a validation accuracy of about 0.94.
 
 ## Run round 1 with the agent
 
@@ -105,7 +105,7 @@ Round 1 tests the pipeline, not the method: the approvals, the job, and the reco
 6. When the job ends, type `/check-round 1`. Each line of the output must start with `OK`. If a line starts with `DIFF`, do not start the loop.
 7. Type `/exit`. Then type `exit` two times: one time to end the job, and one time to close tmux.
 
-This is the workflow of {doc}`Your First Agentic Workflow on the Cluster <first_agentic_workflow>`, with a SLURM job as the task. In a test run, round 1 removed half the weights with a 2-epoch fine-tune and reached a validation accuracy of 0.932.
+This is the workflow of {doc}`Your First Agentic Workflow on the Cluster <first_agentic_workflow>`, with a SLURM job as the task. For example, a round 1 that removes half the weights with a 2-epoch fine-tune reaches a validation accuracy of about 0.93.
 
 ## Check the limits, then start the loop
 
@@ -164,7 +164,7 @@ claude -p "$PROMPT" \
   --json-schema "$(cat configs/round.schema.json)"
 ```
 
-`experiment.yaml` sets the model and the effort level. After each agent step, the loop script finds the model in the `modelUsage` field of the result, and it stops if the step used another model. The deny rule keeps the agent out of the README, because the README holds the results of our runs.
+`experiment.yaml` sets the model and the effort level. After each agent step, the loop script finds the model in the `modelUsage` field of the result, and it stops if the step used another model. The deny rule keeps the agent out of the README, because the README holds example results.
 
 :::{dropdown} Stop rules and budgets
 Before each round, the loop script checks these rules, in this order:
@@ -184,22 +184,10 @@ The loop script also stops when a job waits more than 45 minutes in the queue, o
 :::
 
 - **Watch.** Use `tail -f logs/prune-loop_<job_id>.out`, `state/history.tsv`, and `state/ledger.tsv`. Do not turn on remote control; see {ref}`Remote control <agentic_ai:remote_control>`.
+- **End.** When the loop job is done, its log ends with `final steps done: see state/summary.json and state/final_report.md`.
 - **Stop.** Run `scancel <loop_job_id>`. The loop script cancels its own round job and writes `state/summary.json`. Check with `squeue --me` that the round job is gone. The next loop job counts the GPU minutes of the canceled job.
 - **Finish later.** After an early stop, `sbatch slurm/loop.sbatch --finish` runs only the final steps. It keeps the selected round. After the final steps, the loop job refuses to start in the same state directory.
 - **Problems.** If the agent behaves unexpectedly, follow {ref}`Reporting a concern <security_and_compliance:reporting_a_concern>`.
-
-:::{dropdown} Example: the end of the loop log in a test run
-```text
-2026-10-17 22:52:36 round 14: val_accuracy=0.9100 weights_left=0.007854 passes=yes tokens=22079 gpu_minutes=1.03 (totals: 277274 tokens, 15.1 GPU minutes)
-2026-10-17 22:52:50 round 15: submitted job 53657818
-2026-10-17 22:55:52 round 15: val_accuracy=0.9076 weights_left=0.007454 passes=yes tokens=22194 gpu_minutes=0.97 (totals: 299468 tokens, 16.1 GPU minutes)
-2026-10-17 22:55:52 stop: round_limit
-2026-10-17 22:55:53 confirmation round: submitted job 53658032
-test evaluation, round 15: test_accuracy=0.9045
-test evaluation, confirm 15: test_accuracy=0.9032
-2026-10-17 23:00:12 final steps done: see state/summary.json and state/final_report.md
-```
-:::
 
 :::{dropdown} Test the loop with small limits
 Do not edit `experiment.yaml` for a test: the round job refuses to start while a tracked file has uncommitted changes. Put a test copy in `local/`, which Git ignores, and point the jobs to it:
@@ -225,7 +213,7 @@ After the last round, the loop script selects the passing round with the fewest 
 
 Then check the result yourself; see {ref}`Check the output <agentic_ai:check_the_output>` and {ref}`Watch what it did <agentic_ai:watch_what_it_did>`:
 
-- **Report.** Compare each number in the report with `state/summary.json`. The report gives the tokens and the cost before its own step, so these two numbers are lower than in the summary. In a test run, the report wrote one wrong interval, then corrected it in the next line.
+- **Report.** Compare each number in the report with `state/summary.json`. The report gives the tokens and the cost before its own step, so these two numbers are lower than in the summary.
 - **Records.** In an interactive job, run `.venv/bin/python -m pruning_example.check_round N`, where N is `selected.round` in the summary. An exit status of 0 means that each check passed.
 - **Seeds.** The confirmation round agrees when it also keeps the threshold, and its test accuracy is in the 95% interval of the selected round.
 - **Stop reason.** `round_limit`, `plateau`, `token_budget`, `gpu_budget`, `failed_attempts`, `queue_limit`, and `time_left` are normal stops. `integrity`, `agent_format`, and `model_check` mean a fault. `"terminated": true` means an early stop.
@@ -235,7 +223,7 @@ Then check the result yourself; see {ref}`Check the output <agentic_ai:check_the
 
 A rerun can take a different path. Its numbers are close, not identical, because the jobs can run on different GPU types, and the code does not force deterministic algorithms. Keep the records with the model; see {ref}`Best practices for trustworthy agentic research <agentic_ai:trustworthy_practices>` and {doc}`Reproducible Research <../s2_swe_for_research/reproducible_research>`.
 
-## Results of a test run
+## Example results
 
 | Result | Value |
 |---|---|
@@ -244,8 +232,6 @@ A rerun can take a different path. Its numbers are close, not identical, because
 | Size | 1.56 MB as a bitmask with FP16 values, against 44.7 MB for the dense model in FP32 |
 | Accuracy | Validation 0.9076 and test 0.9045 (95% interval 0.899 to 0.910). Second seed: validation 0.9050 and test 0.9032. |
 | Use of the loop job | 323,072 tokens (about $1.11), 17 GPU minutes, 66 minutes |
-
-Until round 7, the agent raised the sparsity in each round. Round 8 changed three settings at once and fell below the threshold. From round 9, the agent went back to the recipe of round 7. It then raised the learning rate by 0.01 in each round, from 0.02 to 0.08. All later rounds kept the threshold.
 
 :::{dropdown} All 15 rounds
 | Round | Sparsity | Steps | Epochs in total | Learning rate | Validation accuracy | Weights left |
@@ -269,7 +255,7 @@ Until round 7, the agent raised the sparsity in each round. Round 8 changed thre
 From round 3, `conv1` stayed dense. Round 8 also used a weight decay of 0.0002 in place of 0.0005.
 :::
 
-The confirmation round passed exactly at the threshold, and both test values are below 0.905. The draft report flagged both points. Treat the result as a lead to check, not as a finding.
+The confirmation round is exactly at the threshold. Treat the result as a lead to check, not as a finding.
 
 ## Adapt the example
 

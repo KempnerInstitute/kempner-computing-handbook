@@ -33,7 +33,7 @@ flowchart TB
 | Confirmation | One confirmation round | Two confirmation rounds, and the means of 3 seeds |
 | Check of the report | You | The auditor and two code checks, then you |
 
-Several agents cost more tokens. Use them only when a test shows a gain; see {ref}`Start with one agent <agentic_ai:start_with_one_agent>`. This example runs that test. Our runs could not show a gain from the extra agents; see {ref}`Our runs <agentic_ai:multi_agent_our_runs>`.
+Several agents cost more tokens. Use them only when a test shows a gain; see {ref}`Start with one agent <agentic_ai:start_with_one_agent>`. This chapter runs that test on this task. It showed no gain from the extra agents; see {ref}`Results <agentic_ai:multi_agent_results>`.
 
 ## Before you start
 
@@ -41,7 +41,7 @@ Several agents cost more tokens. Use them only when a test shows a gain; see {re
 - **Code.** In your clone, run `git pull`. Then `git status` must show no changes.
 - **Records.** If you ran the single-agent loop in this clone, the agents can read its records in `state/`. For a separate result, use a new clone.
 - **GPUs.** The round jobs run on `kempner_requeue` with `--constraint=a100-mig`. This selects A100 MIG slices (3g.20gb): parts of an A100 GPU with 20 GB of memory each. One round takes 1 to 3 minutes.
-- **Cost.** The budget is 1,250,000 tokens, the plan-only job included, and 150 GPU minutes for the rounds. Both are estimates: a step can use more than planned. Plan for 10% more tokens: in our run with the default settings, this loop used 1,348,571 tokens, 8% more than the budget. The confirmation rounds can add up to 20 GPU minutes, and each requeue up to 10.
+- **Cost.** The budget is 1,250,000 tokens, the plan-only job included, and 150 GPU minutes for the rounds. Both are estimates: a step can use more than planned. Plan for 10% more tokens, because the auditor can use more than its reserve. The confirmation rounds can add up to 20 GPU minutes, and each requeue up to 10.
 - **Your changes.** The jobs refuse to start while a tracked file has changes. So commit each change to `experiment_multi.yaml`. For a test, use a copy in `local/`, as the README shows.
 
 ## Step 1: Check the settings
@@ -85,9 +85,9 @@ claude -p "$PROMPT" \
 ```
 
 - **Role prompt.** `--append-system-prompt-file` adds the prompt of the role to the default system prompt.
-- **README.** The deny rule keeps the agents out of the README, which holds the results of our runs.
+- **README.** The deny rule keeps the agents out of the README, which holds example results.
 - **Effort.** The loop script removes `CLAUDE_CODE_EFFORT_LEVEL`, which overrides `--effort`.
-- **Caps.** Each role has its own caps; see {ref}`Caps on unattended runs <agentic_ai:run_caps>`. In our run with the default settings, the planner and the critic used 70,000 to 194,000 tokens for each wave, and the auditor 619,300.
+- **Caps.** Each role has its own caps; see {ref}`Caps on unattended runs <agentic_ai:run_caps>`. With the default settings, the planner and the critic use about 70,000 to 200,000 tokens for each wave, and the auditor 130,000 to 620,000.
 :::
 
 :::{dropdown} Before an unattended run, answered for this example
@@ -121,7 +121,7 @@ Check the first plan before any GPU job runs.
 2. When `squeue -j <job_id>` shows nothing, the log `logs/prune-multi-loop_<job_id>.out` must end with `wave 1 planned: N configuration(s) accepted`.
 3. Read `state_multi/waves/wave_01/plan.md`. It shows each configuration and the verdict of the critic. A rejected configuration gets one revision. If the critic rejects the revision too, the configuration is dropped.
 4. To accept the plan, start the loop; see {ref}`Step 3: Start the loop <agentic_ai:multi_agent_start_the_loop>`.
-5. To plan again, remove `state_multi/waves/wave_01/`, and submit the job again. In our run with the default settings, the plan of wave 1 used about 86,000 tokens. Do not edit the files of the plan by hand.
+5. To plan again, remove `state_multi/waves/wave_01/`, and submit the job again. A plan of wave 1 uses about 90,000 tokens. Do not edit the files of the plan by hand.
 
 :::{dropdown} Example: a plan of wave 1 with the default roles
 | Item | Sparsity | Steps | Epochs | Learning rate | Excluded | Predicted validation accuracy | Pass probability | Status |
@@ -129,8 +129,6 @@ Check the first plan before any GPU job runs.
 | 1 | 0.92 | 2 | 10 | 0.02 | none | 0.928 | 0.92 | accepted |
 | 2 | 0.96 | 4 | 16 | 0.03 | none | 0.917 | 0.75 | accepted |
 | 3 | 0.985 | 5 | 20 | 0.05 | `conv1`, `fc` | 0.906 | 0.45 | accepted |
-
-The critic on item 3: "It is bold, but nothing in the history says it will fail, and the 0.45 pass probability is stated openly."
 :::
 
 (agentic_ai:multi_agent_start_the_loop)=
@@ -146,34 +144,12 @@ sbatch slurm/multi_loop.sbatch
 Wave 1 runs the plan that you read. For each later wave, the planner plans, the code and the critic check the plan, and the loop script submits one array job. This is the pattern of {ref}`Run an agent unattended in a batch job <agentic_ai:unattended_batch_job>`.
 
 - **Watch.** Run `tail -f logs/prune-multi-loop_<job_id>.out`. Do not turn on remote control; see {ref}`Remote control <agentic_ai:remote_control>`.
+- **End.** When the loop job is done, its log ends with `final steps done: see state_multi/summary.json, final_report.md, and audit.json`.
 - **Stop.** Run `scancel <loop_job_id>`. The loop script cancels its array job. Check with `squeue --me` that no `prune-round` task is left.
 - **Continue.** Submit the loop job again. It counts the GPU minutes of the canceled tasks, and it continues the search.
 - **Finish later.** Run `sbatch slurm/multi_loop.sbatch --finish`. It runs only the final steps, and it keeps the selected round. After the final steps, the loop job refuses to start in the same state directory. To search again, use a new one.
 - **Timeouts.** If `sacct -j <array_job_id>` shows `TIMEOUT`, and the logs `logs/prune-round_<job_id>.out` have no epoch line, reads from `DATA_DIR` hang. Each such round uses 10 GPU minutes. Stop the loop, and tell FASRC.
 - **Problems.** If the agents behave unexpectedly, follow {ref}`Reporting a concern <security_and_compliance:reporting_a_concern>`.
-
-:::{dropdown} Example: the loop log in a test with small limits
-The test allowed 4 round attempts, and its roles used low effort levels. Its plan was not the plan above. Its state directory was `local/f1b_state/`. The test canceled the loop job on purpose during the confirmation rounds:
-
-```text
-2026-10-22 23:21:12 wave 1: submitted array job 54797113, rounds 2 to 4
-2026-10-22 23:26:14 wave 1: round 2: val_accuracy=0.9330 weights_left=0.100000; round 3: val_accuracy=0.9286 weights_left=0.050583; round 4: val_accuracy=0.9236 weights_left=0.020601; tokens planner 23351, critic 22286 (totals: 45637 tokens, 6.3 GPU minutes)
-2026-10-22 23:26:14 stop: round_limit
-2026-10-22 23:26:14 confirmation rounds: submitted array job 54797493 for seeds 1, 2
-2026-10-22 23:29:52 SIGTERM: asked SLURM to cancel array job 54797493.
-```
-
-Then `--finish` counted the canceled tasks and ran the confirmation rounds again. The two `confirm 4` lines are seeds 1 and 2:
-
-```text
-2026-10-22 23:30:21 counted the GPU minutes of 1 job(s) that an earlier loop job did not count
-2026-10-22 23:30:24 confirmation rounds: submitted array job 54797902 for seeds 1, 2
-test evaluation, round 4: test_accuracy=0.9204
-test evaluation, confirm 4: test_accuracy=0.9250
-test evaluation, confirm 4: test_accuracy=0.9211
-2026-10-22 23:37:55 final steps done: see f1b_state/summary.json, final_report.md, and audit.json
-```
-:::
 
 (agentic_ai:multi_agent_check_the_result)=
 ## Step 4: Check the result
@@ -192,25 +168,24 @@ After the last wave, the loop script selects the passing round with the fewest w
 
 The auditor and the code checks do not replace your check; see {ref}`Best practices for trustworthy agentic research <agentic_ai:trustworthy_practices>`.
 
-To audit the report of the single-agent example, run `source cluster.env`, then `STATE_DIR=state sbatch --time=01:00:00 slurm/multi_loop.sbatch --audit-only`. It writes `state/audit.json`. In our runs and tests, the audit of a single-agent report used 133,000 to 359,000 tokens.
+To audit the report of the single-agent example, run `source cluster.env`, then `STATE_DIR=state sbatch --time=01:00:00 slurm/multi_loop.sbatch --audit-only`. It writes `state/audit.json`. The audit of a single-agent report uses about 130,000 to 360,000 tokens.
 
-(agentic_ai:multi_agent_our_runs)=
-## Our runs
+(agentic_ai:multi_agent_results)=
+## Results
 
-We ran three designs, called arms, on October 23, 2026, one run of each. We fixed the comparison rule before the runs.
+Three designs ran the task, one time each:
 
-| Arm | Design |
+| Design | Setup |
 |---|---|
-| 1 | One agent, one round at a time: the loop of the single-agent example, with the limits below |
-| 2 | One agent, waves of 3: this loop with the critic off |
-| 3 | Planner and critic, waves of 3: this loop |
+| Sequential | One agent, one round at a time: the loop of the single-agent example, with the limits below |
+| Waves | One agent, waves of 3: this loop with the critic off |
+| Waves with critic | Planner and critic, waves of 3: this loop with the default settings |
 
-- **Same conditions.** All arms start from the same baseline and round 1, each in its own clone. In each arm, `claude-opus-5-5` at `xhigh` decides, `claude-sonnet-5-5` writes the report, and the auditor checks it. Each arm has 800,000 tokens for the search, 45 round attempts, a plateau of 6 rounds, two confirmation rounds, and 150 GPU minutes on MIG slices.
-- **Result.** The result of an arm holds if its 3-seed means are at least 0.905 for validation and 0.900 for test. We compare only results that hold, by their weights left.
-- **Difference.** An arm is better than another arm only if both results hold, and its weights left are at least 0.15 percentage point lower, for example 0.60% against 0.75%.
+- **Same conditions.** All designs start from the same baseline and round 1, each in its own clone. In each design, `claude-opus-5-5` at `xhigh` decides, `claude-sonnet-5-5` writes the report, and the auditor checks it. Each design has 800,000 tokens for the search, 45 round attempts, a plateau of 6 rounds, two confirmation rounds, and 150 GPU minutes on MIG slices.
+- **Rule.** Fix the rule before the runs. A result holds if its 3-seed means are at least 0.905 for validation and 0.900 for test. A design is better than another only if both results hold, and its weights left are at least 0.15 percentage point lower, for example 0.60% against 0.75%.
 
-:::{dropdown} The settings of the arms
-- **Arm 1.** A copy of `experiment.yaml` in `local/arm1.yaml`, with these changes:
+:::{dropdown} The settings of the designs
+- **Sequential.** A copy of `experiment.yaml` in `local/sequential.yaml`, with these changes:
 
   ```yaml
   target:
@@ -233,12 +208,12 @@ We ran three designs, called arms, on October 23, 2026, one run of each. We fixe
   confirmation_seeds: [1, 2]
   ```
 
-  After round 1, run `source cluster.env`, then `EXPERIMENT_FILE=local/arm1.yaml sbatch slurm/loop.sbatch`. To audit its report, run `STATE_DIR=state sbatch --time=01:00:00 slurm/multi_loop.sbatch --audit-only`.
-- **Arm 2.** A copy of `experiment_multi.yaml` in `local/arm2.yaml`, with `roles.critic.enabled: false`. Put `EXPERIMENT_FILE=local/arm2.yaml` before the `sbatch` commands of Steps 2 and 3.
-- **Arm 3.** `experiment_multi.yaml`, with the commands of Steps 2 and 3.
+  After round 1, run `source cluster.env`, then `EXPERIMENT_FILE=local/sequential.yaml sbatch slurm/loop.sbatch`. To audit its report, run `STATE_DIR=state sbatch --time=01:00:00 slurm/multi_loop.sbatch --audit-only`.
+- **Waves.** A copy of `experiment_multi.yaml` in `local/waves.yaml`, with `roles.critic.enabled: false`. Put `EXPERIMENT_FILE=local/waves.yaml` before the `sbatch` commands of Steps 2 and 3.
+- **Waves with critic.** `experiment_multi.yaml`, with the commands of Steps 2 and 3.
 :::
 
-| Result | Arm 1 | Arm 2 | Arm 3 |
+| Result | Sequential | Waves | Waves with critic |
 |---|---|---|---|
 | Stop | Plateau | Plateau | Token budget |
 | Rounds after round 1 | 14 | 21 | 21 |
@@ -251,42 +226,40 @@ We ran three designs, called arms, on October 23, 2026, one run of each. We fixe
 | Tokens of the report and the audit | 157,494 | 262,900 | 656,481 |
 | Estimated cost | $2.79 | $4.22 | $5.99 |
 | GPU minutes, confirmation included | 41.8 | 59.9 | 61.8 |
-| Time of the search, with the plan-only job of arms 2 and 3 | 62 minutes | 45 minutes | 52 minutes |
+| Time of the search, plan-only job included | 62 minutes | 45 minutes | 52 minutes |
 
-- **No result holds.** So the runs cannot show a difference between the arms. Arm 3 found its smallest passing model in its last wave, then the token budget stopped it.
-- **Selection.** The loop selects the smallest model that passed with seed 0. Near the threshold, a lucky seed helps a model pass. In each arm, both confirmation rounds of the selected round were below 0.905.
-- **Tokens.** Arm 3 used 1,348,571 tokens, 8% more than its budget. Its auditor used 619,300 tokens, more than the 450,000 kept for the writer and the auditor.
-- **Cluster.** All rounds after round 1, and the confirmation rounds, ran on A100 MIG slices (3g.20gb), with no requeue. In the search, each arm waited 4 to 6 minutes in the queue in total. Your waits can be longer.
-- **Limit.** One run of each arm is a worked example, not a proof. The tokens of each role change from run to run.
+- **No result holds.** So the runs show no difference between the designs. Waves with critic found its smallest passing model in its last wave, and then the token budget stopped it.
+- **Selection.** The loop selects the smallest model that passed with seed 0. Near the threshold, a lucky seed helps a model pass. In each design, both confirmation rounds of the selected round were below 0.905.
+- **Tokens.** Waves with critic used 1,348,571 tokens, 8% more than its budget. Its auditor used 619,300 tokens, more than the 450,000 kept for the writer and the auditor.
+- **Cluster.** All rounds after round 1, and the confirmation rounds, ran on A100 MIG slices (3g.20gb), with no requeue. In the search, each design waited 4 to 6 minutes in the queue in total. Your waits can be longer.
+- **One run.** One run of each design cannot prove a difference. The tokens of each role change from run to run.
 
-Before the runs, we tested the critic and the auditor in a CPU job, with the records of the test run of the single-agent example; see {doc}`Evaluating and Monitoring Agents <evaluating_and_monitoring_agents>`.
+Tests in a CPU job checked the critic and the auditor on the records of a single-agent run; see {doc}`Evaluating and Monitoring Agents <evaluating_and_monitoring_agents>`.
 
 | Test | Result |
 |---|---|
-| Critic: 5 clear rule violations that we made, 3 runs each | Rejected in 15 of 15 runs, each for the right reason |
-| Critic: the 14 configurations of the test run, 3 runs each | Accepted in 41 of 42 runs |
-| Auditor: the report of the test run, with 3 known errors | Found the 3 errors, and 2 errors that we did not know. `check_report` found 1. |
+| Critic: 5 configurations that break a rule, 3 runs each | Rejected in 15 of 15 runs, each for the right reason |
+| Critic: the 14 configurations of the single-agent run, 3 runs each | Accepted in 41 of 42 runs |
+| Auditor: the report of the single-agent run, with 3 known errors | Found the 3 errors, and 2 other errors. `check_report` found 1. |
 | Auditor: the report with the 3 known errors fixed | Found the 2 other errors again, and gave 1 false alarm |
-| Auditor: the fixed report with 5 errors that we added | Found the 5 errors, and 1 of the 2 other errors. `check_report` found 2. |
+| Auditor: the fixed report with 5 added errors | Found the 5 errors, and 1 of the 2 other errors. `check_report` found 2. |
 
-In the runs, the critic accepted all 21 configurations of arm 3. The auditor marked 3, 2, and 3 claims as wrong in the reports of arms 1, 2, and 3. In arm 1, two of them were the tokens and the cost from before the report step; see {ref}`Step 4: Check the result <agentic_ai:multi_agent_check_the_result>`. `check_report` found only these two wrong claims. The third named one agent model, but the run used two. The reports gave the selected round and the 3-seed means correctly.
+In the three runs, the critic accepted all 21 configurations. The auditor marked 3, 2, and 3 claims as wrong in the reports of Sequential, Waves, and Waves with critic. `check_report` found 2 of them: the tokens and the cost in the report of Sequential, which are from before the report step; see {ref}`Step 4: Check the result <agentic_ai:multi_agent_check_the_result>`. Each report gave the selected round and the 3-seed means correctly.
 
-## Was it worth it?
-
-Not for the search: no result held, so the runs could not show a gain, and the critic rejected no configuration. The waves saved time, and the auditor found wrong claims that the code checks missed.
+## When to use several agents
 
 | Check of {ref}`Before you trust the result <agentic_ai:before_you_trust_the_result>` | Evidence |
 |---|---|
-| A single agent was tried on the same task, and the multi-agent version did measurably better. | No. No arm has a result that holds, so the runs could not show a gain. |
-| Each agent had only the tools and budget its step needed. | Partly. Read-only tools, role caps, and the model check. The auditor of arm 3 used more tokens than its reserve. |
+| A single agent was tried on the same task, and the multi-agent version did measurably better. | No. No design has a result that holds, so the runs show no gain. |
+| Each agent had only the tools and budget its step needed. | Partly. Read-only tools, role caps, and the model check. The auditor of Waves with critic used more tokens than its reserve. |
 | You read each step's output, not only the last. | Yes. The plan of wave 1 before the loop. The later plans, `hypotheses.tsv`, and `audit.json` after it. |
 | The reviewer worked from the diff in a fresh context, not from the implementer's summary. | Partly. The critic and the auditor are separate `claude -p` calls. The critic reads the reason of the planner for each configuration, as its rules need. |
 | The plan, the review, and each step's JSON result are kept, and the total cost is recorded. | Yes. `state_multi/` and `summary.json` |
 
-- **Waves.** Arm 2 ran 21 rounds in 45 minutes, and arm 1 ran 14 rounds in 62 minutes. Each round used about 2.6 GPU minutes in both arms. Arm 2 used fewer search tokens for each round. Use waves when time matters.
-- **Critic.** It rejected no configuration, and it used 231,560 of the 692,090 search tokens of arm 3. It can help when a bad round uses many GPU hours. Test it on your task first.
-- **Auditor.** It found wrong claims that `check_report` did not find: in the tests, and in the reports of arms 2 and 3. Use it for each report that you share.
-- **Confirmation.** The confirmation rounds were the most useful check. With seed 0 alone, each selected round passed the validation threshold.
+- **Waves.** Use them when time matters. Waves ran 21 rounds in 45 minutes, and Sequential ran 14 rounds in 62 minutes, with about 2.6 GPU minutes for each round in both. Waves also used fewer search tokens for each round.
+- **Critic.** Test it on your task first. In the runs, it rejected no configuration, and it used 231,560 of the 692,090 search tokens of Waves with critic. It can help when a bad round uses many GPU hours.
+- **Auditor.** Use it for each report that you share. It found wrong claims that `check_report` did not find, in the tests and in the reports of Waves and Waves with critic.
+- **Confirmation rounds.** Keep them. With seed 0 alone, each selected round passed the validation threshold, but no result held.
 
 ## Adapt the example
 
