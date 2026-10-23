@@ -62,7 +62,7 @@ This review is also your defense against untrusted content; see {ref}`Agent secu
 
 ## Verify the result
 
-Check the output yourself: open the figure, read the numbers, and run any tests. In a test on the cluster, the agent made the file, the statistics, and a correct histogram, but named the column `temperature_c`, though the prompt asked for `temperature`. Small departures like this are what your check is for. An agent's result is a lead to confirm, not a finding to trust. When you want to measure quality more systematically, see {doc}`Evaluating and Monitoring Agents <evaluating_and_monitoring_agents>`.
+Check the output yourself: open the figure, read the numbers, and run any tests. Look for small departures from the prompt, for example a column named `temperature_c` when the prompt asked for `temperature`. An agent's result is a lead to confirm, not a finding to trust. When you want to measure quality more systematically, see {doc}`Evaluating and Monitoring Agents <evaluating_and_monitoring_agents>`.
 
 Once the task is right, refine it or move on to the next one. When you are done, type `/exit` to leave Claude Code, then `exit` to end the interactive job and release its resources, and `exit` once more to close tmux.
 
