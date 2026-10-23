@@ -6,7 +6,7 @@ This chapter runs the task of {doc}`End-to-End Agentic Workflow Example <end_to_
 flowchart TB
     subgraph SUP [" "]
         direction LR
-        S(["Chapter 28:<br/>setup and round 1"]) --> P["Plan-only job:<br/>plan wave 1"] --> R(["You read<br/>the plan"])
+        S(["Setup, baseline,<br/>and round 1"]) --> P["Plan-only job:<br/>plan wave 1"] --> R(["You read<br/>the plan"])
     end
     subgraph LOOP ["Loop job"]
         direction LR
@@ -24,7 +24,7 @@ flowchart TB
     style LOOP fill:none,stroke:#c8c8d0
 ```
 
-| Part | Chapter 28 | This chapter |
+| Part | Single-agent example | This chapter |
 |---|---|---|
 | Agents | One agent step for each round | Planner, critic, writer, and auditor |
 | Rounds | One round job at a time | Waves of up to 3 round jobs |
@@ -37,7 +37,7 @@ Several agents cost more tokens. Use them only when a test shows a gain; see {re
 
 ## Before you start
 
-- **Chapter 28.** Do its setup, baseline, and round 1. This loop copies round 1 to its own state directory, `state_multi/`.
+- **Single-agent example.** Do the setup, the baseline, and round 1 of {doc}`End-to-End Agentic Workflow Example <end_to_end_example>`. This loop copies round 1 to its own state directory, `state_multi/`.
 - **GPUs.** The round jobs run on `kempner_requeue`, on A100 MIG slices (3g.20gb). One round takes 1 to 3 minutes.
 - **Cost.** The limits are 1,250,000 tokens and 150 GPU minutes for the rounds. The confirmation rounds add a few GPU minutes.
 
@@ -67,7 +67,7 @@ Read `experiment_multi.yaml`. It sets the roles and the limits.
 | Queue | 45 minutes for one array job |
 | Loop job | `shared`, 2 CPUs, 8 GB, 6 hours |
 
-The agents have the guardrails of chapter 28: no shell, no write tools, no MCP tools, and no reads outside the project directory or of the README; see {ref}`Guardrails <agentic_ai:guardrails>` and {ref}`Prohibited activities <security_and_compliance:prohibited_activities>`. Only the scale changes: up to 3 GPU jobs at a time.
+The agents have the guardrails of the single-agent example: no shell, no write tools, no MCP tools, and no reads outside the project directory or of the README; see {ref}`Guardrails <agentic_ai:guardrails>` and {ref}`Prohibited activities <security_and_compliance:prohibited_activities>`. Only the scale changes: up to 3 GPU jobs at a time.
 
 :::{dropdown} A role step, as the loop script runs it
 ```bash
@@ -179,7 +179,7 @@ After the last wave, the loop script selects the passing round with the fewest w
 | `final_report.md` | You read it after the checks above. |
 | `ledger.tsv` | The tokens of each role, and the GPU minutes of each job |
 
-The auditor and the code checks do not replace your check; see {ref}`Best practices for trustworthy agentic research <agentic_ai:trustworthy_practices>`. To check the report of chapter 28 the same way, run `STATE_DIR=state sbatch slurm/multi_loop.sbatch --audit-only`.
+The auditor and the code checks do not replace your check; see {ref}`Best practices for trustworthy agentic research <agentic_ai:trustworthy_practices>`. To check the report of the single-agent example the same way, run `STATE_DIR=state sbatch slurm/multi_loop.sbatch --audit-only`.
 
 (agentic_ai:multi_agent_our_runs)=
 ## Our runs
@@ -190,7 +190,7 @@ Draft. The comparison runs have not run yet. Their design is fixed before the ru
 
 | Arm | Design |
 |---|---|
-| 1 | One agent, one round at a time: the loop of chapter 28 |
+| 1 | One agent, one round at a time: the loop of the single-agent example |
 | 2 | One agent, waves of 3: this loop with the critic off |
 | 3 | Planner and critic, waves of 3: this loop |
 
