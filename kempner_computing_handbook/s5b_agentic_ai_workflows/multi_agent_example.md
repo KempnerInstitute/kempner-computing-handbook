@@ -41,7 +41,7 @@ Several agents cost more tokens. Use them only when a test shows a gain; see {re
 - **Code.** In your clone, run `git pull`. Then `git status` must show no changes.
 - **Records.** If you ran the single-agent loop in this clone, the agents can read its records in `state/`. For a separate result, use a new clone.
 - **GPUs.** The round jobs run on `kempner_requeue` with `--constraint=a100-mig`. This selects A100 MIG slices (3g.20gb): parts of an A100 GPU with 20 GB of memory each. One round takes 1 to 3 minutes.
-- **Cost.** The budget is 1,250,000 tokens, the plan-only job included, and 150 GPU minutes for the rounds. Both are estimates: a step can use more than planned. In our run with the default settings, this loop used 1,348,571 tokens. The confirmation rounds can add up to 20 GPU minutes, and each requeue up to 10.
+- **Cost.** The budget is 1,250,000 tokens, the plan-only job included, and 150 GPU minutes for the rounds. Both are estimates: a step can use more than planned. Plan for 10% more tokens: in our run with the default settings, this loop used 1,348,571 tokens, 8% more than the budget. The confirmation rounds can add up to 20 GPU minutes, and each requeue up to 10.
 - **Your changes.** The jobs refuse to start while a tracked file has changes. So commit each change to `experiment_multi.yaml`. For a test, use a copy in `local/`, as the README shows.
 
 ## Step 1: Check the settings
@@ -256,7 +256,7 @@ We ran three designs, called arms, on October 23, 2026, one run of each. We fixe
 - **No result holds.** So the runs cannot show a difference between the arms. Arm 3 found its smallest passing model in its last wave, then the token budget stopped it.
 - **Selection.** The loop selects the smallest model that passed with seed 0. Near the threshold, a lucky seed helps a model pass. In each arm, both confirmation rounds of the selected round were below 0.905.
 - **Tokens.** Arm 3 used 1,348,571 tokens, 8% more than its budget. Its auditor used 619,300 tokens, more than the 450,000 kept for the writer and the auditor.
-- **Cluster.** All rounds after round 1, and the confirmation rounds, ran on A100 MIG slices (3g.20gb), with no requeue. In the search, each arm waited 4 to 6 minutes in the queue in total. Your waits can be much longer.
+- **Cluster.** All rounds after round 1, and the confirmation rounds, ran on A100 MIG slices (3g.20gb), with no requeue. In the search, each arm waited 4 to 6 minutes in the queue in total. Your waits can be longer.
 - **Limit.** One run of each arm is a worked example, not a proof. The tokens of each role change from run to run.
 
 Before the runs, we tested the critic and the auditor in a CPU job, with the records of the test run of the single-agent example; see {doc}`Evaluating and Monitoring Agents <evaluating_and_monitoring_agents>`.
