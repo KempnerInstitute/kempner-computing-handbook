@@ -22,7 +22,7 @@ The examples use Claude Code, but the ideas carry to other agents.
 (agentic_ai:project_instructions)=
 ## Project instructions
 
-Put what you would otherwise explain every session into an instructions file at the repository root: build and test commands, conventions, and layout. [AGENTS.md](https://agents.md) is the cross-tool standard; in a test on the cluster, Codex followed an instruction in `AGENTS.md` with no setup. Claude Code reads `CLAUDE.md`, and recent versions read `AGENTS.md` when a repository has no `CLAUDE.md`. If your repository has both, add the line `@AGENTS.md` to `CLAUDE.md`, or make `CLAUDE.md` a symlink, so both stay in sync.
+Put what you would otherwise explain every session into an instructions file at the repository root: build and test commands, conventions, and layout. [AGENTS.md](https://agents.md) is the cross-tool standard, and Codex reads it with no setup. Claude Code reads `CLAUDE.md`, and recent versions read `AGENTS.md` when a repository has no `CLAUDE.md`. If your repository has both, add the line `@AGENTS.md` to `CLAUDE.md`, or make `CLAUDE.md` a symlink, so both stay in sync.
 
 Keep the file short (under 200 lines) and specific: "run `uv run pytest` before committing" works better than "test your changes." `/init` writes a first version from your code. A project-level file is shared through version control; a user-level file in `~/.claude/` applies to all your projects.
 
@@ -135,7 +135,7 @@ The second hook appends every command the agent tries, including blocked and fai
 :::
 ::::
 
-In a test on a compute node, this hook blocked each of the 16 targeted commands tried, among them `scancel 12345`, `clustertool jobs cancel 12345`, `rm -f -r build`, `bash -c 'rm -R tmp'`, `find . -name '*.tmp' | xargs rm`, and `git -C . clean -fdx`. It allowed 9 ordinary commands such as `squeue --me`, `rm notes.txt`, and `git commit -m "clean up docs"`. In a live Claude Code session, it also blocked `scancel` and `rm -rf` that the permission rules allowed, and the log recorded both attempts.
+The hook blocks commands such as `scancel 12345`, `clustertool jobs cancel 12345`, `rm -f -r build`, `bash -c 'rm -R tmp'`, `find . -name '*.tmp' | xargs rm`, and `git -C . clean -fdx`. It allows ordinary commands such as `squeue --me`, `rm notes.txt`, and `git commit -m "clean up docs"`. It blocks these commands even when the permission rules allow them, and the log records each attempt.
 
 Know its limits. A hook sees the command line, not what a script does, so it does not stop `python cleanup.py` if that script cancels jobs. It does not catch every form, such as `rm *.pt` or `rsync --delete`. It also errs toward blocking: a search for the word `scancel`, or an option such as `--norm -r` that contains `rm -r`, is blocked too; run such commands yourself. Hooks run with your full permissions, outside any sandbox, so keep them short and review them like code. Codex has hooks too. See the [hooks documentation](https://code.claude.com/docs/en/hooks).
 

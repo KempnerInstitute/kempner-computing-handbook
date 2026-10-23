@@ -84,7 +84,7 @@ jq -er '.result' agent-run/review.json > agent-run/review.md
 - **A failed step stops the chain.** `claude -p` exits nonzero when a run fails, and `jq -e` fails when there is no result, so a script run under `set -euo pipefail` stops instead of passing a bad result on.
 - **A step can return a fixed shape.** For a result a script checks, such as a review verdict, add `--json-schema`; the result then appears in the `structured_output` field.
 
-In a test on the cluster with a toy repository, the chain produced a plan, an implementation whose six tests passed, and a review that found no problems. The implementer's attempt to rewrite files through a shell script was refused, so it used the file-edit tools instead. Committing and merging stay with you: read the review, then the diff itself, before you commit.
+Committing and merging stay with you: read the review, then the diff itself, before you commit.
 
 ## Run independent agents in parallel
 
@@ -164,11 +164,7 @@ claude -p "Array job $SWEEP_JOB_ID has finished. Use sacct to find which tasks f
   --output-format json > logs/report_$SLURM_JOB_ID.json
 ```
 
-`Edit(./reports/**)` limits the agent's writes to `reports/`, and `dontAsk` refuses anything else that needs approval. Use `afterany` for a step that should run however the sweep ends; with `afterok`, it runs only if every task succeeds. In a test on the cluster with a three-task array where one task failed on purpose:
-
-- The `afterany` job ran as soon as the array finished.
-- The `afterok` job was canceled automatically, because the scheduler removes jobs whose dependencies can no longer be met.
-- With the agent step in place, the report ranked the two finished runs and listed the failed task with the cause from its log, and the agent wrote nothing outside `reports/`.
+`Edit(./reports/**)` limits the agent's writes to `reports/`, and `dontAsk` refuses anything else that needs approval. Use `afterany` for a step that should run however the sweep ends. With `afterok`, the step runs only if every task succeeds. If a task fails, SLURM cancels the step, because its dependency can no longer be met.
 
 See {doc}`Job Dependencies <../s1_high_performance_computing/general_hpc_concepts/job_dependencies>`. To run the same agent task over many inputs, first turn off automatic updates, so an update cannot remove the version running jobs use; see {ref}`Running a terminal agent <agentic_ai:running_a_terminal_agent>`. Then use an array job on a CPU partition such as `shared`, with one agent run per task, each with its own budget and log. Cap how many run at once with `%`, for example `--array=0-49%4`, which also slows how fast the runs use up your account's usage limits; see {doc}`Array Jobs <../s1_high_performance_computing/general_hpc_concepts/array_jobs>`.
 
