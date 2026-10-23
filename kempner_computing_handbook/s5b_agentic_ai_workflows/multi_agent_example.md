@@ -1,6 +1,6 @@
 # Multi-Agent Workflow Example
 
-This chapter runs the task of {doc}`End-to-End Agentic Workflow Example <end_to_end_example>` with four agents: a planner, a critic, a writer, and an auditor. The loop script still submits the jobs and writes the records. The code is in the [agentic-workflow-example](https://github.com/KempnerInstitute/agentic-workflow-example) repository.
+This chapter runs the task of {doc}`End-to-End Agentic Workflow Example <end_to_end_example>` with four agent roles: a planner, a critic, a writer, and an auditor. The loop script still submits the jobs and writes the records. The code is in the [agentic-workflow-example](https://github.com/KempnerInstitute/agentic-workflow-example) repository.
 
 ```{mermaid}
 flowchart TB
@@ -12,7 +12,7 @@ flowchart TB
         direction LR
         W["Planner and<br/>critic"] --> J["Up to 3<br/>round jobs"]
         J -->|next wave| W
-        J --> F["Writer and<br/>auditor"]
+        J --> F["Final<br/>steps"]
     end
     SUP -->|you start the loop job| LOOP
     LOOP --> V(["You check<br/>the result"])
@@ -26,48 +26,52 @@ flowchart TB
 
 | Part | Single-agent example | This chapter |
 |---|---|---|
-| Agents | One agent step for each round | Planner, critic, writer, and auditor |
+| Agents | One agent step for each round, and a report step | Planner, critic, writer, and auditor |
 | Rounds | One round job at a time | Waves of up to 3 round jobs |
 | Check before a round | The schema | The schema, a repeat check, and the critic |
 | GPUs | Full GPUs | A100 MIG slices |
-| Confirmation | One seed | Two seeds |
-| Check of the report | You | The auditor and a code check, then you |
+| Confirmation | One confirmation round | Two confirmation rounds, and the means of 3 seeds |
+| Check of the report | You | The auditor and two code checks, then you |
 
-Several agents cost more tokens. Use them only when a test shows a gain; see {ref}`Start with one agent <agentic_ai:start_with_one_agent>`. This example makes that test; see {ref}`Our runs <agentic_ai:multi_agent_our_runs>`.
+Several agents cost more tokens. Use them only when a test shows a gain; see {ref}`Start with one agent <agentic_ai:start_with_one_agent>`. This example runs that test; see {ref}`Our runs <agentic_ai:multi_agent_our_runs>`.
 
 ## Before you start
 
 - **Single-agent example.** Do the setup, the baseline, and round 1 of {doc}`End-to-End Agentic Workflow Example <end_to_end_example>`. This loop copies round 1 to its own state directory, `state_multi/`.
-- **GPUs.** The round jobs run on `kempner_requeue`, on A100 MIG slices (3g.20gb). One round takes 1 to 3 minutes.
-- **Cost.** The limits are 1,250,000 tokens and 150 GPU minutes for the rounds. The confirmation rounds add a few GPU minutes.
+- **Code.** In your clone, run `git pull`. Then `git status` must show no changes.
+- **Records.** If you ran the single-agent loop in this clone, the agents can read its records in `state/`. For a separate result, use a new clone.
+- **GPUs.** The round jobs run on `kempner_requeue` with `--constraint=a100-mig`. This selects A100 MIG slices (3g.20gb): parts of an A100 GPU with 20 GB of memory each. One round takes 1 to 3 minutes.
+- **Cost.** The budget is 1,250,000 tokens, the plan-only job included, and 150 GPU minutes for the rounds. Both are estimates: a step can use more than planned. The confirmation rounds can add up to 20 GPU minutes, and each requeue up to 10.
+- **Your changes.** The jobs refuse to start while a tracked file has changes. So commit each change to `experiment_multi.yaml`. For a test, use a copy in `local/`, as the README shows.
 
 ## Step 1: Check the settings
 
-Read `experiment_multi.yaml`. It sets the roles and the limits.
+Read `experiment_multi.yaml`, `slurm/multi_loop.sbatch`, `slurm/round_array.sbatch`, and the prompts in `prompts/multi/`. These files set what the agents and the jobs can do.
 
 | Role | Model | Effort | Task |
 |---|---|---|---|
-| Planner | `claude-opus-5-5` | `xhigh` | Plans 3 configurations for each wave, each with a hypothesis and a predicted accuracy |
+| Planner | `claude-opus-5-5` | `xhigh` | Plans up to 3 configurations for each wave, each with a hypothesis, a predicted validation accuracy, and a pass probability. Revises rejected configurations one time. |
 | Critic | `claude-sonnet-5-5` | `high` | Accepts or rejects each configuration before any GPU job runs |
 | Writer | `claude-sonnet-5-5` | `medium` | Writes the draft report |
 | Auditor | `claude-opus-5-5` | `max` | Checks each claim of the report against the records |
 
 - **Change a role.** Edit its `model` and `effort` in `roles`. Use full model names, because an alias such as `opus` moves to newer models. Keep a different model for a checker and the role that it checks.
-- **One agent.** Set `roles.critic.enabled: false`. The loop is then one agent that plans waves of 3.
-- **Model check.** The loop script stops with `model_check` if a step used another model.
+- **One agent.** Set `roles.critic.enabled: false`. Then one agent plans the waves.
+- **Model check.** Claude Code can use another model with only a warning, for example when your organization does not allow a model. A planner or critic step with another model stops the loop with `model_check`. For the writer and the auditor, `audit.json` records it in `failures`.
 
 | Limit | Value |
 |---|---|
 | Threshold | Validation accuracy of at least 0.905 |
-| Plateau | Stop after 6 rounds in a row without a smaller passing model |
-| Tokens | 1,250,000: 800,000 for the search, 450,000 for the writer and the auditor |
-| GPU | 150 GPU minutes. Each round reserves its 10-minute time limit. |
+| Plateau | Stop after 6 complete rounds in a row, in round order, without a smaller passing model |
+| Tokens | 1,250,000: 800,000 for the search, 450,000 for the writer and the auditor. The search stops when the next wave could pass 800,000. |
+| GPU | 150 GPU minutes. Each round of a wave reserves its 10-minute time limit. |
 | Rounds | 45 round attempts, round 1 included |
+| Failed waves | Stop after 2 waves in a row with no complete round |
 | Round jobs at the same time | At most 3, as one array job; see {ref}`Array Jobs <resource_management:array_jobs>` |
-| Queue | 45 minutes for one array job |
-| Loop job | `shared`, 2 CPUs, 8 GB, 6 hours |
+| Queue | 45 minutes for one array job. Then the loop script cancels the waiting tasks and stops. |
+| Loop job | `shared`, 2 CPUs, 8 GB, 6 hours. No new wave starts in the last 3 hours, which are for the role steps and the final steps. |
 
-The agents have the guardrails of the single-agent example: no shell, no write tools, no MCP tools, and no reads outside the project directory or of the README; see {ref}`Guardrails <agentic_ai:guardrails>` and {ref}`Prohibited activities <security_and_compliance:prohibited_activities>`. Only the scale changes: up to 3 GPU jobs at a time.
+The agents have the guardrails of the single-agent example. They have no shell, no write tools, and no MCP tools. They cannot read outside the project directory, or read the README; see {ref}`Guardrails <agentic_ai:guardrails>` and {ref}`Prohibited activities <security_and_compliance:prohibited_activities>`. Only the scale changes: up to 3 GPU jobs at a time, within a fixed GPU budget.
 
 :::{dropdown} A role step, as the loop script runs it
 ```bash
@@ -89,15 +93,15 @@ claude -p "$PROMPT" \
 :::{dropdown} Before an unattended run, answered for this example
 | Question | Answer |
 |---|---|
-| Task boundary | Plan or check configurations, or write or check the report. Return JSON. |
+| Task boundary | Plan or check configurations, or write or check the report |
 | Read scope | Only the project directory, without the README |
 | Write scope | None. The loop script writes all files. |
 | Credentials | None. The agents have no shell. |
 | Network | Only the model provider |
 | Data policy | CIFAR-10 is public data (Level 1). |
-| Untrusted input | Project files, and the outputs of earlier agent steps in `state_multi/` |
-| Resource scope | 3 GPU jobs at a time, 10 minutes each; 150 GPU minutes; 45 round attempts; 1,250,000 tokens; 6 hours |
-| Evidence | `history.tsv`, `ledger.tsv`, `waves/`, `hypotheses.tsv`, the JSON result of each agent step, and the loop log |
+| Untrusted input | Project files, and the outputs of earlier role steps in `state_multi/` |
+| Resource scope | At most 3 GPU jobs at a time, at most 10 minutes for each run of a job; 150 GPU minutes; 45 round attempts; 1,250,000 tokens; 6 hours |
+| Evidence | The `run_meta.json` file of each round, `history.tsv`, `ledger.tsv`, `waves/`, `hypotheses.tsv`, `summary.json`, `audit.json`, the JSON result of each role step, and the loop log |
 | Stop condition | The limits above. SIGTERM stops the loop cleanly. |
 
 See {ref}`Before an unattended run <agentic_ai:before_an_unattended_run>`.
@@ -114,18 +118,19 @@ Check the first plan before any GPU job runs.
    sbatch --time=01:30:00 slurm/multi_loop.sbatch --plan-only
    ```
 
-2. When the job ends, read `state_multi/waves/wave_01/plan.md`. It shows each configuration and the verdict of the critic.
-3. To accept the plan, go to step 3.
-4. To plan again, remove `state_multi/waves/wave_01/`, and submit the job again. Do not edit the plan by hand.
+2. When `squeue -j <job_id>` shows nothing, the log `logs/prune-multi-loop_<job_id>.out` must end with `wave 1 planned: N configuration(s) accepted`.
+3. Read `state_multi/waves/wave_01/plan.md`. It shows each configuration and the verdict of the critic. A rejected configuration gets one revision. If the critic rejects the revision too, the configuration is dropped.
+4. To accept the plan, start the loop; see {ref}`Step 3: Start the loop <agentic_ai:multi_agent_start_the_loop>`.
+5. To plan again, remove `state_multi/waves/wave_01/`, and submit the job again. Each new plan uses about 51,000 tokens. Do not edit the files of the plan by hand.
 
-:::{dropdown} Example: the plan of wave 1 in a test
-| Item | Sparsity | Steps | Epochs | Learning rate | Excluded | Predicted validation accuracy | Status |
-|---|---|---|---|---|---|---|---|
-| 1 | 0.92 | 2 | 10 | 0.02 | none | 0.928 | accepted |
-| 2 | 0.96 | 4 | 16 | 0.03 | none | 0.917 | accepted |
-| 3 | 0.985 | 5 | 20 | 0.05 | `conv1`, `fc` | 0.906 | accepted |
+:::{dropdown} Example: a plan of wave 1 with the default roles
+| Item | Sparsity | Steps | Epochs | Learning rate | Excluded | Predicted validation accuracy | Pass probability | Status |
+|---|---|---|---|---|---|---|---|---|
+| 1 | 0.92 | 2 | 10 | 0.02 | none | 0.928 | 0.92 | accepted |
+| 2 | 0.96 | 4 | 16 | 0.03 | none | 0.917 | 0.75 | accepted |
+| 3 | 0.985 | 5 | 20 | 0.05 | `conv1`, `fc` | 0.906 | 0.45 | accepted |
 
-The critic on item 3: "It is bold, but nothing in the history says it will fail."
+The critic on item 3: "It is bold, but nothing in the history says it will fail, and the 0.45 pass probability is stated openly."
 :::
 
 (agentic_ai:multi_agent_start_the_loop)=
@@ -138,65 +143,72 @@ source cluster.env
 sbatch slurm/multi_loop.sbatch
 ```
 
-For each wave, the planner plans, the code and the critic check the plan, and the loop script submits one array job. This is the pattern of {ref}`Run an agent unattended in a batch job <agentic_ai:unattended_batch_job>`.
+Wave 1 runs the plan that you read. For each later wave, the planner plans, the code and the critic check the plan, and the loop script submits one array job. This is the pattern of {ref}`Run an agent unattended in a batch job <agentic_ai:unattended_batch_job>`.
 
-- **Watch.** Run `tail -f logs/prune-multi-loop_<job_id>.out`.
-- **Stop.** Run `scancel <loop_job_id>`. The loop script cancels its array job. The next loop job counts the GPU minutes of the canceled tasks.
-- **Finish later.** Run `sbatch slurm/multi_loop.sbatch --finish`. It runs only the final steps, and it keeps the selected round.
-- **Timeouts.** If round jobs end at the time limit with no epoch line in their logs, check the storage of `DATA_DIR`.
-- **Problems.** Follow {ref}`Reporting a concern <security_and_compliance:reporting_a_concern>`.
+- **Watch.** Run `tail -f logs/prune-multi-loop_<job_id>.out`. Do not turn on remote control; see {ref}`Remote control <agentic_ai:remote_control>`.
+- **Stop.** Run `scancel <loop_job_id>`. The loop script cancels its array job. Check with `squeue --me` that no `prune-round` task is left.
+- **Continue.** Submit the loop job again. It counts the GPU minutes of the canceled tasks, and it continues the search.
+- **Finish later.** Run `sbatch slurm/multi_loop.sbatch --finish`. It runs only the final steps, and it keeps the selected round. After the final steps, the loop job refuses to start in the same state directory. To search again, use a new one.
+- **Timeouts.** If `sacct -j <array_job_id>` shows `TIMEOUT`, and the logs `logs/prune-round_<job_id>.out` have no epoch line, reads from `DATA_DIR` hang. Each such round uses 10 GPU minutes. Stop the loop, and tell FASRC.
+- **Problems.** If the agents behave unexpectedly, follow {ref}`Reporting a concern <security_and_compliance:reporting_a_concern>`.
 
-:::{dropdown} Example: the loop log in a test with 4 round attempts
+:::{dropdown} Example: the loop log in a test with small limits
+The test allowed 4 round attempts, and its roles used low effort levels. Its plan was not the plan above. Its state directory was `local/f1b_state/`. The test canceled the loop job on purpose during the confirmation rounds:
+
 ```text
-2026-10-21 22:07:43 wave 1: submitted array job 54502617, rounds 2 to 4
-2026-10-22 00:40:00 wave 1: round 2: val_accuracy=0.9302 weights_left=0.100000; round 3: val_accuracy=0.9292 weights_left=0.050147; round 4: val_accuracy=0.9182 weights_left=0.020601; tokens planner 23354, critic 22051 (totals: 45405 tokens, 8.7 GPU minutes)
-2026-10-22 00:40:00 stop: round_limit
-2026-10-22 00:40:02 confirmation rounds: submitted array job 54550705 for seeds 1, 2
-2026-10-22 00:41:45 SIGTERM: asked SLURM to cancel array job 54550705.
+2026-10-22 23:21:12 wave 1: submitted array job 54797113, rounds 2 to 4
+2026-10-22 23:26:14 wave 1: round 2: val_accuracy=0.9330 weights_left=0.100000; round 3: val_accuracy=0.9286 weights_left=0.050583; round 4: val_accuracy=0.9236 weights_left=0.020601; tokens planner 23351, critic 22286 (totals: 45637 tokens, 6.3 GPU minutes)
+2026-10-22 23:26:14 stop: round_limit
+2026-10-22 23:26:14 confirmation rounds: submitted array job 54797493 for seeds 1, 2
+2026-10-22 23:29:52 SIGTERM: asked SLURM to cancel array job 54797493.
 ```
 
-The test canceled the loop job on purpose. Then `--finish` ran the confirmation rounds again:
+Then `--finish` counted the canceled tasks and ran the confirmation rounds again. The two `confirm 4` lines are seeds 1 and 2:
 
 ```text
-2026-10-22 00:43:18 confirmation rounds: submitted array job 54551527 for seeds 1, 2
-test evaluation, round 4: test_accuracy=0.9215
-test evaluation, confirm 4: test_accuracy=0.9219
-test evaluation, confirm 4: test_accuracy=0.9179
-2026-10-22 00:52:21 final steps done: see m7_finish_state/summary.json, final_report.md, and audit.json
+2026-10-22 23:30:21 counted the GPU minutes of 1 job(s) that an earlier loop job did not count
+2026-10-22 23:30:24 confirmation rounds: submitted array job 54797902 for seeds 1, 2
+test evaluation, round 4: test_accuracy=0.9204
+test evaluation, confirm 4: test_accuracy=0.9250
+test evaluation, confirm 4: test_accuracy=0.9211
+2026-10-22 23:37:55 final steps done: see f1b_state/summary.json, final_report.md, and audit.json
 ```
 :::
 
 ## Step 4: Check the result
 
-After the last wave, the loop script selects the passing round with the fewest weights left. It confirms it with seeds 1 and 2, evaluates the three models on the test set, and runs the writer and the auditor. Then check these files in `state_multi/`; see {ref}`Check the output <agentic_ai:check_the_output>`:
+After the last wave, the loop script selects the passing round with the fewest weights left. If no round passes, it selects the round with the highest validation accuracy. It runs two confirmation rounds of the selected round, with seeds 1 and 2. It evaluates the three models on the test set, copies the selected model to `results/state_multi/`, and runs the writer and the auditor. Then check these files in `state_multi/`; see {ref}`Check the output <agentic_ai:check_the_output>`:
 
 | File | Check |
 |---|---|
-| `summary.json` | `means.holds` is `true`: the 3-seed means keep 0.905 for validation and 0.900 for test. |
-| `audit.json` | Each claim of the report is `supported`. Check each claim that is `unsupported` or `wrong`. |
+| `summary.json` | `stop_reason` is a normal stop. `integrity`, `agent_format`, and `model_check` mean a fault. |
+| `summary.json` | `means.holds` is `true`: the 3-seed means keep 0.905 for validation and 0.900 for test. If it is `null`, a confirmation round is missing. Run `--finish`. |
+| `audit.json` | `auditor_step_failed` is `false`. Each claim is `supported`. Check each claim that is not. If the auditor step failed, read `failures`. |
 | `audit.json` | Check each number in `unmatched_numbers`. The code did not find it in the records. A derived number, such as a margin, is often correct. |
 | `audit.json` | `check_round.ok` is `true`. |
-| `final_report.md` | You read it after the checks above. |
+| `final_report.md` | Read it after the checks above. Its tokens and cost are from before the writer and auditor steps. |
 | `ledger.tsv` | The tokens of each role, and the GPU minutes of each job |
 
-The auditor and the code checks do not replace your check; see {ref}`Best practices for trustworthy agentic research <agentic_ai:trustworthy_practices>`. To check the report of the single-agent example the same way, run `STATE_DIR=state sbatch slurm/multi_loop.sbatch --audit-only`.
+The auditor and the code checks do not replace your check; see {ref}`Best practices for trustworthy agentic research <agentic_ai:trustworthy_practices>`.
+
+To audit the report of the single-agent example, run `source cluster.env`, then `STATE_DIR=state sbatch --time=01:00:00 slurm/multi_loop.sbatch --audit-only`. It writes `state/audit.json`. The auditor uses about 300,000 tokens.
 
 (agentic_ai:multi_agent_our_runs)=
 ## Our runs
 
 :::{note}
-Draft. The comparison runs have not run yet. Their design is fixed before the runs.
+Draft. We have not done the comparison runs yet. We fixed their design before the runs.
 :::
 
 | Arm | Design |
 |---|---|
-| 1 | One agent, one round at a time: the loop of the single-agent example |
+| 1 | One agent, one round at a time: the loop of the single-agent example, with the limits below |
 | 2 | One agent, waves of 3: this loop with the critic off |
 | 3 | Planner and critic, waves of 3: this loop |
 
-- **Same conditions.** Same baseline and round 1, same agent that decides (`claude-opus-5-5` at `xhigh`), 800,000 tokens for the search, 45 round attempts, and 150 GPU minutes on MIG slices.
-- **Result.** An arm's result holds if its 3-seed means keep 0.905 for validation and 0.900 for test. The main number is its weights left.
-- **Difference.** An arm is better only if its weights left are lower by at least 0.15 point. This is about 1.5 standard errors.
+- **Same conditions.** All arms start from the same baseline and round 1, each in its own clone. In each arm, `claude-opus-5-5` at `xhigh` decides. Each arm has 800,000 tokens for the search, 45 round attempts, a plateau of 6 rounds, two confirmation rounds, and 150 GPU minutes on MIG slices.
+- **Result.** The result of an arm holds if its 3-seed means keep 0.905 for validation and 0.900 for test. The main number is its weights left.
+- **Difference.** An arm is better only if its result holds and its weights left are at least 0.15 percentage point lower, for example 0.60% against 0.75%.
 - **Limit.** One run of each arm is a worked example, not a proof.
 
 ## Was it worth it?
@@ -207,36 +219,36 @@ Draft. After the runs, this section answers each check with the results.
 
 | Check of {ref}`Before you trust the result <agentic_ai:before_you_trust_the_result>` | Evidence |
 |---|---|
-| A single agent was tried, and the multi-agent version did better. | Arms 1 and 2 against arm 3 |
+| A single agent was tried on the same task, and the multi-agent version did measurably better. | Arms 1 and 2 against arm 3 |
 | Each agent had only the tools and budget its step needed. | Read-only tools, role caps, and the model check |
-| You read each step's output. | `plan.md`, `hypotheses.tsv`, and `audit.json` |
-| The reviewer worked in a fresh context. | The critic and the auditor are separate `claude -p` calls. |
-| The outputs and the total cost are kept. | `state_multi/` and `summary.json` |
+| You read each step's output, not only the last. | The plan of wave 1 before the loop. The later plans, `hypotheses.tsv`, and `audit.json` after it. |
+| The reviewer worked from the diff in a fresh context, not from the implementer's summary. | The critic and the auditor are separate `claude -p` calls. The critic reads the reason of the planner for each configuration, as its rules need. |
+| The plan, the review, and each step's JSON result are kept, and the total cost is recorded. | `state_multi/` and `summary.json` |
 
 ## Adapt the example
 
-- **Roles.** Change the models, the effort levels, and the caps in `experiment_multi.yaml`.
-- **Waves.** Change `wave.size` and `wave.max_parallel`.
-- **GPUs.** Set `round.constraint`, for example `a100|h100|h200|rtx6000pro`. A full GPU is faster, so lower `gpu_minutes` too.
-- **Subagents.** To use a role in your own interactive sessions, make its prompt a subagent; see {ref}`Subagents <agentic_ai:configuring_subagents>` in Configuring Agents for Your Project. Do this in your own project. In the clone of this example, a subagent would change round 1.
+- **Roles.** Change the models, the effort levels, and the caps in `experiment_multi.yaml`. Commit the change.
+- **Waves.** Change `wave.size` and `wave.max_parallel`. More GPU jobs at a time make the unattended run larger, so read {ref}`Prohibited activities <security_and_compliance:prohibited_activities>` first.
+- **GPUs.** Set `round.constraint` in `experiment_multi.yaml`, for example `a100|h100|h200|rtx6000pro`. A full GPU is faster, so lower `gpu_minutes` too, but keep 10 minutes for each round of a wave.
+- **Subagents.** To use a role in your own interactive sessions, make its prompt a subagent; see {ref}`Subagents <agentic_ai:configuring_subagents>` in Configuring Agents for Your Project. Do not add it to the clone of this example: a new file in `.claude/` stops the jobs with `integrity`.
 
 :::{dropdown} Example: the critic as a subagent
-Save this file as `.claude/agents/critic.md` in your own project. Paste the text of `prompts/multi/roles/critic.md` below the frontmatter.
+Save this file as `.claude/agents/critic.md` in your own project. Paste the text of `prompts/multi/roles/critic.md` below the frontmatter, and change its file names and rules to those of your project.
 
 ```markdown
 ---
 name: critic
 description: Checks a plan of experiment configurations against the rules and the records before any job runs.
 tools: Read, Grep, Glob
-model: sonnet
+model: claude-sonnet-5-5
 ---
 
-<the text of prompts/multi/roles/critic.md>
+<the text of prompts/multi/roles/critic.md, changed for your project>
 ```
 
 The `tools` field gives the subagent read-only tools; see {ref}`Subagents <agentic_ai:orchestration_subagents>` in Multi-Agent Orchestration.
 :::
 
 ```{seealso}
-For the single-agent version, see {doc}`End-to-End Agentic Workflow Example <end_to_end_example>`. For the patterns and costs of several agents, see {doc}`Multi-Agent Orchestration <multi_agent_orchestration>`.
+For the single-agent example, see {doc}`End-to-End Agentic Workflow Example <end_to_end_example>`. For the patterns and costs of several agents, see {doc}`Multi-Agent Orchestration <multi_agent_orchestration>`.
 ```

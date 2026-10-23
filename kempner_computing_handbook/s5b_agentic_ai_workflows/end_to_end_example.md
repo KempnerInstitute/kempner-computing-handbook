@@ -111,7 +111,7 @@ This is the workflow of {doc}`Your First Agentic Workflow on the Cluster <first_
 
 In the unattended phase, no one approves each round. You approve the whole budget one time, so read the limits first:
 
-- **`experiment.yaml`.** The threshold, the plateau rule, the token budget, the GPU budget, the round limit, and the queue and time allowances. It also sets the model and the effort level of the agent step.
+- **`experiment.yaml`.** The threshold, the plateau rule, the token budget, the GPU budget, the round limit, and the queue and time allowances. It also sets the model and the effort level of the agent step and the report step.
 - **`slurm/loop.sbatch`.** The 6-hour time limit of the loop job, which is the final stop.
 
 The limits that matter are outside the model; see {ref}`Prefer enforceable boundaries over prompt instructions <agentic_ai:enforceable_boundaries>`. The agent has different powers in the two phases:
@@ -164,7 +164,7 @@ claude -p "$PROMPT" \
   --json-schema "$(cat configs/round.schema.json)"
 ```
 
-`experiment.yaml` sets the model and the effort level. After each step, the loop script finds the model in the `modelUsage` field of the result, and it stops if the step used another model. The deny rule keeps the agent out of the README, because the README holds the results of our run.
+`experiment.yaml` sets the model and the effort level. After each agent step, the loop script finds the model in the `modelUsage` field of the result, and it stops if the step used another model. The deny rule keeps the agent out of the README, because the README holds the results of our runs.
 
 :::{dropdown} Stop rules and budgets
 Before each round, the loop script checks these rules, in this order:
@@ -176,7 +176,7 @@ Before each round, the loop script checks these rules, in this order:
 5. 2 failed attempts in a row.
 6. Too little job time for one more round and the final steps.
 
-The loop script also stops when a job waits more than 45 minutes in the queue, or when a tracked file changes. It stops too when the JSON result of an agent step has no token counts, or when a step used another model than `experiment.yaml` sets.
+The loop script also stops when a job waits more than 45 minutes in the queue, or when a tracked file changes. It stops too when the JSON result of an agent step has no token counts, or when an agent step used a model other than the one in `experiment.yaml`.
 
 - **Tokens.** Claude Code has no flag for a total token limit. The loop script adds the input, output, cache read, and cache creation tokens of each model in the `modelUsage` field of each result. The token rule is an estimate: one step can use more than the largest earlier step.
 - **GPU minutes.** The loop script reads them from `sacct -D`, which counts each run of a requeued job. If `sacct` has no record of a job, the loop script counts its 10-minute time limit. No round starts after 60 GPU minutes. With the last round and the confirmation round, the total can reach about 80, or more if SLURM preempts jobs.
@@ -185,7 +185,7 @@ The loop script also stops when a job waits more than 45 minutes in the queue, o
 
 - **Watch.** Use `tail -f logs/prune-loop_<job_id>.out`, `state/history.tsv`, and `state/ledger.tsv`. Do not turn on remote control; see {ref}`Remote control <agentic_ai:remote_control>`.
 - **Stop.** Run `scancel <loop_job_id>`. The loop script cancels its own round job and writes `state/summary.json`. Check with `squeue --me` that the round job is gone. The next loop job counts the GPU minutes of the canceled job.
-- **Finish later.** After an early stop, `sbatch slurm/loop.sbatch --finish` runs only the final steps. It keeps the selected round.
+- **Finish later.** After an early stop, `sbatch slurm/loop.sbatch --finish` runs only the final steps. It keeps the selected round. After the final steps, the loop job refuses to start in the same state directory.
 - **Problems.** If the agent behaves unexpectedly, follow {ref}`Reporting a concern <security_and_compliance:reporting_a_concern>`.
 
 :::{dropdown} Example: the end of the loop log in a test run
@@ -277,7 +277,7 @@ The confirmation round passed exactly at the threshold, and both test values are
 - **Keep.** Keep the parts that make the run safe: the fixed evaluator, the read-only agent step, the loop script, and the limits outside the model. Also keep the parts that make the result checkable: the run records, the confirmation round, and the one-time test evaluation.
 - **Data.** Check that the data level of your data and your results allows the agent to read them. Most unpublished research data is Level 2; see {ref}`Before you start <agentic_ai:before_you_start>`.
 - **Rounds.** Decide what the agent may change in each round, as in {doc}`Experiment Management with Agents <experiment_management_with_agents>`.
-- **GPUs.** To run the round jobs on other GPUs, set `round.constraint` in `experiment.yaml`, for example `a100-mig`. The loop script passes it to `sbatch`.
+- **GPUs.** To run the round jobs on other GPUs, set `round.constraint` in `experiment.yaml`, for example `a100-mig`. A round takes 3 to 4 times longer on a MIG slice, so raise `gpu_minutes` too. Commit the change.
 - **Several agents.** For the same task with four agent roles, see {doc}`Multi-Agent Workflow Example <multi_agent_example>`.
 
 To extend the code with the agent, use the two skills from {doc}`Coding Agent Skills <../s2_swe_for_research/coding_agent_skills>` in an interactive session. The project settings deny edits of `src/` and `tests/`. So work on a development branch, and remove those two deny rules from `.claude/settings.json` on that branch. When the code is done, put the deny rules back, and commit everything. The round job refuses to start while a tracked file has uncommitted changes.
