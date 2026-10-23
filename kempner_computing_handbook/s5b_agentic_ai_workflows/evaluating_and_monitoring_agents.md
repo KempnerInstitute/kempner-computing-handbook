@@ -7,7 +7,7 @@ An agent's output looks confident whether or not it is correct, and a long run c
 
 Before you trust an agent with real work, measure it on tasks whose answers you know. Pick five to ten tasks you have already solved, give each to the agent with the same prompt, and score its output against your answer. Rerun the set whenever you change the model, the prompt, or the setup, so you can see whether a change helps or hurts.
 
-Use the same set to resist needless complexity. A multi-agent pipeline adds coordination overhead and can pass errors along, so compare it with a single agent on your own tasks, and keep whichever is more accurate and cheaper; see {doc}`Multi-Agent Orchestration <multi_agent_orchestration>`.
+Use the same set to resist needless complexity. A multi-agent pipeline adds coordination overhead and can pass errors along, so compare it with a single agent on your own tasks, and keep whichever is more accurate and cheaper; see {doc}`Multi-Agent Orchestration <multi_agent_orchestration>`. {doc}`Multi-Agent Workflow Example <multi_agent_example>` makes this comparison for one task.
 
 (agentic_ai:check_the_output)=
 ## Check the output

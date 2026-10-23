@@ -42,6 +42,7 @@ The [Model Context Protocol (MCP)](https://modelcontextprotocol.io) is an open s
 An MCP server can hold credentials and reach real systems. Keep its configuration and keys out of shared or world-readable paths, and give it only the access it needs. See the secrets guidance in {ref}`Agent security <agentic_ai:agent_security>`.
 ```
 
+(agentic_ai:configuring_subagents)=
 ## Subagents
 
 A subagent is a helper the main agent hands a task to. It works in its own context and returns a summary, which keeps noisy exploration out of your main session. In Claude Code, a subagent is a Markdown file under `.claude/agents/`, and its `tools` field is an allowlist. A review subagent can get read-only tools and nothing else, a limit the model cannot override.

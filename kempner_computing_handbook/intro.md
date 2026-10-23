@@ -65,7 +65,7 @@ Parallel and GPU computing, efficiency, profiling, and experiment management at 
 :link: /s5b_agentic_ai_workflows/README
 :link-type: doc
 
-Coding and research agents: tools, cluster setup, custom tools, research workflows, trustworthy results, and an end-to-end example.
+Coding and research agents: tools, cluster setup, custom tools, research workflows, trustworthy results, and two end-to-end examples.
 :::
 
 :::{grid-item-card} Security and Compliance

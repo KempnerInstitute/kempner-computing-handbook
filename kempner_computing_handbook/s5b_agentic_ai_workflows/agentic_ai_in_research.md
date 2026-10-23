@@ -23,7 +23,7 @@ Work moves through these stages, you review and steer between them, and results 
 (agentic_ai:workflow_patterns)=
 ## Workflow patterns
 
-- **One agent or several.** A single capable agent handles many tasks. Several agents with separate roles, such as a solver and an independent evaluator, can help on large problems but add overhead and pass errors along. Compare both on your own task before you adopt the more complex one; see {doc}`Multi-Agent Orchestration <multi_agent_orchestration>`.
+- **One agent or several.** A single capable agent handles many tasks. Several agents with separate roles, such as a solver and an independent evaluator, can help on large problems but add overhead and pass errors along. Compare both on your own task before you adopt the more complex one; see {doc}`Multi-Agent Orchestration <multi_agent_orchestration>`, and the worked comparison in {doc}`Multi-Agent Workflow Example <multi_agent_example>`.
 - **Bounded loops.** Many research agents work in a design, run, measure, and revise loop. Give the loop a stopping criterion and a budget. For a complete example, see {doc}`End-to-End Agentic Workflow Example <end_to_end_example>`.
 - **Review points.** Add explicit points where you check intermediate output, add domain knowledge, or change course. Treat the agent's output as a draft to check.
 

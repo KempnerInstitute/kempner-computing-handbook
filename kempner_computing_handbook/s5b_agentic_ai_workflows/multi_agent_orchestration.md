@@ -2,11 +2,12 @@
 
 Several agents can split a large task, check each other's work, or run side by side on independent problems. They also multiply cost, and an early mistake can carry through every later step. This page covers when several agents are worth it, and how to build and control multi-step workflows on the cluster with Claude Code and SLURM.
 
+(agentic_ai:start_with_one_agent)=
 ## Start with one agent
 
 Try a single agent first, and add more only when a measured gain justifies the cost; see {doc}`Evaluating and Monitoring Agents <evaluating_and_monitoring_agents>`. The cost is real. Anthropic found that its multi-agent research system used about 15 times as many tokens as a chat ([How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)). [Claude Code's documentation](https://code.claude.com/docs/en/agent-teams) also notes that agent teams use significantly more tokens than one session.
 
-Several agents help when the work splits into independent pieces, when a reviewer should check work it did not produce, or when the task is too large for one context. They hurt on sequential work with many dependencies, on edits to the same files, and on small tasks.
+Several agents help when the work splits into independent pieces, when a reviewer should check work it did not produce, or when the task is too large for one context. They hurt on sequential work with many dependencies, on edits to the same files, and on small tasks. {doc}`Multi-Agent Workflow Example <multi_agent_example>` compares one agent with several on one research task.
 
 | Pattern | How it works | Good for |
 |---|---|---|
@@ -102,6 +103,7 @@ On the cluster, run the sessions in separate tmux windows that share one job. St
 
 ## Delegate within a session
 
+(agentic_ai:orchestration_subagents)=
 ### Subagents
 
 A subagent is a helper that works in its own context inside one session and returns a summary; see {doc}`Configuring Agents for Your Project <configuring_agents>`. Define a role once in `.claude/agents/` to reuse it. This reviewer, saved as `.claude/agents/reviewer.md`, can only read, so it works from the diff the main agent passes it:
@@ -170,6 +172,7 @@ claude -p "Array job $SWEEP_JOB_ID has finished. Use sacct to find which tasks f
 
 See {doc}`Job Dependencies <../s1_high_performance_computing/general_hpc_concepts/job_dependencies>`. To run the same agent task over many inputs, first turn off automatic updates, so an update cannot remove the version running jobs use; see {ref}`Running a terminal agent <agentic_ai:running_a_terminal_agent>`. Then use an array job on a CPU partition such as `shared`, with one agent run per task, each with its own budget and log. Cap how many run at once with `%`, for example `--array=0-49%4`, which also slows how fast the runs use up your account's usage limits; see {doc}`Array Jobs <../s1_high_performance_computing/general_hpc_concepts/array_jobs>`.
 
+(agentic_ai:before_you_trust_the_result)=
 ## Before you trust the result
 
 - A single agent was tried on the same task, and the multi-agent version did measurably better.
@@ -177,6 +180,8 @@ See {doc}`Job Dependencies <../s1_high_performance_computing/general_hpc_concept
 - You read each step's output, not only the last; an error one step takes as given is hard to see at the end.
 - The reviewer worked from the diff in a fresh context, not from the implementer's summary.
 - The plan, the review, and each step's JSON result are kept with the outputs, and the total cost, the sum of the `total_cost_usd` values, is recorded.
+
+{doc}`Multi-Agent Workflow Example <multi_agent_example>` shows the evidence for each of these checks in one example.
 
 ```{seealso}
 For the guardrails these workflows rely on, see {ref}`Guardrails <agentic_ai:guardrails>`. For building custom pipelines in code, see the frameworks in {doc}`Agentic AI Tools <agentic_ai_tools>`.
