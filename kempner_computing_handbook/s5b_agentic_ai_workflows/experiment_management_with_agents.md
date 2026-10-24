@@ -29,7 +29,7 @@ Ask for a small JSON summary per run as well. It is the easiest output for an ag
 With `WANDB_MODE=offline`, W&B writes each run to a local directory, and `wandb sync <run_dir>` uploads it later. Compute nodes have outbound access, so online mode works too; offline mode keeps jobs independent of the network. See W&B's [offline documentation](https://docs.wandb.ai/support/models/articles/can-i-run-wandb-offline).
 :::
 :::{tab-item} MLflow
-Since MLflow 3.7, a local tracking store is a SQLite file by default (`sqlite:///mlflow.db`), viewed with `mlflow server`. It works for a single run, but in a test on netscratch, setting up the database alone took about 90 seconds, and many array tasks writing to one SQLite file over a network filesystem invite locking problems. For parallel jobs, log to an MLflow tracking server instead; the Kempner [mlflow-on-databricks](https://github.com/KempnerInstitute/mlflow-on-databricks) repository sets up tracking on Databricks from the cluster.
+Since MLflow 3.7, a local tracking store is a SQLite file by default (`sqlite:///mlflow.db`), viewed with `mlflow server`. It works for a single run, but on netscratch the setup of the database alone takes about 90 seconds, and many array tasks that write to one SQLite file over a network filesystem invite locking problems. For parallel jobs, log to an MLflow tracking server instead; the Kempner [mlflow-on-databricks](https://github.com/KempnerInstitute/mlflow-on-databricks) repository sets up tracking on Databricks from the cluster.
 :::
 ::::
 
@@ -93,9 +93,9 @@ Long runs hit time limits, and jobs on a partition like `kempner_requeue` can be
 - Write each checkpoint to a temporary file and rename it into place (`os.replace` in Python), so a job killed mid-save cannot leave a corrupt checkpoint.
 - On startup, load the latest checkpoint if one exists and continue from its step.
 
-In a test on the cluster, a run with a one-minute limit stopped at about step 237,000. Resubmitted with a longer `--time`, it logged `resumed from step 236000`, its latest checkpoint, and repeated only the steps after it.
+To check this, give a run a short `--time`, then submit it again with a longer one. It must continue from its latest checkpoint and repeat only the steps after it.
 
-SLURM can also warn a job before its time limit, so the run saves on its way out. `#SBATCH --signal=B:SIGTERM@120` sends SIGTERM about two minutes early, and SLURM may send it up to a minute earlier than requested. With `B:`, only the batch script's shell receives the signal, so the script must pass it on. In a test on the cluster with a one-minute warning, a job that ran training in the foreground with no handler was ended by the warning without saving. With these lines at the end of the batch script, training received the signal, saved, and the job completed cleanly:
+SLURM can also warn a job before its time limit, so the run saves on its way out. `#SBATCH --signal=B:SIGTERM@120` sends SIGTERM about two minutes early, and SLURM may send it up to a minute earlier than requested. With `B:`, only the batch script's shell receives the signal, so the script must pass it on. A job that runs training in the foreground with no handler ends at the warning without saving. Put these lines at the end of the batch script, so that training receives the signal and saves:
 
 ```bash
 python train.py &      # run training in the background

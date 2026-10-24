@@ -75,7 +75,7 @@ Approve the `sbatch` when the agent asks. To follow the job, the agent can use `
 
 ## Diagnose a failure
 
-`clustertool jobs debug <job_id>` reads a job's accounting record and names the likely cause. These two jobs failed on purpose:
+`clustertool jobs debug <job_id>` reads a job's accounting record and names the likely cause. Two examples of its output:
 
 ::::{tab-set}
 :::{tab-item} Out of memory
@@ -173,7 +173,7 @@ claude -p "Read the job logs in logs/ from the last day. For each failed job, ex
 - **Record.** The JSON result has the session ID, for `claude --resume`, and an estimated cost.
 - **Sign-in.** The job uses your saved Harvard login. If `ANTHROPIC_API_KEY` is set, for example in `~/.bashrc`, print mode uses that key instead, so leave it unset; see {ref}`Running a terminal agent <agentic_ai:running_a_terminal_agent>`.
 
-In a test on the cluster with three job logs, the agent wrote its findings to `reports/triage.md` and changed nothing else. Asked in a second run to create a file elsewhere, edit a batch script, and run `touch`, it was refused all three times. Read the report before you act on it; its proposals are leads, not fixes.
+The agent writes its findings to `reports/triage.md`. `dontAsk` refuses a request to create a file elsewhere, edit a batch script, or run `touch`. Read the report before you act on it; its proposals are leads, not fixes.
 
 For a loop in which an agent chooses each round of an experiment within limits, see {doc}`End-to-End Agentic Workflow Example <end_to_end_example>`.
 
