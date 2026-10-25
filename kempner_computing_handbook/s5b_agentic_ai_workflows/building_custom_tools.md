@@ -31,7 +31,7 @@ description: Check a finished SLURM job. Use when asked why a job failed or how 
 4. Propose a fix to the batch script. Do not submit or cancel anything.
 ```
 
-The agent loads the skill when a request matches its description, or when you type `/check-job`. In a test on the cluster, `claude -p "/check-job 51161725"` followed all four steps and, as the skill says, trusted the job's log over its misleading memory record. To share skills, subagents, hooks, and MCP servers as one package, use a plugin; [KempnerForge](https://github.com/KempnerInstitute/KempnerForge) ships one, described in {doc}`Working with Unfamiliar Research Codebases <unfamiliar_codebases>`. See the [skills documentation](https://code.claude.com/docs/en/skills). For ready-made skills, one per Software Engineering for Research chapter, see {doc}`Coding Agent Skills <../s2_swe_for_research/coding_agent_skills>`.
+The agent loads the skill when a request matches its description, or when you type `/check-job`. In print mode, run `claude -p "/check-job <job_id>"`. To share skills, subagents, hooks, and MCP servers as one package, use a plugin; [KempnerForge](https://github.com/KempnerInstitute/KempnerForge) ships one, described in {doc}`Working with Unfamiliar Research Codebases <unfamiliar_codebases>`. See the [skills documentation](https://code.claude.com/docs/en/skills). For ready-made skills, one per Software Engineering for Research chapter, see {doc}`Coding Agent Skills <../s2_swe_for_research/coding_agent_skills>`.
 
 ## Build a read-only MCP server
 
@@ -80,7 +80,7 @@ if __name__ == "__main__":
     mcp.run()
 ```
 
-Install the Python SDK with `uv add "mcp[cli]"` or `pip install "mcp[cli]"`. With no arguments, `mcp.run()` talks to the agent over standard input and output. In a test on the cluster with version 2.3.0 of the SDK, the server listed its two tools, returned a finished job's accounting record, and rejected the input `1; rm -rf ~`.
+Install the Python SDK with `uv add "mcp[cli]"` or `pip install "mcp[cli]"`. With no arguments, `mcp.run()` talks to the agent over standard input and output. The code needs version 2 of the SDK. `job_summary` rejects an input such as `1; rm -rf ~`.
 
 ```{note}
 Version 2 of the MCP Python SDK renamed `FastMCP` to `MCPServer`, so older examples that import from `mcp.server.fastmcp` fail with `ModuleNotFoundError`. The separate `fastmcp` package from Prefect still has its own `FastMCP` class. See the SDK's [migration guide](https://py.sdk.modelcontextprotocol.io/migration/).
@@ -118,8 +118,6 @@ claude mcp add --scope project slurm-readonly -- .venv/bin/python tools/slurm_re
 }
 ```
 :::
-
-In a test on the cluster, `claude mcp add` wrote exactly this file, and an agent in print mode then looked up a job through `job_summary`.
 
 - **Approval.** In an interactive session, Claude Code asks each person to approve a project's servers before first use. `/mcp` shows each server's status and tools.
 - **Permission rules.** The tools are named after the server, such as `mcp__slurm-readonly__job_summary`, and a rule for `mcp__slurm-readonly` covers all of them.

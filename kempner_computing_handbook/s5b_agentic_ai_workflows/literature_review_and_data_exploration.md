@@ -100,7 +100,7 @@ with open(sys.argv[1], newline="") as f:
 ```
 :::
 
-In a test on a compute node, given four references, one with a real DOI but another paper's title and one with an invented DOI, it reported:
+For example, for four references, one with a real DOI but the title of another paper and one with an invented DOI, it reports:
 
 ```text
 $ python check_refs.py review/papers.csv

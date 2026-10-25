@@ -122,6 +122,7 @@ parts:
       - file: s5b_agentic_ai_workflows/evaluating_and_monitoring_agents
       - file: s5b_agentic_ai_workflows/agentic_ai_in_research
     - file: s5b_agentic_ai_workflows/end_to_end_example
+    - file: s5b_agentic_ai_workflows/multi_agent_example
   - caption: Security and Compliance
     numbered: true
     chapters:
