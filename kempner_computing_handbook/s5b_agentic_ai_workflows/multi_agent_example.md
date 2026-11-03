@@ -40,9 +40,21 @@ Several agents cost more tokens. Use them only when a test shows a gain; see {re
 - **Single-agent example.** Do the setup, the baseline, and round 1 of {doc}`End-to-End Agentic Workflow Example <end_to_end_example>`. This loop copies round 1 to its own state directory, `state_multi/`.
 - **Code.** In your clone, run `git pull`. Then `git status` must show no changes.
 - **Records.** If you ran the single-agent loop in this clone, the agents can read its records in `state/`. For a separate result, use a new clone.
-- **GPUs.** The round jobs run on `kempner_requeue` with `--constraint=a100-mig`. This selects A100 MIG slices (3g.20gb): parts of an A100 GPU with 20 GB of memory each. One round takes 1 to 3 minutes.
+- **GPUs.** The round jobs run on `kempner_requeue` with `--constraint=a100-mig`. This selects A100 MIG slices (3g.20gb): parts of an A100 GPU with 20 GB of memory each. One round takes 1 to 3 minutes. To use `kempner_interactive`, see {ref}`Run on kempner_interactive <agentic_ai:multi_agent_kempner_interactive>`.
 - **Cost.** The budget is 1,250,000 tokens, the plan-only job included, and 150 GPU minutes for the rounds. Both are estimates: a step can use more than planned. Plan for 10% more tokens, because the auditor can use more than its reserve. The confirmation rounds can add up to 20 GPU minutes, and each requeue up to 10.
 - **Your changes.** The jobs refuse to start while a tracked file has changes. So commit each change to `experiment_multi.yaml`. For a test, use a copy in `local/`, as the README shows.
+
+(agentic_ai:multi_agent_kempner_interactive)=
+:::{dropdown} Run on kempner_interactive
+`kempner_interactive` has the same A100 MIG slices, and each user can use one GPU at a time. To use it in batch mode for this example:
+
+1. For the baseline and round 1, do the steps in {ref}`Run on kempner_interactive <agentic_ai:end_to_end_kempner_interactive>` of the single-agent example.
+2. In the `round` section of `experiment_multi.yaml`, set `partition: kempner_interactive` and `constraint: a100-mig`.
+3. In `experiment_multi.yaml`, also set `wave.max_parallel: 1` and `budget.final_reserve_minutes: 120`. The rounds of a wave and the two confirmation rounds then run in turns, so a wave takes up to 3 times longer.
+4. Commit the change.
+
+While the loop job runs, keep no other GPU job on `kempner_interactive`. The round jobs wait for it, and the loop stops at `queue_limit_minutes`.
+:::
 
 ## Step 1: Check the settings
 
@@ -265,7 +277,7 @@ In the three runs, the critic accepted all 21 configurations. The auditor marked
 
 - **Roles.** Change the models, the effort levels, and the caps in `experiment_multi.yaml`. Commit the change.
 - **Waves.** Change `wave.size` and `wave.max_parallel`. More GPU jobs at a time make the unattended run larger, so read {ref}`Prohibited activities <security_and_compliance:prohibited_activities>` first.
-- **GPUs.** Set `round.constraint` in `experiment_multi.yaml`, for example `a100|h100|h200|rtx6000pro`. A full GPU is faster, so lower `gpu_minutes` too, but keep 10 minutes for each round of a wave.
+- **GPUs.** Set `round.constraint` in `experiment_multi.yaml`, for example `a100|h100|h200|rtx6000pro`. A full GPU is faster, so lower `gpu_minutes` too, but keep 10 minutes for each round of a wave. `round.partition` sets the partition in the same way; see {ref}`Run on kempner_interactive <agentic_ai:multi_agent_kempner_interactive>`.
 - **Subagents.** To use a role in your own interactive sessions, make its prompt a subagent; see {ref}`Subagents <agentic_ai:configuring_subagents>` in Configuring Agents for Your Project. Do not add it to the clone of this example: a new file in `.claude/` stops the jobs with `integrity`.
 
 :::{dropdown} Example: the critic as a subagent
