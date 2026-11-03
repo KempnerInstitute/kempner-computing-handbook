@@ -99,7 +99,7 @@ You can run the GPU jobs of this example on `kempner_interactive` in batch mode,
 4. Start the loop job as usual. It runs on `shared`, and it submits the round jobs to `kempner_interactive`.
 
 - **GPU minutes.** A round uses about 2.6 GPU minutes on a MIG slice. The loop job then uses about 40 GPU minutes, within the default 60 (`budget.gpu_minutes`).
-- **One GPU.** While the loop job runs, do not keep another GPU job on `kempner_interactive`. A round job waits for it, and if the round job waits more than 45 minutes (`budget.queue_limit_minutes`), the loop stops.
+- **One GPU.** While the loop job runs, do not keep another GPU job on `kempner_interactive`. Another GPU job makes the round jobs wait. If a round job waits more than 45 minutes (`budget.queue_limit_minutes`), the loop stops.
 - **Start check.** If SLURM would reject the round jobs, the loop job stops before the search starts.
 :::
 

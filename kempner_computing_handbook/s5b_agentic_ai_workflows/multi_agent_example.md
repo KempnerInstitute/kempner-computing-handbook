@@ -53,7 +53,7 @@ Several agents cost more tokens. Use them only when a test shows a gain; see {re
 3. In `experiment_multi.yaml`, also set `wave.max_parallel: 1` and `budget.final_reserve_minutes: 120`. The rounds of a wave and the two confirmation rounds then run in turns, so a wave takes up to 3 times longer.
 4. Commit the change.
 
-While the loop job runs, do not keep another GPU job on `kempner_interactive`. A round job waits for it, and if the array job waits more than 45 minutes (`budget.queue_limit_minutes`), the loop stops.
+While the loop job runs, do not keep another GPU job on `kempner_interactive`. Another GPU job makes the round jobs wait. If an array job waits more than 45 minutes (`budget.queue_limit_minutes`), the loop stops.
 :::
 
 ## Step 1: Check the settings
@@ -277,7 +277,7 @@ In the three runs, the critic accepted all 21 configurations. The auditor marked
 
 - **Roles.** Change the models, the effort levels, and the caps in `experiment_multi.yaml`. Commit the change.
 - **Waves.** Change `wave.size` and `wave.max_parallel`. More GPU jobs at a time make the unattended run larger, so read {ref}`Prohibited activities <security_and_compliance:prohibited_activities>` first.
-- **GPUs.** Set `round.constraint` in `experiment_multi.yaml`, for example `a100|h100|h200|rtx6000pro`. A full GPU is faster, so lower `gpu_minutes` too, but keep 10 minutes for each round of a wave. `round.partition` sets the partition in the same way; see {ref}`Run on kempner_interactive <agentic_ai:multi_agent_kempner_interactive>`.
+- **GPUs.** Set `round.constraint` in `experiment_multi.yaml`, for example `a100|h100|h200|rtx6000pro`. A full GPU is faster, so lower `budget.gpu_minutes` too, but keep 10 minutes for each round of a wave. `round.partition` sets the partition in the same way; see {ref}`Run on kempner_interactive <agentic_ai:multi_agent_kempner_interactive>`.
 - **Subagents.** To use a role in your own interactive sessions, make its prompt a subagent; see {ref}`Subagents <agentic_ai:configuring_subagents>` in Configuring Agents for Your Project. Do not add it to the clone of this example: a new file in `.claude/` stops the jobs with `integrity`.
 
 :::{dropdown} Example: the critic as a subagent
