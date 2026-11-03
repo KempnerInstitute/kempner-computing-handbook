@@ -38,20 +38,6 @@ You supervise round 1. Then a loop job runs more rounds without a person, within
 - **Partitions.** You need a SLURM account that can use `kempner_requeue` for the GPU jobs and `shared` for the loop job; see {ref}`SLURM Accounts <resource_management:understanding_slurm:slurm_accounts>`. `kempner_requeue` can preempt a job with no warning. The GPU jobs save a checkpoint after each epoch, and they continue after a requeue; see {ref}`Checkpoint and resume <agentic_ai:checkpoint_and_resume>`. To use `kempner_interactive`, see {ref}`Run on kempner_interactive <agentic_ai:end_to_end_kempner_interactive>`.
 - **Cost.** The loop job uses about 320,000 tokens and 17 GPU minutes, and it runs for about 66 minutes. The baseline and round 1 add about 2 GPU minutes and one interactive session.
 
-(agentic_ai:end_to_end_kempner_interactive)=
-:::{dropdown} Run on kempner_interactive
-You can run the GPU jobs of this example on `kempner_interactive` in batch mode, because each job is short and uses one GPU. The partition has only A100 MIG slices (3g.20gb), and each user can use one GPU at a time. The job scripts ask for full GPUs on `kempner_requeue`, so set the partition and the constraint:
-
-1. In the `round` section of `experiment.yaml`, set `partition: kempner_interactive` and `constraint: a100-mig`. Commit the change.
-2. Train the baseline with `sbatch -p kempner_interactive --constraint=a100-mig slurm/baseline.sbatch`.
-3. Run round 1 in the `test` partition, as {ref}`Run round 1 with the agent <agentic_ai:end_to_end_round_1>` shows. The agent adds `--partition=kempner_interactive --constraint=a100-mig` to its `sbatch` command. Check the options before you approve the command.
-4. Start the loop job as usual. It runs on `shared`, and it submits the round jobs to `kempner_interactive`.
-
-- **GPU minutes.** A round uses about 2.6 GPU minutes on a MIG slice. The default 60 GPU minutes cover the rounds of the loop.
-- **One GPU.** While the loop job runs, keep no other GPU job on `kempner_interactive`. The round jobs wait for it, and the loop stops at `queue_limit_minutes`.
-- **Start check.** If SLURM would reject the round jobs, the loop job stops at start, before any agent step.
-:::
-
 ## Set up the project
 
 The project keeps its files in three places; see {doc}`Storage Options <../s1_high_performance_computing/storage_and_data_transfer/understanding_storage_options>`.
@@ -97,6 +83,26 @@ Before you start Claude Code in the project directory, read its agent configurat
 
 ## Train the baseline
 
+(agentic_ai:end_to_end_kempner_interactive)=
+:::{dropdown} Run on kempner_interactive
+You can run the GPU jobs of this example on `kempner_interactive` in batch mode, because each job is short and uses one GPU. The partition has only A100 MIG slices (3g.20gb), and each user can use one GPU at a time. The job scripts ask for full GPUs on `kempner_requeue`, so set the partition and the constraint. Use these steps in place of the baseline and round 1 commands:
+
+1. In the `round` section of `experiment.yaml`, set `partition: kempner_interactive` and `constraint: a100-mig`. Commit the change.
+2. Train the baseline on a MIG slice:
+
+   ```bash
+   source cluster.env
+   sbatch --partition=kempner_interactive --constraint=a100-mig slurm/baseline.sbatch
+   ```
+
+3. Run round 1 in the `test` partition, as {ref}`Run round 1 with the agent <agentic_ai:end_to_end_round_1>` shows. In the prompt, write the command as `sbatch --wait --partition=kempner_interactive --constraint=a100-mig slurm/round.sbatch agent/next_config.json`. Refuse the command if it does not have these two options.
+4. Start the loop job as usual. It runs on `shared`, and it submits the round jobs to `kempner_interactive`.
+
+- **GPU minutes.** A round uses about 2.6 GPU minutes on a MIG slice. The loop job then uses about 40 GPU minutes, within the default 60 (`budget.gpu_minutes`).
+- **One GPU.** While the loop job runs, do not keep another GPU job on `kempner_interactive`. A round job waits for it, and if the round job waits more than 45 minutes (`budget.queue_limit_minutes`), the loop stops.
+- **Start check.** If SLURM would reject the round jobs, the loop job stops before the search starts.
+:::
+
 ```bash
 source cluster.env
 sbatch slurm/baseline.sbatch
@@ -107,7 +113,7 @@ The job trains the dense model for 40 epochs on one GPU, in about 2 minutes. SLU
 (agentic_ai:end_to_end_round_1)=
 ## Run round 1 with the agent
 
-Round 1 tests the pipeline, not the method: the approvals, the job, and the records. Approve a mild configuration, for example a sparsity of 0.5 to 0.8 with a few epochs. Approve only the exact command `sbatch --wait slurm/round.sbatch agent/next_config.json`. On `kempner_interactive`, the command also has `--partition=kempner_interactive --constraint=a100-mig` after `--wait`. Refuse other added options, such as `--gres` or `--time`, because they change the fixed resources of the job.
+Round 1 tests the pipeline, not the method: the approvals, the job, and the records. Approve a mild configuration, for example a sparsity of 0.5 to 0.8 with a few epochs. Approve only the exact command `sbatch --wait slurm/round.sbatch agent/next_config.json`. If `experiment.yaml` sets `round.partition` or `round.constraint`, the command also has them after `--wait`. Refuse other added options, such as `--gres` or `--time`, because they change the fixed resources of the job.
 
 1. On a login node, start tmux. In tmux, request a CPU job: `salloc --partition=test --time=0-02:00 --mem=16G --cpus-per-task=4`; see {ref}`Keeping a session alive <agentic_ai:keeping_a_session_alive>`.
 2. In the project directory, run `source cluster.env`, then `claude --permission-mode default`. The trust prompt lists the allow rules of the project, and its default choice is "No, exit". Trust the directory only after you read the agent configuration.
@@ -278,7 +284,7 @@ The confirmation round is exactly at the threshold. Treat the result as a lead t
 - **Keep.** Keep the parts that make the run safe: the fixed evaluator, the read-only agent step, the loop script, and the limits outside the model. Also keep the parts that make the result checkable: the run records, the confirmation round, and the one-time test evaluation.
 - **Data.** Check that the data level of your data and your results allows the agent to read them. Most unpublished research data is Level 2; see {ref}`Before you start <agentic_ai:before_you_start>`.
 - **Rounds.** Decide what the agent may change in each round, as in {doc}`Experiment Management with Agents <experiment_management_with_agents>`.
-- **GPUs.** To run the round jobs on other GPUs, set `round.constraint` in `experiment.yaml`, for example `a100-mig`. A round takes 3 to 4 times longer on a MIG slice, so check `gpu_minutes` too. Commit the change. `round.partition` sets the partition in the same way; see {ref}`Run on kempner_interactive <agentic_ai:end_to_end_kempner_interactive>`.
+- **GPUs.** To run the round jobs on other GPUs, set `round.constraint` in `experiment.yaml`, for example `a100-mig`. A round uses about 1.2 GPU minutes on a full GPU and about 2.6 on a MIG slice, so check `budget.gpu_minutes` too. `round.partition` sets the partition in the same way; see {ref}`Run on kempner_interactive <agentic_ai:end_to_end_kempner_interactive>`. Commit the change.
 - **Several agents.** For the same task with four agent roles, see {doc}`Multi-Agent Workflow Example <multi_agent_example>`.
 
 To extend the code with the agent, use the two skills from {doc}`Coding Agent Skills <../s2_swe_for_research/coding_agent_skills>` in an interactive session. The project settings deny edits of `src/` and `tests/`. So work on a development branch, and remove those two deny rules from `.claude/settings.json` on that branch. When the code is done, put the deny rules back, and commit everything. The round job refuses to start while a tracked file has uncommitted changes.

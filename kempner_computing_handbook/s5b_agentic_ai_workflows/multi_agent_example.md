@@ -53,7 +53,7 @@ Several agents cost more tokens. Use them only when a test shows a gain; see {re
 3. In `experiment_multi.yaml`, also set `wave.max_parallel: 1` and `budget.final_reserve_minutes: 120`. The rounds of a wave and the two confirmation rounds then run in turns, so a wave takes up to 3 times longer.
 4. Commit the change.
 
-While the loop job runs, keep no other GPU job on `kempner_interactive`. The round jobs wait for it, and the loop stops at `queue_limit_minutes`.
+While the loop job runs, do not keep another GPU job on `kempner_interactive`. A round job waits for it, and if the array job waits more than 45 minutes (`budget.queue_limit_minutes`), the loop stops.
 :::
 
 ## Step 1: Check the settings
@@ -80,7 +80,7 @@ Read `experiment_multi.yaml`, `slurm/multi_loop.sbatch`, `slurm/round_array.sbat
 | Rounds | 45 round attempts, round 1 included |
 | Failed waves | Stop after 2 waves in a row with no complete round |
 | Round jobs at the same time | At most 3, as one array job; see {ref}`Array Jobs <resource_management:array_jobs>` |
-| Queue | 45 minutes for one array job. Then the loop script cancels the waiting tasks and stops. |
+| Queue | 45 minutes for one array job. Then the loop script cancels the waiting tasks and stops. A wait that `wave.max_parallel` causes does not count. |
 | Loop job | `shared`, 2 CPUs, 8 GB, 6 hours. No new wave starts in the last 3 hours, which are for the role steps and the final steps. |
 
 The agents have the guardrails of the single-agent example. They have no shell, no write tools, and no MCP tools. They cannot read outside the project directory, or read the README; see {ref}`Guardrails <agentic_ai:guardrails>` and {ref}`Prohibited activities <security_and_compliance:prohibited_activities>`. Only the scale changes: up to 3 GPU jobs at a time, within a fixed GPU budget.
