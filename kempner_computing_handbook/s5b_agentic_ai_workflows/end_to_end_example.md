@@ -85,14 +85,14 @@ Before you start Claude Code in the project directory, read its agent configurat
 
 (agentic_ai:end_to_end_kempner_interactive)=
 :::{dropdown} Run on kempner_interactive
-You can run the GPU jobs of this example on `kempner_interactive` in batch mode, because each job is short and uses one GPU. The partition has only A100 MIG slices (3g.20gb), and each user can use one GPU at a time. The job scripts ask for full GPUs on `kempner_requeue`, so set the partition and the constraint. Use these steps in place of the baseline and round 1 commands:
+You can run the GPU jobs of this example on `kempner_interactive` in batch mode, because each job is short and uses one GPU. The partition has only A100 MIG slices (3g.20gb), and each user can use one GPU at a time. The job scripts ask for full GPUs on `kempner_requeue`. On `kempner_interactive`, SLURM rejects them with `Requested node configuration is not available`, so set the partition and the constraint. Use these steps in place of the baseline and round 1 commands:
 
 1. In the `round` section of `experiment.yaml`, set `partition: kempner_interactive` and `constraint: a100-mig`. Commit the change.
 2. Train the baseline on a MIG slice:
 
    ```bash
    source cluster.env
-   sbatch --partition=kempner_interactive --constraint=a100-mig slurm/baseline.sbatch
+   sbatch --partition=kempner_interactive --constraint=a100-mig slurm/baseline.sbatch   # about 5 minutes on a MIG slice
    ```
 
 3. Run round 1 in the `test` partition, as {ref}`Run round 1 with the agent <agentic_ai:end_to_end_round_1>` shows. In the prompt, write the command as `sbatch --wait --partition=kempner_interactive --constraint=a100-mig slurm/round.sbatch agent/next_config.json`. Refuse the command if it does not have these two options.
