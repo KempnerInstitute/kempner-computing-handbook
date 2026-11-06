@@ -36,10 +36,19 @@ Start with a single-GPU recipe: it queues fastest. Each recipe follows the same 
 
 ## Models to consider
 
+```{figure} figures/png/models_tradeoff.png
+---
+width: 100%
+name: recipes-model-tradeoff
+alt: Scatter plot of the recipes in the hpc-agentic-recipes repository. The horizontal axis is the decode rate of one request in tokens per second. The vertical axis is the total throughput of all concurrent requests, on a log scale. The dot color is the GPU type, and the dot size is the number of GPUs.
+---
+Each recipe by its speed for one request (right) and its total throughput for many requests at once (up), from the model table of the [hpc-agentic-recipes](https://github.com/KempnerInstitute/hpc-agentic-recipes) repository. RTX in the figure is the RTX6000.
+```
+
 NVFP4, FP8, INT4, and MXFP4 below are low-precision number formats that fit a large model on fewer GPUs.
 
 - **Gemma-4-26B-A4B** is a strong default for interactive coding on one GPU: a mixture-of-experts model with 4B active parameters, so it is fast and queues quickly.
-- **GLM-5.2** reasons well. Its NVFP4 build is the fastest large model that fits one RTX6000 node, and its FP8 build serves the longest context here, 626K tokens across two H200 nodes.
+- **GLM-5.2** reasons well. Its NVFP4 build fits one RTX6000 node with a 212K context, and its FP8 build serves the longest context here, 626K tokens across two H200 nodes.
 - **Qwen3-Coder-480B** gives strong quality for its speed on one RTX6000 node.
 - **Kimi-K2.7-Code** is the largest coding model that fits one RTX6000 node, a 1T-parameter mixture of experts in INT4. Use it when quality matters more than latency.
 - **Kimi-K3** has the highest published coding scores here, a 2.8T-parameter model in MXFP4. It needs four H200 nodes (16 GPUs, a user's full limit; see {doc}`Cluster Usage Policies <../s1_high_performance_computing/kempner_cluster/kempner_policies_for_responsible_use>`) and the SGLang engine.
