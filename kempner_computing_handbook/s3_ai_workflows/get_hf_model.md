@@ -8,7 +8,7 @@ To directly download the Hugging Face models on the AI cluster, you can use the 
 #!/bin/bash
 
 #SBATCH -J hf-download             # job name
-#SBATCH -p <partition-name>        # CPU-only SLURM partitions (e.g., shared or sapphire)
+#SBATCH -p <partition-name>        # a CPU-only partition (e.g., kempner_cpu, shared, or sapphire)
 #SBATCH -N 1                       # number of nodes
 #SBATCH -n 8                       # number of cores
 #SBATCH --mem 32G                  # memory pool per node
@@ -47,7 +47,7 @@ Below is an explanation of the script and the parameters you need to configure:
 
 These lines (starting with `#SBATCH`) configure your job's resources, such as partition, number of nodes, cores, memory, and output files. You must set:  
 
-- `<partition-name>`: Replace with the appropriate SLURM partition (CPU only - `shared` or `sapphire`) for your job.
+- `<partition-name>`: Replace with a CPU-only SLURM partition, such as `kempner_cpu`, `shared`, or `sapphire`. On `kempner_cpu`, also add `#SBATCH -A <your_account>`.
 
 2. Model Path
 
@@ -95,7 +95,7 @@ This downloads the specified model to your chosen directory. The `--local-dir-us
 ### Summary of Parameters to Set
 | Parameter                  | Description                               | Example Value                             |
 |----------------------------|-------------------------------------------|-------------------------------------------|
-| `<partition-name>`         | SLURM partition name                      | `shared`, `sapphire`, etc.                |
+| `<partition-name>`         | SLURM partition name                      | `kempner_cpu`, `shared`, or `sapphire`    |
 | `HF_Model_Path`            | Hugging Face model repository path        | `"deepseek-ai/DeepSeek-R1"`               |
 | `<PATH/TO/SAVE/HF/MODELS>` | Directory to store downloaded model files | `/n/holylfs06/LABS/<lab-name>/<hf-path>`  |
 

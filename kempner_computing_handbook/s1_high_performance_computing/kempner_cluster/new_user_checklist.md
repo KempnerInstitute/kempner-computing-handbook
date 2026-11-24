@@ -6,7 +6,7 @@ Use this checklist when onboarding to the Kempner AI cluster for the first time.
 ## Before Requesting Access
 
 - [ ] Confirm that your work is eligible for Kempner AI cluster access. See {doc}`Overview of Cluster <overview_of_kempner_cluster>`.
-- [ ] Review the expected use cases, fair-use expectations, GPU-only policy, and communication norms in {doc}`Cluster Usage Policies <kempner_policies_for_responsible_use>`.
+- [ ] Review the expected use cases, fair-use expectations, the rules for GPU and CPU-only jobs, and communication norms in {doc}`Cluster Usage Policies <kempner_policies_for_responsible_use>`.
 - [ ] Review the activities that are not allowed on the cluster in {ref}`Prohibited activities <security_and_compliance:prohibited_activities>`.
 
 
@@ -68,7 +68,7 @@ Once you have an active FASRC account, you can request access to the Kempner AI 
 
 ## Run a First GPU Job
 
-- [ ] Learn the basics of SLURM partitions, accounts, and job submission. The Kempner partitions are GPU-only, so every job must request a GPU with `--gres=gpu:`. See {doc}`Understanding SLURM <../general_hpc_concepts/understanding_slurm>`.
+- [ ] Learn the basics of SLURM partitions, accounts, and job submission. Every job on the Kempner GPU partitions must request a GPU with `--gres=gpu:`. Run CPU-only work on the `kempner_cpu` partition; see {ref}`CPU-only jobs <kempner_cluster:kempner_cpu_partition>`. See {doc}`Understanding SLURM <../general_hpc_concepts/understanding_slurm>`.
 - [ ] Identify which SLURM (fairshare) account you should charge jobs to. If you are in multiple groups, confirm the right account before submitting jobs.
 - [ ] Start with a small interactive GPU allocation to test your environment, then connect to the allocated node. See {doc}`Job Submission Basics <../general_hpc_concepts/job_submission_basics>`.
 

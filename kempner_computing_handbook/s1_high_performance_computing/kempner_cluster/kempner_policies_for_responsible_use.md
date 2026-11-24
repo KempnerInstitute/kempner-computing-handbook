@@ -12,12 +12,14 @@ We don’t limit jobs on the basis of size and encourage users to use capacity w
 
 Please use the [Kempner requeue](https://docs.rc.fas.harvard.edu/kb/kempner-partitions/) partition if you want to try out something resource intensive but not urgent. This work may be requeued by higher priority work, so you should implement checkpointing in the event that something higher priority interrupts your run.
 
-The cluster should never be used for CPU-only jobs. There are four types of Kempner Institute nodes on the cluster: Nodes with A100 40GB GPUs (`kempner` partition), nodes with H100 80GB GPUs (`kempner_h100` partition), nodes with H200 141GB GPUs (`kempner_h200` partition), and nodes with RTX6000 96GB GPUs (`kempner_rtx`). The RTX nodes have 8 GPUs and other nodes have 4 GPUs. Jobs should be submitted with **no more than**:
+The GPU partitions are for GPU jobs only, and every job on them must request a GPU. Run CPU-only work on the `kempner_cpu` partition; see {ref}`CPU-only jobs <kempner_cluster:kempner_cpu_partition>`. There are four types of Kempner Institute nodes on the cluster: Nodes with A100 40GB GPUs (`kempner` partition), nodes with H100 80GB GPUs (`kempner_h100` partition), nodes with H200 141GB GPUs (`kempner_h200` partition), and nodes with RTX6000 96GB GPUs (`kempner_rtx`). The RTX nodes have 8 GPUs and other nodes have 4 GPUs. Jobs should be submitted with **no more than**:
 
-- 16 cores and 240 GB per GPU for `kempner` partition, and 
-- 24 cores and 360 GB per GPU for `kempner_h100` partition.  
-- 16 cores and 360 GB per GPU for `kempner_h200` partition, and 
-- 16 cores and 180 GB per GPU for `kempner_rtx` partition.  
+- 16 cores and 240 GB per GPU for the `kempner` partition,
+- 16 cores and 328 GB per GPU for the `kempner_h100` partition,
+- 16 cores and 360 GB per GPU for the `kempner_h200` partition, and
+- 16 cores and 180 GB per GPU for the `kempner_rtx` partition.
+
+On `kempner_h100`, a job that does not set `-c` or `--mem` gets 16 cores and 328 GB per GPU. The `kempner_requeue` partition allows at most 16 cores and 328 GB per GPU on every node type, so a job that needs more than 328 GB per H200 GPU must use `kempner_h200`.
 
 ::::{important}
 Total GPU usage across the `kempner`, `kempner_h100`, `kempner_h200`, and `kempner_rtx` partitions is capped for each user and each Kempner account:
@@ -42,6 +44,24 @@ If none of the above strategies will work, users should submit a [reservation re
 ::::{warning}
 Users who monopolize cluster resources may have jobs canceled without notice, have fairshare significantly reduced, and in serious or repeated circumstances, may lose access to the cluster.
 ::::
+
+(kempner_cluster:kempner_cpu_partition)=
+## CPU-only jobs
+
+Use the `kempner_cpu` partition for work that does not need a GPU, such as agentic workflows, data preprocessing, evaluation, and analysis. It runs on the 96 H100 nodes and uses up to 32 cores of each node, 3,072 cores in total. The other 64 cores of each node serve GPU jobs.
+
+- **Per job.** Up to 8 cores and 32 GB of memory.
+- **Per user.** Up to 8 cores and 32 GB across all your `kempner_cpu` jobs, for example one 8-core job or eight 1-core jobs. Extra jobs wait in the queue until earlier jobs finish.
+- **Per account.** Up to 96 cores across all users of a lab account.
+- **Memory.** 4 GB per core is both the default and the maximum. Keep `--mem` at or below 4 GB times `-c`. If you ask for more, SLURM adds cores to match, and these cores count toward your 8.
+- **Time limit.** Set one with `-t`, up to 7 days. A job without a time limit is rejected.
+- **No GPUs and no whole nodes.** Do not request a GPU or `--exclusive`.
+
+```bash
+sbatch -p kempner_cpu -A <your_account> -t 1-00:00:00 -c 8 --mem=32G job.sh
+```
+
+A new job can show the pending reason "Nodes required for job are DOWN, DRAINED or reserved for jobs in higher priority partitions" for about a minute before it starts. This is normal.
 
 
 ## Efficient use of resources

@@ -143,7 +143,7 @@ JobScope averages periodic samples, so it is unreliable for jobs of a minute or 
 (agentic_ai:unattended_batch_job)=
 ## Run an agent unattended in a batch job
 
-For work that needs no conversation, such as triaging the night's failed jobs, run the agent in print mode in a batch job. It only talks to its model and reads files, so a small allocation on a CPU partition such as `shared` is enough (`test` is meant for interactive work). Before you submit:
+For work that needs no conversation, such as triaging the night's failed jobs, run the agent in print mode in a batch job. It only talks to its model and reads files, so a small allocation on a CPU partition such as `kempner_cpu` or `shared` is enough (`test` is meant for interactive work). On `kempner_cpu`, also set `#SBATCH --account=<your_account>`. Before you submit:
 
 - Work through {ref}`Before an unattended run <agentic_ai:before_an_unattended_run>`.
 - Set `blockReadsOutsideWorkingDirectories` to `true` under `permissions` in `~/.claude/settings.json`, so `dontAsk` refuses reads outside the project. Otherwise read-only commands such as `cat` run on any file your account can read.
