@@ -87,7 +87,7 @@ For more details on the SLURM directives run `sbatch  --help` and the [SLURM doc
 The following list details several batch jobs, each with a different SLURM configuration and their respective use cases.
 
 ```{warning}
-Please note that some of the following combinations may not work on Kempner partitions, as they require the `--gres=gpu:` option; otherwise, they will fail. The Kempner cluster is available only for GPU jobs, and the shared public partitions on the FASRC cluster should be used for CPU workflows.
+Some of the following combinations do not request a GPU, so they fail on the Kempner GPU partitions, which require the `--gres=gpu:` option. Run CPU-only jobs on the `kempner_cpu` partition (see {ref}`CPU-only jobs <kempner_cluster:kempner_cpu_partition>`) or on the shared public partitions of the FASRC cluster.
 ```
 
 | Combination | Description |

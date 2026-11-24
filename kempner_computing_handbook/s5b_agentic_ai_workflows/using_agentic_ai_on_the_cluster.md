@@ -23,6 +23,8 @@ tmux new -s agent
 salloc --partition=test --time=0-02:00 --mem=16G --cpus-per-task=4
 ```
 
+Kempner users can also use the `kempner_cpu` partition: replace `--partition=test` with `--partition=kempner_cpu --account=<your_account>`. See {ref}`CPU-only jobs <kempner_cluster:kempner_cpu_partition>` for its limits.
+
 Request a GPU only when the agent will run GPU code for you. For short GPU checks, the `kempner_interactive` partition offers small GPU slices; see {doc}`Understanding SLURM <../s1_high_performance_computing/general_hpc_concepts/understanding_slurm>`.
 
 **2. Install Claude Code.**
