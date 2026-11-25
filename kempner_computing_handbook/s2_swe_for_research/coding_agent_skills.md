@@ -1,6 +1,6 @@
 # Coding Agent Skills
 
-This chapter turns the other Software Engineering for Research chapters into skills for coding agents such as Claude Code and Codex. A skill is a `SKILL.md` file of instructions that an agent loads when a task matches the skill's description. With these skills installed, your agent follows the practices in this handbook when it works on your code. To learn how skills work, see {doc}`Building Custom Tools and MCP Servers <../s5b_agentic_ai_workflows/building_custom_tools>`.
+This chapter turns the other Software Engineering for Research chapters into skills for coding agents such as Claude Code and Codex. A skill is a `SKILL.md` file of instructions that an agent loads when a task matches the skill's description. With these skills installed, your agent follows the practices in this handbook when it works on your code. The `cluster-storage` skill, from {doc}`Storage Use by Agents <../s5b_agentic_ai_workflows/storage_use_by_agents>`, also keeps an agent's load on shared cluster storage low. To learn how skills work, see {doc}`Building Custom Tools and MCP Servers <../s5b_agentic_ai_workflows/building_custom_tools>`.
 
 Skills are instructions, not limits. For limits that must hold, use the permission rules and hooks in {ref}`Guardrails <agentic_ai:guardrails>`.
 
@@ -15,8 +15,9 @@ Skills are instructions, not limits. For limits that must hold, use the permissi
 | [`testing-and-continuous-integration`](https://handbook.eng.kempnerinstitute.harvard.edu/skills/testing-and-continuous-integration/SKILL.md) | [Testing and Continuous Integration](testing_and_continuous_integration.md) | Write tests, measure coverage, and set up CI |
 | [`package-development`](https://handbook.eng.kempnerinstitute.harvard.edu/skills/package-development/SKILL.md) | [Package Development](package_development.md) | Package, version, and release Python code |
 | [`reproducible-research`](https://handbook.eng.kempnerinstitute.harvard.edu/skills/reproducible-research/SKILL.md) | [Reproducible Research](reproducible_research.md) | Pin environments, seed runs, version data, and archive results |
+| [`cluster-storage`](https://handbook.eng.kempnerinstitute.harvard.edu/skills/cluster-storage/SKILL.md) | [Storage Use by Agents](../s5b_agentic_ai_workflows/storage_use_by_agents.md) | Place environments, caches, and outputs on the cluster, and keep the load on shared storage low |
 
-Each skill file is at `https://handbook.eng.kempnerinstitute.harvard.edu/skills/<skill-name>/SKILL.md`. If you are not sure which to pick, install all six. An agent reads only each skill's name and description until a task needs the rest.
+Each skill file is at `https://handbook.eng.kempnerinstitute.harvard.edu/skills/<skill-name>/SKILL.md`. If you are not sure which to pick, install all seven. An agent reads only each skill's name and description until a task needs the rest.
 
 (coding_agent_skills:install)=
 ## Install a skill
@@ -50,7 +51,7 @@ If your agent runs in a sandbox, such as the one in {ref}`Agent sandboxing <agen
 
 ### Install by hand
 
-Set `dest` to a folder from the table. The list holds all six skills; delete the lines for skills you do not want. For one project, run the commands from the repository's top folder.
+Set `dest` to a folder from the table. The list holds all seven skills; delete the lines for skills you do not want. For one project, run the commands from the repository's top folder.
 
 ::::{tab-set}
 :::{tab-item} Claude Code
@@ -64,6 +65,7 @@ skills=(
   testing-and-continuous-integration
   package-development
   reproducible-research
+  cluster-storage
 )
 for skill in "${skills[@]}"; do
   mkdir -p $dest/$skill
@@ -83,6 +85,7 @@ skills=(
   testing-and-continuous-integration
   package-development
   reproducible-research
+  cluster-storage
 )
 for skill in "${skills[@]}"; do
   mkdir -p $dest/$skill
@@ -105,7 +108,7 @@ The loop prints nothing for a skill that installs, and `ls` then lists each inst
 | Call a skill by name | Type `/<skill-name>` | Type `$` and choose the skill |
 | Load new skills | Start a new session, or run `/reload-skills` in a running one | Picked up automatically; if a skill does not appear, restart Codex |
 
-Each skill tells the agent to follow your project's own conventions first, such as a CONTRIBUTING file or agent instructions. The skills for Git, packaging, and reproducibility also list actions that the agent takes only when you ask, such as pushing, publishing, deleting, or starting long runs. Project conventions do not override that list, but your own requests count as asking, whether you type them or write them in your agent instructions.
+Each skill tells the agent to follow your project's own conventions first, such as a CONTRIBUTING file or agent instructions. The skills for Git, packaging, reproducibility, and cluster storage also list actions that the agent takes only when you ask, such as pushing, publishing, deleting, or starting long runs. Project conventions do not override that list, but your own requests count as asking, whether you type them or write them in your agent instructions.
 
 (coding_agent_skills:skills_by_chapter)=
 ## Skills by chapter
@@ -156,6 +159,14 @@ The `package-development` skill, from [Package Development](package_development.
 The `reproducible-research` skill, from [Reproducible Research](reproducible_research.md). Download its [SKILL.md](https://handbook.eng.kempnerinstitute.harvard.edu/skills/reproducible-research/SKILL.md).
 
 ```{literalinclude} ../_extra/skills/reproducible-research/SKILL.md
+:language: markdown
+```
+:::
+
+:::{dropdown} Storage Use by Agents
+The `cluster-storage` skill, from [Storage Use by Agents](../s5b_agentic_ai_workflows/storage_use_by_agents.md). Download its [SKILL.md](https://handbook.eng.kempnerinstitute.harvard.edu/skills/cluster-storage/SKILL.md).
+
+```{literalinclude} ../_extra/skills/cluster-storage/SKILL.md
 :language: markdown
 ```
 :::

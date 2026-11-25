@@ -12,10 +12,10 @@ The cluster provides filesystems with very different performance characteristics
 | Scratch | `/n/netscratch/<lab>` | VAST (all-flash) | Active training data, checkpoints, high-IOPS and random small-file reads |
 | Lustre | `/n/holylfs*` | parallel filesystem | Large files read or written with high sequential bandwidth |
 | Home | `/n/home<NN>` | NFS | Code and small configs, not heavy I/O |
-| Node-local | `/tmp` | local SSD | Per-node cache of hot data during a job (cleared when the job ends) |
+| Node-local | `/tmp` | local SSD | Per-node cache of hot data during a job (shared by all jobs on the node, not cleaned when a job ends) |
 
 ```{tip}
-For active training, keep your working data on scratch (`$SCRATCH/<lab>`, VAST). Its all-flash design handles the many small, random reads of ML data loading far better than a disk-based parallel filesystem. See {doc}`Storage Options <../../s1_high_performance_computing/storage_and_data_transfer/understanding_storage_options>` for quotas and the 90-day scratch policy.
+For active training, keep your working data on scratch (`$SCRATCH/<lab>`, VAST). Its all-flash design handles the many small, random reads of ML data loading far better than a disk-based parallel filesystem. See {doc}`Storage Options <../../s1_high_performance_computing/storage_and_data_transfer/understanding_storage_options>` for quotas and the 60-day scratch policy.
 ```
 
 ```{warning}
@@ -88,7 +88,7 @@ Stage hot data close to the GPUs: copy or shard it onto scratch (VAST) or, for d
 ```
 
 ```{note}
-Node-local `/tmp` is fast local disk (the same volume as `/scratch`), so it does not count against your job's memory. Its capacity depends on the GPU node: roughly 400 GB on `kempner` (A100), 840 GB on `kempner_h100` and `kempner_h200`, and 6.9 TB on `kempner_rtx`. It is private to each node and cleared when the job ends, so stage only what fits and copy any results you want to keep back to scratch or a persistent directory.
+Node-local `/tmp` is fast local disk (the same volume as `/scratch`), so it does not count against your job's memory. Its capacity depends on the GPU node: roughly 400 GB on `kempner` (A100), 840 GB on `kempner_h100` and `kempner_h200`, and 7 TB on `kempner_rtx`. It is local to each node and shared by every job on the node. Nothing cleans it when your job ends, so check the free space with `df -h /scratch`, stage only what fits, and remove your files at the end of the job. Copy any results you want to keep back to scratch or a persistent directory. See {ref}`Node-local disk <agentic_ai:node_local_disk>` for a job folder that removes itself.
 ```
 
 ## Chunked and parallel file formats
