@@ -13,66 +13,70 @@ If the project has its own conventions, for example in its README, a CONTRIBUTIN
 
 - Ask before you create, unpack, copy, move, or delete more than a few thousand files or more than 10 GB.
 - Ask before you build or rebuild a Python environment, or download a model or a dataset.
-- Ask before you search, list, or measure a whole lab, scratch, or home folder, or any folder whose size you do not know.
-- Never change file times (`touch`) on scratch to keep old files from the purge. FASRC treats this as abuse.
+- Ask before you search, list, or measure a whole lab, netscratch, or home folder, or any folder whose size you do not know.
+
+## Never
+
+- Never touch, copy, re-extract, or rebuild files on netscratch only to reset their times, even when the user asks. FASRC deletes netscratch files older than 60 days and treats resetting their times as abuse.
 
 ## Filesystems on the Kempner AI cluster
 
 | Path | Type | Use it for | Notes |
 |---|---|---|---|
-| `/n/holylfs06/LABS/<lab_name>` | Lustre | Code, large files, results to keep | Metadata requests are the scarce resource. No environments, caches, or many-file outputs. |
-| `/n/holylabs/LABS/<lab_name>/Users/<username>` | VAST | Code, lock files, environments | 4 TB per lab. Not purged. |
-| `$SCRATCH/<lab_name>/Lab/<username>` | VAST | Environments, caches, job outputs, checkpoints | 50 TB per lab. Files older than 60 days are deleted. |
-| `/n/home<NN>/<username>` | NFS | Settings, skills, small files | 100 GB. No heavy reads or writes. |
-| `/scratch` and `/tmp` on a compute node | Local NVMe | Temporary and many-file work in a job | Shared by all jobs on the node. Not cleaned when a job ends. |
+| `/n/holylabs/LABS/<lab_name>/Users/$USER` | VAST (NFS) | Code, lock files, environments | 4 TB per lab. Not purged. |
+| `/n/holylfs06/LABS/<lab_name>`, if the lab has one | Lustre | Large files, results to keep | Metadata requests are the scarce resource. No environments, caches, or many-file outputs. |
+| `$SCRATCH/<lab_name>/Lab/$USER` | VAST (NFS) | Caches, uv environments, job outputs, checkpoints | 50 TB per lab. Files older than 60 days are deleted. |
+| `/n/home<NN>/$USER` | Isilon (NFS) | Settings, skills, small files | 100 GB. No heavy reads or writes. |
+| Node-local `/scratch` and `/tmp` | Local NVMe | Temporary and many-file work in a job | Shared by all jobs on the node. Not cleaned when a job ends. |
 
-`$SCRATCH` is `/n/netscratch`. Check a path's type with `df -hT <path>`: `lustre` or `nfs`.
+`$SCRATCH` is `/n/netscratch`, called netscratch here. Node-local `/scratch` is a different place: the disk inside each compute node. Check a path's type with `df -hT <path>`: `lustre` is Lustre, and an `nfs` mount from `netscratch-data01` is VAST.
 
 ## Where files go
 
-- Code, lock files (`uv.lock`, `requirements.txt`, `environment.yml`), configs, and results the user keeps: lab storage.
-- Python environments and package caches: VAST, never home or Lustre (`/n/holylfs*`). uv environments can go on holylabs or scratch. Put conda and mamba environments on holylabs: conda keeps each package's old file times, so the scratch purge can delete files from a new environment.
-- An environment on scratch is disposable. Rebuild it from the lock file, for example with `uv sync --locked`.
-- Models and datasets: use the cluster's shared model and data repository first. Otherwise put the download cache on scratch.
-- Job outputs and checkpoints: scratch. Copy only what the user keeps to lab storage.
+- Code, lock files (`uv.lock`, `requirements.txt`, `environment.yml`), and configs: lab storage, preferably holylabs. Keep data and environments out of the code folder.
+- uv environments: on the same filesystem as the uv cache, so uv links files instead of copying them. Both on netscratch, or both on holylabs. Never in home or on Lustre (`/n/holylfs*`).
+- A uv environment on netscratch shares file times with the uv cache, so the purge can remove its files. If imports fail with missing files, ask the user, then rebuild it from the lock file, for example with `uv sync --locked`.
+- conda and mamba environments and their package cache: holylabs. conda keeps each package's old file times, so the netscratch purge can delete files from a new environment.
+- Models and datasets: use the cluster's shared model and data repository first. Otherwise put the download cache on netscratch.
+- Job outputs and checkpoints: netscratch. Copy only what the user keeps to lab storage.
 - Temporary files, unpacked archives, and work with many small files in a job: node-local `/scratch`.
 
 ## Set caches once
 
-Ask the user before you add these to `~/.bashrc` or to the project's environment file. Replace `<lab_name>` and `<username>`.
+Ask the user before you add these to `~/.bashrc`. Replace `<lab_name>`.
 
 ```bash
-S=$SCRATCH/<lab_name>/Lab/<username>
+S=$SCRATCH/<lab_name>/Lab/$USER
 export UV_CACHE_DIR=$S/cache/uv
+export UV_COMPILE_BYTECODE=1                    # compile .pyc files at install, not in many tasks at once
+export UV_PYTHON_INSTALL_DIR=/n/holylabs/LABS/<lab_name>/Users/$USER/uv-python   # uv's Python builds, off home
 export PIP_CACHE_DIR=$S/cache/pip
-export CONDA_PKGS_DIRS=$S/cache/conda-pkgs
 export HF_HOME=$S/cache/huggingface
+export HF_TOKEN_PATH=$HOME/.cache/huggingface/token   # the token stays in home
 export TORCH_HOME=$S/cache/torch
 export TRITON_CACHE_DIR=$S/cache/triton
 export WANDB_DIR=$S/wandb
 export WANDB_CACHE_DIR=$S/cache/wandb
 ```
 
-- Keep the uv cache and the environment on the same filesystem, so uv links files instead of copying them.
-- To keep a uv project's code on Lustre but its environment on scratch, set `UV_PROJECT_ENVIRONMENT=$S/envs/<project>` in the project's environment file, not in `~/.bashrc`.
-- Set `UV_COMPILE_BYTECODE=1`, so uv writes the `.pyc` files once at install time instead of on the first import of each job.
+- After the change, `uv cache dir` must print a path under `$SCRATCH`. If it prints a temporary folder, `UV_NO_CACHE` is set and uv ignores the cache folder.
+- To keep one project's uv environment on netscratch, set `UV_PROJECT_ENVIRONMENT` to a full path for that project only, for example in the `env` block of the project's `.claude/settings.json`. Do not set it in `~/.bashrc`.
 
 ## Search and list
 
 - Work in the smallest folder that holds the task. Never start a search at `/n/holylfs06`, a lab folder, `$SCRATCH`, or `$HOME`.
 - Keep data, environments, checkpoints, and outputs outside the repository, or list them in `.gitignore`. Built-in search tools usually skip ignored paths. `grep -r` and `find` do not.
 - Prefer the built-in search tools with a narrow path and file type over `grep -r` or `find` on a large folder.
-- In a large folder, use `ls` without `-l`. On Lustre, `-l` costs extra requests for every file. To check one file, use `ls -l <file>` or `stat <file>`.
+- In a large folder, use `ls --color=never`, not `ls -l`. Both `-l` and color make `ls` check every file. To check one file, use `ls -l <file>` or `stat <file>`.
 - On Lustre, use `lfs find` instead of `find`, and limit it with `-maxdepth`, `-name`, or `-type`.
-- To measure use, never run `du` or `find` over a lab or scratch folder. On Lustre, `lfs quota -h -g <lab_group> /n/holylfs06` shows the space and the file count.
+- To measure use, never run `du` or `find` over a lab or netscratch folder. On Lustre, `lfs quota -h -g <lab_name> /n/holylfs06` shows the space and the file count.
 - List a large folder once, save the list to a file in the work folder, and reuse it.
 
 ## Python environments and imports
 
 - Each Python start opens and checks many files in its environment. One `import numpy` from a uv environment made about 1,400 file-system calls on this cluster.
 - Do not start Python many times in a loop. Do the work in one process, or batch it in one script.
-- For job arrays and multi-node jobs, build or copy the environment to node-local `/scratch` at the start of each job, or use an Apptainer image, which shared storage sees as one file.
-- If imports fail with missing files after a scratch purge, rebuild the environment from the lock file.
+- In job arrays and multi-node jobs, prepare the environment once on each node, not once per task: unpack one packed archive of it on node-local `/scratch`, or use an Apptainer image, which shared storage sees as one file.
 
 ## Write outputs
 
@@ -84,28 +88,30 @@ export WANDB_CACHE_DIR=$S/cache/wandb
 
 ## Node-local disk in a job
 
-- `/scratch` and `/tmp` are on the same local disk, shared by every job on the node. It holds about 400 GB on A100 nodes, 840 GB on H100 and H200 nodes, and 7 TB on RTX6000 nodes.
+- `/scratch` and `/tmp` are on the same local disk, shared by every job on the node. It holds 397 GB on A100 nodes, 844 GB on H100 and H200 nodes, and 7 TB on RTX6000 nodes.
 - Check free space with `df -h /scratch` before you stage data. Stage only what fits, and leave room for the other jobs.
-- Make one folder for the job, and remove it when the job ends:
+- Put these lines at the top of the batch script, never in your own shell commands. Each of your commands runs in a new shell, so the trap would remove the folder at once.
 
 ```bash
-JOBDIR=/scratch/$USER/$SLURM_JOB_ID
+JOBDIR=/scratch/$USER/${SLURM_JOB_ID:?}          # stops if not in a job
 mkdir -p "$JOBDIR" && trap 'rm -rf "$JOBDIR"' EXIT
 ```
 
-- Nothing cleans `/scratch` when a job ends, and `/tmp` keeps unused files for 10 days. Copy results out before the job ends.
+- Write results to netscratch or lab storage, not to the job folder.
+- The batch script runs on the first node only. In a multi-node job, make and remove the folder in each `srun` task.
+- Nothing cleans `/scratch` when a job ends, and `/tmp` keeps unused files for 10 days.
 
 ## Unpack and delete
 
-- Unpack archives on scratch or node-local `/scratch`, not on Lustre.
-- On scratch, unpack with `tar -xmf`, so the files get the current time. Archive times can put new files in the next purge.
-- To delete many files on Lustre, ask first. Then use `lfs find <folder> -type f -print0 | xargs -0 rm -f` instead of `rm -rf` on a large tree.
+- Unpack archives on netscratch or node-local `/scratch`, not on Lustre.
+- On netscratch, unpack new data with `tar -xmf`, as the FASRC scratch policy recommends. The files then get the current time instead of the archive's old times.
+- To delete many files on Lustre, ask first. Then remove the files with `lfs find <folder> -type f -print0 | xargs -0 rm -f`, and remove the empty folders with `rm -r <folder>`.
 
 ## Watch jobs
 
 - Do not poll files in a loop with `ls`, `cat`, `stat`, or `tail -f`. On shared storage, `tail -f` checks the file every second.
-- Use `sbatch --wait`, `squeue`, or `sacct`. They ask the scheduler, not the filesystem.
-- If you must read a job's output, wait at least 60 seconds between checks, and read only the end of one file, for example `tail -n 20 <file>`.
+- Use `sbatch --wait`, `squeue`, or `sacct`. They ask the scheduler, not the filesystem. Wait at least 60 seconds between checks, so you do not load the scheduler either.
+- To read a job's output, read only the end of one file, for example `tail -n 20 <file>`.
 
 ## Parallel agents and subagents
 

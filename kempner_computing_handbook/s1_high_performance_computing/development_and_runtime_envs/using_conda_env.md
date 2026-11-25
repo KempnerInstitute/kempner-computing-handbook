@@ -210,7 +210,7 @@ Here are the steps to create a conda environment in the lab directory:
 
 - Step 1: Locate your lab directory
 
-The labs are located at the following path: `/n/holylabs/LABS` (or other filesystems such as `holylfs04`, `holylfs05`, `holylfs06`). Inside the LABS directory, you will find directories for individual labs. Within each lab directory, there is a `Users` folder. Inside this folder, there should be a folder with your username. If such a folder does not exist, request the FASRC help desk to create one for you. This folder will serve as your personal directory under your affiliated lab.
+The labs are located at the following path: `/n/holylabs/LABS`. Some labs also have folders on other filesystems, such as `holylfs04`, `holylfs05`, or `holylfs06`. These are Lustre, so do not put conda environments there. Inside the LABS directory, you will find directories for individual labs. Within each lab directory, there is a `Users` folder. Inside this folder, there should be a folder with your username. If such a folder does not exist, request the FASRC help desk to create one for you. This folder will serve as your personal directory under your affiliated lab.
 
 
 - Step 2: Create the following directories in your lab directory:
@@ -222,13 +222,13 @@ The labs are located at the following path: `/n/holylabs/LABS` (or other filesys
 - Step 3: Set the following environment variables in your `~/.bashrc` file:
 
     ```bash
-    export CONDA_ENVS=/n/holylabs/LABS/<lab_name>/<username>/.conda/envs
-    export CONDA_PKGS_DIRS=/n/holylabs/LABS/<lab_name>/<username>/.conda/pkgs
-    export PATH="/n/holylabs/LABS/<lab_name>/<username>/.conda:$PATH"
+    export CONDA_ENVS_DIRS=/n/holylabs/LABS/<lab_name>/Users/<username>/.conda/envs
+    export CONDA_PKGS_DIRS=/n/holylabs/LABS/<lab_name>/Users/<username>/.conda/pkgs
+    export PATH="/n/holylabs/LABS/<lab_name>/Users/<username>/.conda:$PATH"
     ```
 
 
-    Replace `<lab_name>` with the name of your lab and `<username>` with your username. The `CONDA_ENVS` environment variable specifies the directory where the conda environments will be stored, and the `CONDA_PKGS_DIRS` environment variable specifies the directory where the cached packages will be stored.
+    Replace `<lab_name>` with the name of your lab and `<username>` with your username. The `CONDA_ENVS_DIRS` environment variable specifies the directory where the conda environments will be stored, and the `CONDA_PKGS_DIRS` environment variable specifies the directory where the cached packages will be stored.
 
     Run the following command to apply the changes:
 
@@ -240,10 +240,10 @@ The labs are located at the following path: `/n/holylabs/LABS` (or other filesys
 
     ```bash
     envs_dirs:
-    - /n/holylabs/LABS/<lab_name>/<username>/.conda/envs
+    - /n/holylabs/LABS/<lab_name>/Users/<username>/.conda/envs
 
     pkgs_dirs:
-    - /n/holylabs/LABS/<lab_name>/<username>/.conda/pkgs
+    - /n/holylabs/LABS/<lab_name>/Users/<username>/.conda/pkgs
     ```
 
     Replace `<lab_name>` with the name of your lab and `<username>` with your username.

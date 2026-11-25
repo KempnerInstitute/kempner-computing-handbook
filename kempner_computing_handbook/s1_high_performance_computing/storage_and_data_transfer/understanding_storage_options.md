@@ -4,7 +4,7 @@ There are several storage options available on the Kempner Institute AI cluster.
 
 ## Default persistent home directory
 
-Each user has 100GB of persistent storage that is their home directory. _This is for long-term storage of files, checkpoints, datasets, etc._ Your home directory is located at:
+Each user has 100GB of persistent storage that is their home directory. Use it for code, settings, and small files, not for checkpoints or datasets. Your home directory is located at:
 
 ```sh	
 /n/home<number>/<your user name>
@@ -32,7 +32,7 @@ Read more about how to manage a full home directory situation [here](https://doc
 
 ## Default persistent lab directory
 
-Each lab has 4 TB of persistent storage. _This is for long-term storage of files, checkpoints, datasets, etc_. Your lab directory is located at:
+Each lab has 4 TB of persistent storage for long-term files, such as code, environments, results, and checkpoints. Your lab directory is located at:
 
 ```sh
 /n/holylabs/LABS/<your lab name>
@@ -48,7 +48,7 @@ This storage is only accessible to members of the lab. There is __no cost__ asso
 
 ## Temporary High-Performance scratch storage (VAST)
 
-Each lab has 50 TB of `scratch` storage space. This storage is high-performance, and it is intended to be where you keep data you are actively using for a job (e.g., datasets you’re actively using for a job, checkpoints you’re storing from a job, etc.). That data should be copied from the persistent directories above. Data in scratch folders will be deleted after 60 days, and you should treat it as if it could be deleted at any time. 
+Each lab has 50 TB of `scratch` storage space. This storage is high-performance, and it is intended to be where you keep data you are actively using for a job (e.g., datasets you’re actively using for a job, checkpoints you’re storing from a job, etc.). That data should be copied from the persistent directories above. Starting with the December 7, 2026 maintenance, data in scratch folders will be deleted after 60 days (90 days before that), and you should treat it as if it could be deleted at any time. 
 
 ```{warning}
 Please be aware that employing any methods to alter data in the scratch directory to circumvent the 60-day deletion policy is strictly forbidden and will lead to administrative action by the RC team. For further information, please consult the following resource: [RC Scratch Directory Policy](https://docs.rc.fas.harvard.edu/kb/policy-scratch/).
@@ -88,7 +88,7 @@ The following table summarizes the details of the default scratch storage (`nets
 | **Name**            | netscratch           |
 | **Filesystem Type** | VAST                 |
 | **Each Lab Quota**  | 50 TB                |
-| **File Retention**  | 60 days              |
+| **File Retention**  | 60 days (90 days before December 7, 2026) |
 | **Lab Scratch Path**| `/n/netscratch/<your lab name>` | 
 | **Use Cases**       | Optimized for Varieties of Workflows including High I/O AI Workflows |
 

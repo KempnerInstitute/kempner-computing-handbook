@@ -5,6 +5,7 @@ This chapter covers running agentic AI tools on the Kempner AI cluster:
 - {doc}`Using Agentic AI on the Cluster <using_agentic_ai_on_the_cluster>`: install and sign in, permission modes, keeping a session alive, IDE agents, and responsible use on shared infrastructure.
 - {doc}`Your First Agentic Workflow on the Cluster <first_agentic_workflow>`: one small task end to end, from launching the agent to checking the result.
 - {doc}`Agent Security and Scoping <agent_security_and_scoping>`: prompt injection, remote control, and how to limit what an agent can reach, including the agent sandbox.
+- {doc}`Storage Use by Agents <storage_use_by_agents>`: where an agent's environments, caches, and outputs belong, and how to keep its load on shared storage low.
 - {doc}`HPC Agentic Recipes <hpc_agentic_recipes>`: serving open-weight models on the cluster's GPUs, so your prompts and code never leave the cluster.
 
 To give an agent your project's conventions and guardrails, continue to {doc}`Configuring and Extending Agents <configuring_and_extending_agents>`.
