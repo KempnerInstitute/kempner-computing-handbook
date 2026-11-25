@@ -88,7 +88,7 @@ Stage hot data close to the GPUs: copy or shard it onto scratch (VAST) or, for d
 ```
 
 ```{note}
-Node-local `/tmp` is fast local disk (the same volume as `/scratch`), so it does not count against your job's memory. Its capacity depends on the GPU node: roughly 400 GB on `kempner` (A100), 840 GB on `kempner_h100` and `kempner_h200`, and 6.9 TB on `kempner_rtx`. It is private to each node and cleared when the job ends, so stage only what fits and copy any results you want to keep back to scratch or a persistent directory.
+Node-local `/tmp` is fast local disk (the same volume as `/scratch`), so it does not count against your job's memory. Its capacity depends on the GPU node: roughly 400 GB on `kempner` (A100), 840 GB on `kempner_h100` and `kempner_h200`, and 7 TB on `kempner_rtx`. It is local to each node and shared by every job on the node. Nothing cleans it when your job ends, so check the free space with `df -h /scratch`, stage only what fits, and remove your files at the end of the job. Copy any results you want to keep back to scratch or a persistent directory. See {ref}`Node-local disk <agentic_ai:node_local_disk>` for a job folder that removes itself.
 ```
 
 ## Chunked and parallel file formats

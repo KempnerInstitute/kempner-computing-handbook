@@ -201,7 +201,7 @@ The conda environment and cache directory for installed packages can easily exce
 ```{warning}
 - Please note that this is a major change to the default behavior of conda. If you are unsure about this change, please consult with the FAS Research Computing.
 
-- Also be aware that creating numerous conda environments can exhaust the filesystem's inodes, as conda generates a large number of files. To avoid this, use the `$SCRATCH` space for your conda environments. You can learn more about the Scratch space policy on the [FASRC website](https://docs.rc.fas.harvard.edu/kb/policy-scratch/).
+- Also be aware that conda generates a large number of files, which can exhaust a filesystem's inodes and load its metadata servers. Keep environments on `holylabs`, which is on VAST, not on a Lustre lab filesystem such as `holylfs04`, `holylfs05`, or `holylfs06`. Avoid `$SCRATCH` for conda environments: scratch deletes files older than 60 days, and conda keeps each package's original file times, so files in a new environment can be deleted in the next purge. See {doc}`Storage Use by Agents <../../s5b_agentic_ai_workflows/storage_use_by_agents>` and the [FASRC scratch policy](https://docs.rc.fas.harvard.edu/kb/policy-scratch/).
 ```
 
 

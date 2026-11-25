@@ -44,14 +44,14 @@ For example, Jonathan Frankle’s lab directory is at:
 /n/holylabs/LABS/jfrankle_lab
 ```
 
-This storage is only accessible to members of the lab. There is __no cost__ associated with this storage.
+This storage is only accessible to members of the lab. There is __no cost__ associated with this storage. It is on VAST, the same high-performance system as scratch, and it is not purged.
 
 ## Temporary High-Performance scratch storage (VAST)
 
-Each lab has 50 TB of `scratch` storage space. This storage is high-performance, and it is intended to be where you keep data you are actively using for a job (e.g., datasets you’re actively using for a job, checkpoints you’re storing from a job, etc.). That data should be copied from the persistent directories above. Data in scratch folders will be deleted after 90 days, and you should treat it as if it could be deleted at any time. 
+Each lab has 50 TB of `scratch` storage space. This storage is high-performance, and it is intended to be where you keep data you are actively using for a job (e.g., datasets you’re actively using for a job, checkpoints you’re storing from a job, etc.). That data should be copied from the persistent directories above. Data in scratch folders will be deleted after 60 days, and you should treat it as if it could be deleted at any time. 
 
 ```{warning}
-Please be aware that employing any methods to alter data in the scratch directory to circumvent the 90-day deletion policy is strictly forbidden and will lead to administrative action by the RC team. For further information, please consult the following resource: [RC Scratch Directory Policy](https://docs.rc.fas.harvard.edu/kb/policy-scratch/).
+Please be aware that employing any methods to alter data in the scratch directory to circumvent the 60-day deletion policy is strictly forbidden and will lead to administrative action by the RC team. For further information, please consult the following resource: [RC Scratch Directory Policy](https://docs.rc.fas.harvard.edu/kb/policy-scratch/).
 ```
 
 Your scratch directory is located at:
@@ -88,7 +88,7 @@ The following table summarizes the details of the default scratch storage (`nets
 | **Name**            | netscratch           |
 | **Filesystem Type** | VAST                 |
 | **Each Lab Quota**  | 50 TB                |
-| **File Retention**  | 90 days              |
+| **File Retention**  | 60 days              |
 | **Lab Scratch Path**| `/n/netscratch/<your lab name>` | 
 | **Use Cases**       | Optimized for Varieties of Workflows including High I/O AI Workflows |
 
@@ -103,7 +103,7 @@ name: Storage Options
 
 ## Note on Lustre Storage Performance 
 
-If you're running I/O-heavy computational workflows on data stored in any Lustre filesystem (e.g., `holylabs`, `holylfs06`), check the LFS stripe count on your directories and optimize it if necessary. Here are a few important points:
+If you're running I/O-heavy computational workflows on data stored in a Lustre filesystem (e.g., `holylfs06`), check the LFS stripe count on your directories and optimize it if necessary. Here are a few important points:
 
 - The LFS stripe count on a directory determines how data inside that directory is distributed across one or more Object Storage Targets (OSTs), which can significantly improve read/write performance.
 - For a directory with small files, a single stripe (default) is usually sufficient.
@@ -128,3 +128,7 @@ If you're running I/O-heavy computational workflows on data stored in any Lustre
   3. Copy the data back using `cp` or `rsync`. Do not use `mv`, as it won't retrigger striping.
 
 Optimizing stripe counts can lead to significant improvements in I/O performance for data-intensive workflows. Read more about Lustre storage internals [here](https://wiki.lustre.org/Understanding_Lustre_Internals).
+
+```{seealso}
+For where an agent's environments, caches, and outputs belong, and how to keep its load on shared storage low, see {doc}`Storage Use by Agents <../../s5b_agentic_ai_workflows/storage_use_by_agents>`.
+```

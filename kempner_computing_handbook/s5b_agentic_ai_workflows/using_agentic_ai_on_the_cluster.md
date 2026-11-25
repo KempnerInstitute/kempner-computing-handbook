@@ -11,7 +11,7 @@ Cloud-based agents send your prompts, and any code or data they can read, to an 
 
 In practice, Level 1 means public material, such as public repositories and datasets, or made-up data. Most unpublished research code, data, and results are Level 2; see {ref}`Data classification and what the cluster can host <security_and_compliance:data_classification>`. Before you point a cloud agent at them, check with your school whether your account is covered at that level.
 
-You also need the Claude or ChatGPT access Harvard provides (see the sign-in step below), and a compute node. Do not run agents on a login node, where their processes would compete with every other user.
+You also need the Claude or ChatGPT access Harvard provides (see the sign-in step below), and a compute node. Do not run agents on a login node, where their processes would compete with every other user. An agent also reads and writes files much faster than a person, so decide first where its files go; see {doc}`Storage Use by Agents <storage_use_by_agents>`.
 
 (agentic_ai:running_a_terminal_agent)=
 ## Running a terminal agent

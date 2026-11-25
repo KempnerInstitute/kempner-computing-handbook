@@ -15,7 +15,7 @@ sharing, retention, and deletion.
 - Data in FASRC lab directories and lab shares are owned and managed by the PI or
   group owner. FASRC can update ownership or permissions with written approval
   from the PI or group owner.
-- Scratch storage is temporary. Data older than 90 days are purged on a rolling
+- Scratch storage is temporary. Data older than 60 days are purged on a rolling
   basis, so scratch must not be used for long-term retention or archival storage.
 - Harvard guidance states that research records should generally be retained for
   no fewer than seven years after the end of the research project or activity.

@@ -55,7 +55,7 @@ The Kempner AI cluster provides several storage tiers, each suited to a differen
 Match each part of your plan to the appropriate tier, and never treat scratch as long-term or archival storage. For full quotas, paths, and retention details, see [Storage Options](understanding_storage_options.md).
 
 ```{warning}
-Scratch storage is purged on a rolling basis: data older than 90 days will be deleted. Do not rely on scratch to satisfy data retention requirements. Copy anything you must keep to persistent or archival storage.
+Scratch storage is purged on a rolling basis: data older than 60 days will be deleted. Do not rely on scratch to satisfy data retention requirements. Copy anything you must keep to persistent or archival storage.
 ```
 
 Because Kempner research is open science, the cluster is generally used for non-sensitive data. If your project involves data with confidentiality, privacy, or other compliance obligations (for example, data governed by a data use agreement), coordinate with FASRC and the Kempner Institute *before* placing such data on the cluster to confirm the appropriate handling and security controls.

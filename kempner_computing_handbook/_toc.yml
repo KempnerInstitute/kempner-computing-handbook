@@ -104,6 +104,7 @@ parts:
       - file: s5b_agentic_ai_workflows/using_agentic_ai_on_the_cluster
       - file: s5b_agentic_ai_workflows/first_agentic_workflow
       - file: s5b_agentic_ai_workflows/agent_security_and_scoping
+      - file: s5b_agentic_ai_workflows/storage_use_by_agents
       - file: s5b_agentic_ai_workflows/hpc_agentic_recipes
     - file: s5b_agentic_ai_workflows/configuring_and_extending_agents
       sections:

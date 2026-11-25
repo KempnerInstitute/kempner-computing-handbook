@@ -46,7 +46,7 @@ The project keeps its files in three places; see {doc}`Storage Options <../s1_hi
 |---|---|---|
 | Code, environment, and records | Lab storage | Lab storage is persistent. The home directory has a 100 GB limit. |
 | uv cache and Python interpreter | Lab storage | The cache is large. The agent sandbox hides your home directory, so an interpreter there cannot run in sandboxed commands; see {ref}`Agent sandboxing <agentic_ai:agent_sandboxing>`. |
-| Round checkpoints | Scratch (`RUN_ROOT`) | Scratch is fast. FASRC deletes scratch files after 90 days. |
+| Round checkpoints | Scratch (`RUN_ROOT`) | Scratch is fast. FASRC deletes scratch files after 60 days. |
 | CIFAR-10 | The read-only shared copy | No download; see {doc}`Shared Data/Model Repository <../s1_high_performance_computing/storage_and_data_transfer/shared_data_repository>`. |
 
 Clone the repository into lab storage, and copy the settings file:
