@@ -50,10 +50,10 @@ Users who monopolize cluster resources may have jobs canceled without notice, ha
 
 Use the `kempner_cpu` partition for work that does not need a GPU, such as agentic workflows, data preprocessing, evaluation, and analysis. It runs on the 96 H100 nodes and uses up to 32 cores of each node, 3,072 cores in total. The other 64 cores of each node serve GPU jobs.
 
-- **Per job.** Up to 8 cores and 32 GB of memory.
-- **Per user.** Up to 8 cores and 32 GB across all your `kempner_cpu` jobs, for example one 8-core job or eight 1-core jobs. Extra jobs wait in the queue until earlier jobs finish.
-- **Per account.** Up to 96 cores across all users of a lab account.
-- **Memory.** 4 GB per core is both the default and the maximum. Keep `--mem` at or below 4 GB times `-c`. If you ask for more, SLURM adds cores to match, and these cores count toward your 8.
+- **Per job.** Up to 32 cores and 128 GB of memory.
+- **Per user.** Up to 32 cores and 128 GB across all your `kempner_cpu` jobs, for example one 32-core job or four 8-core jobs. Extra jobs wait in the queue until earlier jobs finish.
+- **Per account.** Up to 256 cores across all users of a lab account.
+- **Memory.** 4 GB per core is both the default and the maximum. Keep `--mem` at or below 4 GB times `-c`. If you ask for more, SLURM adds cores to match, and these cores count toward your 32.
 - **Time limit.** Set one with `-t`, up to 7 days. A job without a time limit is rejected.
 - **No GPUs and no whole nodes.** Do not request a GPU or `--exclusive`.
 

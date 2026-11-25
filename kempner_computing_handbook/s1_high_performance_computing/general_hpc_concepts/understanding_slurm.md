@@ -55,7 +55,7 @@ The following partitions are available for Kempner affiliates on the FASRC clust
 | `kempner_requeue` | This partition utilizes `kempner`, `kempner_h100`, `kempner_h200`, `kempner_rtx`, and `kempner_interactive` partitions, so it includes all GPU types, the A100 MIG slices too. It is designed for tasks that can be interrupted and restarted. Each GPU gets at most 16 cores and 328 GB on every node type. This partition has a 2-day time limit.|
 | `kempner_dev` | This partition is dedicated to the engineering team and is not available to all users. |
 | `kempner_interactive` | This partition is dedicated to interactive jobs and lightweight development work. It provides 20GB A100 GPU slices created from full A100 40GB GPUs using NVIDIA Multi-Instance GPU (MIG) technology. |
-| `kempner_cpu` | This partition is for CPU-only jobs. It uses 32 cores of each H100 node, 3072 cores in total. Each job and each user can use up to 8 cores and 32 GB at once, with a 7-day limit; see {ref}`CPU-only jobs <kempner_cluster:kempner_cpu_partition>`. |
+| `kempner_cpu` | This partition is for CPU-only jobs. It uses 32 cores of each H100 node, 3072 cores in total. Each job and each user can use up to 32 cores and 128 GB at once, and each lab account up to 256 cores, with a 7-day limit; see {ref}`CPU-only jobs <kempner_cluster:kempner_cpu_partition>`. |
 
 ```{note}
 The `kempner_interactive` partition is intended for interactive sessions, prototyping, debugging, and other lightweight development tasks, not for full-scale training or production runs. Because the GPUs are partitioned with MIG, each job receives a 20GB slice of an A100 rather than a full GPU. For resource-intensive jobs, use the `kempner`, `kempner_h100`, `kempner_h200`, or `kempner_rtx` partitions instead.
