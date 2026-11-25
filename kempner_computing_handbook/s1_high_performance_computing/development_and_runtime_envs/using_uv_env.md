@@ -237,7 +237,7 @@ uv cache clean ruff      # remove cache entries for one package
 ```
 
 ```{warning}
-Scratch storage is periodically purged. It can be suitable for a disposable cache, but do not rely on it as the only location for project source code or lock files. If `.venv` is purged, recreate it with `uv sync --locked`.
+Scratch storage is periodically purged. It can be suitable for a disposable cache, but do not rely on it as the only location for project source code or lock files. If the purge removes files from `.venv`, rebuild it with `uv sync --locked --reinstall`. Plain `uv sync` does not notice missing files.
 ```
 
 Keep environments off Lustre (`holylfs06`), where their many small files load the metadata servers. For a project whose code is on Lustre, `UV_PROJECT_ENVIRONMENT` places the environment on VAST storage; see {doc}`Storage Use by Agents <../../s5b_agentic_ai_workflows/storage_use_by_agents>`.

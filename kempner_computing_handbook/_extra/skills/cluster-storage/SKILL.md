@@ -7,7 +7,7 @@ description: Use when working on the Kempner AI cluster or another shared HPC cl
 
 Use these practices when you work on a shared cluster, such as the Kempner AI cluster at Harvard. Every file open, file check, and folder listing on shared storage is a request to a metadata server that all users share. An agent makes these requests much faster than a person, and one agent can slow storage down for everyone. These practices summarize the Storage Use by Agents page of the Kempner Institute Computing Handbook: https://handbook.eng.kempnerinstitute.harvard.edu/s5b_agentic_ai_workflows/storage_use_by_agents.html
 
-If the project has its own conventions, for example in its README, a CONTRIBUTING file, or agent instructions, follow those first. Project conventions do not override the Ask first rules. A request from the user, typed or written in the user's own agent instructions, counts as asking.
+If the project has its own conventions, for example in its README, a CONTRIBUTING file, or agent instructions, follow those first. Project conventions do not override the Ask first and Never rules. A request from the user, typed or written in the user's own agent instructions, counts as asking.
 
 ## Ask first
 
@@ -34,8 +34,8 @@ If the project has its own conventions, for example in its README, a CONTRIBUTIN
 ## Where files go
 
 - Code, lock files (`uv.lock`, `requirements.txt`, `environment.yml`), and configs: lab storage, preferably holylabs. Keep data and environments out of the code folder.
-- uv environments: on the same filesystem as the uv cache, so uv links files instead of copying them. Both on netscratch, or both on holylabs. Never in home or on Lustre (`/n/holylfs*`).
-- A uv environment on netscratch shares file times with the uv cache, so the purge can remove its files. If imports fail with missing files, ask the user, then rebuild it from the lock file, for example with `uv sync --locked`.
+- uv environments: on the same filesystem as the uv cache, so uv links files instead of copying them. The cache settings below put both on netscratch. To keep environments on holylabs, the `UV_CACHE_DIR` line must point to holylabs too. Never put environments in home or on Lustre (`/n/holylfs*`).
+- A uv environment on netscratch shares file times with the uv cache, so the purge can remove its files. If imports fail with missing files, ask the user, then rebuild it with `uv sync --locked --reinstall`. Plain `uv sync` does not notice missing files.
 - conda and mamba environments and their package cache: holylabs. conda keeps each package's old file times, so the netscratch purge can delete files from a new environment.
 - Models and datasets: use the cluster's shared model and data repository first. Otherwise put the download cache on netscratch.
 - Job outputs and checkpoints: netscratch. Copy only what the user keeps to lab storage.
@@ -60,7 +60,7 @@ export WANDB_CACHE_DIR=$S/cache/wandb
 ```
 
 - After the change, `uv cache dir` must print a path under `$SCRATCH`. If it prints a temporary folder, `UV_NO_CACHE` is set and uv ignores the cache folder.
-- To keep one project's uv environment on netscratch, set `UV_PROJECT_ENVIRONMENT` to a full path for that project only, for example in the `env` block of the project's `.claude/settings.json`. Do not set it in `~/.bashrc`.
+- To keep one project's uv environment on netscratch, set `UV_PROJECT_ENVIRONMENT` to a full path for that project only, for example in the `env` block of the project's `.claude/settings.local.json`, which is not shared. Do not set it in `~/.bashrc` or in the shared `.claude/settings.json`.
 
 ## Search and list
 
@@ -76,7 +76,10 @@ export WANDB_CACHE_DIR=$S/cache/wandb
 
 - Each Python start opens and checks many files in its environment. One `import numpy` from a uv environment made about 1,400 file-system calls on this cluster.
 - Do not start Python many times in a loop. Do the work in one process, or batch it in one script.
-- In job arrays and multi-node jobs, prepare the environment once on each node, not once per task: unpack one packed archive of it on node-local `/scratch`, or use an Apptainer image, which shared storage sees as one file.
+- In a job array, pack the environment once with `tar`, then unpack the archive into each task's job folder on node-local `/scratch`. This reads one file from shared storage instead of every file. Run Python from the unpacked copy, for example `"$JOBDIR/<env>/bin/python" -m <module>`.
+- In a multi-node job, unpack once on each node with `srun --ntasks-per-node=1`.
+- An Apptainer image also works: shared storage sees it as one file.
+- Do not add an environment's `lib` folder to `LD_LIBRARY_PATH` in `~/.bashrc`. Every program start then searches that folder: in a test, 63 extra file calls for each Python start. Set it only in the job that needs it.
 
 ## Write outputs
 

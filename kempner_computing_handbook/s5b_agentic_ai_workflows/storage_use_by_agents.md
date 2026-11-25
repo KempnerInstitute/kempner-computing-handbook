@@ -23,7 +23,7 @@ This page shows where an agent's files belong and how to keep its storage load l
 | `/n/home<NN>/$USER` | Isilon (NFS) | Settings, skills, small files | 100 GB |
 | Node-local `/scratch` and `/tmp` | Local NVMe | Temporary and many-file work in a job | Shared by all jobs on the node |
 
-VAST handles many small files well. Lustre is built for large files, and an agent's searches of many small files cost the most there. When you can, run the agent in a project folder on holylabs, and keep data and environments out of that folder.
+VAST handles many small files well. Lustre works best with large files, and an agent's searches of many small files cost the most there. When you can, run the agent in a project folder on holylabs. Keep data and environments out of that folder.
 
 Your lab name is usually one of the groups that `id -Gn` lists. To check a path, run `df -hT <path>`. The type `lustre` is Lustre, and an `nfs` mount from `netscratch-data01` is VAST. See {doc}`Storage Options <../s1_high_performance_computing/storage_and_data_transfer/understanding_storage_options>` for the details of each location.
 
@@ -31,14 +31,14 @@ Your lab name is usually one of the groups that `id -Gn` lists. To check a path,
 Starting with the December 7, 2026 maintenance, FASRC deletes netscratch files older than 60 days (90 days before that). Never touch, copy, re-extract, or rebuild files on netscratch only to reset their times. FASRC treats this as abuse; see the [FASRC scratch policy](https://docs.rc.fas.harvard.edu/kb/policy-scratch/).
 ```
 
-- **uv environments.** Keep each environment and the uv cache on the same filesystem, so uv links files instead of copying them. Put both on netscratch for more space, or both on holylabs to keep them past the purge, as in {doc}`uv <../s1_high_performance_computing/development_and_runtime_envs/using_uv_env>`.
-- **uv on netscratch.** Linked files keep the times of the cache, so the purge can remove files from an environment you built today. Keep the lock file with the code, and rebuild with `uv sync --locked` when files are missing.
+- **uv environments.** Keep each environment and the uv cache on the same filesystem, so uv links files instead of copying them. The setup below puts both on netscratch, which has more space. To keep environments on holylabs past the purge, change the `UV_CACHE_DIR` line to a holylabs folder, as in {doc}`uv Environment <../s1_high_performance_computing/development_and_runtime_envs/using_uv_env>`.
+- **uv on netscratch.** Linked files keep the times of the cache, so the purge can remove files from an environment you built today. Keep the lock file with the code. When files are missing, rebuild with `uv sync --locked --reinstall`, which also refreshes the cache.
 - **conda and mamba environments.** Put the environments and the package cache on holylabs, as in {doc}`Conda Environment <../s1_high_performance_computing/development_and_runtime_envs/using_conda_env>`. conda keeps each package's file times: in a new test environment, `six.py` kept its package's 2025 date, so the netscratch purge could delete it at once.
-- **Models and datasets.** Use the {doc}`shared repository <../s1_high_performance_computing/storage_and_data_transfer/shared_data_repository>` first, and download to netscratch only what it does not hold.
+- **Models and datasets.** Use the {doc}`shared repository <../s1_high_performance_computing/storage_and_data_transfer/shared_data_repository>` first. Download to netscratch only what it does not hold.
 
 ## Set up once
 
-Point the tool caches at netscratch, and keep your Hugging Face token in your home folder. Add these lines to `~/.bashrc`, and replace `<lab_name>` with your lab's folder name:
+Point the tool caches at netscratch, and keep your Hugging Face token in your home folder. Add these lines to `~/.bashrc`. Replace `<lab_name>` with your lab's folder name, and if your folder under `Users` on holylabs does not exist, ask FASRC to create it:
 
 ```bash
 S=$SCRATCH/<lab_name>/Lab/$USER
@@ -61,7 +61,7 @@ source ~/.bashrc
 mkdir -p "$S" && uv cache dir
 ```
 
-To keep a project's uv environment on netscratch, next to the uv cache, set `UV_PROJECT_ENVIRONMENT` for that project only. Use the full path. For Claude Code, add it to the `env` block of the project's `.claude/settings.json`:
+To keep a project's uv environment on netscratch, next to the uv cache, set `UV_PROJECT_ENVIRONMENT` for that project only. Use the full path. For Claude Code, add it to the `env` block of the project's `.claude/settings.local.json`, which holds your own settings and is not shared. JSON does not expand `$USER`, so write your user name:
 
 ```json
 {
@@ -81,11 +81,12 @@ When you run uv yourself in that project, export the same variable in your shell
 | `ls -l` in a large folder | Use `ls --color=never`. Check one file with `ls -l <file>`. |
 | `find` or `du` on a large folder | On Lustre, use `lfs find` instead of `find`. Check use with `lfs quota`. List a large folder once and save the list. |
 | Many short Python runs | Do the work in one process. |
-| A job array that reads the environment in every task | Prepare it once on each node's `/scratch` from one packed archive, or use an {doc}`Apptainer <../s1_high_performance_computing/development_and_runtime_envs/containerization>` image. See {doc}`Array Jobs <../s1_high_performance_computing/general_hpc_concepts/array_jobs>`. |
+| A job array that reads the environment in every task | Unpack one packed copy of it into each task's job folder on node-local `/scratch`; see {ref}`One environment archive <agentic_ai:environment_archive>`. Or use an {doc}`Apptainer <../s1_high_performance_computing/development_and_runtime_envs/containerization>` image. See {doc}`Array Jobs <../s1_high_performance_computing/general_hpc_concepts/array_jobs>`. |
 | One file for each sample or step | Append records to one JSON Lines file. Store data as Parquet, HDF5, or tar shards. |
 | Unpacking archives on Lustre | Unpack on netscratch with `tar -xmf`, which the FASRC policy recommends for new data, or on node-local `/scratch`. |
 | Polling output with `ls` or `tail -f` | Use `sbatch --wait`, `squeue`, or `sacct`. Wait at least 60 seconds between checks. |
 | Several agents searching the same folder | Search once and share the result. |
+| An environment's `lib` folder in `LD_LIBRARY_PATH` in `~/.bashrc` | Every program start searches that folder: in a test, 63 extra file calls for each Python start. Set it only in the job that needs it. |
 
 (agentic_ai:node_local_disk)=
 ## Node-local disk
@@ -108,6 +109,25 @@ mkdir -p "$JOBDIR" && trap 'rm -rf "$JOBDIR"' EXIT
 ```
 
 Write results you keep to netscratch or lab storage, not to the job folder. The batch script runs on the first node of a job. In a multi-node job, make and remove the folder in each `srun` task.
+
+(agentic_ai:environment_archive)=
+### One environment archive for a job array
+
+Each task of a job array is a separate job. Without an archive, each task reads every file of the environment from shared storage. Pack a uv or venv environment once, before you submit the array:
+
+```bash
+cd $SCRATCH/<lab_name>/Lab/$USER/envs
+tar -cf <env>.tar <env>
+```
+
+In the array's batch script, after the job folder lines above, unpack the archive and run Python from the copy:
+
+```bash
+tar -C "$JOBDIR" -xf $SCRATCH/<lab_name>/Lab/$USER/envs/<env>.tar
+"$JOBDIR/<env>/bin/python" train.py
+```
+
+Each task then reads one archive file instead of the environment's many files. Commands that the environment installs, such as `pytest`, still point to the old path, so run them as `"$JOBDIR/<env>/bin/python" -m pytest`. Pack the archive again after you change the environment. For a conda environment, use [conda-pack](https://conda.github.io/conda-pack/) instead.
 
 ## Claude Code settings
 
